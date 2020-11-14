@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/dimen_mini"
+    android:elevation="@dimen/cardElevation"
+    app:cardCornerRadius="@dimen/cardCornerRadius">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/dimen_small">
+        <TextView
+            android:id="@+id/title_TextView_itemView_Amal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_text"
+            android:textAppearance="@style/textMedium"
+            android:layout_alignParentStart="true"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_toStartOf="@id/checkBox_itemView_Amal"/>
+        <CheckBox
+            android:id="@+id/checkBox_itemView_Amal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/checkbox_circle_state"
+            android:layout_alignBaseline="@id/title_TextView_itemView_Amal"
+            android:layout_alignParentEnd="true"/>
+
+        <RelativeLayout
+            android:id="@+id/expanded_RelativeLayout_ItemView_Amal"
+            android:layout_below="@id/title_TextView_itemView_Amal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/typeTextView_ItemView_Amal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sunnah Muaqqadah"
+                android:layout_marginTop="@dimen/dimen_small"
+                android:textAlignment="center"
+                android:drawableEnd="@drawable/ic_expand_more"/>
+            <RatingBar
+                android:id="@+id/ratingBar_ItemView_Amal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/typeTextView_ItemView_Amal"/>
+            <TextView
+                android:id="@+id/completed_Text_ItemView_Amal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completed On"
+                android:layout_toStartOf="@id/completionTime_TextView_ItemView_Amal"
+                android:layout_alignBaseline="@id/typeTextView_ItemView_Amal"/>
+            <TextView
+                android:id="@+id/completionTime_TextView_ItemView_Amal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demo_time"
+                android:layout_marginStart="@dimen/dimen_small"
+                android:layout_alignParentEnd="true"
+                android:layout_alignBaseline="@id/completed_Text_ItemView_Amal"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

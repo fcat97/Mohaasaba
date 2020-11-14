@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/dimen_large"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textView1_FragmentCustomDates_TypeActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_custom_date_warning"
+
+            android:padding="@dimen/dimen_small"
+            android:textAlignment="center"
+            android:textAppearance="@style/textMini"/>
+
+        <com.applandeo.materialcalendarview.CalendarView
+            android:id="@+id/calendarView_FragmentCustomDates_TypeActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_extraLarge"
+            custom:headerColor="?attr/colorPrimaryDark"
+            custom:type="many_days_picker"
+            custom:swipeEnabled="true"
+            custom:selectionColor="?attr/colorPrimary"
+            custom:selectionLabelColor="@color/colorWhite"
+            custom:todayLabelColor="?attr/colorAccent"
+            android:layout_below="@id/textView1_FragmentCustomDates_TypeActivity"/>
+    </RelativeLayout>
+</ScrollView>

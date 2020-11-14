@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/labelIcon_ReminderActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_title"
+        android:contentDescription="@string/label_text"
+
+        android:layout_margin="@dimen/dimen_extraLarge"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/label_EditText_ReminderActivity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_extraLarge"
+
+        android:maxLines="1"
+        android:inputType="text"
+        android:background="@android:color/transparent"
+        android:hint="@string/title_request_text"
+        android:autofillHints="@string/title_request_text"
+        android:textAppearance="@style/textRegular.italic"
+        android:textColor="?attr/colorAccent"
+
+        app:layout_constraintTop_toTopOf="@id/labelIcon_ReminderActivity"
+        app:layout_constraintStart_toEndOf="@id/labelIcon_ReminderActivity"/>
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dimen_mini"
+        android:layout_marginBottom="@dimen/dimen_mini"
+        android:layout_marginStart="@dimen/dimen_small"
+        android:layout_marginEnd="@dimen/dimen_small"
+        android:background="?android:attr/listDivider"
+
+        app:layout_constraintStart_toEndOf="@id/labelIcon_ReminderActivity"
+        app:layout_constraintTop_toBottomOf="@id/labelIcon_ReminderActivity"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/reminderIcon_ReminderActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_extraLarge"
+
+        android:src="@drawable/ic_alarm_add"
+        android:contentDescription="@string/reminder_time"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider1"/>
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alarm Date"
+        android:textAppearance="@style/textSmall.Italic"
+
+        app:layout_constraintStart_toStartOf="@id/reminderDate_Button_ReminderActivity"
+        app:layout_constraintTop_toTopOf="@id/reminderIcon_ReminderActivity"/>
+
+    <Button
+        android:id="@+id/reminderDate_Button_ReminderActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_extraLarge"
+
+        android:textAppearance="@style/textRegular.bold"
+        android:text="@string/demo_date"
+        android:theme="@style/AppTheme.Button"
+        android:onClick="openDatePickerDialog"
+
+        app:layout_constraintStart_toEndOf="@id/reminderIcon_ReminderActivity"
+        app:layout_constraintTop_toBottomOf="@id/tvDate"/>
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alarm Time"
+        android:textAppearance="@style/textSmall.Italic"
+
+        app:layout_constraintStart_toStartOf="@id/reminderTime_Button_ReminderActivity"
+        app:layout_constraintTop_toTopOf="@id/reminderIcon_ReminderActivity"/>
+    <Button
+        android:id="@+id/reminderTime_Button_ReminderActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_large"
+        android:textAppearance="@style/textRegular.bold"
+        android:theme="@style/AppTheme.Button"
+        android:text="@string/demo_time"
+        android:onClick="openTimePickerDialog"
+
+        app:layout_constraintTop_toBottomOf="@id/tvTime"
+        app:layout_constraintStart_toEndOf="@id/reminderDate_Button_ReminderActivity"/>
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dimen_mini"
+        android:layout_marginBottom="@dimen/dimen_mini"
+        android:layout_marginStart="@dimen/dimen_small"
+        android:layout_marginEnd="@dimen/dimen_small"
+        android:background="?android:attr/listDivider"
+
+        app:layout_constraintStart_toEndOf="@id/reminderIcon_ReminderActivity"
+        app:layout_constraintTop_toBottomOf="@id/reminderDate_Button_ReminderActivity"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/notificationIcon_ReminderActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:layout_marginStart="@dimen/dimen_extraLarge"
+        android:layout_marginTop="@dimen/dimen_extraLarge"
+        android:src="@drawable/ic_notifications"
+        android:contentDescription="@string/notify_text"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider2"/>
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_mini"
+        android:layout_marginStart="@dimen/dimen_extraLarge"
+        android:textAppearance="@style/textRegular.italic"
+        android:text="@string/notify_before"
+
+        app:layout_constraintTop_toTopOf="@id/notificationIcon_ReminderActivity"
+        app:layout_constraintStart_toEndOf="@id/notificationIcon_ReminderActivity"/>
+    <EditText
+        android:id="@+id/notifyBefore_editText_ReminderActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_mini"
+
+        android:inputType="time"
+        android:layout_marginTop="@dimen/dimen_extraLarge"
+        android:textAppearance="@style/textRegular"
+        android:background="@android:color/transparent"
+        android:autofillHints="@string/time_request"
+        android:hint="@string/time_request"
+
+        app:layout_constraintStart_toStartOf="@id/textView1"
+        app:layout_constraintTop_toBottomOf="@id/textView1" />
+
+    <RadioGroup
+        android:id="@+id/notify_radioGroup_ReminderActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/dimen_large"
+
+        app:layout_constraintTop_toTopOf="@id/notificationIcon_ReminderActivity"
+        app:layout_constraintStart_toEndOf="@id/textView1">
+            <RadioButton
+                android:id="@+id/notify_minute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_large"
+                android:textAppearance="@style/textSmall.Italic"
+                android:text="Minutes"/>
+            <RadioButton
+                android:id="@+id/notify_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_large"
+                android:text="Hours"
+                android:textAppearance="@style/textSmall.Italic"/>
+            <RadioButton
+                android:id="@+id/notify_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_large"
+                android:textAppearance="@style/textSmall.Italic"
+                android:text="Days"/>
+            <RadioButton
+                android:id="@+id/notify_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_large"
+                android:textAppearance="@style/textSmall.Italic"
+                android:text="Month"/>
+    </RadioGroup>
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/notify_switch_ReminderActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        app:layout_constraintStart_toStartOf="@id/textView1"
+        app:layout_constraintTop_toBottomOf="@id/notifyBefore_editText_ReminderActivity"
+        app:layout_constraintBottom_toBottomOf="@id/notify_radioGroup_ReminderActivity"/>
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dimen_mini"
+        android:layout_marginBottom="@dimen/dimen_mini"
+        android:layout_marginStart="@dimen/dimen_small"
+        android:layout_marginEnd="@dimen/dimen_small"
+        android:background="?android:attr/listDivider"
+
+        app:layout_constraintStart_toEndOf="@id/notificationIcon_ReminderActivity"
+        app:layout_constraintTop_toBottomOf="@id/notify_radioGroup_ReminderActivity"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/repeatIcon_ReminderActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:layout_margin="@dimen/dimen_extraLarge"
+        android:src="@drawable/ic_repeat"
+        android:contentDescription="@string/repeat_text"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider3"/>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_extraLarge"
+        android:padding="@dimen/dimen_mini"
+        android:textAppearance="@style/textRegular.italic"
+        android:text="@string/repeat_text"
+
+        app:layout_constraintTop_toTopOf="@id/repeatIcon_ReminderActivity"
+        app:layout_constraintStart_toEndOf="@id/repeatIcon_ReminderActivity"/>
+    <EditText
+        android:id="@+id/repeat_editText_ReminderActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_mini"
+
+        android:inputType="numberSigned"
+        android:layout_marginTop="@dimen/dimen_extraLarge"
+        android:textAppearance="@style/textRegular"
+        android:background="@android:color/transparent"
+
+        app:layout_constraintStart_toStartOf="@id/textView2"
+        app:layout_constraintTop_toBottomOf="@id/textView2"
+        android:autofillHints="@string/time_request"
+        android:hint="@string/time_request"/>
+    <RadioGroup
+        android:id="@+id/repeat_radioGroup_ReminderActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/dimen_large"
+
+        app:layout_constraintTop_toTopOf="@id/textView2"
+        app:layout_constraintStart_toEndOf="@id/textView2">
+            <RadioButton
+                android:id="@+id/repeat_minute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_large"
+                android:textAppearance="@style/textSmall.Italic"
+                android:text="Minutes"/>
+            <RadioButton
+                android:id="@+id/repeat_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_large"
+                android:text="Hours"
+                android:textAppearance="@style/textSmall.Italic"/>
+            <RadioButton
+                android:id="@+id/repeat_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_large"
+                android:textAppearance="@style/textSmall.Italic"
+                android:text="Days"/>
+            <RadioButton
+                android:id="@+id/repeat_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_large"
+                android:textAppearance="@style/textSmall.Italic"
+                android:text="Month"/>
+    </RadioGroup>
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/repeat_switch_ReminderActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="@id/repeat_editText_ReminderActivity"
+        app:layout_constraintBottom_toBottomOf="@id/repeat_radioGroup_ReminderActivity"
+        app:layout_constraintTop_toBottomOf="@id/repeat_editText_ReminderActivity"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/repeat_radioGroup_ReminderActivity"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <Button
+            android:id="@+id/confirm_button_ReminderActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/confirm_text"
+            android:textColor="@color/colorWhite"
+            style="@style/AppTheme.Button"
+            android:layout_margin="@dimen/dimen_small"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

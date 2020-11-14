@@ -1,0 +1,76 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        applicationId "com.example.mohasaaba"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.google.android.material:material:1.2.1'
+
+    def lifecycle_version = "2.2.0"
+    def room_version = "2.2.5"
+    /*ViewModel and LiveData (New Style-in one Line)*/
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    /*Room Dependencies*/
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    //Library for Json
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    /*Custom Library for waveProgressView*/
+    implementation 'com.github.jakob-grabner:Circle-Progress-View:1.4'
+
+    //Advance Date Picker
+    implementation 'com.appeaser.sublimepickerlibrary:sublimepickerlibrary:2.1.2'
+    implementation 'com.applandeo:material-calendar-view:1.7.0'
+    implementation 'com.archit.calendar:awesome-calendar:2.0.0'
+
+    //AdvanceRichEditText
+    implementation 'com.github.chinalwb:are:0.1.7'
+
+    //JSoup for making Title in NoteActivity
+    implementation 'org.jsoup:jsoup:1.11.3'
+
+    //Horizontal DatePicker
+    implementation 'com.github.jhonnyx2012:horizontal-picker:1.0.6'
+
+    //ColorPicker
+    implementation "codes.side:andcolorpicker:0.4.0"
+    implementation "androidx.core:core-ktx:+"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}

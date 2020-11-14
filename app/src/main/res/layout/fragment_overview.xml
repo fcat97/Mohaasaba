@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorWhite"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.FragmentOverview">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_small"
+            android:layout_marginEnd="@dimen/dimen_small"
+            android:layout_marginTop="@dimen/dimen_small"
+            android:layout_marginBottom="@dimen/dimen_mini"
+            android:background="@android:color/transparent"
+
+            app:cardCornerRadius="@dimen/cardCornerRadius"
+            app:cardElevation="@dimen/cardElevation">
+            <FrameLayout
+                android:id="@+id/description_frameLayout_OverviewFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <include layout="@layout/view_description_add_schedule"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_small"
+            android:layout_marginEnd="@dimen/dimen_small"
+            android:layout_marginTop="@dimen/dimen_mini"
+            android:layout_marginBottom="@dimen/dimen_mini"
+            android:background="@android:color/transparent"
+
+            app:cardCornerRadius="@dimen/cardCornerRadius"
+            app:cardElevation="@dimen/cardElevation">
+            <FrameLayout
+                android:id="@+id/reminder_frameLayout_OverviewFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <include layout="@layout/view_reminder_add_schedule"
+                    android:visibility="gone"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_mini"
+            android:layout_marginEnd="@dimen/dimen_mini"
+            android:layout_marginTop="@dimen/dimen_mini"
+            android:layout_marginBottom="@dimen/dimen_large"
+            android:background="@android:color/transparent"
+
+            app:cardCornerRadius="@dimen/cardCornerRadius"
+            app:cardElevation="@dimen/cardElevation">
+            <FrameLayout
+                android:id="@+id/targetView_frameLayout_OverviewFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <include layout="@layout/view_target_add_schedule"
+                    android:visibility="gone"/>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</ScrollView>

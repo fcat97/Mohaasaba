@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <ScrollView
+        android:id="@+id/scrollView_DescriptionView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dimen_small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <com.chinalwb.are.AREditText
+            android:id="@+id/arEditText"
+            android:layout_width="match_parent"
+            android:background="@android:color/white"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_request"
+            android:textAppearance="@style/textSmall"/>
+    </ScrollView>
+
+    <com.chinalwb.are.styles.toolbar.ARE_ToolbarDefault
+        android:id="@+id/areToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/dimen_mini"
+        android:layout_marginStart="@dimen/dimen_mini"
+        android:layout_marginEnd="@dimen/dimen_mini"
+        android:background="?attr/colorControlActivated"
+        android:backgroundTint="?attr/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

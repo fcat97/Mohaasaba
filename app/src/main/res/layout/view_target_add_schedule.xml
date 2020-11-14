@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/parentLayout_viewTarget_AddScheduleActivity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <at.grabner.circleprogress.CircleProgressView
+        android:id="@+id/progress_circular_viewTarget_AddScheduleActivity"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_margin="4dp"
+        android:padding="4dp"
+
+        app:cpv_maxValue="100"
+        app:cpv_value="45"
+        app:cpv_textColor="?attr/colorAccent"
+        app:cpv_textMode="Percent"
+        app:cpv_autoTextSize="true"
+        app:cpv_textScale="0.75"
+        app:cpv_unit="%"
+        app:cpv_unitColor="?attr/colorPrimary"
+        app:cpv_unitPosition="right_top"
+        app:cpv_unitToTextScale="0.85"
+        app:cpv_showUnit="true"
+        app:cpv_blockCount="15"
+
+        app:cpv_startAngle="300"
+        app:cpv_rimWidth="3dp"
+        app:cpv_barWidth="15dp"
+        app:cpv_barColor="?attr/colorAccent"
+        app:cpv_innerContourColor="@android:color/transparent"
+        app:cpv_outerContourColor="@android:color/transparent"
+
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/completed_ImageView_viewTarget_AddScheduleActivity"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_checkup"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@id/progress_circular_viewTarget_AddScheduleActivity"
+        app:layout_constraintBottom_toBottomOf="@id/progress_circular_viewTarget_AddScheduleActivity"
+        app:layout_constraintStart_toStartOf="@id/progress_circular_viewTarget_AddScheduleActivity"
+        app:layout_constraintTop_toTopOf="@id/progress_circular_viewTarget_AddScheduleActivity"/>
+    <TextView
+        android:id="@+id/textView1_viewTarget_AddScheduleActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="350 steps"
+        android:layout_margin="@dimen/dimen_small"
+        android:textAppearance="@style/textRegular"
+
+        app:layout_constraintStart_toEndOf="@id/progress_circular_viewTarget_AddScheduleActivity"
+        app:layout_constraintTop_toTopOf="@id/progress_circular_viewTarget_AddScheduleActivity"
+        app:layout_constraintEnd_toStartOf="@id/textView2_viewTarget_AddScheduleActivity"
+        app:layout_constraintBottom_toBottomOf="@id/progress_circular_viewTarget_AddScheduleActivity"/>
+
+    <TextView
+        android:id="@+id/textView2_viewTarget_AddScheduleActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="of"
+        android:layout_margin="@dimen/dimen_small"
+        android:textAppearance="@style/textRegular.italic"
+
+        app:layout_constraintStart_toEndOf="@id/textView1_viewTarget_AddScheduleActivity"
+        app:layout_constraintEnd_toStartOf="@id/textView3_viewTarget_AddScheduleActivity"
+        app:layout_constraintBaseline_toBaselineOf="@id/textView1_viewTarget_AddScheduleActivity"/>
+
+    <TextView
+        android:id="@+id/textView3_viewTarget_AddScheduleActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="1000 steps"
+        android:layout_margin="@dimen/dimen_small"
+        android:textAppearance="@style/textRegular"
+
+        app:layout_constraintStart_toEndOf="@id/textView2_viewTarget_AddScheduleActivity"
+        app:layout_constraintBaseline_toBaselineOf="@id/textView1_viewTarget_AddScheduleActivity"
+        app:layout_constraintEnd_toStartOf="@id/incrementButton_viewTarget_AddScheduleActivity"/>
+
+    <Button
+        android:id="@+id/incrementButton_viewTarget_AddScheduleActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="+1"
+        android:textColor="@color/colorGreen"
+        android:background="@drawable/button_ripple"
+        android:drawableStart="@drawable/ic_step"
+        android:layout_marginEnd="@dimen/dimen_small"
+
+
+        app:layout_constraintTop_toTopOf="@id/progress_circular_viewTarget_AddScheduleActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/progress_circular_viewTarget_AddScheduleActivity"/>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinateLayout_viewTarget_AddScheduleActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/progress_circular_viewTarget_AddScheduleActivity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_viewTarget_AddScheduleActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <ImageButton
+        android:id="@+id/expand_ImageButton_viewTarget_AddScheduleActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:src="@drawable/ic_expand_more"
+        android:background="@android:color/transparent"
+        android:tint="@color/colorGreen"
+
+        app:layout_constraintTop_toBottomOf="@id/coordinateLayout_viewTarget_AddScheduleActivity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="expand history" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

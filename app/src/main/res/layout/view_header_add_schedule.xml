@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dimen_small">
+    <ImageView
+        android:id="@+id/tagIcon_addSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_tag"
+        android:background="@android:color/transparent"
+        android:tint="?attr/colorPrimary"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:contentDescription="@string/tag_icon" />
+
+    <EditText
+        android:id="@+id/tag_EditText_addSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:hint="@string/dummy_tags"
+        android:textColorHint="@android:color/secondary_text_dark"
+        android:autofillHints="@string/dummy_tags"
+        android:textColor="?attr/colorPrimary"
+        android:textAppearance="@style/textSmall.Italic"
+        android:maxLines="1"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+
+        android:layout_marginStart="8dp"
+        android:layout_toStartOf="@id/scheduleType_TextView_Add_Schedule"
+        android:layout_toEndOf="@id/tagIcon_addSchedule"/>
+
+
+    <TextView
+        android:id="@+id/scheduleType_TextView_Add_Schedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_mini"
+
+        android:text="@string/scheduleType_daily_text"
+        android:textAppearance="@style/textMini"
+        android:background="@android:color/transparent"
+        android:textColor="?attr/colorPrimary"
+
+        android:layout_toStartOf="@id/overflowButton_Header_addSchedule"/>
+
+    <ImageButton
+        android:id="@+id/overflowButton_Header_addSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_mini"
+
+        android:src="@drawable/ic_setting"
+        android:tint="?attr/colorPrimary"
+        android:background="@android:color/transparent"
+
+        android:layout_toStartOf="@id/targetButton_Header_addSchedule"
+        android:onClick="showTypeActivity_header"/>
+
+    <ImageButton
+        android:id="@+id/targetButton_Header_addSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_mini"
+
+        android:src="@drawable/ic_progress"
+        android:background="@android:color/transparent"
+        android:onClick="openTargetPickerDialog"
+
+        android:layout_toStartOf="@id/reminderButton_Header_addSchedule"/>
+    <ImageButton
+        android:id="@+id/reminderButton_Header_addSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_mini"
+
+        android:src="@drawable/ic_alarm_add"
+        android:background="@android:color/transparent"
+
+        android:layout_toStartOf="@id/themeButton_Header_addSchedule"/>
+    <ImageButton
+        android:id="@+id/themeButton_Header_addSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_mini"
+
+        android:src="@drawable/ic_palette"
+        android:tint="?attr/colorPrimary"
+        android:background="@android:color/transparent"
+        android:onClick="openColorPickerDialog"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"/>
+
+</RelativeLayout>

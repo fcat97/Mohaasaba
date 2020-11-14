@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/textView1_FragmentDaily_TypeActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_daily_warning"
+            android:textAppearance="@style/textSmall"
+            android:gravity="center"
+            android:layout_margin="@dimen/dimen_small"/>
+        <View
+            android:id="@+id/divider1_FragmentDaily_TypeActivity"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="?attr/dividerHorizontal"
+            android:layout_margin="@dimen/dimen_mini"/>
+
+        <LinearLayout
+            android:id="@+id/linearLayout1_FragmentDaily_TypeActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:padding="@dimen/dimen_mini"
+            android:gravity="center">
+            <CheckBox
+                android:id="@+id/cb_saturday_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/sat"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+            <CheckBox
+                android:id="@+id/cb_sunday_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/sun"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+            <CheckBox
+                android:id="@+id/cb_monday_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/mon"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout2_FragmentDaily_TypeActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            android:padding="@dimen/dimen_mini"
+            android:gravity="center">
+            <CheckBox
+                android:id="@+id/cb_tuesday_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/tue"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+            <CheckBox
+                android:id="@+id/cb_wednesday_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/wed"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <CheckBox
+                android:id="@+id/cb_thursday_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/thu"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+            <CheckBox
+                android:id="@+id/cb_friday_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/fri"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider2_FragmentDaily_TypeActivity"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="?attr/dividerHorizontal"
+            android:layout_margin="@dimen/dimen_mini"/>
+
+        <LinearLayout
+            android:id="@+id/linearLayout3_FragmentDaily_TypeActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:padding="@dimen/dimen_mini"
+            android:gravity="center">
+            <CheckBox
+                android:id="@+id/cb_january_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/jan"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+            <CheckBox
+                android:id="@+id/cb_february_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/feb"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+            <CheckBox
+                android:id="@+id/cb_march_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/mar"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout4_FragmentDaily_TypeActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:padding="@dimen/dimen_mini"
+            android:gravity="center">
+            <CheckBox
+                android:id="@+id/cb_april_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/apr"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+            <CheckBox
+                android:id="@+id/cb_may_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/may"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+            <CheckBox
+                android:id="@+id/cb_june_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/jun"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout5_FragmentDaily_TypeActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:padding="@dimen/dimen_mini"
+            android:gravity="center">
+            <CheckBox
+                android:id="@+id/cb_july_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/jul"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+            <CheckBox
+                android:id="@+id/cb_august_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/aug"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+            <CheckBox
+                android:id="@+id/cb_september_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/sep"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout6_FragmentDaily_TypeActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:padding="@dimen/dimen_mini"
+            android:gravity="center">
+            <CheckBox
+                android:id="@+id/cb_october_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/oct"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+            <CheckBox
+                android:id="@+id/cb_november_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/nov"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+            <CheckBox
+                android:id="@+id/cb_december_FragmentDaily_TypeActivity"
+                android:padding="@dimen/dimen_mini"
+                android:text="@string/dec"
+                android:background="@drawable/checkbox_drawable"
+                android:textAllCaps="true"
+                android:textAppearance="@style/textSmall"
+                android:layout_margin="@dimen/dimen_mini"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

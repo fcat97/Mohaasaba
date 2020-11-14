@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.FragmentTodo">
+    <Button
+        android:id="@+id/datePickerButton_FragmentTodo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/demo_date"
+        style="@style/AppTheme.Button"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"/>
+    <EditText
+        android:id="@+id/addTodo_EditText_FragmentTodo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/add_new_todo"
+        android:lines="1"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        style="@style/AppTheme.EditText"
+        android:textAppearance="@style/textRegular"
+        android:layout_margin="@dimen/dimen_small"
+        android:layout_toStartOf="@id/addButton_FragmentTodo"
+        android:layout_alignParentBottom="true"/>
+    <ImageButton
+        android:id="@+id/addButton_FragmentTodo"
+        android:layout_width="48sp"
+        android:layout_height="48sp"
+        android:src="@drawable/ic_add"
+        android:tint="?attr/colorAccent"
+        android:background="@android:color/transparent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/datePickerButton_FragmentTodo"
+        android:layout_above="@id/addTodo_EditText_FragmentTodo">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/dimen_small"
+            android:layout_margin="@dimen/dimen_small">
+            <ListView
+                android:id="@+id/listView_FragmentTodo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_fragment_todo" />
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+</RelativeLayout>

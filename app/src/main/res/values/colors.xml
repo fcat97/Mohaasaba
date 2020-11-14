@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="colorRed">#f44336</color>
+    <color name="colorRedDark">#e53935</color>
+    <color name="colorRedAccent">#ff1744</color>
+
+    <color name="colorPink">#e91e63</color>
+    <color name="colorPinkDark">#d81b60</color>
+    <color name="colorPinkAccent">#f50057</color>
+
+    <color name="colorPurple">#9C27B0</color>
+    <color name="colorPurpleDark">#8E24AA</color>
+    <color name="colorPurpleAccent">#AA00FF</color>
+
+    <color name="colorDeepPurple">#673AB7</color>
+    <color name="colorDeepPurpleDark">#5E35B1</color>
+    <color name="colorDeepPurpleAccent">#7C4DFF</color>
+
+    <color name="colorIndigo">#3F51B5</color>
+    <color name="colorIndigoDark">#3949AB</color>
+    <color name="colorIndigoAccent">#3D5AFE</color>
+
+    <color name="colorBlue">#2196f3</color>
+    <color name="colorBlueDark">#1e88e5</color>
+    <color name="colorBlueAccent">#448aff</color>
+
+    <color name="colorLightBlue">#03a9f4</color>
+    <color name="colorLightBlueDark">#039be5</color>
+    <color name="colorLightBlueAccent">#40c4ff</color>
+
+    <color name="colorCyan">#00bcd4</color>
+    <color name="colorCyanDark">#00acc1</color>
+    <color name="colorCyanAccent">#18ffff</color>
+
+    <color name="colorTeal">#009688</color>
+    <color name="colorTealDark">#00897b</color>
+    <color name="colorTealAccent">#1de9b6</color>
+
+    <color name="colorGreen">#4caf50</color>
+    <color name="colorGreenDark">#43a047</color>
+    <color name="colorGreenAccent">#00e676</color>
+
+    <color name="colorLightGreen">#8bc34a</color>
+    <color name="colorLightGreenDark">#7cb342</color>
+    <color name="colorLightGreenAccent">#b2ff59</color>
+
+    <color name="colorLime">#cddc39</color>
+    <color name="colorLimeDark">#c0ca33</color>
+    <color name="colorLimeAccent">#eeff41</color>
+
+    <color name="colorYellow">#ffeb3b</color>
+    <color name="colorYellowDark">#fdd835</color>
+    <color name="colorYellowAccent">#ffea00</color>
+
+    <color name="colorAmber">#ffc107</color>
+    <color name="colorAmberDark">#ffb300</color>
+    <color name="colorAmberAccent">#ffc400</color>
+
+    <color name="colorOrange">#FF9800</color>
+    <color name="colorOrangeDark">#FB8C00</color>
+    <color name="colorOrangeAccent">#FFAB40</color>
+
+
+    <color name="colorTextPrimary">#000000</color>
+    <color name="colorWhite">@android:color/white</color>
+</resources>

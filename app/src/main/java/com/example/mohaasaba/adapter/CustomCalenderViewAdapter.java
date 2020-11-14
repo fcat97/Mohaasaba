@@ -1,0 +1,263 @@
+package com.example.mohaasaba.adapter;
+
+
+import android.graphics.Color;
+import android.graphics.drawable.ShapeDrawable;
+import android.os.Build;
+import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mohaasaba.database.History;
+import com.example.mohaasaba.database.Todo;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
+
+public class CustomCalenderViewAdapter extends RecyclerView.Adapter<CustomCalenderViewAdapter.ViewHolder> {
+    private static final String TAG = "RecyclerViewAdapter";
+    private String[] daysName = {"Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"};
+    private List<String> daysNames = new ArrayList<>(Arrays.asList(daysName));
+    private List<Calendar> daysOfMonth = new ArrayList<>();
+    private List<Integer> colorAlpha = new ArrayList<>();
+    private History history;
+
+    private int _offset;
+    private int _day_of_month;
+
+    private int _weekDays_BGCOLOR = Color.TRANSPARENT;
+    private int _weekDays_TEXTCOLOR = Color.BLUE;
+    private int _weekend_TEXTCOLOR = Color.RED;
+
+    /** Current Month Setting */
+    private int _currentMonthDays_TEXTCOLOR = Color.BLACK;
+    private int _currentMonthDays_BGCOLOR = Color.TRANSPARENT;
+    private int _selectedDated_TEXTCOLOR = Color.BLACK;
+    private int _selectedDated_TEXTCOLOR_ALT = Color.WHITE;
+    private int _selectedDates_BGCOLOR = Color.GREEN;
+
+    /** Other Months setting */
+    private int _otherMonthDays_TEXTCOLOR = Color.LTGRAY;
+    private int _otherMonthDays_BGCOLOR = Color.TRANSPARENT;
+
+
+    public CustomCalenderViewAdapter(History history) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        int _1st = calendar.get(Calendar.DAY_OF_YEAR);
+        _offset = calendar.get(Calendar.DAY_OF_WEEK);
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) _offset = 0;
+        _day_of_month = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        for (int i = _1st - _offset; i < _1st - _offset + 42; i++) {
+            Calendar c = Calendar.getInstance();
+            c.clear();
+            c.set(Calendar.YEAR, year);
+            c.set(Calendar.DAY_OF_YEAR, i);
+
+            daysOfMonth.add(c);
+        }
+
+        this.history = history;
+        createAlpha();
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        TextView textView = new TextView(parent.getContext());
+        return new ViewHolder(textView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        if (position < 7) {
+            holder.textView.setText(daysNames.get(position));
+            holder.textView.setBackgroundColor(_weekDays_BGCOLOR);
+            holder.textView.setTextColor(_weekDays_TEXTCOLOR);
+        }
+        else {
+            /* Setting for other month days */
+            if (position < 7 + _offset || position > 7 + _offset + _day_of_month - 1) {
+                holder.textView.setTextColor(_otherMonthDays_TEXTCOLOR);
+                holder.textView.setBackgroundColor(_otherMonthDays_BGCOLOR);
+            }
+            /* Setting for this month days */
+            else {
+                /* if progress present */
+                if (colorAlpha.get(position - 7) != 0) {
+                    int alpha = colorAlpha.get(position - 7);
+                    ShapeDrawable drawable = new ShapeDrawable();
+                    drawable.getPaint().setColor(_selectedDates_BGCOLOR);
+                    drawable.getPaint().setAlpha(alpha);
+                    holder.textView.setBackground(drawable);
+                    if (alpha < 150) holder.textView.setTextColor(_selectedDated_TEXTCOLOR);
+                    else holder.textView.setTextColor(_selectedDated_TEXTCOLOR_ALT);
+
+                }
+                /* if no progress found */
+                else {
+                    holder.textView.setTextColor(_currentMonthDays_TEXTCOLOR);
+                    holder.textView.setBackgroundColor(_currentMonthDays_BGCOLOR);
+                }
+                /* Set HolyDays Color */
+                if ((position + 1)%7 == 0) holder.textView.setTextColor(_weekend_TEXTCOLOR);
+            }
+
+            /* Set All the days number to textView */
+            holder.textView.setText(String.valueOf(daysOfMonth.get(position - 7).get(Calendar.DAY_OF_MONTH)));
+        }
+
+
+    }
+
+    @Override
+    public int getItemCount() {
+        if (_offset + _day_of_month <= 35) return 42;
+        return daysNames.size() + daysOfMonth.size();
+    }
+
+    public int get_weekDays_BGCOLOR() {
+        return _weekDays_BGCOLOR;
+    }
+
+    public void set_weekDays_BGCOLOR(int _weekDays_BGCOLOR) {
+        this._weekDays_BGCOLOR = _weekDays_BGCOLOR;
+    }
+
+    public int get_weekDays_TEXTCOLOR() {
+        return _weekDays_TEXTCOLOR;
+    }
+
+    public void set_weekDays_TEXTCOLOR(int _weekDays_TEXTCOLOR) {
+        this._weekDays_TEXTCOLOR = _weekDays_TEXTCOLOR;
+    }
+
+    public int get_weekend_TEXTCOLOR() {
+        return _weekend_TEXTCOLOR;
+    }
+
+    public void set_weekend_TEXTCOLOR(int _weekend_TEXTCOLOR) {
+        this._weekend_TEXTCOLOR = _weekend_TEXTCOLOR;
+    }
+
+    public int get_currentMonthDays_TEXTCOLOR() {
+        return _currentMonthDays_TEXTCOLOR;
+    }
+
+    public void set_currentMonthDays_TEXTCOLOR(int _currentMonthDays_TEXTCOLOR) {
+        this._currentMonthDays_TEXTCOLOR = _currentMonthDays_TEXTCOLOR;
+    }
+
+    public int get_currentMonthDays_BGCOLOR() {
+        return _currentMonthDays_BGCOLOR;
+    }
+
+    public void set_currentMonthDays_BGCOLOR(int _currentMonthDays_BGCOLOR) {
+        this._currentMonthDays_BGCOLOR = _currentMonthDays_BGCOLOR;
+    }
+
+    public int get_selectedDated_TEXTCOLOR() {
+        return _selectedDated_TEXTCOLOR;
+    }
+
+    public void set_selectedDated_TEXTCOLOR(int _selectedDated_TEXTCOLOR) {
+        this._selectedDated_TEXTCOLOR = _selectedDated_TEXTCOLOR;
+    }
+
+    public int get_selectedDated_TEXTCOLOR_ALT() {
+        return _selectedDated_TEXTCOLOR_ALT;
+    }
+
+    public void set_selectedDated_TEXTCOLOR_ALT(int _selectedDated_TEXTCOLOR_ALT) {
+        this._selectedDated_TEXTCOLOR_ALT = _selectedDated_TEXTCOLOR_ALT;
+    }
+
+    public int get_selectedDates_BGCOLOR() {
+        return _selectedDates_BGCOLOR;
+    }
+
+    public void set_selectedDates_BGCOLOR(int _selectedDates_BGCOLOR) {
+        this._selectedDates_BGCOLOR = _selectedDates_BGCOLOR;
+    }
+
+    public int get_otherMonthDays_TEXTCOLOR() {
+        return _otherMonthDays_TEXTCOLOR;
+    }
+
+    public void set_otherMonthDays_TEXTCOLOR(int _otherMonthDays_TEXTCOLOR) {
+        this._otherMonthDays_TEXTCOLOR = _otherMonthDays_TEXTCOLOR;
+    }
+
+    public int get_otherMonthDays_BGCOLOR() {
+        return _otherMonthDays_BGCOLOR;
+    }
+
+    public void set_otherMonthDays_BGCOLOR(int _otherMonthDays_BGCOLOR) {
+        this._otherMonthDays_BGCOLOR = _otherMonthDays_BGCOLOR;
+    }
+
+    private int getDatePosition(Calendar calendar) {
+        int year = calendar.get(Calendar.YEAR);
+        int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+        calendar.clear();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
+        return daysOfMonth.indexOf(calendar);
+    }
+    private void createAlpha() {
+        colorAlpha = new ArrayList<>();
+        for (int i = 0; i < daysOfMonth.size(); i++) {
+            History.Progress progress = history.getProgressOf(daysOfMonth.get(i));
+            if (progress != null) {
+                if (! progress.onTodo) {
+                    colorAlpha.add(calculateAlpha(progress.currentProgress, progress.maxProgress));
+                } else {
+                    Todo todo = history.getTodo(daysOfMonth.get(i));
+                    int max = todo.getStates().size();
+                    int current = 0;
+                    for (boolean state: todo.getStates()){
+                        if (state) current++;
+                    }
+                    colorAlpha.add(calculateAlpha(current, max));
+                }
+            } else {
+                colorAlpha.add((Integer)0);
+            }
+        }
+
+    }
+    private int calculateAlpha(int progress, int maxProgress) {
+        if (maxProgress == 0) return 0;
+        return (progress * 255) / maxProgress;
+    }
+
+    public void refresh() {
+        createAlpha();
+        notifyDataSetChanged();
+    }
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView textView;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            this.textView = (TextView) itemView;
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            textView.setLayoutParams(layoutParams);
+            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            textView.setPadding(4,4,4,4);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                textView.setAutoSizeTextTypeUniformWithConfiguration(6,24,1, TypedValue.COMPLEX_UNIT_DIP);
+            }
+        }
+    }
+
+}
+
