@@ -36,8 +36,8 @@ public class ColorPickerAdapter extends RecyclerView.Adapter<ColorPickerAdapter.
         int themeID = ThemeUtils.getResourceID(ThemeUtils.getThemeList().get(position));
         TypedArray typedArray = mContext.obtainStyledAttributes(themeID, attrs);
         int colorPrimary = typedArray.getColor(0, Color.BLACK);
-        int colorPrimaryDark = typedArray.getColor(1, Color.BLACK);
-        int colorAccent = typedArray.getColor(2, Color.LTGRAY);
+        int colorPrimaryDark = typedArray.getColor(1, Color.BLACK); // get typedArray for each id
+        int colorAccent = typedArray.getColor(2, Color.LTGRAY); // get typedArray for each id
 
         holder.colorButton.setBackgroundTintList(ColorStateList.valueOf(colorPrimary));
         holder.colorButton.setText(ThemeUtils.getThemeNames().get(position));

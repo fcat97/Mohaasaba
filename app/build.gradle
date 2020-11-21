@@ -7,13 +7,14 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.example.mohasaaba"
+        applicationId 'com.example.mohaasaba'
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0"
+        versionName '0.3.01'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionNameSuffix 'bcc496f_alpha'
     }
 
     buildTypes {
@@ -73,4 +74,7 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Charts
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

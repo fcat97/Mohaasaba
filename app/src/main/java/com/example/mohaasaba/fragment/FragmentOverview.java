@@ -24,11 +24,9 @@ public class FragmentOverview extends Fragment {
     private FrameLayout mReminderFrameLayout;
     private FrameLayout mTargetFrameLayout;
     private ViewMaker viewMaker;
-    private ViewMaker.TargetViewListeners targetViewListeners;
     private FragmentOverviewCallbacks fragmentOverviewCallbacks;
 
-    public FragmentOverview(ViewMaker.TargetViewListeners targetViewListeners) {
-        this.targetViewListeners = targetViewListeners;
+    public FragmentOverview() {
         setRetainInstance(true);
     }
 
@@ -75,14 +73,6 @@ public class FragmentOverview extends Fragment {
             mReminderFrameLayout.addView(reminderView);
             mReminderFrameLayout.setVisibility(View.VISIBLE);
         } else mReminderFrameLayout.setVisibility(View.GONE);
-    }
-    public void setTargetView(History history) {
-        mTargetFrameLayout.removeAllViews();
-        if (history.getProgressOf(Calendar.getInstance()) != null) {
-            View targetView = viewMaker.getTargetView(history, targetViewListeners);
-            mTargetFrameLayout.addView(targetView);
-            mTargetFrameLayout.setVisibility(View.VISIBLE);
-        } else mTargetFrameLayout.setVisibility(View.GONE);
     }
 
     public interface FragmentOverviewCallbacks {

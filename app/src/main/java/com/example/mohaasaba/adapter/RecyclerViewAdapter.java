@@ -19,9 +19,11 @@ import com.example.mohaasaba.R;
 import com.example.mohaasaba.database.DataConverter;
 import com.example.mohaasaba.database.History;
 import com.example.mohaasaba.database.Schedule;
+import com.example.mohaasaba.database.Task;
 import com.example.mohaasaba.helper.ThemeUtils;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import at.grabner.circleprogress.CircleProgressView;
@@ -65,31 +67,14 @@ public class RecyclerViewAdapter extends ListAdapter<Schedule, RecyclerViewAdapt
         Schedule schedule = getItem(position);
         holder.titleView.setText(schedule.getTitle());
 
+        Calendar today = Calendar.getInstance();
+        List<Task> todoList = schedule.getHistory().getTasks(today);
+        int maxProgress = todoList.size();
+        float currentProgress = schedule.getHistory().getProgress(today);
 
-        History.Progress progress = schedule.getHistory().getProgressOf(Calendar.getInstance());
-
-        if (progress != null && ! progress.onTodo) {
-            holder.circleProgressView.setMaxValue(progress.maxProgress);
-            holder.circleProgressView.setValue(progress.currentProgress);
-            if (progress.maxProgress == progress.currentProgress) {
-                holder.completeImageView.setVisibility(View.VISIBLE);
-                holder.circleProgressView.setVisibility(View.INVISIBLE);
-            } else {
-                holder.completeImageView.setVisibility(View.INVISIBLE);
-                holder.circleProgressView.setVisibility(View.VISIBLE);
-            }
-        } else if (progress != null) {
-            int maxProgress = schedule.getHistory().getTodo(Calendar.getInstance()).getStates().size();
-            if (maxProgress == 0) holder.circleProgressView.setMaxValue(10);
-            else holder.circleProgressView.setMaxValue(maxProgress);
-            int currentProgress = 0;
-            for (boolean state :
-                    schedule.getHistory().getTodo(Calendar.getInstance()).getStates()) {
-                if (state) currentProgress++;
-            }
+        if (maxProgress != 0) { // if Schedule contains Task > 0
             holder.circleProgressView.setValue(currentProgress);
-
-            if (maxProgress == currentProgress) {
+            if (currentProgress == 100f) {
                 holder.completeImageView.setVisibility(View.VISIBLE);
                 holder.circleProgressView.setVisibility(View.INVISIBLE);
             } else {

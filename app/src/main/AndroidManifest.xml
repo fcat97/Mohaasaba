@@ -8,12 +8,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Mohasaaba">
+        android:theme="@style/Theme.Mohaasaba">
         <activity android:name=".activities.SearchActivity"
             android:label="SearchActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".activities.AmalActivity"
-            android:label="AmalActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.TypeActivity"

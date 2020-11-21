@@ -8,12 +8,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.mohaasaba.database.AppRepository;
-import com.example.mohaasaba.database.History;
 import com.example.mohaasaba.database.Note;
 import com.example.mohaasaba.database.Reminder;
 import com.example.mohaasaba.database.Schedule;
 import com.example.mohaasaba.database.ScheduleType;
-import com.example.mohaasaba.database.Todo;
 import com.example.mohaasaba.receivers.AlarmReceiver;
 
 import java.util.Calendar;
@@ -76,15 +74,6 @@ public class AddScheduleViewModel extends AndroidViewModel {
     }
     public void setSchedule(Schedule schedule) {
         this.schedule = schedule;
-    }
-    public void updateTodo(Calendar selectedDate, Todo todo) {
-        schedule.getHistory().commitTodo(selectedDate, todo);
-    }
-    public void updateProgress(History.Progress progress) {
-        schedule.getHistory().commitProgress(Calendar.getInstance(), progress);
-    }
-    public void resetProgress() {
-        schedule.getHistory().resetProgressOf(Calendar.getInstance());
     }
     public LiveData<List<Schedule>> getSubScheduleLiveData() {
         return subScheduleLiveData;

@@ -30,20 +30,16 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.database.DataConverter;
-import com.example.mohaasaba.database.History;
 import com.example.mohaasaba.database.Note;
 import com.example.mohaasaba.database.Reminder;
 import com.example.mohaasaba.database.Schedule;
 import com.example.mohaasaba.database.ScheduleType;
-import com.example.mohaasaba.database.Todo;
 import com.example.mohaasaba.dialog.DialogColorPicker;
 import com.example.mohaasaba.dialog.DialogDatePicker;
-import com.example.mohaasaba.dialog.DialogTargetEditor;
 import com.example.mohaasaba.fragment.FragmentOther;
 import com.example.mohaasaba.fragment.FragmentOverview;
 import com.example.mohaasaba.fragment.FragmentTodo;
 import com.example.mohaasaba.helper.ThemeUtils;
-import com.example.mohaasaba.helper.ViewMaker;
 import com.example.mohaasaba.viewModel.AddScheduleViewModel;
 import com.google.android.material.tabs.TabLayout;
 
@@ -74,8 +70,6 @@ public class AddScheduleActivity extends AppCompatActivity
     private FragmentOverview fragmentOverview;
     private FragmentOther fragmentOther;
     private FragmentTodo fragmentTodo;
-    private Todo showingTodo;
-    private Calendar selectedDate;
     private boolean isReached = false;
     private boolean isFragmentOtherCreated = false;
 
@@ -131,83 +125,27 @@ public class AddScheduleActivity extends AppCompatActivity
             openAddReminderActivity();
         });
 
-        fragmentOverview = new FragmentOverview(new ViewMaker.TargetViewListeners() {
-            @Override
-            public void onIncrementButtonClicked(int afterClickedProgress) {
-                mViewModel.getSchedule().getHistory().getProgressOf(Calendar.getInstance()).currentProgress = afterClickedProgress;
-                mViewModel.updateProgress(mViewModel.getSchedule().getHistory().getProgressOf(Calendar.getInstance()));
-            }
-
-            @Override
-            public void onIncrementButtonLongClicked(int afterClickedProgress) {
-                mViewModel.getSchedule().getHistory().getProgressOf(Calendar.getInstance()).currentProgress = afterClickedProgress;
-                mViewModel.updateProgress(mViewModel.getSchedule().getHistory().getProgressOf(Calendar.getInstance()));
-            }
-
-            @Override
-            public void onViewLongClicked() {
-                mViewModel.resetProgress();
-                setTargetView(mViewModel.getSchedule().getHistory());
-            }
-        });
-
         try {
             setIntentData(); /*For Edit Schedule*/
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 
+        fragmentOverview = new FragmentOverview();
         fragmentOverview.setFragmentOverviewCallbacks(new FragmentOverview.FragmentOverviewCallbacks() {
             @Override
             public void onReach() {
                 isReached = true;
                 if (mViewModel.getReminder() != null) setReminderView(mViewModel.getReminder());
                 if (mViewModel.getNote() != null) setNoteView(mViewModel.getNote());
-                setTargetView(mViewModel.getSchedule().getHistory());
             }
         });
-        selectedDate = Calendar.getInstance();
-        showingTodo = mViewModel.getSchedule().getHistory().getTodo(selectedDate);
-        fragmentTodo = new FragmentTodo(showingTodo, new FragmentTodo.FragmentTodoListener() {
 
-            @Override
-            public void onItemClicked(int position) {
-                showingTodo.toggleState(position);
-                mViewModel.updateTodo(selectedDate, showingTodo);
-                fragmentTodo.setTodo(showingTodo);
-                if (mViewModel.getSchedule().getHistory().getProgressOf(selectedDate) != null &&
-                        mViewModel.getSchedule().getHistory().getProgressOf(selectedDate).onTodo) {
-                    setTargetView(mViewModel.getSchedule().getHistory());
-                }
-            }
-
-            @Override
-            public void onAddTodoButtonClicked(String todoText) {
-                showingTodo.addNew(todoText);
-                mViewModel.updateTodo(selectedDate, showingTodo);
-                fragmentTodo.setTodo(showingTodo);
-                if (mViewModel.getSchedule().getHistory().getProgressOf(selectedDate) != null &&
-                        mViewModel.getSchedule().getHistory().getProgressOf(selectedDate).onTodo) {
-                    setTargetView(mViewModel.getSchedule().getHistory());
-                }
-            }
-
-            @Override
-            public void onDatePickerButtonClicked() {
-                openDatePickerDialog();
-            }
-
-            @Override
-            public void onItemLongClicked(int position) {
-                showingTodo.removeTodo(position);
-                mViewModel.updateTodo(selectedDate, showingTodo);
-                fragmentTodo.setTodo(showingTodo);
-                if (mViewModel.getSchedule().getHistory().getProgressOf(selectedDate) != null &&
-                        mViewModel.getSchedule().getHistory().getProgressOf(selectedDate).onTodo) {
-                    setTargetView(mViewModel.getSchedule().getHistory());
-                }
-            }
+        fragmentTodo = new FragmentTodo(mViewModel.getSchedule().getHistory());
+        fragmentTodo.setFragmentListeners(() -> {
+            openDatePickerDialog();
         });
+
         fragmentOther = new FragmentOther(new FragmentOther.FragmentOtherCallbacks() {
             @Override
             public void onReach() {
@@ -241,9 +179,7 @@ public class AddScheduleActivity extends AppCompatActivity
             schedule.setScheduleType(type.getParcelable(EXTRA_SCHEDULE_TYPE));
             mViewModel = new ViewModelProvider(this).get(AddScheduleViewModel.class);
             mViewModel.init(getApplication(), schedule);
-/*
-            mViewModel = new AddScheduleViewModel(getApplication(),schedule);
-*/
+
             mViewModel.setScheduleEdited(true); /* if schedule exists flag it for update */
 
             mTitleEditText.setText(schedule.getTitle());
@@ -364,11 +300,11 @@ public class AddScheduleActivity extends AppCompatActivity
     }
 
     /** Dialog Related Methods */
-    private void openDatePickerDialog() {
+    /*private void openDatePickerDialog() {
         DialogDatePicker datePickerDialog = new DialogDatePicker();
         datePickerDialog.show(getSupportFragmentManager(),"date picker");
-    }
-    public void openTargetPickerDialog(View v) {
+    }*/
+    /*public void openTargetPickerDialog(View v) {
         History.Progress progress = mViewModel.getSchedule().getHistory().getProgressOf(Calendar.getInstance());
         DialogTargetEditor dialogTargetEditor = new DialogTargetEditor(progress, new DialogTargetEditor.TargetEditorListeners() {
             @Override
@@ -384,7 +320,7 @@ public class AddScheduleActivity extends AppCompatActivity
             }
         });
         dialogTargetEditor.show(getSupportFragmentManager(), "targetEditor");
-    }
+    }*/
     public void openColorPickerDialog(View v) {
         DialogColorPicker colorPicker = new DialogColorPicker();
         colorPicker.setListener(themeID -> {
@@ -397,12 +333,16 @@ public class AddScheduleActivity extends AppCompatActivity
     }
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        selectedDate.clear();
-        selectedDate.set(year, month, dayOfMonth);
-        fragmentTodo.setDatePickerButtonText(selectedDate);
-        showingTodo = mViewModel.getSchedule().getHistory().getTodo(selectedDate);
-        fragmentTodo.setTodo(showingTodo);
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(year, month, dayOfMonth);
+        fragmentTodo.invalidateFragment(calendar);
     }
+    public void openDatePickerDialog() {
+        DialogDatePicker dialogDatePicker = new DialogDatePicker();
+        dialogDatePicker.show(getSupportFragmentManager(), "Date Picker Dialog");
+    }
+
 
 
     /** Activity related methods */
@@ -430,10 +370,6 @@ public class AddScheduleActivity extends AppCompatActivity
         Intent intent = new Intent(this,TypeActivity.class);
         intent.putExtra(AddScheduleActivity.EXTRA_SCHEDULE_TYPE, mViewModel.getScheduleType());
         startActivityForResult(intent, EDIT_SCHEDULE_TYPE_REQUEST);
-    }
-    private void openEditScheduleActivity() {
-        Intent intent = new Intent(this, AddScheduleActivity.class);
-        startActivityForResult(intent, MainActivity.ADD_NEW_SCHEDULE_REQUEST);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -483,9 +419,7 @@ public class AddScheduleActivity extends AppCompatActivity
         if (mViewModel.getReminder() == null)  mReminderButton.setVisibility(View.GONE);
         else mReminderButton.setVisibility(View.VISIBLE);
     }
-    private void setTargetView(History history) {
-        fragmentOverview.setTargetView(history);
-    }
+
     private void setSubSchedule(List<Schedule> scheduleList) {
         fragmentOther.submitList(scheduleList);
     }

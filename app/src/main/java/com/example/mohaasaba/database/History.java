@@ -2,130 +2,141 @@ package com.example.mohaasaba.database;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * History.class
- * This class contains 2 sub classes:
- *  1. Progress History
- *  2. Todo_History
- * and a field that indicates if progress is still counting or not
- * This field is useful when user decide not to count progress history but
- * don't wish to loss all the previous records
- * */
-public class History implements Parcelable {
+public class History implements Parcelable{
     private static final String TAG = "History";
-    private boolean countingProgress;
-    private HashMap<Long, Progress> progressHistory;
-    private HashMap<Long, Todo> todoHash;
+    private HashMap<Long, List<Task>> taskHash = new HashMap<>();
 
-    public History() {
-        this.progressHistory = new HashMap<>();
-        this.todoHash = new HashMap<>();
+    public History() {}
+
+    public void commitTodo(Calendar date, List<Task> taskList) {
+        long key = getKey(date);
+        taskHash.put(key, taskList);
     }
-
-    /**
-     * Commit should be done before saving Schedule */
-    public void commitTodo(Calendar calendar, Todo todo) {
-        todoHash.put(getDateInMillis(calendar), todo);
-    }
-
-    public Todo getTodo(Calendar calendar) {
-        if (todoHash.containsKey(getDateInMillis(calendar))) return todoHash.get(getDateInMillis(calendar));
-        return getPastTodoCommit(calendar);
+    public List<Task> getTasks(Calendar date) {
+        long key = getKey(date);
+        Log.d(TAG, "getTasks: called date " + date.get(Calendar.DAY_OF_MONTH) +
+                "/" + date.get(Calendar.MONTH) + "/" + date.get(Calendar.YEAR));
+        if (taskHash.containsKey(key)) return taskHash.get(key);
+        Log.d(TAG, "getTasks: not found");
+        return duplicateTasks(key);
     }
 
+    // Get progress in % value;
+    public final float getProgress(Calendar date) {
+        Log.d(TAG, "getProgress: called date " + date.get(Calendar.DAY_OF_MONTH) +
+                "/" + date.get(Calendar.MONTH) + "/" + date.get(Calendar.YEAR));
+        // if commit of this date not exist return with zero
+        if (! taskHash.containsKey(getKey(date))) return 0;
 
-    /* Progress related methods */
-    public HashMap<Long, Progress> getProgressHistory() {
-        return progressHistory;
-    }
-    public void setProgressHistory(HashMap<Long, Progress> progressHistory) {
-        this.progressHistory = progressHistory;
-    }
-    public Progress getProgressOf(Calendar calendar) {
-        if (! countingProgress) return null;
-        if (progressHistory.containsKey(getDateInMillis(calendar))) return progressHistory.get(getDateInMillis(calendar));
-        else return getPastProgressCommit(calendar);
-    }
+        Log.d(TAG, "getProgress: TaskList found! calculating progress");
+        List<Task> taskList = getTasks(date);
+        if (taskList.size() == 0) return 0;
 
-    public void commitProgress(Calendar calendar, Progress progress) {
-        progressHistory.remove(getDateInMillis(calendar));
-        progressHistory.put(getDateInMillis(calendar), progress);
-        countingProgress = true;
+        float progress = 0f;
+        for (Task task :
+                taskList) {
+            progress = progress + task.getProgress();
+        }
+        Log.d(TAG, "getProgress: TaskList.size() = " + taskList.size());
+        return progress / taskList.size();
     }
-    public void resetProgressOf(Calendar calendar) {
-        long date = getDateInMillis(calendar);
-        progressHistory.remove(date);
-    }
+    public final List<Float> getProgress(Calendar starting, Calendar ending) {
+        Log.d(TAG, "getProgress: monthly called");
+        List<Float> progressList = new ArrayList<>();
 
-    /**
-     *  Private Methods
-     */
-    private Long getDateInMillis(Calendar calendar) {
-        int m = calendar.get(Calendar.MONTH);
-        int d = calendar.get(Calendar.DAY_OF_MONTH);
-        int y = calendar.get(Calendar.YEAR);
+        int start = starting.get(Calendar.DAY_OF_YEAR);
+        int end = ending.get(Calendar.DAY_OF_YEAR);
+
+        Calendar calendar = Calendar.getInstance();
         calendar.clear();
-        calendar.set(y, m, d);
-        return calendar.getTimeInMillis();
-    }
-    private Todo getPastTodoCommit(Calendar calendar) {
-        long date = getDateInMillis(calendar);
-        List<Long> keyList = new ArrayList<>(todoHash.keySet());
-        if (! keyList.contains(date)) keyList.add(date);
+        calendar.set(Calendar.YEAR, starting.get(Calendar.YEAR));
 
-        Collections.sort(keyList);
-        int index = keyList.indexOf(date);
-        if (index == 0) return new Todo();  /* if this date is first date */
-
-        ArrayList<Boolean> newStates = new ArrayList<>();
-        ArrayList<String> newTodoText = new ArrayList<>();
-        newTodoText.addAll(todoHash.get(keyList.get(index - 1)).getTodoTexts());
-        for (int i = 0; i < newTodoText.size(); i++) {
-            newStates.add(false);
+        for (int i = start; i <= end; i++) {
+            calendar.set(Calendar.DAY_OF_YEAR, i);
+            progressList.add(getProgress(calendar));
         }
 
-        return new Todo(newStates, newTodoText);
+        return progressList;
     }
-    private Progress getPastProgressCommit(Calendar calendar) {
-        long date = getDateInMillis(calendar);
-        List<Long> keyList = new ArrayList<>(progressHistory.keySet());
-        if (! keyList.contains(date)) keyList.add(date);
+
+    private List<Task> duplicateTasks(long key) {
+        if (taskHash.containsKey(key)) return taskHash.get(key);
+
+        Log.d(TAG, "duplicateTasks: creating new List");
+        List<Long> keyList = new ArrayList<>(taskHash.keySet());
+        if (! keyList.contains(key)) keyList.add(key);
 
         Collections.sort(keyList);
-        int index = keyList.indexOf(date);
-        if (index == 0) return new Progress();  /* if this date is first date */
+        int index = keyList.indexOf(key);
+        if (index == 0) return new ArrayList<>();  /* if this date is first date */
+        Log.d(TAG, "duplicateTasks: getting previous list");
 
-        Progress previous = progressHistory.get(keyList.get(index - 1));
+        List<Task> previous = taskHash.get(keyList.get(index - 1));
 
-        Progress newProgress = new Progress();
-        assert previous != null;
-        newProgress.maxProgress = previous.maxProgress;
-        newProgress.progressStep = previous.progressStep;
-        newProgress.unit = previous.unit;
-        newProgress.onTodo = previous.onTodo;
-        newProgress.currentProgress = 0;
+        List<Task> newList = new ArrayList<>();
+        for (Task task :
+                previous) {
+            Task newTask = new Task(task.text);
+            newTask.commitDate = key;
+            newTask.taskType = task.taskType;
+            newTask.maxProgress = task.maxProgress;
+            newTask.currentProgress = 0;
+            newTask.step = task.step;
+            newList.add(newTask);
+        }
 
-        return newProgress;
+        return newList;
+    }
+    private long getKey(Calendar calendar) {
+        int year = calendar.get(Calendar.YEAR);
+        int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+
+        calendar.clear();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
+
+        return calendar.getTimeInMillis();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return super.equals(obj);
+    }
+
+    protected History(Parcel in) {
+        this.taskHash = (HashMap<Long, List<Task>>) in.readSerializable();
     }
 
     @Override
-    public boolean equals(@Nullable Object obj) {
-        if (obj == null) return false;
-        if (this.countingProgress != ((History)obj).countingProgress) return false;
-        if (this.progressHistory.equals(((History) obj).progressHistory)) return false;
-        if (this.todoHash.equals(((History) obj).todoHash)) return false;
-        return super.equals(obj);
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeSerializable(this.taskHash);
     }
 
     @Override
@@ -133,23 +144,10 @@ public class History implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeByte(this.countingProgress ? (byte) 1 : (byte) 0);
-        dest.writeSerializable(this.progressHistory);
-        dest.writeSerializable(this.todoHash);
-    }
-
-    protected History(Parcel in) {
-        this.countingProgress = in.readByte() != 0;
-        this.progressHistory = (HashMap<Long, Progress>) in.readSerializable();
-        this.todoHash = (HashMap<Long, Todo>) in.readSerializable();
-    }
-
     public static final Creator<History> CREATOR = new Creator<History>() {
         @Override
-        public History createFromParcel(Parcel source) {
-            return new History(source);
+        public History createFromParcel(Parcel in) {
+            return new History(in);
         }
 
         @Override
@@ -157,77 +155,4 @@ public class History implements Parcelable {
             return new History[size];
         }
     };
-
-    public static final class Progress implements Parcelable, Serializable {
-        public int maxProgress;
-        public int progressStep = 1;
-        public String unit = "";
-        public boolean onTodo;
-        public int currentProgress;
-
-        public Progress() {
-
-        }
-
-        @Override
-        public int hashCode() {
-            return super.hashCode();
-        }
-
-        @Override
-        public boolean equals(@Nullable Object obj) {
-            if (obj == null) return false;
-            if (this.maxProgress != (((Progress) obj).maxProgress)) return false;
-            if (this.progressStep != ((Progress) obj).progressStep) return false;
-            if (this.currentProgress != ((Progress) obj).currentProgress) return false;
-            if (! this.unit.equals(((Progress) obj).unit)) return false;
-            if (this.onTodo != (((Progress) obj).onTodo)) return false;
-            else return super.equals(obj);
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return "maxProgress " + maxProgress + "\t" +
-                    "progressStep " + progressStep + "\t" +
-                    "currentProgress " + currentProgress + "\t" +
-                    "unit " + unit + "\t" +
-                    "onTodo " + onTodo;
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(this.maxProgress);
-            dest.writeInt(this.progressStep);
-            dest.writeString(this.unit);
-            dest.writeByte(this.onTodo ? (byte) 1 : (byte) 0);
-            dest.writeInt(this.currentProgress);
-        }
-
-        protected Progress(Parcel in) {
-            this.maxProgress = in.readInt();
-            this.progressStep = in.readInt();
-            this.unit = in.readString();
-            this.onTodo = in.readByte() != 0;
-            this.currentProgress = in.readInt();
-        }
-
-        public static final Creator<Progress> CREATOR = new Creator<Progress>() {
-            @Override
-            public Progress createFromParcel(Parcel source) {
-                return new Progress(source);
-            }
-
-            @Override
-            public Progress[] newArray(int size) {
-                return new Progress[size];
-            }
-        };
-    }
-
 }

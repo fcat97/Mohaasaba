@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MohasabaP</string>
+    <string name="app_name">Mohaasaba</string>
     <string name="dummy_text">This is a Sample Text for rabbit purpose</string>
     <string name="dummy_tags">tag1, tag2, tag3</string>
     <string name="title_request_text">"Enter Title Here</string>
@@ -75,4 +75,5 @@
     <string name="nov">Nov</string>
     <string name="dec">Dec</string>
     <string name="feature_not_available">Feature Not Available</string>
+    <string name="expand_history">expand history</string>
 </resources>
