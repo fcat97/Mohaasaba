@@ -2,6 +2,7 @@ package com.example.mohaasaba.adapter;
 
 import android.media.Image;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -62,6 +63,11 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
             listener.itemClicked(position);
         });
 
+        holder.itemView.setOnLongClickListener(v -> {
+            listener.itemLongClicked(position);
+            return true;
+        });
+
         if (task.getProgress() == 100f) {
             holder.circleProgressView.setVisibility(View.INVISIBLE);
             holder.completedImageView.setVisibility(View.VISIBLE);
@@ -90,5 +96,6 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
     }
     public interface ItemClickedListener {
         void itemClicked(int position);
+        void itemLongClicked(int position);
     }
 }

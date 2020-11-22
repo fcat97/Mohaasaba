@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mohaasaba.R;
@@ -24,7 +25,6 @@ import com.example.mohaasaba.adapter.TaskAdapter;
 import com.example.mohaasaba.database.History;
 import com.example.mohaasaba.database.Task;
 import com.example.mohaasaba.dialog.DialogDatePicker;
-import com.example.mohaasaba.helper.ThemeUtils;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -50,12 +50,6 @@ public class FragmentTodo extends Fragment {
     private TextView selectedTextView;
     private RecyclerView mRecyclerView;
     private LineChart lineChart;
-    private TextView currentProgressTextView;
-    private EditText maxProgressEditText;
-    private EditText progressStepEditText;
-    private EditText progressTypeEditText;
-    private RelativeLayout taskEditLayout;
-    private RelativeLayout headerLayout;
     private RelativeLayout datePickerRecyclerView;
 
     private List<Task> taskList;
@@ -83,18 +77,7 @@ public class FragmentTodo extends Fragment {
         selectedTextView = rootView.findViewById(R.id.textView_header_FragmentTodo);
         addTodoEditText = rootView.findViewById(R.id.addTodo_EditText_FragmentTodo);
         lineChart = rootView.findViewById(R.id.lineChart_header_FragmentTodo);
-        headerLayout = rootView.findViewById(R.id.header);
         datePickerRecyclerView = rootView.findViewById(R.id.recyclerView_Header_FragmentTodo);
-
-
-        // Find all views of ViewEditTask
-        taskEditLayout = rootView.findViewById(R.id.editTaskLayout_FragmentTodo);
-        currentProgressTextView = rootView.findViewById(R.id.currentProgress_TextView_FragmentTodo);
-        maxProgressEditText = rootView.findViewById(R.id.maxProgress_EditText_FragmentTodo);
-        progressStepEditText = rootView.findViewById(R.id.progressStep_EditText_FragmentTodo);
-        progressTypeEditText = rootView.findViewById(R.id.taskType_EditText_FragmentTodo);
-
-        progressTypeEditText.setKeyListener(null);
 
 
         /* Set the properties of LineChart */
@@ -119,6 +102,7 @@ public class FragmentTodo extends Fragment {
 
         mAdapter = new TaskAdapter();
         mRecyclerView.setAdapter(mAdapter);
+        new ItemTouchHelper(itemTouchHelperCallbacks).attachToRecyclerView(mRecyclerView);
 
         addTodoButton.setOnClickListener(v -> {
             String text = addTodoEditText.getText().toString().trim();
@@ -149,13 +133,18 @@ public class FragmentTodo extends Fragment {
         });
 
         /** Adapter Listeners */
-        mAdapter.setListener(position -> {
-            taskList.get(position).progress();
-            mAdapter.submitList(taskList);
-            mAdapter.notifyItemChanged(position);
-            history.commitTodo(selectedDate, taskList);
-            setCircularView();
-            /*editTask(taskList.get(position));*/
+        mAdapter.setListener(new TaskAdapter.ItemClickedListener() {
+            @Override
+            public void itemClicked(int position) {
+                editTask(taskList.get(position));
+            }
+
+            @Override
+            public void itemLongClicked(int position) {
+                taskList.get(position).progress();
+                history.commitTodo(selectedDate, taskList);
+                invalidateFragment(selectedDate);
+            }
         });
     }
 
@@ -171,13 +160,13 @@ public class FragmentTodo extends Fragment {
     }
 
     private void editTask(Task task) {
-        if (headerLayout.getVisibility() == View.VISIBLE) headerLayout.setVisibility(View.GONE);
-        if (taskEditLayout.getVisibility() == View.GONE) taskEditLayout.setVisibility(View.VISIBLE);
+        FragmentTaskEditor fragmentTaskEditor = new FragmentTaskEditor(task);
+        fragmentTaskEditor.show(getParentFragmentManager(), "Target Editor");
 
-        addTodoEditText.setText(task.text);
-        maxProgressEditText.setText(String.valueOf(task.maxProgress));
-        progressStepEditText.setText(String.valueOf(task.step));
-        currentProgressTextView.setText(String.valueOf(task.currentProgress));
+        fragmentTaskEditor.setListener(() -> {
+            history.commitTodo(selectedDate, taskList);
+            invalidateFragment(selectedDate);
+        });
     }
 
     /** Set data to circular progress view */
@@ -195,6 +184,7 @@ public class FragmentTodo extends Fragment {
         setCircularView();
         taskList = history.getTasks(selectedDate);
         mAdapter.submitList(taskList);
+        mAdapter.notifyDataSetChanged();
     }
     private void setChartData() {
 
@@ -226,6 +216,7 @@ public class FragmentTodo extends Fragment {
         dataSet.setLineWidth(1f);
         dataSet.setFillAlpha(255);
         dataSet.setDrawFilled(true);
+        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
         // Get color from theme
         int[] attrs = {R.attr.colorAccent};
@@ -261,4 +252,20 @@ public class FragmentTodo extends Fragment {
     public interface FragmentTodoListeners {
         void onClicked();
     }
+
+    private ItemTouchHelper.SimpleCallback itemTouchHelperCallbacks = new ItemTouchHelper.SimpleCallback(
+            0, ItemTouchHelper.RIGHT
+    ) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            taskList.remove(viewHolder.getAdapterPosition());
+            history.commitTodo(selectedDate, taskList);
+            invalidateFragment(selectedDate);
+        }
+    };
 }

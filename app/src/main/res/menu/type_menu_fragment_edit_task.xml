@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/type_fazr_FragmentTaskEditor"
+        android:title="Farz"/>
+    <item android:id="@+id/type_wazib_FragmentTaskEditor"
+        android:title="Wazib"/>
+    <item android:id="@+id/type_sunnah_FragmentTaskEditor"
+        android:title="Sunnah"/>
+    <item android:id="@+id/type_mustahab_FragmentTaskEditor"
+        android:title="Mustahab"/>
+    <item android:id="@+id/type_mubah_FragmentTaskEditor"
+        android:title="Mubah"/>
+    <item android:id="@+id/type_maqruh_FragmentTaskEditor"
+        android:title="Maqruh"/>
+    <item android:id="@+id/type_sagirah_FragmentTaskEditor"
+        android:title="Gunahe Sagira"/>
+    <item android:id="@+id/type_kabirah_FragmentTaskEditor"
+        android:title="Gunahe Kabira"/>
+</menu>

@@ -22,7 +22,6 @@ public class FragmentOverview extends Fragment {
     private static final String TAG = "FragmentOverview";
     private FrameLayout mDescriptionFrameLayout;
     private FrameLayout mReminderFrameLayout;
-    private FrameLayout mTargetFrameLayout;
     private ViewMaker viewMaker;
     private FragmentOverviewCallbacks fragmentOverviewCallbacks;
 
@@ -45,7 +44,6 @@ public class FragmentOverview extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
         mDescriptionFrameLayout = rootView.findViewById(R.id.description_frameLayout_OverviewFragment);
         mReminderFrameLayout = rootView.findViewById(R.id.reminder_frameLayout_OverviewFragment);
-        mTargetFrameLayout = rootView.findViewById(R.id.targetView_frameLayout_OverviewFragment);
         return rootView;
     }
 

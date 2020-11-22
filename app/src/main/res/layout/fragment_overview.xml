@@ -49,25 +49,6 @@
                     android:visibility="gone"/>
             </FrameLayout>
         </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_mini"
-            android:layout_marginEnd="@dimen/dimen_mini"
-            android:layout_marginTop="@dimen/dimen_mini"
-            android:layout_marginBottom="@dimen/dimen_large"
-            android:background="@android:color/transparent"
-
-            app:cardCornerRadius="@dimen/cardCornerRadius"
-            app:cardElevation="@dimen/cardElevation">
-            <FrameLayout
-                android:id="@+id/targetView_frameLayout_OverviewFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <include layout="@layout/view_target_add_schedule"
-                    android:visibility="gone"/>
-            </FrameLayout>
-        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
 </ScrollView>
