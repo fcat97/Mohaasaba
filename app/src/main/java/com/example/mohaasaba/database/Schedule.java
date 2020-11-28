@@ -26,16 +26,20 @@ public class Schedule implements Parcelable {
     private List<String> subSchedulesID = new ArrayList<>();
     private String title;
     private String noteID;
-    private String reminderID;
     private List<String> tags = new ArrayList<>();
     private String renewInterval;
+    private List<Notify> notifyList = new ArrayList<>();
     private History history = new History();
     private int themeID = -1001;
+    private int startingMinute; // starting minute of day; default 0
+    private int endingMinute; // ending minute of day; default 24*60-1
 
     public Schedule(String title) {
         this.scheduleID = IdGenerator.getNewID();
         this.title = title;
         this.setScheduleType(new ScheduleType());
+        this.startingMinute = 0;
+        this.endingMinute = 24*60 - 1;
     }
 
     @NonNull
@@ -56,12 +60,6 @@ public class Schedule implements Parcelable {
     }
     public void setNoteID(String noteID) {
         this.noteID = noteID;
-    }
-    public String getReminderID() {
-        return reminderID;
-    }
-    public void setReminderID(String reminderID) {
-        this.reminderID = reminderID;
     }
     public List<String> getTags() {
         return tags;
@@ -99,6 +97,24 @@ public class Schedule implements Parcelable {
     public void setSubSchedulesID(List<String> subSchedulesID) {
         this.subSchedulesID = subSchedulesID;
     }
+    public List<Notify> getNotifyList() {
+        return notifyList;
+    }
+    public void setNotifyList(List<Notify> notifyList) {
+        this.notifyList = notifyList;
+    }
+    public void setStartingMinute(int startingMinute) {
+        this.startingMinute = startingMinute;
+    }
+    public int getStartingMinute() {
+        return startingMinute;
+    }
+    public int getEndingMinute() {
+        return endingMinute;
+    }
+    public void setEndingMinute(int endingMinute) {
+        this.endingMinute = endingMinute;
+    }
 
     @Override
     public int describeContents() {
@@ -112,11 +128,13 @@ public class Schedule implements Parcelable {
         dest.writeStringList(this.subSchedulesID);
         dest.writeString(this.title);
         dest.writeString(this.noteID);
-        dest.writeString(this.reminderID);
         dest.writeStringList(this.tags);
         dest.writeString(this.renewInterval);
         dest.writeParcelable(this.history, flags);
         dest.writeInt(this.themeID);
+        dest.writeTypedList(this.notifyList);
+        dest.writeInt(this.startingMinute);
+        dest.writeInt(this.endingMinute);
     }
 
     protected Schedule(Parcel in) {
@@ -125,11 +143,13 @@ public class Schedule implements Parcelable {
         this.subSchedulesID = in.createStringArrayList();
         this.title = in.readString();
         this.noteID = in.readString();
-        this.reminderID = in.readString();
         this.tags = in.createStringArrayList();
         this.renewInterval = in.readString();
         this.history = in.readParcelable(History.class.getClassLoader());
         this.themeID = in.readInt();
+        this.notifyList = in.createTypedArrayList(Notify.CREATOR);
+        this.startingMinute = in.readInt();
+        this.endingMinute = in.readInt();
     }
 
     public static final Creator<Schedule> CREATOR = new Creator<Schedule>() {

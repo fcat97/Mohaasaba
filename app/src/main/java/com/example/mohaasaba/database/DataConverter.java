@@ -123,4 +123,22 @@ public class DataConverter {
 
         return gson.toJson(interval, type);
     }
+
+    @TypeConverter
+    public static List<Notify> fromStringToNotifyList(String string) {
+        if (string == null) return null;
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Notify>>(){}.getType();
+
+        return gson.fromJson(string, type);
+    }
+
+    @TypeConverter
+    public static String fromNotifyToString (List<Notify> notifyList) {
+        if (notifyList == null) return null;
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Notify>>(){}.getType();
+
+        return gson.toJson(notifyList, type);
+    }
 }

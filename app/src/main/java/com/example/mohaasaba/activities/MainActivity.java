@@ -1,5 +1,7 @@
 package com.example.mohaasaba.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -25,9 +27,11 @@ import com.example.mohaasaba.database.Reminder;
 import com.example.mohaasaba.database.Schedule;
 import com.example.mohaasaba.fragment.FragmentMainActivity;
 import com.example.mohaasaba.receivers.AlarmReceiver;
+import com.example.mohaasaba.receivers.NotificationScheduler;
 import com.example.mohaasaba.viewModel.ScheduleViewModel;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements FragmentMainActivity.FragmentCallbacks{
@@ -133,25 +137,41 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
             openSearchActivity();
             return true;
         }
+        if (item.getItemId() == R.id.scheduleAlarm_menuItem_MainActivity) {
+            scheduleNotifications();
+            return true;
+        }
         return false;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        scheduleNotifications();
+    }
     /*
      * This method will delete all the Attached objects which are entities in the DB
      * */
     private void removeAttachments(Schedule schedule) throws ExecutionException, InterruptedException {
         if (schedule.getNoteID() != null) mScheduleViewModel.deleteNote(schedule.getNoteID());
-        if (schedule.getReminderID() != null) cancelReminder(mScheduleViewModel.getReminder(schedule.getReminderID()));
-    }
-
-    private void cancelReminder(Reminder reminder) {
-        mAlarmReceiver.cancelReminder(reminder);
-        mScheduleViewModel.deleteReminder(reminder);
     }
 
     public void openAddScheduleActivity(View view) {
         Intent intent = new Intent(this,AddScheduleActivity.class);
         startActivityForResult(intent,ADD_NEW_SCHEDULE_REQUEST);
+    }
+
+    private void scheduleNotifications() {
+        Log.d(TAG, "scheduleNotifications: alarmIssue called");
+        Intent intent = new Intent(this, NotificationScheduler.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1008,intent,PendingIntent.FLAG_ONE_SHOT);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.SECOND, 10);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setExact(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+        Log.d(TAG, "scheduleNotifications: alarmIssue Pending Intent scheduled");
     }
 
     private void openEditScheduleActivity(Schedule schedule) {

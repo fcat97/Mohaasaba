@@ -71,4 +71,5 @@
 
     <color name="colorTextPrimary">#000000</color>
     <color name="colorWhite">@android:color/white</color>
+    <color name="colorGray">#E6E6E6</color>
 </resources>

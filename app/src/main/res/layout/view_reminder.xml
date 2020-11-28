@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorGray">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reminders"
+        android:textAppearance="@style/textMedium"
+        android:textColor="@android:color/darker_gray"
+
+        android:layout_marginTop="@dimen/dimen_small"
+        android:layout_marginStart="@dimen/dimen_extraLarge"
+        android:textAlignment="center"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_FragmentReminder"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:layout_marginTop="48dp"
+
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+        tools:listitem="@layout/item_fragment_reminder"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
+        android:id="@+id/noItem_FragmentReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="No Reminder!"
+        android:textAppearance="@style/textMedium"
+        android:textColor="@android:color/darker_gray"
+
+        android:textAlignment="center"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addReminder_FAB_FragmentReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:src="@drawable/ic_add"
+        android:layout_margin="@dimen/dimen_small"
+
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"/>
+</RelativeLayout>

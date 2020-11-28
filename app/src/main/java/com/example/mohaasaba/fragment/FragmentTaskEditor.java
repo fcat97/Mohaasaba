@@ -1,6 +1,5 @@
 package com.example.mohaasaba.fragment;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,15 +18,13 @@ import com.example.mohaasaba.R;
 import com.example.mohaasaba.database.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.util.List;
-
 public class FragmentTaskEditor extends BottomSheetDialogFragment {
     private EditText titleEditText;
     private EditText maxProgressEditText;
     private EditText stepEditText;
     private TextView typeEditText;
     private TextView currentProgressTextView;
-    private Button confirmButton;
+    private ImageButton confirmButton;
     private Task task, mTemp;
     private ImageButton decrementProgressImageButton;
     private FragmentTargetEditorListener listener;
@@ -40,7 +37,7 @@ public class FragmentTaskEditor extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = View.inflate(getContext(), R.layout.view_edit_task, null);
+        View view = View.inflate(getContext(), R.layout.fragment_edit_task, null);
 
         titleEditText = view.findViewById(R.id.title_EditText_FragmentTaskEditor);
         maxProgressEditText = view.findViewById(R.id.maxProgress_EditText_FragmentTaskEditor);

@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dimen_mini"
-    android:elevation="@dimen/cardElevation"
+    android:layout_margin="2dp"
+    app:cardElevation="@dimen/cardElevation"
     app:cardCornerRadius="@dimen/dimen_mini"
     android:clickable="true"
     android:focusable="true">
@@ -24,8 +24,8 @@
                 android:layout_marginStart="@dimen/dimen_small"
                 android:layout_marginEnd="@dimen/dimen_small"
                 android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"
-                android:layout_toStartOf="@id/circularProgressView_itemView_FragmentTodo"/>
+                android:layout_toStartOf="@id/deleteButton_ImageButton_itemView_FragmentTodo"
+                android:layout_toEndOf="@id/circularProgressView_itemView_FragmentTodo"/>
             <at.grabner.circleprogress.CircleProgressView
                 android:id="@+id/circularProgressView_itemView_FragmentTodo"
                 android:layout_width="32dp"
@@ -52,7 +52,7 @@
                 app:cpv_innerContourColor="@android:color/transparent"
                 app:cpv_outerContourColor="@android:color/transparent"
 
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"/>
 
             <ImageView
@@ -63,7 +63,17 @@
                 android:src="@drawable/ic_checkup"
                 android:visibility="invisible"
 
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"/>
+            <ImageButton
+                android:id="@+id/deleteButton_ImageButton_itemView_FragmentTodo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dimen_mini"
+                android:backgroundTint="@android:color/holo_red_light"
+                android:background="@drawable/button_circle_ripple"
+                android:layout_alignParentEnd="true"/>
         </RelativeLayout>
 </androidx.cardview.widget.CardView>

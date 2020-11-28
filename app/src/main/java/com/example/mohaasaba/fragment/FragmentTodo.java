@@ -33,6 +33,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.text.DateFormat;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -102,7 +103,6 @@ public class FragmentTodo extends Fragment {
 
         mAdapter = new TaskAdapter();
         mRecyclerView.setAdapter(mAdapter);
-        new ItemTouchHelper(itemTouchHelperCallbacks).attachToRecyclerView(mRecyclerView);
 
         addTodoButton.setOnClickListener(v -> {
             String text = addTodoEditText.getText().toString().trim();
@@ -124,8 +124,12 @@ public class FragmentTodo extends Fragment {
             return false;
         });
 
+        // Initialize all Views
         selectedDate = Calendar.getInstance();
-        invalidateFragment(selectedDate);
+        taskList = history.getTasks(selectedDate);
+        mAdapter.submitList(taskList);
+        mAdapter.notifyDataSetChanged();
+        setHeaderView();
 
         // Set Listener for opening Date Picker Dialog
         datePickerRecyclerView.setOnClickListener(v -> {
@@ -143,7 +147,18 @@ public class FragmentTodo extends Fragment {
             public void itemLongClicked(int position) {
                 taskList.get(position).progress();
                 history.commitTodo(selectedDate, taskList);
-                invalidateFragment(selectedDate);
+                setHeaderView();
+                mAdapter.notifyItemChanged(position);
+            }
+
+            @Override
+            public void deleteButtonClicked(int position) {
+                Log.d(TAG, "deleteButtonClicked: position " + position);
+                taskList.remove(position);
+                mAdapter.notifyItemRemoved(position);
+                mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount());
+                history.commitTodo(selectedDate, taskList);
+                setHeaderView();
             }
         });
     }
@@ -156,7 +171,7 @@ public class FragmentTodo extends Fragment {
         mAdapter.submitList(taskList);
         mAdapter.notifyItemInserted(taskList.size() - 1);
         mRecyclerView.scrollToPosition(taskList.size() - 1);
-        setCircularView();
+        setHeaderView();
     }
 
     private void editTask(Task task) {
@@ -165,27 +180,27 @@ public class FragmentTodo extends Fragment {
 
         fragmentTaskEditor.setListener(() -> {
             history.commitTodo(selectedDate, taskList);
-            invalidateFragment(selectedDate);
+            mAdapter.notifyItemChanged(taskList.indexOf(task));
+            setHeaderView();
         });
     }
 
     /** Set data to circular progress view */
-    private void setCircularView() {
+    private void setHeaderView() {
         float progress = history.getProgress(selectedDate);
         mCircularProgressView.setValueAnimated(progress, 500);
+        selectedTextView.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(selectedDate.getTime()));
         setChartData(); // Set the LineChart Data
     }
 
-    /** Invoked when new Date picked*/
-    public void invalidateFragment(Calendar calendar) {
-        Log.d("History", "invalidateFragment: called");
+    public void setSelectedDate(Calendar calendar) {
+        selectedDate.clear();
         selectedDate.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        selectedTextView.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(selectedDate.getTime()));
-        setCircularView();
         taskList = history.getTasks(selectedDate);
         mAdapter.submitList(taskList);
         mAdapter.notifyDataSetChanged();
     }
+
     private void setChartData() {
 
         // check if selected dates are changed on not
@@ -252,20 +267,4 @@ public class FragmentTodo extends Fragment {
     public interface FragmentTodoListeners {
         void onClicked();
     }
-
-    private ItemTouchHelper.SimpleCallback itemTouchHelperCallbacks = new ItemTouchHelper.SimpleCallback(
-            0, ItemTouchHelper.RIGHT
-    ) {
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            return false;
-        }
-
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            taskList.remove(viewHolder.getAdapterPosition());
-            history.commitTodo(selectedDate, taskList);
-            invalidateFragment(selectedDate);
-        }
-    };
 }

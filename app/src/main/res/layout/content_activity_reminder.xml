@@ -21,10 +21,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_extraLarge"
+        style="@style/AppTheme.EditText"
 
         android:maxLines="1"
         android:inputType="text"
-        android:background="@android:color/transparent"
+        android:background="@drawable/checkbox_drawable"
         android:hint="@string/title_request_text"
         android:autofillHints="@string/title_request_text"
         android:textAppearance="@style/textRegular.italic"

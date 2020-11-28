@@ -24,7 +24,7 @@ public class AddScheduleViewModel extends AndroidViewModel {
     private LiveData<Note> noteLiveData;   // Used when add new Schedule mode
     private Note mNote;
     private Schedule schedule;
-    private Reminder mReminder;
+    /*private Reminder mReminder;*/
     private List<Schedule> mSubScheduleList;
     private LiveData<List<Schedule>> subScheduleLiveData;
     private boolean scheduleEdited = false;
@@ -39,7 +39,6 @@ public class AddScheduleViewModel extends AndroidViewModel {
         else {
             this.schedule = schedule;
             if (schedule.getNoteID() != null) this.noteLiveData = repository.getNote(schedule.getNoteID());
-            if (schedule.getReminderID() != null) this.mReminder = repository.getReminder(schedule.getReminderID());
             if (schedule.getSubSchedulesID().size() != 0) this.subScheduleLiveData = repository.getSchedule(schedule.getSubSchedulesID());
         }
     }
@@ -51,12 +50,12 @@ public class AddScheduleViewModel extends AndroidViewModel {
     public Note getNote() {
         return this.mNote;
     }
-    public Reminder getReminder() {
+    /*public Reminder getReminder() {
         return mReminder;
-    }
-    public void setReminder(Reminder reminder) {
+    }*/
+    /*public void setReminder(Reminder reminder) {
         this.mReminder = reminder;
-    }
+    }*/
     public void setScheduleEdited(boolean scheduleEdited) {
         this.scheduleEdited = scheduleEdited;
     }
@@ -118,39 +117,43 @@ public class AddScheduleViewModel extends AndroidViewModel {
             }
         }
     }
-    public void activateReminder(Context context) throws ExecutionException, InterruptedException {
-        AlarmReceiver alarmReceiver = new AlarmReceiver(context);
-        if (mReminder == null) return; /* mReminder can't be null */
-        if (mReminder.getReminderTime().getTimeInMillis() <= Calendar.getInstance().getTimeInMillis()) return; /* Time has passed */
 
-        /* If Reminder is first time created */
+
+    /*public void activateReminder(Context context) throws ExecutionException, InterruptedException {
+        AlarmReceiver alarmReceiver = new AlarmReceiver(context);
+        if (mReminder == null) return; *//* mReminder can't be null *//*
+        if (mReminder.getReminderTime().getTimeInMillis() <= Calendar.getInstance().getTimeInMillis()) return; *//* Time has passed *//*
+
+        *//* If Reminder is first time created *//*
         if (schedule.getReminderID() == null) {
             schedule.setReminderID(mReminder.getReminderID());
             int pendingIntentID = repository.insertReminder(mReminder);
             alarmReceiver.activateReminder(mReminder,pendingIntentID,schedule.getTitle());
         } else {
-            /* If reminder existed but Edited*/
+            *//* If reminder existed but Edited*//*
             if (schedule.getReminderID().equals(mReminder.getReminderID())) {
-                alarmReceiver.cancelReminder(mReminder); /* As pendingIntentID remains same as before */
-                alarmReceiver.activateReminder(mReminder,mReminder.getPendingIntentID(),schedule.getTitle()); /* Cancel and update it */
+                alarmReceiver.cancelReminder(mReminder); *//* As pendingIntentID remains same as before *//*
+                alarmReceiver.activateReminder(mReminder,mReminder.getPendingIntentID(),schedule.getTitle()); *//* Cancel and update it *//*
                 repository.updateReminder(mReminder);
             } else {
-                /* if previous reminder deleted and new reminder created */
-                deleteReminder(context); /* Deactivate & Delete old Reminder*/
-                schedule.setReminderID(mReminder.getReminderID()); /* Set new Reminder ID to schedule */
-                int pendingIntentID = repository.insertReminder(mReminder); /* Insert newReminder and get pendingIntentID */
-                alarmReceiver.activateReminder(mReminder,pendingIntentID,schedule.getTitle()); /* Active new Reminder */
+                *//* if previous reminder deleted and new reminder created *//*
+                deleteReminder(context); *//* Deactivate & Delete old Reminder*//*
+                schedule.setReminderID(mReminder.getReminderID()); *//* Set new Reminder ID to schedule *//*
+                int pendingIntentID = repository.insertReminder(mReminder); *//* Insert newReminder and get pendingIntentID *//*
+                alarmReceiver.activateReminder(mReminder,pendingIntentID,schedule.getTitle()); *//* Active new Reminder *//*
             }
         }
-    }
-    public void deleteReminder(Context context) throws ExecutionException, InterruptedException {
-        if (schedule.getReminderID() == null) return; /* If there is no reminder preExisted*/
+    }*/
+
+/*    public void deleteReminder(Context context) throws ExecutionException, InterruptedException {
+        if (schedule.getReminderID() == null) return; *//* If there is no reminder preExisted*//*
         AlarmReceiver alarmReceiver = new AlarmReceiver(context);
-        Reminder oldReminder = repository.getReminder(schedule.getReminderID()); /* Get the Old Reminder*/
-        alarmReceiver.cancelReminder(oldReminder); /* Cancel the Reminder */
-        repository.deleteReminder(oldReminder.getReminderID()); /* Delete it from database */
-        schedule.setReminderID(null); /* as no reminder Attached */
-    }
+        Reminder oldReminder = repository.getReminder(schedule.getReminderID()); *//* Get the Old Reminder*//*
+        alarmReceiver.cancelReminder(oldReminder); *//* Cancel the Reminder *//*
+        repository.deleteReminder(oldReminder.getReminderID()); *//* Delete it from database *//*
+        schedule.setReminderID(null); *//* as no reminder Attached *//*
+    }*/
+
 
     public void insertSchedule() {
         if (scheduleEdited) repository.updateSchedule(schedule);

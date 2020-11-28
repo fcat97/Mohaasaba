@@ -13,21 +13,19 @@
         style="@style/AppTheme.EditText"
 
         android:layout_marginEnd="@dimen/dimen_small"
-        android:layout_marginTop="@dimen/dimen_small"
 
         android:layout_toStartOf="@id/confirm_button_FragmentTaskEditor"
         android:layout_alignParentTop="true"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/confirm_button_FragmentTaskEditor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/AppTheme.Button"
-
-
-        android:text="Confirm"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/ic_check"
+        android:tint="?attr/colorAccent"
+        android:background="@drawable/button_circle_ripple"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/confirm_text" />
 
     <TextView
         android:id="@+id/textView1_FragmentTaskEditor"

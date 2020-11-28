@@ -7,7 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-@Database(entities = {Schedule.class, Note.class, Reminder.class}, version = 39)
+@Database(entities = {Schedule.class, Note.class, Reminder.class}, version = 41)
 @TypeConverters({DataConverter.class})
 public abstract class AppDatabase extends RoomDatabase{
     private static AppDatabase appDatabaseInstance;

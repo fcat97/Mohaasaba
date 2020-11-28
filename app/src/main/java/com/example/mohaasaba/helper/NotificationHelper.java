@@ -47,6 +47,7 @@ public class NotificationHelper extends ContextWrapper {
 
 
         /*Step 5*/
+        // Resister this channel for app
         getManager().createNotificationChannel(channel);
     }
 
@@ -73,7 +74,7 @@ public class NotificationHelper extends ContextWrapper {
 
 
 
-/*Steps to create NotificationHelper.class
+/* Steps to create NotificationHelper.class
  *
  * Step 1:   Declare constants of channels name and ID
  * Step 2:   Create channel

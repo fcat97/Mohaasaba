@@ -1,6 +1,7 @@
 package com.example.mohaasaba.database;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -22,6 +23,11 @@ public class AppRepository {
     private ScheduleDao mScheduleDao;
     private NoteDao mNoteDao;
     private ReminderDao mReminderDao;
+
+    public AppRepository(Context context) {
+        AppDatabase appDatabase = AppDatabase.getInstance(context);
+        this.mScheduleDao = appDatabase.scheduleDao();
+    }
 
     public AppRepository(Application application) {
         AppDatabase appDatabase = AppDatabase.getInstance(application);
@@ -85,6 +91,49 @@ public class AppRepository {
                 conditions + " ORDER BY scheduleID DESC";
         Log.d(TAG, "getScheduleOfToday: " + query);
         return mScheduleDao.getSchedule(new SimpleSQLiteQuery(query));
+    }
+    public List<Schedule> getSchedulesOfToday() throws ExecutionException, InterruptedException {
+        String dayOfWeek = getDayOfWeek();
+        String monthOfYear = getMonthOfYear();
+
+        List<ScheduleType.Dates> datesList = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        datesList.add(new ScheduleType.Dates(calendar));
+
+        String conditions = getQueryString(datesList);
+        Log.i(TAG, "getScheduleOfToday: " + conditions);
+
+        String query = "SELECT * FROM schedule_table WHERE " +
+                "(type_daily IS 1) OR " +
+                "((type_day_specified IS 1) AND (" +  dayOfWeek + " IS 1)) OR " +
+                "((type_month_specified IS 1) AND (" + monthOfYear + " IS 1)) OR " +
+                "((type_month_day_specified IS 1) AND (" + dayOfWeek + " IS 1) AND (" + monthOfYear + " IS 1)) OR " +
+                conditions + " ORDER BY scheduleID DESC";
+        Log.d(TAG, "getScheduleOfToday: " + query);
+
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<List<Schedule>> result = executorService.submit(new Callable<List<Schedule>>() {
+            @Override
+            public List<Schedule> call() throws Exception {
+                return mScheduleDao.getScheduleList(new SimpleSQLiteQuery(query));
+            }
+        });
+
+        return result.get();
+    }
+
+    public List<Schedule> getAllSchedules() throws ExecutionException, InterruptedException {
+        String query = "SELECT * FROM schedule_table";
+
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<List<Schedule>> result = executorService.submit(new Callable<List<Schedule>>() {
+            @Override
+            public List<Schedule> call() throws Exception {
+                return mScheduleDao.getScheduleList(new SimpleSQLiteQuery(query));
+            }
+        });
+
+        return result.get();
     }
     public LiveData<List<Schedule>> getSchedulesOfThisWeek() {
         String monthOfYear = getMonthOfYear();

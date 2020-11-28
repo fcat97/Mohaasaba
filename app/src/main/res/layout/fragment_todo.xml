@@ -5,51 +5,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorGray"
     tools:context=".fragment.FragmentTodo">
     <include
         android:id="@+id/header"
-        layout="@layout/view_header_fragment_todo"/>
-    <EditText
-        android:id="@+id/addTodo_EditText_FragmentTodo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/add_new_todo"
-        android:lines="1"
-        android:imeOptions="actionDone"
-        android:inputType="text"
-        style="@style/AppTheme.EditText"
-        android:textAppearance="@style/textRegular"
+        android:layout_margin="@dimen/dimen_mini"
+        layout="@layout/view_header_fragment_todo"/>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/addLayout_FragmentTodo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/dimen_small"
-        android:layout_toStartOf="@id/addButton_FragmentTodo"
-        android:layout_above="@id/coordinateLayout_FragmentTodo"/>
-    <ImageButton
-        android:id="@+id/addButton_FragmentTodo"
-        android:layout_width="48sp"
-        android:layout_height="48sp"
-        android:src="@drawable/ic_add"
-        android:tint="?attr/colorAccent"
-        android:background="@android:color/transparent"
-        android:layout_above="@id/coordinateLayout_FragmentTodo"
-        android:layout_alignParentEnd="true"/>
+        app:cardCornerRadius="@dimen/dimen_mini"
+        android:background="@color/white">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/addTodo_EditText_FragmentTodo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/add_new_todo"
+                android:lines="1"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                style="@style/AppTheme.EditText"
+                android:textAppearance="@style/textRegular"
+                android:layout_margin="@dimen/dimen_mini"
+                android:layout_toStartOf="@id/addButton_FragmentTodo"/>
+            <ImageButton
+                android:id="@+id/addButton_FragmentTodo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add"
+                android:tint="?attr/colorAccent"
+                android:layout_centerVertical="true"
+                android:background="@drawable/button_circle_ripple"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerView_FragmentTodo"
         tools:listitem="@layout/item_fragment_todo"
+        android:background="@color/colorGray"
+        android:layout_margin="@dimen/dimen_mini"
 
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/header"
-        android:layout_above="@id/addTodo_EditText_FragmentTodo"
+        android:layout_above="@id/addLayout_FragmentTodo"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinateLayout_FragmentTodo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-        <include
-            android:id="@+id/editTaskLayout_FragmentTodo"
-            layout="@layout/view_edit_task"
-            android:visibility="gone"/>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </RelativeLayout>

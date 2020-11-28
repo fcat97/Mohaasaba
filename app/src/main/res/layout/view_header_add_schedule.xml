@@ -59,19 +59,8 @@
         android:tint="?attr/colorPrimary"
         android:background="@android:color/transparent"
 
-        android:layout_toStartOf="@id/reminderButton_Header_addSchedule"
+        android:layout_toStartOf="@id/themeButton_Header_addSchedule"
         android:onClick="showTypeActivity_header"/>
-
-    <ImageButton
-        android:id="@+id/reminderButton_Header_addSchedule"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dimen_mini"
-
-        android:src="@drawable/ic_alarm_add"
-        android:background="@android:color/transparent"
-
-        android:layout_toStartOf="@id/themeButton_Header_addSchedule"/>
     <ImageButton
         android:id="@+id/themeButton_Header_addSchedule"
         android:layout_width="wrap_content"

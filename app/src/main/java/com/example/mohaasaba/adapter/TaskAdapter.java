@@ -2,9 +2,11 @@ package com.example.mohaasaba.adapter;
 
 import android.media.Image;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,7 +43,8 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
     @NonNull
     @Override
     public TaskHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View rootView = View.inflate(parent.getContext(), R.layout.item_fragment_todo, null);
+        View rootView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_fragment_todo, parent, false);
 
         return new TaskHolder(rootView);
     }
@@ -64,6 +67,11 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         });
 
         holder.itemView.setOnLongClickListener(v -> {
+            if (listener == null) try {
+                throw new Exception("Must Implement method");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             listener.itemLongClicked(position);
             return true;
         });
@@ -76,18 +84,29 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
             holder.completedImageView.setVisibility(View.INVISIBLE);
         }
 
+        holder.deleteButton.setOnClickListener(v -> {
+            if (listener == null) try {
+                throw new Exception("Must Implement method");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            listener.deleteButtonClicked(position);
+        });
+
     }
 
     static class TaskHolder extends RecyclerView.ViewHolder {
         private TextView textView;
         private CircleProgressView circleProgressView;
         private ImageView completedImageView;
+        private ImageButton deleteButton;
 
         public TaskHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.textView_itemView_FragmentTodo);
             circleProgressView = itemView.findViewById(R.id.circularProgressView_itemView_FragmentTodo);
             completedImageView = itemView.findViewById(R.id.completed_ImageView_itemView_FragmentTodo);
+            deleteButton = itemView.findViewById(R.id.deleteButton_ImageButton_itemView_FragmentTodo);
         }
     }
 
@@ -97,5 +116,6 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
     public interface ItemClickedListener {
         void itemClicked(int position);
         void itemLongClicked(int position);
+        void deleteButtonClicked(int position);
     }
 }

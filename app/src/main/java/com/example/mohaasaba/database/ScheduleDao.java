@@ -30,4 +30,7 @@ public interface ScheduleDao {
 
     @RawQuery(observedEntities = Schedule.class)
     LiveData<List<Schedule>> getSchedule(SupportSQLiteQuery query);
+
+    @RawQuery
+    List<Schedule> getScheduleList(SupportSQLiteQuery query);
 }

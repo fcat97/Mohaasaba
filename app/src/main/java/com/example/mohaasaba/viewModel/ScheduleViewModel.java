@@ -32,13 +32,6 @@ public class ScheduleViewModel extends AndroidViewModel {
         mRepository.deleteNote(noteID);
     }
 
-    public void deleteReminder(Reminder reminder) {
-        mRepository.deleteReminder(reminder.getReminderID());
-    }
-    public Reminder getReminder(String reminderID) throws ExecutionException, InterruptedException {
-        return mRepository.getReminder(reminderID);
-    }
-
     public LiveData<List<Schedule>> getAllSchedule() {
         mAllSchedule = mRepository.getAllSchedule();
         return mAllSchedule;

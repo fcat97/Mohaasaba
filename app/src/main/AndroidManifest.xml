@@ -59,6 +59,8 @@
         </activity>
 
         <receiver android:name=".receivers.AlarmReceiver" />
+        <receiver android:name=".receivers.NotificationScheduler"/>
+        <receiver android:name=".receivers.NotyFire"/>
     </application>
 
 </manifest>
