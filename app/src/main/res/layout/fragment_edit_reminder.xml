@@ -20,7 +20,7 @@
             style="@style/AppTheme.EditText"
             android:layout_marginEnd="@dimen/dimen_large"
 
-            android:hint="@string/title_request_text_optional"
+            android:hint="@string/notify_message_request"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"/>
         <TextView
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:text="Choose Time of Reminder"
+            android:text="Choose Time to Notify"
             android:textAlignment="center"
             android:textAppearance="@style/textRegular"
 
@@ -123,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:text="Choose Time of Reminder"
+            android:text="Notification will Show Early"
             android:textAlignment="center"
             android:textAppearance="@style/textRegular"
 

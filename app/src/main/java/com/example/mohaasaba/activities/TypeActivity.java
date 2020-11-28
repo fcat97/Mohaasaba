@@ -35,8 +35,6 @@ public class TypeActivity extends AppCompatActivity {
 
     private ScheduleType scheduleType;
 
-    private SwitchCompat swNotify;
-    private Button notificationTimeButton;
     private Button confirmButton;
 
 
@@ -49,8 +47,6 @@ public class TypeActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout_TypeActivity);
         viewPager = findViewById(R.id.viewPager_TypeActivity);
 
-        swNotify = findViewById(R.id.swNotify_TypeActivity);
-        notificationTimeButton = findViewById(R.id.notificationTime_Button_TypeActivity);
         confirmButton = findViewById(R.id.confirm_button_TypeActivity);
 
 

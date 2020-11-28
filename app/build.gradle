@@ -10,11 +10,11 @@ android {
         applicationId 'com.example.mohaasaba'
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 341
-        versionName '0.3.41'
+        versionCode 352
+        versionName '0.3.52'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        versionNameSuffix '_6454680_alpha'
+        versionNameSuffix '_750146b_beta'
     }
 
     buildTypes {
@@ -33,9 +33,9 @@ dependencies {
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.google.android.material:material:1.2.1'
@@ -56,24 +56,13 @@ dependencies {
     implementation 'com.github.jakob-grabner:Circle-Progress-View:1.4'
 
     //Advance Date Picker
-    implementation 'com.appeaser.sublimepickerlibrary:sublimepickerlibrary:2.1.2'
     implementation 'com.applandeo:material-calendar-view:1.7.0'
-    implementation 'com.archit.calendar:awesome-calendar:2.0.0'
 
     //AdvanceRichEditText
     implementation 'com.github.chinalwb:are:0.1.7'
 
     //JSoup for making Title in NoteActivity
     implementation 'org.jsoup:jsoup:1.11.3'
-
-    //Horizontal DatePicker
-    implementation 'com.github.jhonnyx2012:horizontal-picker:1.0.6'
-
-    //ColorPicker
-    implementation "codes.side:andcolorpicker:0.4.0"
-    implementation "androidx.core:core-ktx:+"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // Charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'

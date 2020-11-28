@@ -106,7 +106,7 @@ public class NotificationScheduler extends BroadcastReceiver{
             else if (hour == notify.notificationHour && minute >= notify.notificationMinute) continue;
 
             Intent intent = new Intent(mContext, NotyFire.class);
-            intent.putExtra(NotyFire.NOTIFICATION_TITLE, "Mohaasaba");
+            intent.putExtra(NotyFire.NOTIFICATION_TITLE, notify.scheduleTitle);
             intent.putExtra(NotyFire.NOTIFICATION_MESSAGE, notify.message);
             intent.putExtra(NotyFire.NOTIFICATION_ID, notify.uniqueID);
 
@@ -137,9 +137,9 @@ public class NotificationScheduler extends BroadcastReceiver{
         for (Notify notify:
                 getAllNotifications()) {
             Intent intent = new Intent(mContext, NotyFire.class);
-            intent.putExtra(NotyFire.NOTIFICATION_TITLE, "Mohaasaba");
+            /*intent.putExtra(NotyFire.NOTIFICATION_TITLE, notify.scheduleTitle);
             intent.putExtra(NotyFire.NOTIFICATION_MESSAGE, notify.message);
-            intent.putExtra(NotyFire.NOTIFICATION_ID, notify.uniqueID);
+            intent.putExtra(NotyFire.NOTIFICATION_ID, notify.uniqueID);*/
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, notify.uniqueID,
                     intent, PendingIntent.FLAG_NO_CREATE);
@@ -176,24 +176,24 @@ public class NotificationScheduler extends BroadcastReceiver{
             int uniqueID = Integer.parseInt(value.split("<<:>>")[1]);
 
             Intent intent = new Intent(mContext, NotyFire.class);
-            intent.putExtra(NotyFire.NOTIFICATION_TITLE, "Mohaasaba");
+            /*intent.putExtra(NotyFire.NOTIFICATION_TITLE, "Mohaasaba");
             intent.putExtra(NotyFire.NOTIFICATION_MESSAGE, message);
-            intent.putExtra(NotyFire.NOTIFICATION_ID, uniqueID);
+            intent.putExtra(NotyFire.NOTIFICATION_ID, uniqueID);*/
             Log.d(TAG, "cancelPIdFromSharedPref: alarmIssue intent created " + intent.toString());
 
             Log.d(TAG, "cancelPIdFromSharedPref: alarmIssue pendingIntentID " + uniqueID);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, uniqueID, intent, PendingIntent.FLAG_NO_CREATE);
-            Log.d(TAG, "cancelPIdFromSharedPref: alarmIssue pendingIntent created " + pendingIntent.toString());
+            if (pendingIntent != null) Log.d(TAG, "cancelPIdFromSharedPref: alarmIssue pendingIntent created " + pendingIntent.toString());
 
             if (pendingIntent != null) {
                 alarmManager.cancel(pendingIntent);
                 Log.d(TAG, "cancelPIdFromSharedPref: alarmIssue alarm Canceled ");
             }
 
-            runningPIdSet.remove(uniqueID);
+            runningPIdSet.remove(value);
             Log.d(TAG, "cancelPIdFromSharedPref: alarmIssue id removed from sharedPref");
         }
-        Log.d(TAG, "cancelAll: alarmIssue after cancel runningPIdSet.size() " +runningPIdSet.size());
+        Log.d(TAG, "cancelPIdFromSharedPref: alarmIssue after cancel runningPIdSet.size() " + runningPIdSet.size());
 
         sharedPreferences.edit()
                 .putStringSet(RUNNING_PID, runningPIdSet)

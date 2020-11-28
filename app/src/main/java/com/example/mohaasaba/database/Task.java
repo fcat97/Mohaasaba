@@ -22,24 +22,24 @@ public class Task implements Parcelable, Serializable {
     }
     public String text;
     public Type taskType = Type.Mubah;
-    public int maxProgress;
-    public int currentProgress;
-    public int step;
+    public float maxProgress;
+    public float currentProgress;
+    public float step;
     public int priority;
 
 
     // Public Constructor
     public Task(String text) {
         this.text = text;
-        this.maxProgress = 1;
-        this.currentProgress = 0;
-        this.step = 1;
+        this.maxProgress = 1.0f;
+        this.currentProgress = 0f;
+        this.step = 1.0f;
         this.priority = 1;
         this.commitDate = Calendar.getInstance().getTimeInMillis();
     }
 
     public float getProgress() {
-        return (float) currentProgress * 100 / maxProgress;
+        return currentProgress * 100 / maxProgress;
     }
     public void progress() {
         currentProgress = Math.min(currentProgress + step, maxProgress);
@@ -70,9 +70,9 @@ public class Task implements Parcelable, Serializable {
         this.commitDate = in.readLong();
         this.taskType = Type.values()[in.readInt()];
         this.text = in.readString();
-        this.maxProgress = in.readInt();
-        this.currentProgress = in.readInt();
-        this.step = in.readInt();
+        this.maxProgress = in.readFloat();
+        this.currentProgress = in.readFloat();
+        this.step = in.readFloat();
         this.priority = in.readInt();
     }
 
@@ -81,9 +81,9 @@ public class Task implements Parcelable, Serializable {
         dest.writeLong(this.commitDate);
         dest.writeInt(this.taskType.ordinal());
         dest.writeString(this.text);
-        dest.writeInt(this.maxProgress);
-        dest.writeInt(this.currentProgress);
-        dest.writeInt(this.step);
+        dest.writeFloat(this.maxProgress);
+        dest.writeFloat(this.currentProgress);
+        dest.writeFloat(this.step);
         dest.writeInt(this.priority);
     }
 

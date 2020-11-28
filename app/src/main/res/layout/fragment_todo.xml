@@ -11,7 +11,6 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_mini"
         layout="@layout/view_header_fragment_todo"/>
     <androidx.cardview.widget.CardView
         android:id="@+id/addLayout_FragmentTodo"

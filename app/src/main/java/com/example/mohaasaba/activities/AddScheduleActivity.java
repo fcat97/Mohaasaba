@@ -193,11 +193,7 @@ public class AddScheduleActivity extends AppCompatActivity
                 onBackPressed();
                 return true;
             case R.id.save_menuItem_addSchedule:
-                try {
-                    saveSchedule();
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
+                saveSchedule();
                 return true;
             case R.id.addNote_menuItem_addSchedule:
                 if (mViewModel.getNote() == null) openAddNoteActivity();
@@ -362,7 +358,7 @@ public class AddScheduleActivity extends AppCompatActivity
     }
 
     // On Save MenuItem Clicked --------------------------------------------------------------------
-    private void saveSchedule() throws ExecutionException, InterruptedException {
+    private void saveSchedule() {
 
 //        Set Schedule with Title and Tags
         String scheduleTitle = mTitleEditText.getText().toString().trim();
@@ -394,6 +390,9 @@ public class AddScheduleActivity extends AppCompatActivity
         if (mViewModel.getSubScheduleList() != null) mViewModel.insertSubSchedules();
         if (mViewModel.getSchedule().getThemeID() == -1001) mViewModel.getSchedule().setThemeID(ThemeUtils.THEME_GREEN);
 
+        /* Fix the edited title to Notification as well */
+        mViewModel.setNotificationTitles();
+
         /* Finally insert the schedule */
         mViewModel.insertSchedule();
         setResult(RESULT_OK);
@@ -412,9 +411,9 @@ public class AddScheduleActivity extends AppCompatActivity
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return fragmentOverview;
-                case 1:
                     return fragmentTodo;
+                case 1:
+                    return fragmentOverview;
                 default:
                     return null;
             }

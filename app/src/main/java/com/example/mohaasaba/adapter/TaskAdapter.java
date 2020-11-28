@@ -55,7 +55,7 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         holder.textView.setText(task.text);
         holder.circleProgressView.setMaxValue(task.maxProgress);
         holder.circleProgressView.setValue(task.currentProgress);
-        holder.circleProgressView.setBlockCount(task.maxProgress / task.step);
+        holder.circleProgressView.setBlockCount(Math.round(task.maxProgress / task.step));
         
         holder.itemView.setOnClickListener(v -> {
             if (listener == null) try {

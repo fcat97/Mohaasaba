@@ -1,16 +1,12 @@
 package com.example.mohaasaba.database;
 
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
 import com.example.mohaasaba.helper.IdGenerator;
-import com.example.mohaasaba.helper.NotifyHelper;
-import com.example.mohaasaba.receivers.NotyFire;
 
 public class Notify implements Parcelable {
     public static final long MINUTE = 60 * 1000;
@@ -22,6 +18,7 @@ public class Notify implements Parcelable {
         HIGH
     }
 
+    public String scheduleTitle;
     public String message;
     public int notificationHour;
     public int notificationMinute;
@@ -41,6 +38,7 @@ public class Notify implements Parcelable {
     }
 
     protected Notify(Parcel in) {
+        scheduleTitle = in.readString();
         message = in.readString();
         notificationHour = in.readInt();
         notificationMinute = in.readInt();
@@ -52,6 +50,7 @@ public class Notify implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(scheduleTitle);
         dest.writeString(message);
         dest.writeInt(notificationHour);
         dest.writeInt(notificationMinute);
@@ -85,6 +84,7 @@ public class Notify implements Parcelable {
     @Override
     public String toString() {
         return " unique_ID: " + uniqueID +
+                " Schedule Title " + scheduleTitle +
                 " Message: " + message +
                 " Hour: " + notificationHour +
                 " Minute: " + notificationMinute +

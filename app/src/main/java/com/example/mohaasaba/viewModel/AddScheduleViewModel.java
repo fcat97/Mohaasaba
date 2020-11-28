@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.mohaasaba.database.AppRepository;
 import com.example.mohaasaba.database.Note;
+import com.example.mohaasaba.database.Notify;
 import com.example.mohaasaba.database.Reminder;
 import com.example.mohaasaba.database.Schedule;
 import com.example.mohaasaba.database.ScheduleType;
@@ -153,7 +154,12 @@ public class AddScheduleViewModel extends AndroidViewModel {
         repository.deleteReminder(oldReminder.getReminderID()); *//* Delete it from database *//*
         schedule.setReminderID(null); *//* as no reminder Attached *//*
     }*/
-
+    public void setNotificationTitles() {
+        for (Notify notify:
+             schedule.getNotifyList()) {
+            notify.scheduleTitle = schedule.getTitle();
+        }
+    }
 
     public void insertSchedule() {
         if (scheduleEdited) repository.updateSchedule(schedule);

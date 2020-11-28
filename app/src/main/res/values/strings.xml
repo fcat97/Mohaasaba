@@ -3,7 +3,7 @@
     <string name="dummy_text">This is a Sample Text for rabbit purpose</string>
     <string name="dummy_tags">tag1, tag2, tag3</string>
     <string name="title_request_text">"Enter Title Here</string>
-    <string name="title_request_text_optional">"Enter Title Here (Optional)</string>
+    <string name="notify_message_request">Enter a Message to Notify</string>
     <string name="title_request_warning">Enter a valid title</string>
     <string name="edit_text">Edit</string>
     <string name="save_text">Save</string>
