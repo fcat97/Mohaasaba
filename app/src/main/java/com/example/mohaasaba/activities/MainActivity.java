@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
      * */
     private void removeAttachments(Schedule schedule) throws ExecutionException, InterruptedException {
         if (schedule.getNoteID() != null) mScheduleViewModel.deleteNote(schedule.getNoteID());
+        scheduleNotifications();
     }
 
     public void openAddScheduleActivity(View view) {

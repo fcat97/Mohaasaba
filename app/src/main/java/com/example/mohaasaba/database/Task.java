@@ -26,13 +26,14 @@ public class Task implements Parcelable, Serializable {
     public float currentProgress;
     public float step;
     public int priority;
-
+    public String unit;
 
     // Public Constructor
     public Task(String text) {
         this.text = text;
         this.maxProgress = 1.0f;
         this.currentProgress = 0f;
+        this.unit = "";
         this.step = 1.0f;
         this.priority = 1;
         this.commitDate = Calendar.getInstance().getTimeInMillis();

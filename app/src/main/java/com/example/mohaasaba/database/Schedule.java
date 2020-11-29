@@ -33,6 +33,7 @@ public class Schedule implements Parcelable {
     private int themeID = -1001;
     private int startingMinute; // starting minute of day; default 0
     private int endingMinute; // ending minute of day; default 24*60-1
+    private int priority;
 
     public Schedule(String title) {
         this.scheduleID = IdGenerator.getNewID();
@@ -40,6 +41,7 @@ public class Schedule implements Parcelable {
         this.setScheduleType(new ScheduleType());
         this.startingMinute = 0;
         this.endingMinute = 24*60 - 1;
+        this.priority = 1;
     }
 
     @NonNull
@@ -115,6 +117,12 @@ public class Schedule implements Parcelable {
     public void setEndingMinute(int endingMinute) {
         this.endingMinute = endingMinute;
     }
+    public int getPriority() {
+        return priority;
+    }
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
 
     @Override
     public int describeContents() {
@@ -135,6 +143,7 @@ public class Schedule implements Parcelable {
         dest.writeTypedList(this.notifyList);
         dest.writeInt(this.startingMinute);
         dest.writeInt(this.endingMinute);
+        dest.writeInt(this.priority);
     }
 
     protected Schedule(Parcel in) {
@@ -150,6 +159,7 @@ public class Schedule implements Parcelable {
         this.notifyList = in.createTypedArrayList(Notify.CREATOR);
         this.startingMinute = in.readInt();
         this.endingMinute = in.readInt();
+        this.priority = in.readInt();
     }
 
     public static final Creator<Schedule> CREATOR = new Creator<Schedule>() {

@@ -78,4 +78,5 @@
     <string name="feature_not_available">Feature Not Available</string>
     <string name="expand_history">expand history</string>
     <string name="debug_text">Debug</string>
+    <string name="unit">Unit</string>
 </resources>

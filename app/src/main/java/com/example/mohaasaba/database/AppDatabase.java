@@ -11,6 +11,9 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.mohaasaba.R;
+import com.example.mohaasaba.helper.ThemeUtils;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -19,7 +22,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-@Database(entities = {Schedule.class, Note.class, Reminder.class}, version = 44)
+@Database(entities = {Schedule.class, Note.class, Reminder.class}, version = 45)
 @TypeConverters({DataConverter.class})
 public abstract class AppDatabase extends RoomDatabase{
     private static AppDatabase appDatabaseInstance;
@@ -52,6 +55,7 @@ public abstract class AppDatabase extends RoomDatabase{
         ScheduleDao scheduleDao = appDatabaseInstance.scheduleDao();
 
         Schedule schedule = new Schedule("Quick Tutorial");
+        schedule.setThemeID(ThemeUtils.THEME_GREEN);
 
         Notify notify1 = new Notify(0,0);
         notify1.scheduleTitle = schedule.getTitle();
@@ -61,13 +65,8 @@ public abstract class AppDatabase extends RoomDatabase{
         notify2.scheduleTitle = schedule.getTitle();
         notify2.message = "Click on the + icon in top right corner";
 
-        Notify notify3 = new Notify(0,0);
-        notify3.scheduleTitle = schedule.getTitle();
-        notify3.message = "Go to Todo Tab for other help";
-
         schedule.getNotifyList().add(notify1);
         schedule.getNotifyList().add(notify2);
-        schedule.getNotifyList().add(notify3);
 
         List<Task> taskList = new ArrayList<>();
         taskList.add(new Task("You can add new task from bottom"));

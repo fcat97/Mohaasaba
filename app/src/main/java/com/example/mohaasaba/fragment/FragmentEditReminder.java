@@ -52,7 +52,7 @@ public class FragmentEditReminder extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        reminderTitleEditText.setText(notify.message);
+        if (! notify.message.trim().isEmpty()) reminderTitleEditText.setText(notify.message);
         reminderHourEditText.setText(String.valueOf(notify.notificationHour));
         reminderMinuteEditText.setText(String.valueOf(notify.notificationMinute));
 
@@ -72,6 +72,7 @@ public class FragmentEditReminder extends BottomSheetDialogFragment {
                 if (notify.notificationHour < 0) notify.notificationHour = 0;
                 if (notify.notificationMinute >= 60) notify.notificationMinute = 59;
                 if (notify.notificationMinute < 0) notify.notificationMinute = 0;
+                if (notify.repeatMinute > 0 && notify.repeatMinute < 15) notify.repeatMinute = 15;
 
                 listeners.onConfirm();
                 dismiss();

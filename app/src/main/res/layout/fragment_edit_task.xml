@@ -102,11 +102,24 @@
 
     <EditText
         android:id="@+id/maxProgress_EditText_FragmentTaskEditor"
-        android:layout_width="100dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/textRegular"
-        android:inputType="numberSigned"
+        android:inputType="numberDecimal"
         style="@style/AppTheme.EditText"
+        android:layout_marginEnd="@dimen/dimen_small"
+
+        android:layout_alignTop="@id/textView3_FragmentTaskEditor"
+        android:layout_toStartOf="@id/progressUnit_EditText_FragmentTaskEditor"/>
+
+    <EditText
+        android:id="@+id/progressUnit_EditText_FragmentTaskEditor"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/textRegular"
+        android:inputType="text"
+        style="@style/AppTheme.EditText"
+        android:hint="@string/unit"
 
         android:layout_alignTop="@id/textView3_FragmentTaskEditor"
         android:layout_alignParentEnd="true"/>
@@ -140,7 +153,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/textRegular"
-        android:inputType="numberSigned"
+        android:inputType="numberDecimal"
         style="@style/AppTheme.EditText"
 
         android:layout_alignTop="@id/textView5_FragmentTaskEditor"

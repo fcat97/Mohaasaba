@@ -22,6 +22,7 @@ public class FragmentTaskEditor extends BottomSheetDialogFragment {
     private EditText titleEditText;
     private EditText maxProgressEditText;
     private EditText stepEditText;
+    private EditText progressUnitEditText;
     private TextView typeEditText;
     private TextView currentProgressTextView;
     private ImageButton confirmButton;
@@ -42,6 +43,7 @@ public class FragmentTaskEditor extends BottomSheetDialogFragment {
         titleEditText = view.findViewById(R.id.title_EditText_FragmentTaskEditor);
         maxProgressEditText = view.findViewById(R.id.maxProgress_EditText_FragmentTaskEditor);
         stepEditText = view.findViewById(R.id.progressStep_EditText_FragmentTaskEditor);
+        progressUnitEditText = view.findViewById(R.id.progressUnit_EditText_FragmentTaskEditor);
         typeEditText = view.findViewById(R.id.taskType_EditText_FragmentTaskEditor);
         currentProgressTextView = view.findViewById(R.id.currentProgress_TextView_FragmentTaskEditor);
         confirmButton = view.findViewById(R.id.confirm_button_FragmentTaskEditor);
@@ -59,6 +61,7 @@ public class FragmentTaskEditor extends BottomSheetDialogFragment {
         currentProgressTextView.setText(String.valueOf(task.currentProgress));
         maxProgressEditText.setText(String.valueOf(task.maxProgress));
         stepEditText.setText(String.valueOf(task.step));
+        if (! task.unit.trim().isEmpty()) progressUnitEditText.setText(task.unit);
 
         typeEditText.setText(task.taskType.toString());
 
@@ -67,6 +70,7 @@ public class FragmentTaskEditor extends BottomSheetDialogFragment {
         mTemp = new Task(task.text);
         mTemp.maxProgress = task.maxProgress;
         mTemp.currentProgress = task.currentProgress;
+        mTemp.unit = task.unit;
         mTemp.step = task.step;
         mTemp.taskType = task.taskType;
 
@@ -77,13 +81,15 @@ public class FragmentTaskEditor extends BottomSheetDialogFragment {
 
         confirmButton.setOnClickListener(v -> {
             String title = titleEditText.getText().toString().trim();
-            int maxProgress = Integer.parseInt(maxProgressEditText.getText().toString());
-            int step = Integer.parseInt(stepEditText.getText().toString());
+            String unit = progressUnitEditText.getText().toString().trim();
+            float maxProgress = Float.parseFloat(maxProgressEditText.getText().toString());
+            float step = Float.parseFloat(stepEditText.getText().toString());
 
             if (! title.isEmpty() && maxProgress  > 0 && step > 0) {
                 task.text = title;
                 task.maxProgress = maxProgress;
                 task.step = step;
+                task.unit = unit;
                 task.currentProgress = mTemp.currentProgress;
                 task.taskType = mTemp.taskType;
 
