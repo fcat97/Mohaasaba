@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -12,12 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.database.Notify;
+import com.example.mohaasaba.models.Notify;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.text.DateFormat;
-import java.util.Calendar;
 
 public class FragmentEditReminder extends BottomSheetDialogFragment {
     private EditText reminderTitleEditText;

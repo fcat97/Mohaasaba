@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.mohaasaba.models.Note;
+
 @Dao
 public interface NoteDao {
     @Insert

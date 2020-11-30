@@ -15,8 +15,8 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.database.Note;
-import com.example.mohaasaba.database.Reminder;
+import com.example.mohaasaba.models.Note;
+import com.example.mohaasaba.models.Reminder;
 
 import java.text.DateFormat;
 import java.util.Calendar;

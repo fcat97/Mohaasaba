@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.database.Reminder;
+import com.example.mohaasaba.models.Reminder;
 import com.example.mohaasaba.dialog.DialogDatePicker;
 import com.example.mohaasaba.dialog.DialogTimePicker;
 

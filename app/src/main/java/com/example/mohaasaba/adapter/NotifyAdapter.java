@@ -12,8 +12,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.database.Notify;
-import com.example.mohaasaba.database.Task;
+import com.example.mohaasaba.models.Notify;
 
 import java.text.DateFormat;
 import java.util.Calendar;

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
@@ -15,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.database.Task;
+import com.example.mohaasaba.models.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class FragmentTaskEditor extends BottomSheetDialogFragment {

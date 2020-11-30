@@ -1,9 +1,6 @@
 package com.example.mohaasaba.adapter;
 
-import android.media.Image;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -16,7 +13,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.database.Task;
+import com.example.mohaasaba.models.Task;
 
 import at.grabner.circleprogress.CircleProgressView;
 

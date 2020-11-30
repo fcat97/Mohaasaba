@@ -17,13 +17,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.adapter.TaskAdapter;
-import com.example.mohaasaba.database.History;
-import com.example.mohaasaba.database.Task;
+import com.example.mohaasaba.models.History;
+import com.example.mohaasaba.models.Task;
 import com.example.mohaasaba.dialog.DialogDatePicker;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -33,7 +32,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.text.DateFormat;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;

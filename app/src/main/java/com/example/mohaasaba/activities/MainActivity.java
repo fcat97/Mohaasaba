@@ -23,8 +23,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.database.Reminder;
-import com.example.mohaasaba.database.Schedule;
+import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.fragment.FragmentMainActivity;
 import com.example.mohaasaba.receivers.AlarmReceiver;
 import com.example.mohaasaba.receivers.NotificationScheduler;
@@ -41,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
 
     private ScheduleViewModel mScheduleViewModel;
     private AlarmReceiver mAlarmReceiver;
+    private NotificationScheduler notificationScheduler;
 
     private FragmentMainActivity mTodayFragment;
     private FragmentMainActivity mAllSchedulesFragment;
@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
             getWindow().setStatusBarColor(Color.WHITE);
         }
+
+        notificationScheduler = new NotificationScheduler(this);
 
         mAlarmReceiver = new AlarmReceiver(getApplicationContext());
         mScheduleViewModel = new ScheduleViewModel(getApplication());
@@ -138,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
             return true;
         }
         if (item.getItemId() == R.id.scheduleAlarm_menuItem_MainActivity) {
-            scheduleNotifications();
+            notificationScheduler.scheduleNotifications();
             return true;
         }
         return false;
@@ -147,32 +149,19 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
     @Override
     protected void onResume() {
         super.onResume();
-        scheduleNotifications();
+        notificationScheduler.scheduleNotifications();
     }
     /*
      * This method will delete all the Attached objects which are entities in the DB
      * */
     private void removeAttachments(Schedule schedule) throws ExecutionException, InterruptedException {
         if (schedule.getNoteID() != null) mScheduleViewModel.deleteNote(schedule.getNoteID());
-        scheduleNotifications();
+        notificationScheduler.scheduleNotifications();
     }
 
     public void openAddScheduleActivity(View view) {
         Intent intent = new Intent(this,AddScheduleActivity.class);
         startActivityForResult(intent,ADD_NEW_SCHEDULE_REQUEST);
-    }
-
-    private void scheduleNotifications() {
-        Log.d(TAG, "scheduleNotifications: alarmIssue called");
-        Intent intent = new Intent(this, NotificationScheduler.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1008,intent,PendingIntent.FLAG_ONE_SHOT);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, 10);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
-        Log.d(TAG, "scheduleNotifications: alarmIssue Pending Intent scheduled");
     }
 
     private void openEditScheduleActivity(Schedule schedule) {

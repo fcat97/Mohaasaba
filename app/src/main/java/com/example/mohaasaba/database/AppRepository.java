@@ -8,6 +8,11 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
+import com.example.mohaasaba.models.Note;
+import com.example.mohaasaba.models.Reminder;
+import com.example.mohaasaba.models.Schedule;
+import com.example.mohaasaba.models.ScheduleType;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;

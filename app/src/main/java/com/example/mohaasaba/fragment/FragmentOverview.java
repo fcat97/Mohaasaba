@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.adapter.NotifyAdapter;
-import com.example.mohaasaba.database.Note;
-import com.example.mohaasaba.database.Notify;
+import com.example.mohaasaba.models.Note;
+import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.helper.ViewMaker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

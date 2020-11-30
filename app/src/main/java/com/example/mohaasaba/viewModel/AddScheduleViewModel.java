@@ -1,21 +1,17 @@
 package com.example.mohaasaba.viewModel;
 
 import android.app.Application;
-import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.mohaasaba.database.AppRepository;
-import com.example.mohaasaba.database.Note;
-import com.example.mohaasaba.database.Notify;
-import com.example.mohaasaba.database.Reminder;
-import com.example.mohaasaba.database.Schedule;
-import com.example.mohaasaba.database.ScheduleType;
-import com.example.mohaasaba.receivers.AlarmReceiver;
+import com.example.mohaasaba.models.Note;
+import com.example.mohaasaba.models.Notify;
+import com.example.mohaasaba.models.Schedule;
+import com.example.mohaasaba.models.ScheduleType;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 

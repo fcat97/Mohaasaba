@@ -1,4 +1,4 @@
-package com.example.mohaasaba.database;
+package com.example.mohaasaba.models;
 
 
 import android.os.Parcel;

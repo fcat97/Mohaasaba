@@ -2,6 +2,9 @@ package com.example.mohaasaba.database;
 
 import androidx.room.TypeConverter;
 
+import com.example.mohaasaba.models.History;
+import com.example.mohaasaba.models.Notify;
+import com.example.mohaasaba.models.ScheduleType;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

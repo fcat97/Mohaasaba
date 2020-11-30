@@ -1,4 +1,4 @@
-package com.example.mohaasaba.database;
+package com.example.mohaasaba.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -307,7 +307,7 @@ public class ScheduleType implements Parcelable {
     }
 
 
-    static class Dates implements Parcelable, Serializable {
+    public static class Dates implements Parcelable, Serializable {
         int month; /* Month is in format of Calendar.MONTH i.e. January = 0*/
         int dayOfMonth;
 

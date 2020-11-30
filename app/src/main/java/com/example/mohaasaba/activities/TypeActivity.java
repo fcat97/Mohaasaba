@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
@@ -16,7 +15,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.database.ScheduleType;
+import com.example.mohaasaba.models.ScheduleType;
 import com.example.mohaasaba.fragment.FragmentCustomDates;
 import com.example.mohaasaba.fragment.FragmentDaily;
 import com.example.mohaasaba.fragment.FragmentInterval;

@@ -9,6 +9,8 @@ import androidx.room.RawQuery;
 import androidx.room.Update;
 import androidx.sqlite.db.SupportSQLiteQuery;
 
+import com.example.mohaasaba.models.Schedule;
+
 import java.util.List;
 
 @Dao

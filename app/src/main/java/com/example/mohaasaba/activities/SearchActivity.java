@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.adapter.RecyclerViewAdapter;
 import com.example.mohaasaba.database.AppRepository;
-import com.example.mohaasaba.database.Schedule;
+import com.example.mohaasaba.models.Schedule;
 
 import java.util.ArrayList;
 import java.util.List;

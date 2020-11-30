@@ -17,9 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.database.DataConverter;
-import com.example.mohaasaba.database.History;
-import com.example.mohaasaba.database.Schedule;
-import com.example.mohaasaba.database.Task;
+import com.example.mohaasaba.models.Schedule;
+import com.example.mohaasaba.models.Task;
 import com.example.mohaasaba.helper.ThemeUtils;
 
 import java.util.Calendar;

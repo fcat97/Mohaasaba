@@ -7,11 +7,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.mohaasaba.database.AppRepository;
-import com.example.mohaasaba.database.Reminder;
-import com.example.mohaasaba.database.Schedule;
+import com.example.mohaasaba.models.Schedule;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class ScheduleViewModel extends AndroidViewModel {
     private AppRepository mRepository;

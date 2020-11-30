@@ -9,7 +9,7 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-import com.example.mohaasaba.database.Reminder;
+import com.example.mohaasaba.models.Reminder;
 import com.example.mohaasaba.helper.NotificationHelper;
 
 public class AlarmReceiver extends BroadcastReceiver {

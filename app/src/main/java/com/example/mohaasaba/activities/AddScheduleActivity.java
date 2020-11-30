@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,14 +29,13 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.database.DataConverter;
-import com.example.mohaasaba.database.Note;
-import com.example.mohaasaba.database.Notify;
-import com.example.mohaasaba.database.Schedule;
-import com.example.mohaasaba.database.ScheduleType;
+import com.example.mohaasaba.models.Note;
+import com.example.mohaasaba.models.Notify;
+import com.example.mohaasaba.models.Schedule;
+import com.example.mohaasaba.models.ScheduleType;
 import com.example.mohaasaba.dialog.DialogColorPicker;
 import com.example.mohaasaba.dialog.DialogDatePicker;
 import com.example.mohaasaba.fragment.FragmentEditReminder;
-import com.example.mohaasaba.fragment.FragmentOther;
 import com.example.mohaasaba.fragment.FragmentOverview;
 import com.example.mohaasaba.fragment.FragmentTodo;
 import com.example.mohaasaba.helper.ThemeUtils;
@@ -45,7 +43,6 @@ import com.example.mohaasaba.viewModel.AddScheduleViewModel;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class AddScheduleActivity extends AppCompatActivity

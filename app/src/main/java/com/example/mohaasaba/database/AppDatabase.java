@@ -1,26 +1,24 @@
 package com.example.mohaasaba.database;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
-import androidx.sqlite.db.SimpleSQLiteQuery;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.mohaasaba.R;
 import com.example.mohaasaba.helper.ThemeUtils;
+import com.example.mohaasaba.models.Note;
+import com.example.mohaasaba.models.Notify;
+import com.example.mohaasaba.models.Reminder;
+import com.example.mohaasaba.models.Schedule;
+import com.example.mohaasaba.models.Task;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 @Database(entities = {Schedule.class, Note.class, Reminder.class}, version = 45)
 @TypeConverters({DataConverter.class})

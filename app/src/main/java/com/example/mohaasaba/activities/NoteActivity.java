@@ -30,7 +30,7 @@ import com.chinalwb.are.styles.toolitems.ARE_ToolItem_Superscript;
 import com.chinalwb.are.styles.toolitems.ARE_ToolItem_Underline;
 import com.chinalwb.are.styles.toolitems.IARE_ToolItem;
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.database.Note;
+import com.example.mohaasaba.models.Note;
 import com.example.mohaasaba.helper.ThemeUtils;
 
 import org.jsoup.Jsoup;
