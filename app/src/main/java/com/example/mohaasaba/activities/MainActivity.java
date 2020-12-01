@@ -2,7 +2,9 @@ package com.example.mohaasaba.activities;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,7 +27,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.fragment.FragmentMainActivity;
-import com.example.mohaasaba.receivers.AlarmReceiver;
+import com.example.mohaasaba.receivers.BootReceiver;
 import com.example.mohaasaba.receivers.NotificationScheduler;
 import com.example.mohaasaba.viewModel.ScheduleViewModel;
 import com.google.android.material.tabs.TabLayout;
@@ -39,8 +41,7 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
     private static final String TAG = "MainActivity";
 
     private ScheduleViewModel mScheduleViewModel;
-    private AlarmReceiver mAlarmReceiver;
-    private NotificationScheduler notificationScheduler;
+    private AlarmManager mAlarmManager;
 
     private FragmentMainActivity mTodayFragment;
     private FragmentMainActivity mAllSchedulesFragment;
@@ -61,10 +62,20 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
             getWindow().setStatusBarColor(Color.WHITE);
         }
 
-        notificationScheduler = new NotificationScheduler(this);
+        mAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        mAlarmReceiver = new AlarmReceiver(getApplicationContext());
         mScheduleViewModel = new ScheduleViewModel(getApplication());
+
+
+        /* Enable the BootReceiver Broadcast Receiver explicitly
+        * This receiver is disabled in Manifest by default
+        * The following action will enable it */
+        ComponentName receiver = new ComponentName(this, BootReceiver.class);
+        PackageManager pm = getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
 
         /*
         //Implementing swipe action
@@ -140,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
             return true;
         }
         if (item.getItemId() == R.id.scheduleAlarm_menuItem_MainActivity) {
-            notificationScheduler.scheduleNotifications();
+            rescheduleNotification();
             return true;
         }
         return false;
@@ -149,14 +160,22 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
     @Override
     protected void onResume() {
         super.onResume();
-        notificationScheduler.scheduleNotifications();
+        rescheduleNotification();
+    }
+
+    private void rescheduleNotification() {
+        Intent intent = new Intent(this, NotificationScheduler.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, NotificationScheduler.MIDNIGHT_REQUEST_PID,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Calendar calendar = Calendar.getInstance();
+        mAlarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
     /*
      * This method will delete all the Attached objects which are entities in the DB
      * */
-    private void removeAttachments(Schedule schedule) throws ExecutionException, InterruptedException {
+    private void removeAttachments(Schedule schedule) {
         if (schedule.getNoteID() != null) mScheduleViewModel.deleteNote(schedule.getNoteID());
-        notificationScheduler.scheduleNotifications();
+        rescheduleNotification();
     }
 
     public void openAddScheduleActivity(View view) {
