@@ -164,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
     }
 
     private void rescheduleNotification() {
+        Log.d(TAG, "rescheduleNotification: called");
         Intent intent = new Intent(this, NotificationScheduler.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, NotificationScheduler.MIDNIGHT_REQUEST_PID,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);

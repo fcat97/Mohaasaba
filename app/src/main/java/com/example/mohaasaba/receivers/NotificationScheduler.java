@@ -121,9 +121,9 @@ public class NotificationScheduler extends BroadcastReceiver{
             PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext.getApplicationContext(), notify.uniqueID,
                     intent, PendingIntent.FLAG_UPDATE_CURRENT);
             if (notify.repeatMinute == 0) {
-                alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             } else {
-                alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(),
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                         notify.repeatMinute * Notify.MINUTE, pendingIntent);
             }
 
