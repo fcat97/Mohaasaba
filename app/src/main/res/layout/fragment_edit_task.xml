@@ -196,4 +196,12 @@
 
         android:layout_alignTop="@id/textView7_FragmentTaskEditor"
         android:layout_alignParentEnd="true"/>
+
+    <FrameLayout
+        android:id="@+id/dateSelector_FrameLayout_FragmentTaskEditor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_small"
+
+        android:layout_below="@id/textView8_FragmentTaskEditor"/>
 </RelativeLayout>

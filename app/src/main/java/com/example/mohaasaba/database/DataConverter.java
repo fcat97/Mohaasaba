@@ -144,4 +144,23 @@ public class DataConverter {
 
         return gson.toJson(notifyList, type);
     }
+
+    @TypeConverter
+    public static String fromEnumToString(ScheduleType.Type type) {
+        if (type == null) return null;
+        Gson gson = new Gson();
+        Type classType = new TypeToken<ScheduleType.Type>(){}.getType();
+
+        return gson.toJson(type, classType);
+    }
+
+    @TypeConverter
+    public static ScheduleType.Type fromStringToType(String string) {
+        if (string == null ) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<ScheduleType.Type>(){}.getType();
+
+        return gson.fromJson(string, type);
+    }
 }

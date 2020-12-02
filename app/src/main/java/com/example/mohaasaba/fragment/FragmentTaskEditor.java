@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.mohaasaba.R;
+import com.example.mohaasaba.helper.ViewMaker;
 import com.example.mohaasaba.models.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -29,8 +31,10 @@ public class FragmentTaskEditor extends BottomSheetDialogFragment {
     private ImageButton decrementProgressImageButton;
     private FragmentTargetEditorListener listener;
 
+    private FrameLayout dateSelectorFrameLayout;
+
     public FragmentTaskEditor(Task task) {
-        this.task = task;
+       this.task = task;
     }
 
 
@@ -47,6 +51,8 @@ public class FragmentTaskEditor extends BottomSheetDialogFragment {
         currentProgressTextView = view.findViewById(R.id.currentProgress_TextView_FragmentTaskEditor);
         confirmButton = view.findViewById(R.id.confirm_button_FragmentTaskEditor);
         decrementProgressImageButton = view.findViewById(R.id.decrementProgress_ImageButton_FragmentTaskEditor);
+
+        dateSelectorFrameLayout = view.findViewById(R.id.dateSelector_FrameLayout_FragmentTaskEditor);
 
         return view;
 
@@ -72,6 +78,7 @@ public class FragmentTaskEditor extends BottomSheetDialogFragment {
         mTemp.unit = task.unit;
         mTemp.step = task.step;
         mTemp.taskType = task.taskType;
+        mTemp.scheduleType = task.scheduleType;
 
         decrementProgressImageButton.setOnClickListener(v -> {
             mTemp.undo();
@@ -91,6 +98,7 @@ public class FragmentTaskEditor extends BottomSheetDialogFragment {
                 task.unit = unit;
                 task.currentProgress = mTemp.currentProgress;
                 task.taskType = mTemp.taskType;
+                task.scheduleType = mTemp.scheduleType;
 
                 if (listener != null) {
                     listener.onConfirm();
@@ -106,6 +114,10 @@ public class FragmentTaskEditor extends BottomSheetDialogFragment {
             showTypeMenu();
         });
 
+        ViewMaker viewMaker = new ViewMaker(getContext());
+        ViewMaker.DateSelectorView  dateSelectorView = viewMaker.getDateSelectorView();
+        dateSelectorView.setScheduleType(mTemp.scheduleType);
+        dateSelectorFrameLayout.addView(dateSelectorView.getView());
     }
 
     private void showTypeMenu() {

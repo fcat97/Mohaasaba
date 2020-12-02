@@ -1,5 +1,8 @@
 package com.example.mohaasaba.adapter;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +56,8 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         holder.circleProgressView.setMaxValue(task.maxProgress);
         holder.circleProgressView.setValue(task.currentProgress);
         holder.circleProgressView.setBlockCount(Math.round(task.maxProgress / task.step));
+        if (task.scheduleType.isToday()) holder.todayIndicator.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+        else holder.todayIndicator.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         
         holder.itemView.setOnClickListener(v -> {
             if (listener == null) try {
@@ -97,6 +102,7 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         private CircleProgressView circleProgressView;
         private ImageView completedImageView;
         private ImageButton deleteButton;
+        private View todayIndicator;
 
         public TaskHolder(@NonNull View itemView) {
             super(itemView);
@@ -104,6 +110,7 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
             circleProgressView = itemView.findViewById(R.id.circularProgressView_itemView_FragmentTodo);
             completedImageView = itemView.findViewById(R.id.completed_ImageView_itemView_FragmentTodo);
             deleteButton = itemView.findViewById(R.id.deleteButton_ImageButton_itemView_FragmentTodo);
+            todayIndicator = itemView.findViewById(R.id.todayIndicator_itemView_FragmentTodo);
         }
     }
 

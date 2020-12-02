@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 public class Task implements Parcelable, Serializable {
-    public long commitDate;
     public enum Type {
         Farz,
         Wazib,
@@ -20,6 +19,8 @@ public class Task implements Parcelable, Serializable {
         SagiraGunah,
         KabiraGunah
     }
+
+    public long commitDate;
     public String text;
     public Type taskType = Type.Mubah;
     public float maxProgress;
@@ -27,6 +28,7 @@ public class Task implements Parcelable, Serializable {
     public float step;
     public int priority;
     public String unit;
+    public ScheduleType scheduleType;
 
     // Public Constructor
     public Task(String text) {
@@ -37,6 +39,7 @@ public class Task implements Parcelable, Serializable {
         this.step = 1.0f;
         this.priority = 1;
         this.commitDate = Calendar.getInstance().getTimeInMillis();
+        this.scheduleType = new ScheduleType();
     }
 
     public float getProgress() {
@@ -56,7 +59,8 @@ public class Task implements Parcelable, Serializable {
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        if (obj == null) return false;
+        return super.equals(obj);
+        /*if (obj == null) return false;
         else if (this.commitDate != ((Task)obj).commitDate) return false;
         else if (! this.text.equals(((Task)obj).text)) return false;
         else if (! this.taskType.equals(((Task)obj).taskType)) return false;
@@ -64,7 +68,8 @@ public class Task implements Parcelable, Serializable {
         else if (this.currentProgress != ((Task)obj).currentProgress) return false;
         else if (this.step != ((Task)obj).step) return false;
         else if (this.priority != ((Task)obj).priority) return false;
-        else return super.equals(obj);
+        else if (! this.scheduleType.equals(obj)) return false;
+        else return super.equals(obj);*/
     }
 
     protected Task(Parcel in) {
@@ -75,6 +80,7 @@ public class Task implements Parcelable, Serializable {
         this.currentProgress = in.readFloat();
         this.step = in.readFloat();
         this.priority = in.readInt();
+        this.scheduleType = in.readParcelable(ScheduleType.class.getClassLoader());
     }
 
     @Override
@@ -86,6 +92,7 @@ public class Task implements Parcelable, Serializable {
         dest.writeFloat(this.currentProgress);
         dest.writeFloat(this.step);
         dest.writeInt(this.priority);
+        dest.writeParcelable(scheduleType, flags);
     }
 
     @Override

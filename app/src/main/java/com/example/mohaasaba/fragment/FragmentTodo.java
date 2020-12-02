@@ -160,7 +160,6 @@ public class FragmentTodo extends Fragment {
             }
         });
     }
-
     /** Add new task and commit to history class*/
     private void addTask(String text) {
         Task task = new Task(text);

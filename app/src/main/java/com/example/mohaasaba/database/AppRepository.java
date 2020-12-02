@@ -79,7 +79,6 @@ public class AppRepository {
     }
     public LiveData<List<Schedule>> getScheduleOfToday() {
         String dayOfWeek = getDayOfWeek();
-        String monthOfYear = getMonthOfYear();
 
         List<ScheduleType.Dates> datesList = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
@@ -89,17 +88,13 @@ public class AppRepository {
         Log.i(TAG, "getScheduleOfToday: " + conditions);
 
         String query = "SELECT * FROM schedule_table WHERE " +
-                "(type_daily IS 1) OR " +
-                "((type_day_specified IS 1) AND (" +  dayOfWeek + " IS 1)) OR " +
-                "((type_month_specified IS 1) AND (" + monthOfYear + " IS 1)) OR " +
-                "((type_month_day_specified IS 1) AND (" + dayOfWeek + " IS 1) AND (" + monthOfYear + " IS 1)) OR " +
+                "((type LIKE '%WeekDays%') AND (" +  dayOfWeek + " IS 1)) OR " +
                 conditions + " ORDER BY scheduleID DESC";
         Log.d(TAG, "getScheduleOfToday: " + query);
         return mScheduleDao.getSchedule(new SimpleSQLiteQuery(query));
     }
     public List<Schedule> getSchedulesOfToday() throws ExecutionException, InterruptedException {
         String dayOfWeek = getDayOfWeek();
-        String monthOfYear = getMonthOfYear();
 
         List<ScheduleType.Dates> datesList = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
@@ -109,10 +104,7 @@ public class AppRepository {
         Log.i(TAG, "getScheduleOfToday: " + conditions);
 
         String query = "SELECT * FROM schedule_table WHERE " +
-                "(type_daily IS 1) OR " +
-                "((type_day_specified IS 1) AND (" +  dayOfWeek + " IS 1)) OR " +
-                "((type_month_specified IS 1) AND (" + monthOfYear + " IS 1)) OR " +
-                "((type_month_day_specified IS 1) AND (" + dayOfWeek + " IS 1) AND (" + monthOfYear + " IS 1)) OR " +
+                "((type LIKE '%WeekDays%') AND (" +  dayOfWeek + " IS 1)) OR " +
                 conditions + " ORDER BY scheduleID DESC";
         Log.d(TAG, "getScheduleOfToday: " + query);
 
@@ -141,8 +133,6 @@ public class AppRepository {
         return result.get();
     }
     public LiveData<List<Schedule>> getSchedulesOfThisWeek() {
-        String monthOfYear = getMonthOfYear();
-
         Calendar calendar = Calendar.getInstance();
         List<ScheduleType.Dates> datesList = new ArrayList<>();
         for (int i = 1; i <= 7; i++) {
@@ -158,14 +148,12 @@ public class AppRepository {
 
 
         String query = "SELECT * FROM schedule_table WHERE " +
-                "(type_daily IS 1) OR (" + monthOfYear + " IS 1)" + " OR " + "(type_day_specified IS 1)" + " OR " +
+                "(type LIKE '%WeekDays%') OR " +
                 customDates + " ORDER BY scheduleID DESC";
         Log.i(TAG, "getSchedulesOfThisWeek: " + query);
         return mScheduleDao.getSchedule(new SimpleSQLiteQuery(query));
     }
     public LiveData<List<Schedule>> getSchedulesOfThisMonth() {
-        String monthOfYear = getMonthOfYear();
-
         Calendar calendar = Calendar.getInstance();
         List<ScheduleType.Dates> datesList = new ArrayList<>();
 
@@ -179,7 +167,7 @@ public class AppRepository {
         }
         String customDates = getQueryString(datesList);
         String query = "SELECT * FROM schedule_table WHERE " +
-                "(type_daily IS 1) OR (" + monthOfYear + " IS 1)" + " OR " + "(type_day_specified IS 1)" + " OR " +
+                "(type LIKE '%WeekDays%') OR " +
                 customDates + " ORDER BY scheduleID DESC";
         Log.i(TAG, "getSchedulesOfThisMonth: " + query);
         return mScheduleDao.getSchedule(new SimpleSQLiteQuery(query));
@@ -203,52 +191,7 @@ public class AppRepository {
 
         return result.get();
     }
-    private String getMonthOfYear() {
-        Calendar c = Calendar.getInstance();
-        String monthOfYear;
-        switch (c.get(Calendar.MONTH)) {
-            case Calendar.JANUARY:
-                monthOfYear = "everyJanuary";
-                break;
-            case Calendar.FEBRUARY:
-                monthOfYear = "everyFebruary";
-                break;
-            case Calendar.MARCH:
-                monthOfYear = "everyMarch";
-                break;
-            case Calendar.APRIL:
-                monthOfYear = "everyApril";
-                break;
-            case Calendar.MAY:
-                monthOfYear = "everyMay";
-                break;
-            case Calendar.JUNE:
-                monthOfYear = "everyJune";
-                break;
-            case Calendar.JULY:
-                monthOfYear = "everyJuly";
-                break;
-            case Calendar.AUGUST:
-                monthOfYear = "everyAugust";
-                break;
-            case Calendar.SEPTEMBER:
-                monthOfYear = "everySeptember";
-                break;
-            case Calendar.OCTOBER:
-                monthOfYear = "everyOctober";
-                break;
-            case Calendar.NOVEMBER:
-                monthOfYear = "everyNovember";
-                break;
-            case Calendar.DECEMBER:
-                monthOfYear = "everyDecember";
-                break;
-            default:
-                monthOfYear = "type_monthly";
-                break;
-        }
-        return monthOfYear;
-    }
+
     private String getDayOfWeek() {
         Calendar c = Calendar.getInstance();
         String dayOfWeek;

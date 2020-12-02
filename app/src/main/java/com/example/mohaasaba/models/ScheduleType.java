@@ -2,6 +2,7 @@ package com.example.mohaasaba.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,263 +10,70 @@ import androidx.annotation.Nullable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class ScheduleType implements Parcelable {
-    public static final String ACTIVE_DAYS = "ScheduleType.activeDays";
-    public static final String INACTIVE_DAYS = "ScheduleType.inactiveDays";
-    public static final String CONTINUOUS_DAYS = "ScheduleType.continuous";
+public class ScheduleType implements Parcelable, Serializable {
     private static final String TAG = "ScheduleType";
-    private boolean type_daily;
-    private boolean type_day_specified;
-    private boolean type_month_specified;
-    private boolean type_month_day_specified;
-    private boolean type_custom;
-    private boolean type_interval;
 
-    private boolean everySaturday;
-    private boolean everySunday;
-    private boolean everyMonday;
-    private boolean everyTuesday;
-    private boolean everyWednesday;
-    private boolean everyThursday;
-    private boolean everyFriday;
+    public enum Type {
+        WeekDays,
+        CustomDates,
+        Intervals
+    }
 
-    private boolean everyJanuary;
-    private boolean everyFebruary;
-    private boolean everyMarch;
-    private boolean everyApril;
-    private boolean everyMay;
-    private boolean everyJune;
-    private boolean everyJuly;
-    private boolean everyAugust;
-    private boolean everySeptember;
-    private boolean everyOctober;
-    private boolean everyNovember;
-    private boolean everyDecember;
+    public Type type;
+
+    public boolean everySaturday;
+    public boolean everySunday;
+    public boolean everyMonday;
+    public boolean everyTuesday;
+    public boolean everyWednesday;
+    public boolean everyThursday;
+    public boolean everyFriday;
 
     private List<Dates> selectedDates = new ArrayList<>();
     private Interval interval;
 
     public ScheduleType() {
-        this.type_daily = true;
+        this.type = Type.WeekDays;
+        this.everySaturday = true;
+        this.everySunday = true;
+        this.everyMonday = true;
+        this.everyTuesday = true;
+        this.everyWednesday = true;
+        this.everyThursday = true;
+        this.everyFriday = true;
     }
 
-    public void clearAll() {
-        type_daily = false;
-        type_day_specified = false;
-        type_month_specified = false;
-        type_month_day_specified = false;
-        type_custom = false;
-        type_interval = false;
+    public void initialize() {
+        this.type = Type.WeekDays;
 
-        everySaturday = false;
-        everySunday = false;
-        everyMonday = false;
-        everyTuesday = false;
-        everyWednesday = false;
-        everyThursday = false;
-        everyFriday = false;
-
-        everyJanuary = false;
-        everyFebruary = false;
-        everyMarch = false;
-        everyApril = false;
-        everyMay = false;
-        everyJune = false;
-        everyJuly = false;
-        everyAugust = false;
-        everySeptember = false;
-        everyOctober = false;
-        everyNovember = false;
-        everyDecember = false;
+        this.everySaturday = true;
+        this.everySunday = true;
+        this.everyMonday = true;
+        this.everyTuesday = true;
+        this.everyWednesday = true;
+        this.everyThursday = true;
+        this.everyFriday = true;
 
         selectedDates = new ArrayList<>();
         interval = null;
     }
 
-
-    public boolean isType_daily() {
-        return type_daily;
-    }
-    public void setType_daily(boolean type_daily) {
-        this.type_daily = type_daily;
-    }
-    public boolean isType_day_specified() {
-        return type_day_specified;
-    }
-    public void setType_day_specified(boolean type_daily_mod) {
-        this.type_day_specified = type_daily_mod;
-    }
-    public boolean isType_month_specified() {
-        return type_month_specified;
-    }
-    public void setType_month_specified(boolean type_month_specified) {
-        this.type_month_specified = type_month_specified;
-    }
-    public boolean isType_month_day_specified() {
-        return type_month_day_specified;
-    }
-    public void setType_month_day_specified(boolean type_month_day_specified) {
-        this.type_month_day_specified = type_month_day_specified;
-    }
-
-    public boolean isType_custom() {
-        return type_custom;
-    }
-    public void setType_custom(boolean type_custom) {
-        this.type_custom = type_custom;
-    }
-    public boolean isType_interval() {
-        return type_interval;
-    }
-    public void setType_interval(boolean type_interval) {
-        this.type_interval = type_interval;
-    }
-
-    public boolean isEverySaturday() {
-        return everySaturday;
-    }
-    public void setEverySaturday(boolean everySaturday) {
-        this.everySaturday = everySaturday;
-    }
-    public boolean isEverySunday() {
-        return everySunday;
-    }
-    public void setEverySunday(boolean everySunday) {
-        this.everySunday = everySunday;
-    }
-    public boolean isEveryMonday() {
-        return everyMonday;
-    }
-    public void setEveryMonday(boolean everyMonday) {
-        this.everyMonday = everyMonday;
-    }
-    public boolean isEveryTuesday() {
-        return everyTuesday;
-    }
-    public void setEveryTuesday(boolean everyTuesday) {
-        this.everyTuesday = everyTuesday;
-    }
-    public boolean isEveryWednesday() {
-        return everyWednesday;
-    }
-    public void setEveryWednesday(boolean everyWednesday) {
-        this.everyWednesday = everyWednesday;
-    }
-    public boolean isEveryThursday() {
-        return everyThursday;
-    }
-    public void setEveryThursday(boolean everyThursday) {
-        this.everyThursday = everyThursday;
-    }
-    public boolean isEveryFriday() {
-        return everyFriday;
-    }
-    public void setEveryFriday(boolean everyFriday) {
-        this.everyFriday = everyFriday;
-    }
-
-    public boolean isEveryJanuary() {
-        return everyJanuary;
-    }
-    public void setEveryJanuary(boolean everyJanuary) {
-        this.everyJanuary = everyJanuary;
-    }
-    public boolean isEveryFebruary() {
-        return everyFebruary;
-    }
-    public void setEveryFebruary(boolean everyFebruary) {
-        this.everyFebruary = everyFebruary;
-    }
-    public boolean isEveryMarch() {
-        return everyMarch;
-    }
-    public void setEveryMarch(boolean everyMarch) {
-        this.everyMarch = everyMarch;
-    }
-    public boolean isEveryApril() {
-        return everyApril;
-    }
-    public void setEveryApril(boolean everyApril) {
-        this.everyApril = everyApril;
-    }
-    public boolean isEveryMay() {
-        return everyMay;
-    }
-    public void setEveryMay(boolean everyMay) {
-        this.everyMay = everyMay;
-    }
-    public boolean isEveryJune() {
-        return everyJune;
-    }
-    public void setEveryJune(boolean everyJune) {
-        this.everyJune = everyJune;
-    }
-    public boolean isEveryJuly() {
-        return everyJuly;
-    }
-    public void setEveryJuly(boolean everyJuly) {
-        this.everyJuly = everyJuly;
-    }
-    public boolean isEveryAugust() {
-        return everyAugust;
-    }
-    public void setEveryAugust(boolean everyAugust) {
-        this.everyAugust = everyAugust;
-    }
-    public boolean isEverySeptember() {
-        return everySeptember;
-    }
-    public void setEverySeptember(boolean everySeptember) {
-        this.everySeptember = everySeptember;
-    }
-    public boolean isEveryOctober() {
-        return everyOctober;
-    }
-    public void setEveryOctober(boolean everyOctober) {
-        this.everyOctober = everyOctober;
-    }
-    public boolean isEveryNovember() {
-        return everyNovember;
-    }
-    public void setEveryNovember(boolean everyNovember) {
-        this.everyNovember = everyNovember;
-    }
-    public boolean isEveryDecember() {
-        return everyDecember;
-    }
-    public void setEveryDecember(boolean everyDecember) {
-        this.everyDecember = everyDecember;
-    }
-
+    // Class related Getter and Setter -------------------------------------------------------------
     public List<Dates> getSelectedDates() {
         return selectedDates;
-    }
-    public List<Calendar> getSelectedDatesAsCalender() {
-        List<Calendar> calendars = new ArrayList<>();
-
-        for (Dates selected: selectedDates
-             ) {
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            calendar.clear();
-            calendar.set(year, selected.month, selected.dayOfMonth);
-            calendars.add(calendar);
-        }
-
-        return calendars;
     }
     public void setSelectedDates(List<Dates> selectedDates) {
         this.selectedDates = selectedDates;
     }
-    public void setSelectedDatesFromCalender(List<Calendar> calenders) {
-        selectedDates = new ArrayList<>();
-        for (int i = 0; i < calenders.size(); i++) {
-            selectedDates.add(new Dates(calenders.get(i).get(Calendar.MONTH), calenders.get(i).get(Calendar.DAY_OF_MONTH)));
-        }
+    public Interval getInterval() {
+        /* Required for RoomDB */
+        return interval;
+    }
+    public void setInterval(Interval interval) {
+        /* Required for RoomDB */
+        this.interval = interval;
     }
     private void setSelectedDates(Interval interval) {
         Calendar calendar = Calendar.getInstance();
@@ -282,24 +90,46 @@ public class ScheduleType implements Parcelable {
         }
     }
 
-    public Interval getInterval() {
-        /* Required for RoomDB */
-        return interval;
+    // Methods to be used outside ------------------------------------------------------------------
+    public List<Calendar> getSelectedDatesAsCalender() {
+        List<Calendar> calendars = new ArrayList<>();
+
+        for (Dates selected: selectedDates
+             ) {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            calendar.clear();
+            calendar.set(year, selected.month, selected.dayOfMonth);
+            calendars.add(calendar);
+        }
+
+        return calendars;
     }
-    public void setInterval(Interval interval) {
-        /* Required for RoomDB */
-        this.interval = interval;
+    public void setSelectedDatesFromCalender(List<Calendar> calenders) {
+        selectedDates = new ArrayList<>();
+        for (int i = 0; i < calenders.size(); i++) {
+            selectedDates.add(new Dates(calenders.get(i).get(Calendar.MONTH), calenders.get(i).get(Calendar.DAY_OF_MONTH)));
+        }
+    }
+    public boolean isToday() {
+        if (type == Type.WeekDays) {
+            Calendar calendar = Calendar.getInstance();
+            int d_of_week = calendar.get(Calendar.DAY_OF_WEEK);
+            Log.d(TAG, "isToday: called");
+            Log.d(TAG, "isToday: day of week " + d_of_week);
+
+            if (d_of_week == Calendar.SUNDAY && everySunday) return true;
+            else if (d_of_week == Calendar.MONDAY && everyMonday) return true;
+            else if (d_of_week == Calendar.TUESDAY && everyTuesday) return true;
+            else if (d_of_week == Calendar.WEDNESDAY && everyWednesday) return true;
+            else if (d_of_week == Calendar.THURSDAY && everyThursday) return true;
+            else if (d_of_week == Calendar.FRIDAY && everyFriday) return true;
+            else if (d_of_week == Calendar.SATURDAY && everySaturday) return true;
+            else return false;
+        }
+        else return false;
     }
 
-    public Map<String, Integer> getIntervalData() {
-        if (interval == null) return null;
-        Map<String, Integer> map = new HashMap<>();
-        map.put(ACTIVE_DAYS, interval.activeDays);
-        map.put(INACTIVE_DAYS, interval.inactiveDays);
-        if (interval.isContinuous) map.put(CONTINUOUS_DAYS, 1);
-        else map.put(CONTINUOUS_DAYS, 0);
-        return map;
-    }
     public void setInterval(int dayLength, int interval, boolean isContinuous) {
         Interval interval1 = new Interval(dayLength, interval, isContinuous);
         setSelectedDates(interval1);
@@ -307,6 +137,7 @@ public class ScheduleType implements Parcelable {
     }
 
 
+    // Inner Classes -------------------------------------------------------------------------------
     public static class Dates implements Parcelable, Serializable {
         int month; /* Month is in format of Calendar.MONTH i.e. January = 0*/
         int dayOfMonth;
@@ -368,9 +199,9 @@ public class ScheduleType implements Parcelable {
         };
     }
     public static class Interval implements Parcelable {
-        int activeDays;
-        int inactiveDays;
-        boolean isContinuous;
+        public int activeDays;
+        public int inactiveDays;
+        public boolean isContinuous;
 
         public Interval(int activeDays, int inactiveDays, boolean isContinuous) {
             this.activeDays = activeDays;
@@ -410,6 +241,7 @@ public class ScheduleType implements Parcelable {
     }
 
 
+    // Parcelable Classes and Methods --------------------------------------------------------------
     @Override
     public int describeContents() {
         return 0;
@@ -417,12 +249,7 @@ public class ScheduleType implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeByte(this.type_daily ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.type_day_specified ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.type_month_specified ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.type_month_day_specified ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.type_custom ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.type_interval ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.type.ordinal());
         dest.writeByte(this.everySaturday ? (byte) 1 : (byte) 0);
         dest.writeByte(this.everySunday ? (byte) 1 : (byte) 0);
         dest.writeByte(this.everyMonday ? (byte) 1 : (byte) 0);
@@ -430,29 +257,12 @@ public class ScheduleType implements Parcelable {
         dest.writeByte(this.everyWednesday ? (byte) 1 : (byte) 0);
         dest.writeByte(this.everyThursday ? (byte) 1 : (byte) 0);
         dest.writeByte(this.everyFriday ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.everyJanuary ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.everyFebruary ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.everyMarch ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.everyApril ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.everyMay ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.everyJune ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.everyJuly ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.everyAugust ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.everySeptember ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.everyOctober ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.everyNovember ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.everyDecember ? (byte) 1 : (byte) 0);
         dest.writeTypedList(this.selectedDates);
         dest.writeParcelable(this.interval, flags);
     }
 
     protected ScheduleType(Parcel in) {
-        this.type_daily = in.readByte() != 0;
-        this.type_day_specified = in.readByte() != 0;
-        this.type_month_specified = in.readByte() != 0;
-        this.type_month_day_specified = in.readByte() != 0;
-        this.type_custom = in.readByte() != 0;
-        this.type_interval = in.readByte() != 0;
+        this.type = Type.values()[in.readInt()];
         this.everySaturday = in.readByte() != 0;
         this.everySunday = in.readByte() != 0;
         this.everyMonday = in.readByte() != 0;
@@ -460,18 +270,6 @@ public class ScheduleType implements Parcelable {
         this.everyWednesday = in.readByte() != 0;
         this.everyThursday = in.readByte() != 0;
         this.everyFriday = in.readByte() != 0;
-        this.everyJanuary = in.readByte() != 0;
-        this.everyFebruary = in.readByte() != 0;
-        this.everyMarch = in.readByte() != 0;
-        this.everyApril = in.readByte() != 0;
-        this.everyMay = in.readByte() != 0;
-        this.everyJune = in.readByte() != 0;
-        this.everyJuly = in.readByte() != 0;
-        this.everyAugust = in.readByte() != 0;
-        this.everySeptember = in.readByte() != 0;
-        this.everyOctober = in.readByte() != 0;
-        this.everyNovember = in.readByte() != 0;
-        this.everyDecember = in.readByte() != 0;
         this.selectedDates = in.createTypedArrayList(Dates.CREATOR);
         this.interval = in.readParcelable(Interval.class.getClassLoader());
     }
@@ -487,4 +285,14 @@ public class ScheduleType implements Parcelable {
             return new ScheduleType[size];
         }
     };
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return super.equals(obj);
+    }
 }

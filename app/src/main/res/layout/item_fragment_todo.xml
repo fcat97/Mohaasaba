@@ -12,9 +12,14 @@
         <RelativeLayout
             android:id="@+id/RelativeLayout1_itemView_FragmentTodo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:background="?attr/selectableItemBackground"
             android:layout_alignParentStart="true">
+            <View
+                android:id="@+id/todayIndicator_itemView_FragmentTodo"
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="?attr/colorAccent"/>
             <TextView
                 android:id="@+id/textView_itemView_FragmentTodo"
                 android:layout_width="match_parent"
@@ -52,7 +57,7 @@
                 app:cpv_innerContourColor="@android:color/transparent"
                 app:cpv_outerContourColor="@android:color/transparent"
 
-                android:layout_alignParentStart="true"
+                android:layout_toEndOf="@id/todayIndicator_itemView_FragmentTodo"
                 android:layout_alignParentTop="true"/>
 
             <ImageView

@@ -23,19 +23,6 @@ public class FragmentDaily extends Fragment {
     private CheckBox cbThursday;
     private CheckBox cbFriday;
 
-    private CheckBox cbJanuary;
-    private CheckBox cbFebruary;
-    private CheckBox cbMarch;
-    private CheckBox cbApril;
-    private CheckBox cbMay;
-    private CheckBox cbJune;
-    private CheckBox cbJuly;
-    private CheckBox cbAugust;
-    private CheckBox cbSeptember;
-    private CheckBox cbOctober;
-    private CheckBox cbNovember;
-    private CheckBox cbDecember;
-
     public FragmentDaily() {
         setRetainInstance(true);
     }
@@ -57,19 +44,6 @@ public class FragmentDaily extends Fragment {
         cbWednesday = rootView.findViewById(R.id.cb_wednesday_FragmentDaily_TypeActivity);
         cbThursday = rootView.findViewById(R.id.cb_thursday_FragmentDaily_TypeActivity);
         cbFriday = rootView.findViewById(R.id.cb_friday_FragmentDaily_TypeActivity);
-
-        cbJanuary = rootView.findViewById(R.id.cb_january_FragmentDaily_TypeActivity);
-        cbFebruary = rootView.findViewById(R.id.cb_february_FragmentDaily_TypeActivity);
-        cbMarch = rootView.findViewById(R.id.cb_march_FragmentDaily_TypeActivity);
-        cbApril = rootView.findViewById(R.id.cb_april_FragmentDaily_TypeActivity);
-        cbMay = rootView.findViewById(R.id.cb_may_FragmentDaily_TypeActivity);
-        cbJune = rootView.findViewById(R.id.cb_june_FragmentDaily_TypeActivity);
-        cbJuly = rootView.findViewById(R.id.cb_july_FragmentDaily_TypeActivity);
-        cbAugust = rootView.findViewById(R.id.cb_august_FragmentDaily_TypeActivity);
-        cbSeptember = rootView.findViewById(R.id.cb_september_FragmentDaily_TypeActivity);
-        cbOctober = rootView.findViewById(R.id.cb_october_FragmentDaily_TypeActivity);
-        cbNovember = rootView.findViewById(R.id.cb_november_FragmentDaily_TypeActivity);
-        cbDecember = rootView.findViewById(R.id.cb_december_FragmentDaily_TypeActivity);
 
         return rootView;
     }
@@ -106,54 +80,6 @@ public class FragmentDaily extends Fragment {
 
     public CheckBox getCbFriday() {
         return cbFriday;
-    }
-
-    public CheckBox getCbJanuary() {
-        return cbJanuary;
-    }
-
-    public CheckBox getCbFebruary() {
-        return cbFebruary;
-    }
-
-    public CheckBox getCbMarch() {
-        return cbMarch;
-    }
-
-    public CheckBox getCbApril() {
-        return cbApril;
-    }
-
-    public CheckBox getCbMay() {
-        return cbMay;
-    }
-
-    public CheckBox getCbJune() {
-        return cbJune;
-    }
-
-    public CheckBox getCbJuly() {
-        return cbJuly;
-    }
-
-    public CheckBox getCbAugust() {
-        return cbAugust;
-    }
-
-    public CheckBox getCbSeptember() {
-        return cbSeptember;
-    }
-
-    public CheckBox getCbOctober() {
-        return cbOctober;
-    }
-
-    public CheckBox getCbNovember() {
-        return cbNovember;
-    }
-
-    public CheckBox getCbDecember() {
-        return cbDecember;
     }
 
     public void setCallbacks(TypeActivity.OnFragmentCreatedCallbacks callbacks) {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -309,7 +310,7 @@ public class AddScheduleActivity extends AppCompatActivity
     }
     private void openEditScheduleTypeActivity() {
         Intent intent = new Intent(this,TypeActivity.class);
-        intent.putExtra(AddScheduleActivity.EXTRA_SCHEDULE_TYPE, mViewModel.getScheduleType());
+        intent.putExtra(AddScheduleActivity.EXTRA_SCHEDULE_TYPE, (Parcelable) mViewModel.getScheduleType());
         startActivityForResult(intent, EDIT_SCHEDULE_TYPE_REQUEST);
     }
     @Override
@@ -346,12 +347,15 @@ public class AddScheduleActivity extends AppCompatActivity
     }
 
     private void invalidateScheduleTypeTextView(ScheduleType scheduleType) {
-        if (scheduleType.isType_daily()) mScheduleTypeTextView.setText(R.string.scheduleType_daily_text);
-        else if (scheduleType.isType_day_specified()) mScheduleTypeTextView.setText(R.string.scheduleType_onWeekday);
-        else if (scheduleType.isType_month_specified()) mScheduleTypeTextView.setText(R.string.scheduleType_onMonth);
-        else if (scheduleType.isType_month_day_specified()) mScheduleTypeTextView.setText(R.string.scheduleType_onMonthAndDay);
-        else if (scheduleType.isType_custom()) mScheduleTypeTextView.setText(R.string.scheduleType_custom_text);
-        else if (scheduleType.isType_interval()) mScheduleTypeTextView.setText(R.string.scheduleType_interval_text);
+        if (scheduleType.type == ScheduleType.Type.WeekDays) {
+            if (scheduleType.everySaturday && scheduleType.everySunday && scheduleType.everyMonday
+                    && scheduleType.everyTuesday && scheduleType.everyWednesday
+                    && scheduleType.everyThursday && scheduleType.everyFriday)
+                mScheduleTypeTextView.setText(R.string.scheduleType_daily_text);
+            else mScheduleTypeTextView.setText(R.string.scheduleType_onWeekday);
+        }
+        else if (scheduleType.type == ScheduleType.Type.CustomDates) mScheduleTypeTextView.setText(R.string.scheduleType_custom_text);
+        else mScheduleTypeTextView.setText(R.string.scheduleType_interval_text);
     }
 
     // On Save MenuItem Clicked --------------------------------------------------------------------
