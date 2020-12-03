@@ -196,6 +196,7 @@ public class FragmentTodo extends Fragment {
         taskList = history.getTasks(selectedDate);
         mAdapter.submitList(taskList);
         mAdapter.notifyDataSetChanged();
+        setHeaderView();
     }
 
     private void setChartData() {
@@ -247,11 +248,6 @@ public class FragmentTodo extends Fragment {
         lineChart.setData(lineData);
         lineChart.invalidate();
         lineChart.animateX(600);
-    }
-    private void openDatePickerDialog() {
-        // TODO: Fix this issue
-        DialogDatePicker datePickerDialog = new DialogDatePicker();
-        datePickerDialog.show(getParentFragmentManager(),"date picker");
     }
 
     //TODO: Implement DatePicker Dialog From FragmentTodo;

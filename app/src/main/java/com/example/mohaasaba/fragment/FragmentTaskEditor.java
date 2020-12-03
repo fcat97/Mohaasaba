@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -88,6 +89,15 @@ public class FragmentTaskEditor extends BottomSheetDialogFragment {
         confirmButton.setOnClickListener(v -> {
             String title = titleEditText.getText().toString().trim();
             String unit = progressUnitEditText.getText().toString().trim();
+            if (maxProgressEditText.getText().toString().trim().isEmpty()){
+                Toast.makeText(getContext(), "Max Progress not Valid!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (stepEditText.getText().toString().trim().isEmpty()) {
+                Toast.makeText(getContext(), "Step is not Valid", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             float maxProgress = Float.parseFloat(maxProgressEditText.getText().toString());
             float step = Float.parseFloat(stepEditText.getText().toString());
 
