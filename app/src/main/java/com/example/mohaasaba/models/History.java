@@ -18,6 +18,21 @@ public class History implements Parcelable{
 
     public History() {}
 
+    public History duplicate() {
+        Calendar calendar = Calendar.getInstance();
+        List<Task> oldTasks = getTasks(calendar);
+        List<Task> taskList = new ArrayList<>();
+
+        for (Task t :
+                oldTasks) {
+            taskList.add(t.duplicate());
+        }
+
+        History history = new History();
+        history.commitTodo(calendar, taskList);
+
+        return history;
+    }
     public void commitTodo(Calendar date, List<Task> taskList) {
         long key = getKey(date);
         taskHash.put(key, taskList);

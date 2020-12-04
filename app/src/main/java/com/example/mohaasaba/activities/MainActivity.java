@@ -25,6 +25,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.mohaasaba.R;
+import com.example.mohaasaba.fragment.FragmentScheduleOptions;
 import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.fragment.FragmentMainActivity;
 import com.example.mohaasaba.receivers.BootReceiver;
@@ -152,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
         }
         if (item.getItemId() == R.id.scheduleAlarm_menuItem_MainActivity) {
             rescheduleNotification();
+            Toast.makeText(this, "Don't Disturb Me!", Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;
@@ -218,9 +220,21 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
     }
 
     @Override
-    public void onItemLongClicked(Schedule schedule) throws ExecutionException, InterruptedException {
-        removeAttachments(schedule);
-        mScheduleViewModel.deleteSchedule(schedule);
+    public void onItemLongClicked(Schedule schedule) {
+        FragmentScheduleOptions fragmentScheduleOptions = new FragmentScheduleOptions();
+        fragmentScheduleOptions.show(getSupportFragmentManager(), "Fragment Schedule Option");
+        fragmentScheduleOptions.setListeners(new FragmentScheduleOptions.FragmentScheduleOptionListeners() {
+            @Override
+            public void onCopyButtonClicked() {
+                mScheduleViewModel.copySchedule(schedule);
+            }
+
+            @Override
+            public void onDeleteButtonClicked() {
+                removeAttachments(schedule);
+                mScheduleViewModel.deleteSchedule(schedule);
+            }
+        });
     }
 
     private final class ViewPagerAdapter extends FragmentStateAdapter {

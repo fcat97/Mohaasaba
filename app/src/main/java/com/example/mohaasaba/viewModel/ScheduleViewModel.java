@@ -46,4 +46,9 @@ public class ScheduleViewModel extends AndroidViewModel {
         this.schedulesOfThisMonth = mRepository.getSchedulesOfThisMonth();
         return schedulesOfThisMonth;
     }
+
+    public void copySchedule(Schedule schedule) {
+        Schedule item = schedule.duplicate();
+        mRepository.insertSchedule(item);
+    }
 }

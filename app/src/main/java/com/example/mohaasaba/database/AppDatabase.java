@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-@Database(entities = {Schedule.class, Note.class, Reminder.class}, version = 46)
+@Database(entities = {Schedule.class, Note.class, Reminder.class}, version = 47)
 @TypeConverters({DataConverter.class})
 public abstract class AppDatabase extends RoomDatabase{
     private static AppDatabase appDatabaseInstance;

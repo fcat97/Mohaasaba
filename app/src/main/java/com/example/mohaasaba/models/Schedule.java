@@ -31,16 +31,12 @@ public class Schedule implements Parcelable {
     private List<Notify> notifyList = new ArrayList<>();
     private History history = new History();
     private int themeID = -1001;
-    private int startingMinute; // starting minute of day; default 0
-    private int endingMinute; // ending minute of day; default 24*60-1
     private int priority;
 
     public Schedule(String title) {
         this.scheduleID = IdGenerator.getNewID();
         this.title = title;
         this.setScheduleType(new ScheduleType());
-        this.startingMinute = 0;
-        this.endingMinute = 24*60 - 1;
         this.priority = 1;
     }
 
@@ -105,23 +101,26 @@ public class Schedule implements Parcelable {
     public void setNotifyList(List<Notify> notifyList) {
         this.notifyList = notifyList;
     }
-    public void setStartingMinute(int startingMinute) {
-        this.startingMinute = startingMinute;
-    }
-    public int getStartingMinute() {
-        return startingMinute;
-    }
-    public int getEndingMinute() {
-        return endingMinute;
-    }
-    public void setEndingMinute(int endingMinute) {
-        this.endingMinute = endingMinute;
-    }
     public int getPriority() {
         return priority;
     }
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public Schedule duplicate() {
+        Schedule item = new Schedule(title);
+        item.setScheduleType(getScheduleType());
+        item.setSubSchedulesID(getSubSchedulesID());
+        item.setNoteID(getNoteID());
+        item.setTags(getTags());
+        item.setRenewInterval(getRenewInterval());
+        item.setNotifyList(getNotifyList());
+        item.setHistory(getHistory().duplicate());  // Get New History with existing tasksList
+        item.setThemeID(getThemeID());
+        item.setPriority(getPriority());
+
+        return item;
     }
 
     @Override
@@ -141,8 +140,6 @@ public class Schedule implements Parcelable {
         dest.writeParcelable(this.history, flags);
         dest.writeInt(this.themeID);
         dest.writeTypedList(this.notifyList);
-        dest.writeInt(this.startingMinute);
-        dest.writeInt(this.endingMinute);
         dest.writeInt(this.priority);
     }
 
@@ -157,8 +154,6 @@ public class Schedule implements Parcelable {
         this.history = in.readParcelable(History.class.getClassLoader());
         this.themeID = in.readInt();
         this.notifyList = in.createTypedArrayList(Notify.CREATOR);
-        this.startingMinute = in.readInt();
-        this.endingMinute = in.readInt();
         this.priority = in.readInt();
     }
 
