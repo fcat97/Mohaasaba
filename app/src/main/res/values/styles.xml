@@ -88,6 +88,26 @@
         <item name="colorPrimaryDark">@color/colorOrangeDark</item>
         <item name="colorAccent">@color/colorOrangeAccent</item>
     </style>
+    <style name="ThemeDeepOrange" parent="AppTheme.NoActionBar">
+        <item name="colorPrimary">@color/colorDeepOrange</item>
+        <item name="colorPrimaryDark">@color/colorDeepOrangeDark</item>
+        <item name="colorAccent">@color/colorDeepOrangeAccent</item>
+    </style>
+    <style name="ThemeBrown" parent="AppTheme.NoActionBar">
+        <item name="colorPrimary">@color/colorBrown</item>
+        <item name="colorPrimaryDark">@color/colorBrownDark</item>
+        <item name="colorAccent">@color/colorBrownAccent</item>
+    </style>
+    <style name="ThemeGray" parent="AppTheme.NoActionBar">
+        <item name="colorPrimary">@color/colorGrayPrimary</item>
+        <item name="colorPrimaryDark">@color/colorGrayDark</item>
+        <item name="colorAccent">@color/colorGrayAccent</item>
+    </style>
+    <style name="ThemeBlueGray" parent="AppTheme.NoActionBar">
+        <item name="colorPrimary">@color/colorBlueGray</item>
+        <item name="colorPrimaryDark">@color/colorBlueGrayDark</item>
+        <item name="colorAccent">@color/colorBlueGrayAccent</item>
+    </style>
 
 
 

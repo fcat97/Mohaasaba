@@ -8,66 +8,82 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="colorRed">#f44336</color>
-    <color name="colorRedDark">#e53935</color>
-    <color name="colorRedAccent">#ff1744</color>
 
-    <color name="colorPink">#e91e63</color>
-    <color name="colorPinkDark">#d81b60</color>
-    <color name="colorPinkAccent">#f50057</color>
+    <color name="colorRed">#F44336</color>
+    <color name="colorRedDark">#D32F2F</color>
+    <color name="colorRedAccent">#FF5252</color>
+
+    <color name="colorPink">#E91E63</color>
+    <color name="colorPinkDark">#C2185B</color>
+    <color name="colorPinkAccent">#FF4081</color>
 
     <color name="colorPurple">#9C27B0</color>
-    <color name="colorPurpleDark">#8E24AA</color>
-    <color name="colorPurpleAccent">#AA00FF</color>
+    <color name="colorPurpleDark">#7B1FA2</color>
+    <color name="colorPurpleAccent">#E040FB</color>
 
     <color name="colorDeepPurple">#673AB7</color>
-    <color name="colorDeepPurpleDark">#5E35B1</color>
+    <color name="colorDeepPurpleDark">#512DA8</color>
     <color name="colorDeepPurpleAccent">#7C4DFF</color>
 
     <color name="colorIndigo">#3F51B5</color>
-    <color name="colorIndigoDark">#3949AB</color>
-    <color name="colorIndigoAccent">#3D5AFE</color>
+    <color name="colorIndigoDark">#303F9F</color>
+    <color name="colorIndigoAccent">#536DFE</color>
 
-    <color name="colorBlue">#2196f3</color>
-    <color name="colorBlueDark">#1e88e5</color>
-    <color name="colorBlueAccent">#448aff</color>
+    <color name="colorBlue">#2196F3</color>
+    <color name="colorBlueDark">#1976D2</color>
+    <color name="colorBlueAccent">#448AFF</color>
 
-    <color name="colorLightBlue">#03a9f4</color>
-    <color name="colorLightBlueDark">#039be5</color>
-    <color name="colorLightBlueAccent">#40c4ff</color>
+    <color name="colorLightBlue">#03A9F4</color>
+    <color name="colorLightBlueDark">#0288D1</color>
+    <color name="colorLightBlueAccent">#03A9F4</color>
 
-    <color name="colorCyan">#00bcd4</color>
-    <color name="colorCyanDark">#00acc1</color>
-    <color name="colorCyanAccent">#18ffff</color>
+    <color name="colorCyan">#00BCD4</color>
+    <color name="colorCyanDark">#0097A7</color>
+    <color name="colorCyanAccent">#00BCD4</color>
 
     <color name="colorTeal">#009688</color>
-    <color name="colorTealDark">#00897b</color>
-    <color name="colorTealAccent">#1de9b6</color>
+    <color name="colorTealDark">#00796B</color>
+    <color name="colorTealAccent">#009688</color>
 
-    <color name="colorGreen">#4caf50</color>
-    <color name="colorGreenDark">#43a047</color>
-    <color name="colorGreenAccent">#00e676</color>
+    <color name="colorGreen">#4CAF50</color>
+    <color name="colorGreenDark">#388E3C</color>
+    <color name="colorGreenAccent">#4CAF50</color>
 
-    <color name="colorLightGreen">#8bc34a</color>
-    <color name="colorLightGreenDark">#7cb342</color>
-    <color name="colorLightGreenAccent">#b2ff59</color>
+    <color name="colorLightGreen">#8BC34A</color>
+    <color name="colorLightGreenDark">#689F38</color>
+    <color name="colorLightGreenAccent">#8BC34A</color>
 
-    <color name="colorLime">#cddc39</color>
-    <color name="colorLimeDark">#c0ca33</color>
-    <color name="colorLimeAccent">#eeff41</color>
+    <color name="colorLime">#CDDC39</color>
+    <color name="colorLimeDark">#AFB42B</color>
+    <color name="colorLimeAccent">#CDDC39</color>
 
-    <color name="colorYellow">#ffeb3b</color>
-    <color name="colorYellowDark">#fdd835</color>
-    <color name="colorYellowAccent">#ffea00</color>
+    <color name="colorYellow">#FFEB3B</color>
+    <color name="colorYellowDark">#FBC02D</color>
+    <color name="colorYellowAccent">#FFEB3B</color>
 
-    <color name="colorAmber">#ffc107</color>
-    <color name="colorAmberDark">#ffb300</color>
-    <color name="colorAmberAccent">#ffc400</color>
+    <color name="colorAmber">#FFC107</color>
+    <color name="colorAmberDark">#FFA000</color>
+    <color name="colorAmberAccent">#FFC107</color>
 
     <color name="colorOrange">#FF9800</color>
-    <color name="colorOrangeDark">#FB8C00</color>
-    <color name="colorOrangeAccent">#FFAB40</color>
+    <color name="colorOrangeDark">#F57C00</color>
+    <color name="colorOrangeAccent">#FF9800</color>
 
+    <color name="colorDeepOrange">#FF5722</color>
+    <color name="colorDeepOrangeDark">#E64A19</color>
+    <color name="colorDeepOrangeAccent">#FF5722</color>
+
+    <color name="colorBrown">#795548</color>
+    <color name="colorBrownDark">#5D4037</color>
+    <color name="colorBrownAccent">#795548</color>
+
+    <color name="colorGrayPrimary">#9E9E9E</color>
+    <color name="colorGrayDark">#616161</color>
+    <color name="colorGrayAccent">#9E9E9E</color>
+
+    <color name="colorBlueGray">#607D8B</color>
+    <color name="colorBlueGrayDark">#455A64</color>
+    <color name="colorBlueGrayAccent">#607D8B</color>
 
     <color name="colorTextPrimary">#000000</color>
     <color name="colorWhite">@android:color/white</color>

@@ -22,6 +22,10 @@ public class ThemeUtils {
     public static final int THEME_YELLOW = -11013;
     public static final int THEME_AMBER = -11014;
     public static final int THEME_ORANGE = -11015;
+    public static final int THEME_DEEP_ORANGE = -11016;
+    public static final int THEME_BROWN = -11017;
+    public static final int THEME_GRAY = -11018;
+    public static final int THEME_BLUE_GRAY = -11019;
 
     public static List<Integer> getThemeList() {
         List<Integer> themeList = new ArrayList<>();
@@ -41,6 +45,10 @@ public class ThemeUtils {
         themeList.add(THEME_YELLOW);
         themeList.add(THEME_AMBER);
         themeList.add(THEME_ORANGE);
+        themeList.add(THEME_DEEP_ORANGE);
+        themeList.add(THEME_BROWN);
+        themeList.add(THEME_GRAY);
+        themeList.add(THEME_BLUE_GRAY);
 
         return themeList;
     }
@@ -62,6 +70,10 @@ public class ThemeUtils {
         themeNames.add("Yellow");
         themeNames.add("Amber");
         themeNames.add("Orange");
+        themeNames.add("Deep Orange");
+        themeNames.add("Brown");
+        themeNames.add("Gray");
+        themeNames.add("Blue Gray");
 
         return themeNames;
     }
@@ -97,6 +109,14 @@ public class ThemeUtils {
                 return R.style.ThemeAmber;
             case THEME_ORANGE:
                 return R.style.ThemeOrange;
+            case THEME_DEEP_ORANGE:
+                return R.style.ThemeDeepOrange;
+            case THEME_BROWN:
+                return R.style.ThemeBrown;
+            case THEME_GRAY:
+                return R.style.ThemeGray;
+            case THEME_BLUE_GRAY:
+                return R.style.ThemeBlueGray;
             default:
                 return R.style.AppTheme;
         }
