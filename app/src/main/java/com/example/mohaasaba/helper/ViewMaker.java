@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.text.Html;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -149,6 +150,7 @@ public class ViewMaker {
     public static class DateSelectorView implements View.OnClickListener {
         private View rootView;
         private ScheduleType type;
+        private int selectedColor;
 
         private TextView sat;
         private TextView sun;
@@ -184,51 +186,54 @@ public class ViewMaker {
             wed.setOnClickListener(this);
             thu.setOnClickListener(this);
             fri.setOnClickListener(this);
+
+            TypedValue typedValue = new TypedValue();
+            context.getTheme().resolveAttribute(R.attr.colorAccent, typedValue, true);
+            selectedColor = typedValue.data;
         }
 
         @Override
         public void onClick(View v) {
-            //TODO: get this colors from Theme colors
             if (v.getId() == R.id.saturdayLabel_DaysSelectorView) {
                 saturday = !saturday;
                 type.everySaturday = saturday;
-                if (saturday) v.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                if (saturday) v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
                 else v.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
             }
             else if (v.getId() == R.id.sundayLabel_DaysSelectorView) {
                 sunday = !sunday;
                 type.everySunday = sunday;
-                if (sunday) v.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                if (sunday) v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
                 else v.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
             }
             else if (v.getId() == R.id.mondayLabel_DaysSelectorView) {
                 monday = !monday;
                 type.everyMonday = monday;
-                if (monday) v.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                if (monday) v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
                 else v.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
             }
             else if (v.getId() == R.id.tuesdayLabel_DaysSelectorView) {
                 tuesday = !tuesday;
                 type.everyTuesday = tuesday;
-                if (tuesday) v.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                if (tuesday) v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
                 else v.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
             }
             else if (v.getId() == R.id.wednesdayLabel_DaysSelectorView) {
                 wednesday = !wednesday;
                 type.everyWednesday = wednesday;
-                if (wednesday) v.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                if (wednesday) v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
                 else v.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
             }
             else if (v.getId() == R.id.thursdayLabel_DaysSelectorView) {
                 thursday = !thursday;
                 type.everyThursday = thursday;
-                if (thursday) v.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                if (thursday) v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
                 else v.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
             }
             else if (v.getId() == R.id.fridayLabel_DaysSelectorView) {
                 friday = !friday;
                 type.everyFriday = friday;
-                if (friday) v.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                if (friday) v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
                 else v.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
             }
         }
@@ -248,25 +253,25 @@ public class ViewMaker {
             thursday = type.everyThursday;
             friday = type.everyFriday;
 
-            if (saturday) sat.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+            if (saturday) sat.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
             else sat.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
 
-            if (sunday) sun.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+            if (sunday) sun.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
             else sun.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
 
-            if (monday) mon.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+            if (monday) mon.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
             else mon.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
 
-            if (tuesday) tue.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+            if (tuesday) tue.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
             else tue.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
 
-            if (wednesday) wed.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+            if (wednesday) wed.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
             else wed.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
 
-            if (thursday) thu.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+            if (thursday) thu.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
             else thu.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
 
-            if (friday) fri.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+            if (friday) fri.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
             else fri.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
         }
 
