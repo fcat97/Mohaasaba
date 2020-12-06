@@ -48,15 +48,11 @@ import java.util.concurrent.ExecutionException;
 
 public class AddScheduleActivity extends AppCompatActivity
         implements DatePickerDialog.OnDateSetListener, FragmentOverview.FragmentOverviewListeners{
-    public static final int ADD_NEW_NOTE_REQUEST = 2131;
-    public static final int EDIT_NOTE_REQUEST = 2132;
     public static final int EDIT_SCHEDULE_TYPE_REQUEST = 2152;
     public static final String EXTRA_SCHEDULE = "com.example.mohasabap.EXTRA_SCHEDULE";
     public static final String EXTRA_THEME_ID = "com.example.mohasabap.EXTRA_SCHEDULE";
     public static final String EXTRA_SCHEDULE_TYPE = "com.example.mohasabap.EXTRA_SCHEDULE_TYPE";
     private static final String TAG = "AddScheduleActivity";
-
-    private  boolean showAddNoteMenu = true;
 
     private AddScheduleViewModel mViewModel;
     private EditText mTitleEditText;
@@ -65,7 +61,6 @@ public class AddScheduleActivity extends AppCompatActivity
     private TabLayout tabLayout;
     private FragmentOverview fragmentOverview;
     private FragmentTodo fragmentTodo;
-    private boolean isReached = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +116,7 @@ public class AddScheduleActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-        fragmentOverview = new FragmentOverview(mViewModel.getSchedule().getNotifyList());
+        fragmentOverview = new FragmentOverview(mViewModel.getSchedule());
         fragmentOverview.setListeners(this);
 
         fragmentTodo = new FragmentTodo(mViewModel.getSchedule().getHistory());
@@ -151,16 +146,6 @@ public class AddScheduleActivity extends AppCompatActivity
             mTitleEditText.setText(schedule.getTitle());
             if (schedule.getTags().size() != 0) mTagEditText.setText(
                     DataConverter.joinListToString(schedule.getTags()));
-            if (mViewModel.getNoteLiveData() != null){
-                showAddNoteMenu = false;
-                mViewModel.getNoteLiveData().observe(this, new Observer<Note>() {
-                    @Override
-                    public void onChanged(Note note) {
-                        if (isReached) setNoteView(note);
-                        mViewModel.setNote(note);
-                    }
-                });
-            }
 
             /* Change the ScheduleType TextView Text */
             invalidateScheduleTypeTextView(mViewModel.getScheduleType());
@@ -177,8 +162,6 @@ public class AddScheduleActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.add_schedule_activity, menu);
-
-        if (!showAddNoteMenu) menu.findItem(R.id.addNote_menuItem_addSchedule).setVisible(false);
         return true;
     }
     @Override
@@ -193,57 +176,12 @@ public class AddScheduleActivity extends AppCompatActivity
             case R.id.save_menuItem_addSchedule:
                 saveSchedule();
                 return true;
-            case R.id.addNote_menuItem_addSchedule:
-                if (mViewModel.getNote() == null) openAddNoteActivity();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
     // PopUp menu ----------------------------------------------------------------------------------
-    /*public void showPopup_reminderView(View v) {
-        PopupMenu popupMenu = new PopupMenu(this, v);
-        popupMenu.inflate(R.menu.popup_add_schedule);
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.edit_menuItem_description_view:
-                        openEditReminderActivity();
-                        return true;
-                    case R.id.delete_menuItem_description_view:
-                        mViewModel.setReminder(null);
-                        setReminderView(null);
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
-        popupMenu.show();
-    }*/
-    public void showPopup_noteView(View v) {
-        PopupMenu popupMenu = new PopupMenu(this, v);
-        popupMenu.inflate(R.menu.popup_add_schedule);
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.edit_menuItem_description_view:
-                        openEditNoteActivity();
-                        return true;
-                    case R.id.delete_menuItem_description_view:
-                        mViewModel.setNote(null);
-                        setNoteView(null);
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
-        popupMenu.show();
-    }
     public void showTypeActivity_header(View v) {
         openEditScheduleTypeActivity();
     }
@@ -284,12 +222,6 @@ public class AddScheduleActivity extends AppCompatActivity
 
     // Fragment Overview Listeners------------------------------------------------------------------
     @Override
-    public void onReach() {
-        // FragmentOverview Listener
-        isReached = true;
-        if (mViewModel.getNote() != null) setNoteView(mViewModel.getNote());
-    }
-    @Override
     public void onEditNotify(Notify notify) {
         // FragmentOverview Listener
         showEditReminderFragment(notify);
@@ -297,17 +229,6 @@ public class AddScheduleActivity extends AppCompatActivity
 
 
     // Activity related methods --------------------------------------------------------------------
-    private void openAddNoteActivity() {
-        Intent intent = new Intent(this,NoteActivity.class);
-        intent.putExtra(EXTRA_THEME_ID, mViewModel.getSchedule().getThemeID());
-        startActivityForResult(intent,ADD_NEW_NOTE_REQUEST);
-    }
-    private void openEditNoteActivity() {
-        Intent intent = new Intent(this,NoteActivity.class);
-        intent.putExtra(NoteActivity.EXTRA_NOTE, mViewModel.getNote());
-        intent.putExtra(EXTRA_THEME_ID, mViewModel.getSchedule().getThemeID());
-        startActivityForResult(intent,EDIT_NOTE_REQUEST);
-    }
     private void openEditScheduleTypeActivity() {
         Intent intent = new Intent(this,TypeActivity.class);
         intent.putExtra(AddScheduleActivity.EXTRA_SCHEDULE_TYPE, (Parcelable) mViewModel.getScheduleType());
@@ -316,20 +237,6 @@ public class AddScheduleActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ADD_NEW_NOTE_REQUEST && resultCode == RESULT_OK) {
-            assert data != null;
-            Note note = data.getParcelableExtra(NoteActivity.EXTRA_NOTE);
-            assert note != null;
-            setNoteView(note);
-            mViewModel.setNote(note); //Don't worry note will not be null
-        }
-
-        if (requestCode == EDIT_NOTE_REQUEST && resultCode == RESULT_OK) {
-            Note note = data.getParcelableExtra(NoteActivity.EXTRA_NOTE);
-            mViewModel.setNote(note);
-            setNoteView(note);
-        }
-
 
         if (requestCode == EDIT_SCHEDULE_TYPE_REQUEST && resultCode == RESULT_OK) {
             Bundle bundle = data.getBundleExtra("TYPE_BUNDLE");
@@ -340,12 +247,6 @@ public class AddScheduleActivity extends AppCompatActivity
     }
 
     //Set Views methods ---------------------------------------------------------------------------
-    private void setNoteView(Note note) {
-        fragmentOverview.setNoteView(note);
-        showAddNoteMenu = note == null;
-        invalidateOptionsMenu();
-    }
-
     private void invalidateScheduleTypeTextView(ScheduleType scheduleType) {
         if (scheduleType.type == ScheduleType.Type.WeekDays) {
             if (scheduleType.everySaturday && scheduleType.everySunday && scheduleType.everyMonday
@@ -381,14 +282,9 @@ public class AddScheduleActivity extends AppCompatActivity
                 mViewModel.setSchedule(newSchedule);
             }
         }
-        /* Insert associated objects */
-        if (mViewModel.getNote() != null) mViewModel.insertNote();
-        else mViewModel.deleteNote();
 
         /*if (mViewModel.getReminder() != null) mViewModel.activateReminder(getApplicationContext());
         else mViewModel.deleteReminder(getApplicationContext());*/
-
-        if (mViewModel.getSubScheduleList() != null) mViewModel.insertSubSchedules();
         if (mViewModel.getSchedule().getThemeID() == -1001) mViewModel.getSchedule().setThemeID(ThemeUtils.THEME_GREEN);
 
         /* Fix the edited title to Notification as well */

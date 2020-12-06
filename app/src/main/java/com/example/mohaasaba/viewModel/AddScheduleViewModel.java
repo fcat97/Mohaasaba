@@ -18,12 +18,8 @@ import java.util.concurrent.ExecutionException;
 public class AddScheduleViewModel extends AndroidViewModel {
     private static final String TAG = "AddScheduleViewModel";
     private AppRepository repository;
-    private LiveData<Note> noteLiveData;   // Used when add new Schedule mode
-    private Note mNote;
     private Schedule schedule;
     /*private Reminder mReminder;*/
-    private List<Schedule> mSubScheduleList;
-    private LiveData<List<Schedule>> subScheduleLiveData;
     private boolean scheduleEdited = false;
 
     public AddScheduleViewModel(@NonNull Application application) {
@@ -35,18 +31,9 @@ public class AddScheduleViewModel extends AndroidViewModel {
         if (schedule == null) this.schedule = new Schedule("dummy_schedule");
         else {
             this.schedule = schedule;
-            if (schedule.getNoteID() != null) this.noteLiveData = repository.getNote(schedule.getNoteID());
-            if (schedule.getSubSchedulesID().size() != 0) this.subScheduleLiveData = repository.getSchedule(schedule.getSubSchedulesID());
         }
     }
 
-    /* Getter and Setter methods*/
-    public void setNote(Note note) {
-        this.mNote = note;
-    }
-    public Note getNote() {
-        return this.mNote;
-    }
     /*public Reminder getReminder() {
         return mReminder;
     }*/
@@ -55,9 +42,6 @@ public class AddScheduleViewModel extends AndroidViewModel {
     }*/
     public void setScheduleEdited(boolean scheduleEdited) {
         this.scheduleEdited = scheduleEdited;
-    }
-    public LiveData<Note> getNoteLiveData() {
-        return noteLiveData;
     }
     public void setScheduleType(ScheduleType mScheduleType) {
         schedule.setScheduleType(mScheduleType);
@@ -70,49 +54,6 @@ public class AddScheduleViewModel extends AndroidViewModel {
     }
     public void setSchedule(Schedule schedule) {
         this.schedule = schedule;
-    }
-    public LiveData<List<Schedule>> getSubScheduleLiveData() {
-        return subScheduleLiveData;
-    }
-    public List<Schedule> getSubScheduleList() {
-        return mSubScheduleList;
-    }
-    public void setSubScheduleList(List<Schedule> mSubScheduleList) {
-        /* Don't call for individual SubSchedule */
-        this.mSubScheduleList = mSubScheduleList;
-    }
-
-    //    Database operations
-    public void insertNote() {
-        if (mNote == null) return; /* For safety */
-        if (schedule.getNoteID() == null) {
-            schedule.setNoteID(mNote.getNoteID());
-            repository.insertNote(mNote);
-        }
-        else {
-            if (schedule.getNoteID().equals(mNote.getNoteID())) {
-                repository.updateNote(mNote);
-            } else {
-                repository.deleteNote(schedule.getNoteID());
-                schedule.setNoteID(mNote.getNoteID());
-                repository.insertNote(mNote);
-            }
-        }
-    }
-    public void deleteNote() {
-        repository.deleteNote(schedule.getNoteID());
-        schedule.setNoteID(null);
-    }
-    public void insertSubSchedules() {
-        if (mSubScheduleList == null) return;
-        for (Schedule sc : mSubScheduleList ) {
-            String s = sc.getScheduleID();
-            if (schedule.getSubSchedulesID().contains(s)) repository.updateSchedule(sc);
-            else {
-                schedule.getSubSchedulesID().add(s);
-                repository.insertSchedule(sc);
-            }
-        }
     }
 
 

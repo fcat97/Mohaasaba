@@ -170,14 +170,19 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
         Intent intent = new Intent(this, NotificationScheduler.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, NotificationScheduler.MIDNIGHT_REQUEST_PID,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        Calendar calendar = Calendar.getInstance();
-        mAlarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        try {
+            pendingIntent.send(getApplicationContext(), 10099, intent);
+            Log.d(TAG, "rescheduleNotification: done");
+        } catch (PendingIntent.CanceledException e) {
+            Log.d(TAG, "rescheduleNotification: failed");
+            e.printStackTrace();
+        }
     }
-    /*
-     * This method will delete all the Attached objects which are entities in the DB
-     * */
+
+    /**
+     * Method to remove all associated Database Entities when Schedule is deleted
+     * @param schedule deleted schedule*/
     private void removeAttachments(Schedule schedule) {
-        if (schedule.getNoteID() != null) mScheduleViewModel.deleteNote(schedule.getNoteID());
         rescheduleNotification();
     }
 

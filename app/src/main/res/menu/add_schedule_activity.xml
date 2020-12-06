@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/addNote_menuItem_addSchedule"
-        android:enabled="true"
-        android:icon="@drawable/ic_notes"
-        app:showAsAction="ifRoom"
-        android:title="@string/note_text" />
 
     <item android:id="@+id/save_menuItem_addSchedule"
         android:icon="@drawable/ic_save"

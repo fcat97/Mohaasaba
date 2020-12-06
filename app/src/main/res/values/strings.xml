@@ -79,4 +79,6 @@
     <string name="expand_history">expand history</string>
     <string name="debug_text">Debug</string>
     <string name="unit">Unit</string>
+    <string name="note">Note</string>
+    <string name="write_something_here">Write Something Here!</string>
 </resources>

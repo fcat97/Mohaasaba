@@ -1,10 +1,13 @@
 package com.example.mohaasaba.fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -18,6 +21,7 @@ import com.example.mohaasaba.adapter.NotifyAdapter;
 import com.example.mohaasaba.models.Note;
 import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.helper.ViewMaker;
+import com.example.mohaasaba.models.Schedule;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
@@ -25,9 +29,8 @@ import java.util.List;
 
 public class FragmentOverview extends Fragment {
     private static final String TAG = "FragmentOverview";
-    private FrameLayout mDescriptionFrameLayout;
-    private ViewMaker viewMaker;
     private FragmentOverviewListeners listeners;
+    private Schedule schedule;
 
     // Notification fields
     private RecyclerView notifyRecyclerView;
@@ -35,30 +38,28 @@ public class FragmentOverview extends Fragment {
     private List<Notify> notifyList;
     private NotifyAdapter notifyAdapter;
     private TextView notifyNoItemTextView;
+    private EditText noteEditText;
 
-    public FragmentOverview(List<Notify> notifyList) {
-        this.notifyList = notifyList;
+    public FragmentOverview(Schedule schedule) {
+        this.schedule = schedule;
+        this.notifyList = schedule.getNotifyList();
         setRetainInstance(true);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-
-        }*/
-        viewMaker = new ViewMaker(getContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
-        mDescriptionFrameLayout = rootView.findViewById(R.id.description_frameLayout_OverviewFragment);
 
         notifyRecyclerView = rootView.findViewById(R.id.recyclerView_FragmentReminder);
         notifyAddButton = rootView.findViewById(R.id.addReminder_FAB_FragmentReminder);
         notifyNoItemTextView = rootView.findViewById(R.id.noItem_FragmentReminder);
+        noteEditText = rootView.findViewById(R.id.note_EditText_viewNote_FragmentOverView);
 
         return rootView;
     }
@@ -66,10 +67,25 @@ public class FragmentOverview extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (listeners != null) listeners.onReach();
-        else throw new ClassCastException("Must implement Listeners");
 
+        noteEditText.setText(schedule.getNote());
+        noteEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.d(TAG, "afterTextChanged: " + s.toString());
+                schedule.setNote(s.toString());
+            }
+        });
 
         // Notify Related --------------------------------------------------------------------------
         if (notifyList.size() == 0) notifyNoItemTextView.setVisibility(View.VISIBLE);
@@ -99,20 +115,8 @@ public class FragmentOverview extends Fragment {
                 notifyAdapter.notifyItemRangeChanged(position, notifyAdapter.getItemCount());
             }
         });
-        //------------------------------------------------------------------------------------------
     }
 
-
-    public void setNoteView(Note note) {
-        mDescriptionFrameLayout.removeAllViews();
-        if (note != null) {
-            View noteView = viewMaker.getNoteView(note);
-            mDescriptionFrameLayout.addView(noteView);
-            mDescriptionFrameLayout.setVisibility(View.VISIBLE);
-        } else {
-            mDescriptionFrameLayout.setVisibility(View.GONE);
-        }
-    }
 
     public void notifyEditConfirmed(Notify notify) {
         Log.d(TAG, "notifyEditConfirmed: called");
@@ -123,7 +127,6 @@ public class FragmentOverview extends Fragment {
         if (notifyList.size() > 0) notifyNoItemTextView.setVisibility(View.INVISIBLE);
     }
     public interface FragmentOverviewListeners {
-        void onReach();
         void onEditNotify(Notify notify);
     }
     public void setListeners(FragmentOverviewListeners listeners) {

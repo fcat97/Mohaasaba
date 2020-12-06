@@ -23,11 +23,9 @@ public class Schedule implements Parcelable {
     @Embedded
     private ScheduleType scheduleType;
 
-    private List<String> subSchedulesID = new ArrayList<>();
     private String title;
-    private String noteID;
+    private String note;
     private List<String> tags = new ArrayList<>();
-    private String renewInterval;
     private List<Notify> notifyList = new ArrayList<>();
     private History history = new History();
     private int themeID = -1001;
@@ -38,6 +36,7 @@ public class Schedule implements Parcelable {
         this.title = title;
         this.setScheduleType(new ScheduleType());
         this.priority = 1;
+        this.note = "";
     }
 
     @NonNull
@@ -53,23 +52,17 @@ public class Schedule implements Parcelable {
     public void setTitle(String title) {
         this.title = title;
     }
-    public String getNoteID() {
-        return noteID;
+    public String getNote() {
+        return note;
     }
-    public void setNoteID(String noteID) {
-        this.noteID = noteID;
+    public void setNote(String note) {
+        this.note = note;
     }
     public List<String> getTags() {
         return tags;
     }
     public void setTags(List<String> tags) {
         this.tags = tags;
-    }
-    public String getRenewInterval() {
-        return renewInterval;
-    }
-    public void setRenewInterval(String renewInterval) {
-        this.renewInterval = renewInterval;
     }
     public ScheduleType getScheduleType() {
         return scheduleType;
@@ -89,12 +82,6 @@ public class Schedule implements Parcelable {
     public void setThemeID(int themeID) {
         this.themeID = themeID;
     }
-    public List<String> getSubSchedulesID() {
-        return subSchedulesID;
-    }
-    public void setSubSchedulesID(List<String> subSchedulesID) {
-        this.subSchedulesID = subSchedulesID;
-    }
     public List<Notify> getNotifyList() {
         return notifyList;
     }
@@ -111,10 +98,8 @@ public class Schedule implements Parcelable {
     public Schedule duplicate() {
         Schedule item = new Schedule(title);
         item.setScheduleType(getScheduleType());
-        item.setSubSchedulesID(getSubSchedulesID());
-        item.setNoteID(getNoteID());
+        item.setNote(getNote());
         item.setTags(getTags());
-        item.setRenewInterval(getRenewInterval());
         item.setNotifyList(getNotifyList());
         item.setHistory(getHistory().duplicate());  // Get New History with existing tasksList
         item.setThemeID(getThemeID());
@@ -132,11 +117,9 @@ public class Schedule implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.scheduleID);
         dest.writeParcelable(this.scheduleType, flags);
-        dest.writeStringList(this.subSchedulesID);
         dest.writeString(this.title);
-        dest.writeString(this.noteID);
+        dest.writeString(this.note);
         dest.writeStringList(this.tags);
-        dest.writeString(this.renewInterval);
         dest.writeParcelable(this.history, flags);
         dest.writeInt(this.themeID);
         dest.writeTypedList(this.notifyList);
@@ -146,11 +129,9 @@ public class Schedule implements Parcelable {
     protected Schedule(Parcel in) {
         this.scheduleID = in.readString();
         this.scheduleType = in.readParcelable(ScheduleType.class.getClassLoader());
-        this.subSchedulesID = in.createStringArrayList();
         this.title = in.readString();
-        this.noteID = in.readString();
+        this.note = in.readString();
         this.tags = in.createStringArrayList();
-        this.renewInterval = in.readString();
         this.history = in.readParcelable(History.class.getClassLoader());
         this.themeID = in.readInt();
         this.notifyList = in.createTypedArrayList(Notify.CREATOR);
