@@ -3,6 +3,7 @@ package com.example.mohaasaba.adapter;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import at.grabner.circleprogress.CircleProgressView;
 public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
     private static final String TAG = "Task Adapter";
     private ItemClickedListener listener;
+    int primaryColor;
 
     public TaskAdapter() {
         super(DIFF_CALLBACK);
@@ -46,6 +48,10 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         View rootView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_fragment_todo, parent, false);
 
+        TypedValue typedValue = new TypedValue();
+        parent.getContext().getTheme().resolveAttribute(R.attr.colorAccent, typedValue, true);
+        primaryColor = typedValue.data;
+
         return new TaskHolder(rootView);
     }
 
@@ -56,7 +62,7 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         holder.circleProgressView.setMaxValue(task.maxProgress);
         holder.circleProgressView.setValue(task.currentProgress);
         holder.circleProgressView.setBlockCount(Math.round(task.maxProgress / task.step));
-        if (task.scheduleType.isToday()) holder.todayIndicator.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+        if (task.scheduleType.isToday()) holder.todayIndicator.setBackgroundTintList(ColorStateList.valueOf(primaryColor));
         else holder.todayIndicator.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         
         holder.itemView.setOnClickListener(v -> {

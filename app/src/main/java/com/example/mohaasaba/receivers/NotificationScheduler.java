@@ -157,12 +157,12 @@ public class NotificationScheduler extends BroadcastReceiver{
      * */
     private void cancelPIdFromSharedPref() {
         Set<String> runningPIdSet = sharedPreferences.getStringSet(RUNNING_PID, new HashSet<>());
+        Set<String> toRemove = new HashSet<>();
         Log.d(TAG, "cancelPIdFromSharedPref:  before cancel runningPIdSet.size() " + runningPIdSet.size());
         for (String value : runningPIdSet) {
-            Log.d(TAG, "cancelPIdFromSharedPref:  canceling with sharedPref");
             Log.d(TAG, "cancelPIdFromSharedPref:  value " + value);
 
-            String message = value.split("<<:>>")[0];
+            /*String message = value.split("<<:>>")[0];*/
             int uniqueID = Integer.parseInt(value.split("<<:>>")[1]);
 
             Intent intent = new Intent(mContext.getApplicationContext(), NotyFire.class);
@@ -181,9 +181,12 @@ public class NotificationScheduler extends BroadcastReceiver{
                 Log.d(TAG, "cancelPIdFromSharedPref:  alarm Canceled ");
             }
 
-            runningPIdSet.remove(value);
-            Log.d(TAG, "cancelPIdFromSharedPref:  id removed from sharedPref");
+            toRemove.add(value);
+            Log.d(TAG, "cancelPIdFromSharedPref:" + uniqueID + " marked for removal from sharedPref");
         }
+        Log.d(TAG, "cancelPIdFromSharedPref:  after cancel toRemove.size() " + toRemove.size());
+
+        runningPIdSet.removeAll(toRemove);
         Log.d(TAG, "cancelPIdFromSharedPref:  after cancel runningPIdSet.size() " + runningPIdSet.size());
 
         sharedPreferences.edit()
