@@ -239,6 +239,7 @@ public class FragmentTodo extends Fragment {
         // set the accent color
         dataSet.setFillColor(colorPrimary);
         dataSet.setColor(colorPrimary);
+        dataSet.setFillAlpha(35);
 
         // Create data
         LineData lineData = new LineData(dataSet);
