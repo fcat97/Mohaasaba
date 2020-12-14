@@ -70,9 +70,10 @@ public class RecyclerViewAdapter extends ListAdapter<Schedule, RecyclerViewAdapt
         List<Task> todoList = schedule.getHistory().getTasks(today);
         int maxProgress = todoList.size();
         float currentProgress = schedule.getHistory().getProgress(today);
+        float old = holder.circleProgressView.getCurrentValue();
 
         if (maxProgress != 0) { // if Schedule contains Task > 0
-            holder.circleProgressView.setValue(currentProgress);
+            holder.circleProgressView.setValueAnimated(old,currentProgress,1000);
             if (currentProgress == 100f) {
                 holder.completeImageView.setVisibility(View.VISIBLE);
                 holder.circleProgressView.setVisibility(View.INVISIBLE);

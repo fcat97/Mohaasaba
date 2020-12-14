@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="64dp"
+    android:layout_height="wrap_content"
     app:cardElevation="@dimen/cardElevation"
     android:layout_marginTop="2dp"
     android:layout_marginBottom="2dp"
@@ -12,7 +12,7 @@
     app:cardCornerRadius="@dimen/cardCornerRadius"
     android:gravity="center">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/selectableItemBackground">
@@ -23,20 +23,17 @@
             android:layout_height="wrap_content"
             android:text="@string/dummy_text"
             android:textAppearance="@style/textRegular.bold"
-            android:layout_margin="8dp"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:layout_marginStart="@dimen/dimen_small"
+            android:layout_marginTop="@dimen/dimen_mini"
+            android:layout_alignParentTop="true"/>
 
         <ImageView
             android:id="@+id/tagIcon_mainActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_tag"
-
-            app:layout_constraintStart_toStartOf="@id/titleTextView_mainActivity"
-            app:layout_constraintTop_toTopOf="@id/tagsTextView_mainActivity"
-            app:layout_constraintBottom_toBottomOf="@id/tagsTextView_mainActivity"/>
+            android:layout_alignStart="@id/titleTextView_mainActivity"
+            android:layout_below="@id/titleTextView_mainActivity"/>
 
         <TextView
             android:id="@+id/tagsTextView_mainActivity"
@@ -45,20 +42,18 @@
 
             android:text="@string/no_tags"
             android:textAppearance="@style/textSmall.Italic"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/tagIcon_mainActivity"
-            app:layout_constraintTop_toBottomOf="@+id/titleTextView_mainActivity"/>
+            android:layout_marginStart="@dimen/dimen_small"
+            android:layout_below="@id/titleTextView_mainActivity"
+            android:layout_toEndOf="@id/tagIcon_mainActivity"/>
 
         <at.grabner.circleprogress.CircleProgressView
             android:id="@+id/progress_circular_mainActivity"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_margin="4dp"
-            android:padding="4dp"
 
             app:cpv_maxValue="100"
-            app:cpv_value="45"
+            app:cpv_value="0"
             app:cpv_textColor="?attr/colorAccent"
             app:cpv_textMode="Percent"
             app:cpv_autoTextSize="true"
@@ -77,20 +72,18 @@
             app:cpv_innerContourColor="@android:color/transparent"
             app:cpv_outerContourColor="@android:color/transparent"
 
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:layout_alignParentEnd="true" />
 
         <ImageView
             android:id="@+id/completed_ImageView_ItemRecyclerView_MainActivity"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_checkup"
             android:visibility="invisible"
-            app:layout_constraintTop_toTopOf="@id/progress_circular_mainActivity"
-            app:layout_constraintBottom_toBottomOf="@id/progress_circular_mainActivity"
-            app:layout_constraintStart_toStartOf="@id/progress_circular_mainActivity"
-            app:layout_constraintEnd_toEndOf="@id/progress_circular_mainActivity"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+            android:layout_alignStart="@id/progress_circular_mainActivity"
+            android:layout_alignEnd="@id/progress_circular_mainActivity"
+            android:layout_alignTop="@id/progress_circular_mainActivity"
+            android:layout_alignBottom="@id/progress_circular_mainActivity"/>
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>
