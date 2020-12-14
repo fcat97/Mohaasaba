@@ -82,4 +82,6 @@
     <string name="note">Note</string>
     <string name="write_something_here">Write Something Here!</string>
     <string name="routine">Routine</string>
+    <string name="reminders">Reminders</string>
+    <string name="no_reminder">No Reminder!</string>
 </resources>

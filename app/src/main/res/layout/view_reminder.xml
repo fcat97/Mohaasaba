@@ -5,12 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/dimen_mini"
     android:background="@color/colorGray">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reminders"
+        android:text="@string/reminders"
         android:textAppearance="@style/textMedium"
         android:textColor="@android:color/darker_gray"
 
@@ -37,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:text="No Reminder!"
+        android:text="@string/no_reminder"
         android:textAppearance="@style/textMedium"
         android:textColor="@android:color/darker_gray"
 
@@ -54,5 +55,7 @@
         android:layout_margin="@dimen/dimen_small"
 
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/add_reminder"
+        tools:ignore="RelativeOverlap" />
 </RelativeLayout>
