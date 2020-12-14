@@ -179,6 +179,7 @@ public class ViewMaker {
             thu = rootView.findViewById(R.id.thursdayLabel_DaysSelectorView);
             fri = rootView.findViewById(R.id.fridayLabel_DaysSelectorView);
 
+            // Set onClickListener to all views
             sat.setOnClickListener(this);
             sun.setOnClickListener(this);
             mon.setOnClickListener(this);
@@ -187,9 +188,12 @@ public class ViewMaker {
             thu.setOnClickListener(this);
             fri.setOnClickListener(this);
 
+            // Get theme color from Resource
             TypedValue typedValue = new TypedValue();
             context.getTheme().resolveAttribute(R.attr.colorAccent, typedValue, true);
-            selectedColor = typedValue.data;
+            int themeColor = typedValue.data;
+            // Set alpha(transparency) to theme color
+            selectedColor = Color.argb(165, Color.red(themeColor), Color.green(themeColor), Color.blue(themeColor));
         }
 
         @Override
@@ -197,44 +201,86 @@ public class ViewMaker {
             if (v.getId() == R.id.saturdayLabel_DaysSelectorView) {
                 saturday = !saturday;
                 type.everySaturday = saturday;
-                if (saturday) v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
-                else v.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
+                if (saturday) {
+                    ((TextView)v).setTextColor(Color.WHITE);
+                    v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
+                }
+                else {
+                    ((TextView)v).setTextColor(Color.BLACK);
+                    v.setBackgroundTintList(ColorStateList.valueOf(Color.argb(85,230, 230, 230)));
+                }
             }
             else if (v.getId() == R.id.sundayLabel_DaysSelectorView) {
                 sunday = !sunday;
                 type.everySunday = sunday;
-                if (sunday) v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
-                else v.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
+                if (sunday) {
+                    v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
+                    ((TextView)v).setTextColor(Color.WHITE);
+                }
+                else {
+                    ((TextView)v).setTextColor(Color.BLACK);
+                    v.setBackgroundTintList(ColorStateList.valueOf(Color.argb(85,230, 230, 230)));
+                }
             }
             else if (v.getId() == R.id.mondayLabel_DaysSelectorView) {
                 monday = !monday;
                 type.everyMonday = monday;
-                if (monday) v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
-                else v.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
+                if (monday) {
+                    v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
+                    ((TextView)v).setTextColor(Color.WHITE);
+                }
+                else {
+                    v.setBackgroundTintList(ColorStateList.valueOf(Color.argb(85,230, 230, 230)));
+                    ((TextView)v).setTextColor(Color.BLACK);
+                }
             }
             else if (v.getId() == R.id.tuesdayLabel_DaysSelectorView) {
                 tuesday = !tuesday;
                 type.everyTuesday = tuesday;
-                if (tuesday) v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
-                else v.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
+                if (tuesday) {
+                    v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
+                    ((TextView)v).setTextColor(Color.WHITE);
+                }
+                else {
+                    v.setBackgroundTintList(ColorStateList.valueOf(Color.argb(85,230, 230, 230)));
+                    ((TextView)v).setTextColor(Color.BLACK);
+                }
             }
             else if (v.getId() == R.id.wednesdayLabel_DaysSelectorView) {
                 wednesday = !wednesday;
                 type.everyWednesday = wednesday;
-                if (wednesday) v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
-                else v.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
+                if (wednesday) {
+                    v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
+                    ((TextView)v).setTextColor(Color.WHITE);
+                }
+                else {
+                    v.setBackgroundTintList(ColorStateList.valueOf(Color.argb(85,230, 230, 230)));
+                    ((TextView)v).setTextColor(Color.BLACK);
+                }
             }
             else if (v.getId() == R.id.thursdayLabel_DaysSelectorView) {
                 thursday = !thursday;
                 type.everyThursday = thursday;
-                if (thursday) v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
-                else v.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
+                if (thursday) {
+                    v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
+                    ((TextView)v).setTextColor(Color.WHITE);
+                }
+                else {
+                    v.setBackgroundTintList(ColorStateList.valueOf(Color.argb(85,230, 230, 230)));
+                    ((TextView)v).setTextColor(Color.BLACK);
+                }
             }
             else if (v.getId() == R.id.fridayLabel_DaysSelectorView) {
                 friday = !friday;
                 type.everyFriday = friday;
-                if (friday) v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
-                else v.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
+                if (friday) {
+                    v.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
+                    ((TextView)v).setTextColor(Color.WHITE);
+                }
+                else {
+                    v.setBackgroundTintList(ColorStateList.valueOf(Color.argb(85,230, 230, 230)));
+                    ((TextView)v).setTextColor(Color.BLACK);
+                }
             }
         }
 
@@ -253,26 +299,68 @@ public class ViewMaker {
             thursday = type.everyThursday;
             friday = type.everyFriday;
 
-            if (saturday) sat.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
-            else sat.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
+            if (saturday) {
+                sat.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
+                sat.setTextColor(Color.WHITE);
+            }
+            else {
+                sat.setBackgroundTintList(ColorStateList.valueOf(Color.argb(85,230, 230, 230)));
+                sat.setTextColor(Color.BLACK);
+            }
 
-            if (sunday) sun.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
-            else sun.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
+            if (sunday) {
+                sun.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
+                sun.setTextColor(Color.WHITE);
+            }
+            else {
+                sun.setBackgroundTintList(ColorStateList.valueOf(Color.argb(85,230, 230, 230)));
+                sun.setTextColor(Color.BLACK);
+            }
 
-            if (monday) mon.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
-            else mon.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
+            if (monday) {
+                mon.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
+                mon.setTextColor(Color.WHITE);
+            }
+            else {
+                mon.setBackgroundTintList(ColorStateList.valueOf(Color.argb(85,230, 230, 230)));
+                mon.setTextColor(Color.BLACK);
+            }
 
-            if (tuesday) tue.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
-            else tue.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
+            if (tuesday) {
+                tue.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
+                tue.setTextColor(Color.WHITE);
+            }
+            else {
+                tue.setBackgroundTintList(ColorStateList.valueOf(Color.argb(85,230, 230, 230)));
+                tue.setTextColor(Color.BLACK);
+            }
 
-            if (wednesday) wed.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
-            else wed.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
+            if (wednesday) {
+                wed.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
+                wed.setTextColor(Color.WHITE);
+            }
+            else {
+                wed.setBackgroundTintList(ColorStateList.valueOf(Color.argb(85,230, 230, 230)));
+                wed.setTextColor(Color.BLACK);
+            }
 
-            if (thursday) thu.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
-            else thu.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
+            if (thursday) {
+                thu.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
+                thu.setTextColor(Color.WHITE);
+            }
+            else {
+                thu.setBackgroundTintList(ColorStateList.valueOf(Color.argb(85,230, 230, 230)));
+                thu.setTextColor(Color.BLACK);
+            }
 
-            if (friday) fri.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
-            else fri.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(230, 230, 230)));
+            if (friday) {
+                fri.setBackgroundTintList(ColorStateList.valueOf(selectedColor));
+                fri.setTextColor(Color.WHITE);
+            }
+            else {
+                fri.setBackgroundTintList(ColorStateList.valueOf(Color.argb(85,230, 230, 230)));
+                fri.setTextColor(Color.BLACK);
+            }
         }
 
     }
