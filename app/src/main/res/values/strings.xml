@@ -84,4 +84,6 @@
     <string name="routine">Routine</string>
     <string name="reminders">Reminders</string>
     <string name="no_reminder">No Reminder!</string>
+    <string name="todo">Todo</string>
+    <string name="other">Other</string>
 </resources>

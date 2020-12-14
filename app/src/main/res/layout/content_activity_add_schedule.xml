@@ -20,12 +20,12 @@
             android:id="@+id/tabItem_todo_AddScheduleActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Todo"/>
+            android:text="@string/todo"/>
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabItem_overview_AddScheduleActivity"
+            android:id="@+id/tabItem_other_AddScheduleActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Overview"/>
+            android:text="@string/other"/>
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
