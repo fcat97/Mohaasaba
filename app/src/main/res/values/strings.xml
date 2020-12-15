@@ -86,4 +86,14 @@
     <string name="no_reminder">No Reminder!</string>
     <string name="todo">Todo</string>
     <string name="other">Other</string>
+    <string name="current_progress">Current Progress</string>
+    <string name="complete_task_to_increment">Complete task to Increment</string>
+    <string name="_24">24</string>
+    <string name="maximum_progress">Maximum Progress</string>
+    <string name="define_maximum_progress">Define Maximum Progress</string>
+    <string name="progress_steps">Progress Steps</string>
+    <string name="steps_of_progress_increment">Steps of Progress Increment</string>
+    <string name="progress_type">Progress Type</string>
+    <string name="change_the_type_of_task">Change the Type of Task</string>
+    <string name="mubah">Mubah</string>
 </resources>

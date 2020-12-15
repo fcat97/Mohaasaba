@@ -98,9 +98,11 @@ public class RecyclerViewAdapter extends ListAdapter<Schedule, RecyclerViewAdapt
             int colorAccent = typedArray1.getColor(0,Color.LTGRAY);
             typedArray1.recycle();
 
+            int tagColor = Color.argb(125, Color.red(colorPrimary), Color.green(colorPrimary),Color.blue(colorPrimary));
+            int tagIconColor = Color.argb(155, Color.red(colorPrimary), Color.green(colorPrimary),Color.blue(colorPrimary));
             holder.titleView.setTextColor(colorPrimary);
-            holder.tagsTextView.setTextColor(colorPrimary);
-            holder.tagIcon.setImageTintList(ColorStateList.valueOf(colorPrimary));
+            holder.tagsTextView.setTextColor(tagColor);
+            holder.tagIcon.setImageTintList(ColorStateList.valueOf(tagIconColor));
             holder.circleProgressView.setBarColor(colorAccent);
 
         }
