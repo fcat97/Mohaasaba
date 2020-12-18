@@ -10,11 +10,11 @@ android {
         applicationId 'com.example.mohaasaba'
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 406
-        versionName '0.4.06'
+        versionCode 601
+        versionName '0.6.01'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        versionNameSuffix '_c3cedc2_beta'
+        versionNameSuffix '_ae74d3d_beta'
     }
 
     buildTypes {
