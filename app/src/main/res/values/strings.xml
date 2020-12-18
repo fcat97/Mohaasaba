@@ -81,4 +81,6 @@
     <string name="unit">Unit</string>
     <string name="note">Note</string>
     <string name="write_something_here">Write Something Here!</string>
+    <string name="schedules">Schedules</string>
+    <string name="hishab">Hisaab</string>
 </resources>

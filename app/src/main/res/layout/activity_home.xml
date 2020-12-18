@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dashboard_gradient"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activities.HomeActivity">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbarLayout_HomeActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_HomeActivity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:theme="@style/AppTheme.ToolbarOverlay"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:titleTextColor="?attr/colorAccent"/>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <include
+            android:layout_width="360dp"
+            android:layout_height="360dp"
+            android:layout_centerInParent="true"
+            layout="@layout/content_activity_home"/>
+</RelativeLayout>
