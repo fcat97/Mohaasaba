@@ -61,7 +61,7 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         holder.textView.setText(task.text);
         holder.circleProgressView.setMaxValue(task.maxProgress);
         holder.circleProgressView.setBlockCount(Math.round(task.maxProgress / task.step));
-        holder.circleProgressView.setValueAnimated(task.currentProgress - task.step,
+        holder.circleProgressView.setValueAnimated(Math.max(task.currentProgress - task.step, 0),
                 task.currentProgress, 1000); //Animation fix
         if (task.scheduleType.isToday()) holder.todayIndicator.setBackgroundTintList(ColorStateList.valueOf(primaryColor));
         else holder.todayIndicator.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
