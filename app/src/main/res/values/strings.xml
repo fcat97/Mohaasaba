@@ -43,7 +43,6 @@
     <string name="today_s_schedules">Today\'s Schedules</string>
     <string name="all_schedules">All Schedules</string>
     <string name="text_request">Start Writing…</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="confirm_text">Confirm</string>
     <string name="add_target">Add Target</string>
@@ -96,4 +95,6 @@
     <string name="progress_type">Progress Type</string>
     <string name="change_the_type_of_task">Change the Type of Task</string>
     <string name="mubah">Mubah</string>
+    <string name="schedules">Schedules</string>
+    <string name="hishab">Hisaab</string>
 </resources>
