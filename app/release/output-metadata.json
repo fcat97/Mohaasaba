@@ -10,8 +10,8 @@
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 501,
-      "versionName": "0.5.01_ae74d3d_beta",
+      "versionCode": 603,
+      "versionName": "0.6.03_ae74d3d_beta",
       "outputFile": "app-release.apk"
     }
   ]

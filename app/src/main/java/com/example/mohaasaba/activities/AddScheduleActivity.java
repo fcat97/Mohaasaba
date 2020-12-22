@@ -18,26 +18,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.database.DataConverter;
-import com.example.mohaasaba.models.Note;
 import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.models.ScheduleType;
 import com.example.mohaasaba.dialog.DialogColorPicker;
 import com.example.mohaasaba.dialog.DialogDatePicker;
 import com.example.mohaasaba.fragment.FragmentEditReminder;
-import com.example.mohaasaba.fragment.FragmentOverview;
+import com.example.mohaasaba.fragment.FragmentOther;
 import com.example.mohaasaba.fragment.FragmentTodo;
 import com.example.mohaasaba.helper.ThemeUtils;
 import com.example.mohaasaba.viewModel.AddScheduleViewModel;
@@ -47,7 +44,7 @@ import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
 public class AddScheduleActivity extends AppCompatActivity
-        implements DatePickerDialog.OnDateSetListener, FragmentOverview.FragmentOverviewListeners{
+        implements DatePickerDialog.OnDateSetListener, FragmentOther.FragmentOtherListeners {
     public static final int EDIT_SCHEDULE_TYPE_REQUEST = 2152;
     public static final String EXTRA_SCHEDULE = "com.example.mohasabap.EXTRA_SCHEDULE";
     public static final String EXTRA_THEME_ID = "com.example.mohasabap.EXTRA_SCHEDULE";
@@ -59,7 +56,7 @@ public class AddScheduleActivity extends AppCompatActivity
     private EditText mTagEditText;
     private TextView mScheduleTypeTextView;
     private TabLayout tabLayout;
-    private FragmentOverview fragmentOverview;
+    private FragmentOther fragmentOther;
     private FragmentTodo fragmentTodo;
 
     @Override
@@ -116,8 +113,8 @@ public class AddScheduleActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-        fragmentOverview = new FragmentOverview(mViewModel.getSchedule());
-        fragmentOverview.setListeners(this);
+        fragmentOther = new FragmentOther(mViewModel.getSchedule());
+        fragmentOther.setListeners(this);
 
         fragmentTodo = new FragmentTodo(mViewModel.getSchedule().getHistory());
         fragmentTodo.setFragmentListeners(this::openDatePickerDialog);
@@ -215,15 +212,15 @@ public class AddScheduleActivity extends AppCompatActivity
         fragmentEditReminder.setListeners(new FragmentEditReminder.EditFragmentListeners() {
             @Override
             public void onConfirm() {
-                fragmentOverview.notifyEditConfirmed(notify);
+                fragmentOther.notifyEditConfirmed(notify);
             }
         });
     }
 
-    // Fragment Overview Listeners------------------------------------------------------------------
+    // Fragment Other Listeners------------------------------------------------------------------
     @Override
     public void onEditNotify(Notify notify) {
-        // FragmentOverview Listener
+        // FragmentOther Listener
         showEditReminderFragment(notify);
     }
 
@@ -310,7 +307,7 @@ public class AddScheduleActivity extends AppCompatActivity
                 case 0:
                     return fragmentTodo;
                 case 1:
-                    return fragmentOverview;
+                    return fragmentOther;
                 default:
                     return null;
             }

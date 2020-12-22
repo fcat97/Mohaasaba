@@ -43,7 +43,6 @@
     <string name="today_s_schedules">Today\'s Schedules</string>
     <string name="all_schedules">All Schedules</string>
     <string name="text_request">Start Writing…</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="confirm_text">Confirm</string>
     <string name="add_target">Add Target</string>
@@ -81,6 +80,21 @@
     <string name="unit">Unit</string>
     <string name="note">Note</string>
     <string name="write_something_here">Write Something Here!</string>
+    <string name="routine">Routine</string>
+    <string name="reminders">Reminders</string>
+    <string name="no_reminder">No Reminder!</string>
+    <string name="todo">Todo</string>
+    <string name="other">Other</string>
+    <string name="current_progress">Current Progress</string>
+    <string name="complete_task_to_increment">Complete task to Increment</string>
+    <string name="_24">24</string>
+    <string name="maximum_progress">Maximum Progress</string>
+    <string name="define_maximum_progress">Define Maximum Progress</string>
+    <string name="progress_steps">Progress Steps</string>
+    <string name="steps_of_progress_increment">Steps of Progress Increment</string>
+    <string name="progress_type">Progress Type</string>
+    <string name="change_the_type_of_task">Change the Type of Task</string>
+    <string name="mubah">Mubah</string>
     <string name="schedules">Schedules</string>
     <string name="hishab">Hisaab</string>
 </resources>

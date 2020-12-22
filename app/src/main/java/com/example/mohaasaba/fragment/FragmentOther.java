@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,18 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.adapter.NotifyAdapter;
-import com.example.mohaasaba.models.Note;
 import com.example.mohaasaba.models.Notify;
-import com.example.mohaasaba.helper.ViewMaker;
 import com.example.mohaasaba.models.Schedule;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
 import java.util.List;
 
-public class FragmentOverview extends Fragment {
+public class FragmentOther extends Fragment {
     private static final String TAG = "FragmentOverview";
-    private FragmentOverviewListeners listeners;
+    private FragmentOtherListeners listeners;
     private Schedule schedule;
 
     // Notification fields
@@ -40,7 +37,7 @@ public class FragmentOverview extends Fragment {
     private TextView notifyNoItemTextView;
     private EditText noteEditText;
 
-    public FragmentOverview(Schedule schedule) {
+    public FragmentOther(Schedule schedule) {
         this.schedule = schedule;
         this.notifyList = schedule.getNotifyList();
         setRetainInstance(true);
@@ -54,7 +51,7 @@ public class FragmentOverview extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_other, container, false);
 
         notifyRecyclerView = rootView.findViewById(R.id.recyclerView_FragmentReminder);
         notifyAddButton = rootView.findViewById(R.id.addReminder_FAB_FragmentReminder);
@@ -126,10 +123,10 @@ public class FragmentOverview extends Fragment {
         notifyAdapter.notifyDataSetChanged();
         if (notifyList.size() > 0) notifyNoItemTextView.setVisibility(View.INVISIBLE);
     }
-    public interface FragmentOverviewListeners {
+    public interface FragmentOtherListeners {
         void onEditNotify(Notify notify);
     }
-    public void setListeners(FragmentOverviewListeners listeners) {
+    public void setListeners(FragmentOtherListeners listeners) {
         this.listeners = listeners;
     }
 }

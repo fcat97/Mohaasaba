@@ -1,55 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center">
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dimen_small"
-        android:background="@android:color/transparent"
-        app:cardElevation="@dimen/cardElevation"
-        app:cardCornerRadius="20dp">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:background="@android:color/transparent"
-            android:layout_height="match_parent">
-            <Button
+    android:layout_gravity="center">
+            <androidx.cardview.widget.CardView
                 android:id="@+id/btn1_HomeActivity"
                 android:layout_width="128dp"
                 android:layout_height="128dp"
-                style="@style/AppTheme.Button"
-                android:elevation="@dimen/dimen_small"
-                android:drawableTop="@drawable/ic_schedule"
-                android:text="@string/schedules"
-                android:layout_margin="@dimen/dimen_small"/>
-            <Button
+                android:layout_margin="1dp"
+                app:cardCornerRadius="@dimen/dimen_small">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackground">
+                    <ImageView
+                        android:id="@+id/img_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_schedule"
+                        app:tint="@color/colorPink"
+                        android:layout_centerInParent="true"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schedules"
+                        android:textAlignment="center"
+                        android:layout_below="@id/img_1"
+                        android:layout_centerHorizontal="true"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
                 android:id="@+id/btn2_HomeActivity"
                 android:layout_width="128dp"
                 android:layout_height="128dp"
-                style="@style/AppTheme.Button"
-                android:elevation="@dimen/dimen_small"
-                android:drawableTop="@drawable/ic_expense"
-                android:text="@string/hishab"
-                android:layout_margin="@dimen/dimen_small"
-                android:layout_toEndOf="@id/btn1_HomeActivity"/>
-            <Button
+                android:background="?attr/selectableItemBackground"
+                android:layout_toEndOf="@id/btn1_HomeActivity"
+                android:layout_margin="1dp"
+                app:cardCornerRadius="@dimen/dimen_small">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackground">
+                    <ImageView
+                        android:id="@+id/img_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_expense"
+                        app:tint="@color/colorPink"
+                        android:layout_centerInParent="true"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hishab"
+                        android:textAlignment="center"
+                        android:layout_below="@id/img_2"
+                        android:layout_centerHorizontal="true"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
                 android:id="@+id/btn3_HomeActivity"
                 android:layout_width="128dp"
                 android:layout_height="128dp"
-                style="@style/AppTheme.Button"
-                android:elevation="@dimen/dimen_small"
-                android:layout_margin="@dimen/dimen_small"
-                android:layout_below="@id/btn1_HomeActivity"/>
-            <Button
+                android:background="?attr/selectableItemBackground"
+                android:layout_below="@id/btn1_HomeActivity"
+                android:layout_margin="1dp"
+                app:cardCornerRadius="@dimen/dimen_small">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackground">
+                    <ImageView
+                        android:id="@+id/img_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_expense"
+                        app:tint="@color/colorPink"
+                        android:layout_centerInParent="true"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hishab"
+                        android:textAlignment="center"
+                        android:layout_below="@id/img_3"
+                        android:layout_centerHorizontal="true"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
                 android:id="@+id/btn4_HomeActivity"
                 android:layout_width="128dp"
                 android:layout_height="128dp"
-                style="@style/AppTheme.Button"
-                android:layout_margin="@dimen/dimen_small"
+                android:background="?attr/selectableItemBackground"
                 android:layout_below="@id/btn2_HomeActivity"
-                android:layout_toEndOf="@id/btn3_HomeActivity"/>
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+                android:layout_toEndOf="@id/btn3_HomeActivity"
+                android:layout_margin="1dp"
+                app:cardCornerRadius="@dimen/dimen_small">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackground">
+                    <ImageView
+                        android:id="@+id/img_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_expense"
+                        app:tint="@color/colorPink"
+                        android:layout_centerInParent="true"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hishab"
+                        android:textAlignment="center"
+                        android:layout_below="@id/img_4"
+                        android:layout_centerHorizontal="true"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 </RelativeLayout>

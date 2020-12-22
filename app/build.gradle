@@ -10,8 +10,8 @@ android {
         applicationId 'com.example.mohaasaba'
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 603
-        versionName '0.6.03'
+        versionCode 604
+        versionName '0.6.04'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         versionNameSuffix '_ae74d3d_beta'
@@ -44,6 +44,7 @@ dependencies {
     def room_version = "2.2.5"
     /*ViewModel and LiveData (New Style-in one Line)*/
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    //noinspection LifecycleAnnotationProcessorWithJava8
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     /*Room Dependencies*/
     implementation "androidx.room:room-runtime:$room_version"
