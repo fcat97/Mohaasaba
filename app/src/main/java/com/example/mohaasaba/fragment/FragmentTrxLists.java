@@ -1,7 +1,7 @@
 package com.example.mohaasaba.fragment;
 
-import android.graphics.Canvas;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +23,7 @@ import java.util.List;
 public class FragmentTrxLists extends Fragment {
     FloatingActionButton floatingActionButton;
     RecyclerView recyclerView;
+    Callbacks callbacks;
 
     @Nullable
     @Override
@@ -38,6 +39,11 @@ public class FragmentTrxLists extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        floatingActionButton.setOnClickListener(v -> {
+            if (callbacks != null) callbacks.onFABClicked();
+            else throw new ClassCastException("Must implement Callbacks");
+        });
 
         List<TransactionPage> pages = new ArrayList<>();
 
@@ -83,5 +89,18 @@ public class FragmentTrxLists extends Fragment {
         TransactionPageAdapter adapter = new TransactionPageAdapter();
         adapter.submitList(pages);
         recyclerView.setAdapter(adapter);
+
+        // set adapter listener
+        adapter.setCallbacks(transactionPage -> {
+            if (callbacks != null) callbacks.onItemClicked(transactionPage);
+        });
+    }
+
+    public void setCallbacks(Callbacks callbacks) {
+        this.callbacks = callbacks;
+    }
+    public interface Callbacks {
+        void onFABClicked();
+        void onItemClicked(TransactionPage transactionPage);
     }
 }

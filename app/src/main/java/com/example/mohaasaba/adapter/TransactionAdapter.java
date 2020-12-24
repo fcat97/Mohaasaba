@@ -1,5 +1,6 @@
 package com.example.mohaasaba.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import com.example.mohaasaba.R;
 import com.example.mohaasaba.models.Transaction;
 
 public class TransactionAdapter extends ListAdapter<Transaction, TransactionAdapter.ViewHolder> {
-
+    Callbacks callbacks;
 
     protected TransactionAdapter() {
         super(DIFF_UTILS);
@@ -48,12 +49,23 @@ public class TransactionAdapter extends ListAdapter<Transaction, TransactionAdap
 
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView text, amount;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             text = itemView.findViewById(R.id.text_TransactionItem_TextView_HisaabActivity);
             amount = itemView.findViewById(R.id.amount_TransactionItem_TextView_HisaabActivity);
+
+            itemView.setOnClickListener(v -> {
+                if (callbacks != null) callbacks.clicked();
+            });
         }
+    }
+
+    public void setCallbacks(Callbacks callbacks) {
+        this.callbacks = callbacks;
+    }
+    public interface Callbacks {
+        void clicked();
     }
 }

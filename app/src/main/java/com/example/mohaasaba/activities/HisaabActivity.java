@@ -6,13 +6,16 @@ import androidx.appcompat.widget.Toolbar;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.fragment.FragmentTrxLists;
+import com.example.mohaasaba.models.TransactionPage;
 
 public class HisaabActivity extends AppCompatActivity {
-
+    static int clks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +30,29 @@ public class HisaabActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_HisaabActivity);
         setSupportActionBar(toolbar);
 
+        FragmentTrxLists fragmentTrxLists = new FragmentTrxLists();
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainerView_HisaabActivity, new FragmentTrxLists())
+                .add(R.id.fragmentContainerView_HisaabActivity, fragmentTrxLists)
                 .commit();
+
+        fragmentTrxLists.setCallbacks(new FragmentTrxLists.Callbacks() {
+            @Override
+            public void onFABClicked() {
+                openTransactionPageEditFragment(null);
+            }
+
+            @Override
+            public void onItemClicked(TransactionPage transactionPage) {
+                Log.d("HisaabActivity", "onItemClicked: I'm here");
+                openTransactionPageEditFragment(transactionPage);
+            }
+        });
+
+    }
+
+    private void openTransactionPageEditFragment(TransactionPage transactionPage) {
+
+        Toast.makeText(this, "Clicked " + clks++, Toast.LENGTH_SHORT).show();
     }
 }

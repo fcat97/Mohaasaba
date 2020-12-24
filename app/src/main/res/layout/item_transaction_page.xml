@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/rootLL_TransactionPage_HisaabActivity"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,6 +9,7 @@
     android:orientation="vertical"
     android:layout_gravity="center"
     android:elevation="@dimen/dimen_mini"
+    android:foreground="?attr/selectableItemBackground"
     android:layout_marginBottom="@dimen/dimen_small"
     android:layout_marginStart="@dimen/dimen_small"
     android:layout_marginEnd="@dimen/dimen_small"
