@@ -11,12 +11,17 @@
       "type": "SINGLE",
       "filters": [],
 <<<<<<< HEAD
+<<<<<<< HEAD
       "versionCode": 406,
       "versionName": "0.4.06_c3cedc2_beta",
 =======
       "versionCode": 501,
       "versionName": "0.5.01_ae74d3d_beta",
 >>>>>>> homePage
+=======
+      "versionCode": 603,
+      "versionName": "0.6.03_ae74d3d_beta",
+>>>>>>> master
       "outputFile": "app-release.apk"
     }
   ]

@@ -5,6 +5,7 @@ import androidx.room.TypeConverter;
 import com.example.mohaasaba.models.History;
 import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.ScheduleType;
+import com.example.mohaasaba.models.Transaction;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -160,6 +161,26 @@ public class DataConverter {
 
         Gson gson = new Gson();
         Type type = new TypeToken<ScheduleType.Type>(){}.getType();
+
+        return gson.fromJson(string, type);
+    }
+
+    @TypeConverter
+    public static String fromTransactionToString(Transaction transaction) {
+        if (transaction == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<Transaction>(){}.getType();
+
+        return gson.toJson(transaction, type);
+    }
+
+    @TypeConverter
+    public static Transaction fromStringToTransaction(String string) {
+        if (string == null ) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<Transaction>(){}.getType();
 
         return gson.fromJson(string, type);
     }

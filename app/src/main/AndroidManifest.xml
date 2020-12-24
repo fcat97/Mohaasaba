@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mohaasaba">
-        <activity android:name=".activities.HomeActivity"
+        <activity android:name=".activities.HisaabActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/hishab"/>
+        <activity
+            android:name=".activities.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -62,8 +66,7 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/schedules"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <receiver android:name=".receivers.NotyFire" />
         <receiver android:name=".receivers.NotificationScheduler" />

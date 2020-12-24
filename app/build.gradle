@@ -12,6 +12,8 @@ android {
         targetSdkVersion 30
         versionCode 601
         versionName '0.6.01'
+        versionCode 604
+        versionName '0.6.04'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         versionNameSuffix '_ae74d3d_beta'
