@@ -15,7 +15,7 @@ public class Transaction implements Parcelable, Serializable {
     public final String entryKey; // Final Primary Key
     public String commitTime; // Default is Entry Time
     public String note;
-    public List<String> tags;
+    public String tags;
     public float amount; // expend is < 0 & income is > 0
     public String unit; // Default is BDT
     public String fromPage; // Default is Pocket;
@@ -24,7 +24,7 @@ public class Transaction implements Parcelable, Serializable {
     public Transaction(float amount) {
         this.entryKey = IdGenerator.getNewID();
         this.commitTime = entryKey;
-        this.tags = new ArrayList<>();
+        this.tags = "";
         this.amount = amount;
         this.note = "";
         this.unit = "৳";
@@ -36,7 +36,7 @@ public class Transaction implements Parcelable, Serializable {
         entryKey = in.readString();
         commitTime = in.readString();
         note = in.readString();
-        tags = in.createStringArrayList();
+        tags = in.readString();
         amount = in.readFloat();
         unit = in.readString();
         fromPage = in.readString();
@@ -65,7 +65,7 @@ public class Transaction implements Parcelable, Serializable {
         dest.writeString(entryKey);
         dest.writeString(commitTime);
         dest.writeString(note);
-        dest.writeStringList(tags);
+        dest.writeString(tags);
         dest.writeFloat(amount);
         dest.writeString(unit);
         dest.writeString(fromPage);

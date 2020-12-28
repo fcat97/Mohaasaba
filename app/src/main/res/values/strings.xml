@@ -105,4 +105,7 @@
     <string name="transaction_unit_bdt">৳</string>
     <string name="create_new_hisaab">Create New Hisaab</string>
     <string name="add_new">Add New</string>
+    <string name="_0">0</string>
+    <string name="expense">Expense</string>
+    <string name="income">Income</string>
 </resources>

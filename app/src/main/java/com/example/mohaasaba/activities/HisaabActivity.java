@@ -6,16 +6,19 @@ import androidx.appcompat.widget.Toolbar;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.mohaasaba.R;
+import com.example.mohaasaba.fragment.FragmentTrxEditor;
 import com.example.mohaasaba.fragment.FragmentTrxLists;
+import com.example.mohaasaba.fragment.FragmentTrxPageEditor;
+import com.example.mohaasaba.models.Transaction;
 import com.example.mohaasaba.models.TransactionPage;
 
 public class HisaabActivity extends AppCompatActivity {
-    static int clks;
+    private FragmentTrxLists fragmentTrxLists;
+    private FragmentTrxPageEditor fragmentTrxPageEditor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,29 +33,37 @@ public class HisaabActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_HisaabActivity);
         setSupportActionBar(toolbar);
 
-        FragmentTrxLists fragmentTrxLists = new FragmentTrxLists();
+        showFragmentTrxList();
+    }
+
+    private void showFragmentTrxList() {
+        fragmentTrxLists = new FragmentTrxLists();
+        fragmentTrxLists.setCallbacks(this::openTransactionPageEditFragment);
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentContainerView_HisaabActivity, fragmentTrxLists)
                 .commit();
-
-        fragmentTrxLists.setCallbacks(new FragmentTrxLists.Callbacks() {
-            @Override
-            public void onFABClicked() {
-                openTransactionPageEditFragment(null);
-            }
-
-            @Override
-            public void onItemClicked(TransactionPage transactionPage) {
-                Log.d("HisaabActivity", "onItemClicked: I'm here");
-                openTransactionPageEditFragment(transactionPage);
-            }
-        });
-
     }
 
     private void openTransactionPageEditFragment(TransactionPage transactionPage) {
+        fragmentTrxPageEditor = new FragmentTrxPageEditor(transactionPage);
+        fragmentTrxPageEditor.setCallbacks(this::openFragmentTrxEditor);
 
-        Toast.makeText(this, "Clicked " + clks++, Toast.LENGTH_SHORT).show();
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom,
+                        R.anim.enter_from_bottom, R.anim.exit_to_bottom)
+                .add(R.id.fragmentContainerView_HisaabActivity, fragmentTrxPageEditor)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void openFragmentTrxEditor(Transaction transaction) {
+        FragmentTrxEditor fragmentTrxEditor = new FragmentTrxEditor(transaction);
+        fragmentTrxEditor.setCallbacks(this::saveTransaction);
+        fragmentTrxEditor.show(getSupportFragmentManager(), "FragmentTrxEditor");
+    }
+
+    private void saveTransaction(Transaction transaction) {
+        fragmentTrxPageEditor.addTransaction(transaction);
     }
 }

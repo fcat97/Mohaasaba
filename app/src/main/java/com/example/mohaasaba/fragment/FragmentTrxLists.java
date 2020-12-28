@@ -41,7 +41,7 @@ public class FragmentTrxLists extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         floatingActionButton.setOnClickListener(v -> {
-            if (callbacks != null) callbacks.onFABClicked();
+            if (callbacks != null) callbacks.onItemClicked(new TransactionPage());
             else throw new ClassCastException("Must implement Callbacks");
         });
 
@@ -100,7 +100,6 @@ public class FragmentTrxLists extends Fragment {
         this.callbacks = callbacks;
     }
     public interface Callbacks {
-        void onFABClicked();
         void onItemClicked(TransactionPage transactionPage);
     }
 }

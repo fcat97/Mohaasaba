@@ -6,24 +6,24 @@
     android:paddingStart="@dimen/dimen_small"
     android:paddingEnd="@dimen/dimen_small">
     <RelativeLayout
-        android:id="@+id/rr1"
+        android:id="@+id/rr1_FragmentTransactionEditor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/dimen_small"
         android:paddingEnd="@dimen/dimen_small">
         <EditText
-            android:id="@+id/et1"
+            android:id="@+id/amount_EditText_FragmentTransactionEditor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="...30"
+            android:inputType="numberDecimal"
+            android:hint="@string/_0"
             android:textSize="48sp"
             android:textAlignment="textEnd"
-            android:layout_toStartOf="@id/tv2"
+            android:layout_toStartOf="@id/amountUnit_TextVeiw_FragmentTransactionEditor"
             android:layout_marginEnd="@dimen/dimen_small"
             android:background="@android:color/transparent"/>
         <TextView
-            android:id="@+id/tv2"
+            android:id="@+id/amountUnit_TextVeiw_FragmentTransactionEditor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="৳"
@@ -31,49 +31,53 @@
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/rl2"
+        android:id="@+id/rl2_FragmentTransactionEditor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/rr1">
+        android:layout_below="@id/rr1_FragmentTransactionEditor">
         <TextView
-            android:id="@+id/tv_1"
+            android:id="@+id/expense_TextView_FragmentTransactionEditor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/textMedium"
-            android:text="Expense"
-            android:background="@color/colorGray"
+            android:text="@string/expense"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/colorPrimary"
+            android:textColor="@android:color/white"
             android:padding="@dimen/dimen_mini"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"/>
         <TextView
-            android:id="@+id/tv_2"
+            android:id="@+id/income_TextView_FragmentTransactionEditor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/textMedium"
-            android:text="Income"
-            android:textColor="@color/white"
-            android:background="@color/colorBlue"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/income"
+            android:background="@color/colorGray"
             android:padding="@dimen/dimen_mini"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/tv_1"/>
+            android:layout_toEndOf="@id/expense_TextView_FragmentTransactionEditor"/>
     </RelativeLayout>
 
     <EditText
-        android:id="@+id/et_note"
+        android:id="@+id/note_EditText_FragmentTransactionEditor"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_below="@id/rl2"
+        android:layout_below="@id/rl2_FragmentTransactionEditor"
         android:background="@color/colorGray"
         android:hint="@string/note_text"
         android:inputType="text"
         android:gravity="top"
         android:padding="@dimen/dimen_mini"/>
     <EditText
-        android:id="@+id/et_tags"
+        android:id="@+id/tags_EditText_FragmentTransactionEditor"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@id/et_note"
+        android:layout_below="@id/note_EditText_FragmentTransactionEditor"
         android:background="@color/colorGray"
         android:hint="@string/dummy_tags"
         android:layout_marginTop="@dimen/dimen_small"
@@ -81,50 +85,53 @@
         android:gravity="top"
         android:padding="@dimen/dimen_mini"/>
     <RelativeLayout
-        android:id="@+id/rl3"
+        android:id="@+id/rl3_FragmentTransactionEditor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorGray"
         android:layout_marginTop="@dimen/dimen_small"
         android:paddingBottom="@dimen/dimen_small"
-        android:layout_below="@id/et_tags">
+        android:layout_below="@id/tags_EditText_FragmentTransactionEditor">
         <TextView
-            android:id="@+id/tv__1"
+            android:id="@+id/__tv1_FragmentTransactionEditor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="From"
             android:textSize="20sp"
             android:layout_marginTop="@dimen/dimen_small"/>
         <TextView
+            android:id="@+id/from_select_TextView_FragmentTransactionEditor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Unknown Category"
             android:textSize="20sp"
             android:layout_alignParentEnd="true"
-            android:layout_alignTop="@id/tv__1"/>
+            android:layout_alignTop="@id/__tv1_FragmentTransactionEditor"/>
         <TextView
-            android:id="@+id/tv__2"
+            android:id="@+id/__tv2_FragmentTransactionEditor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="To"
             android:textSize="20sp"
             android:layout_marginTop="@dimen/dimen_small"
-            android:layout_below="@id/tv__1"/>
+            android:layout_below="@id/__tv1_FragmentTransactionEditor"/>
         <TextView
+            android:id="@+id/to_select_TextView_FragmentTransactionEditor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Unknown Category"
             android:textSize="20sp"
             android:layout_alignParentEnd="true"
-            android:layout_alignTop="@id/tv__2"/>
+            android:layout_alignTop="@id/__tv2_FragmentTransactionEditor"/>
     </RelativeLayout>
 
     <Button
+        android:id="@+id/confirm_Button_FragmentTransactionEditor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirm"
         style="@style/AppTheme.Button"
         android:layout_marginTop="@dimen/dimen_small"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/rl3"/>
+        android:layout_below="@id/rl3_FragmentTransactionEditor"/>
 </RelativeLayout>

@@ -34,7 +34,7 @@ public class TransactionPageAdapter extends ListAdapter<TransactionPage, Transac
 
         @Override
         public boolean areContentsTheSame(@NonNull TransactionPage oldItem, @NonNull TransactionPage newItem) {
-            return false;
+            return oldItem.transactions.equals(newItem.transactions);
         }
     };
 

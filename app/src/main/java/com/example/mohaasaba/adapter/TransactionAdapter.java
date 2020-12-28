@@ -17,7 +17,7 @@ import com.example.mohaasaba.models.Transaction;
 public class TransactionAdapter extends ListAdapter<Transaction, TransactionAdapter.ViewHolder> {
     Callbacks callbacks;
 
-    protected TransactionAdapter() {
+    public TransactionAdapter() {
         super(DIFF_UTILS);
     }
 
