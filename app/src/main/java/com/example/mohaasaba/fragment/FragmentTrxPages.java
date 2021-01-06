@@ -1,7 +1,6 @@
 package com.example.mohaasaba.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +14,13 @@ import com.example.mohaasaba.R;
 import com.example.mohaasaba.adapter.TransactionPageAdapter;
 import com.example.mohaasaba.models.Transaction;
 import com.example.mohaasaba.models.TransactionPage;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentTrxLists extends Fragment {
-    FloatingActionButton floatingActionButton;
-    RecyclerView recyclerView;
-    Callbacks callbacks;
+public class FragmentTrxPages extends Fragment {
+    private RecyclerView recyclerView;
+    private OnItemClickedCallback onItemClickedCallback;
 
     @Nullable
     @Override
@@ -31,7 +28,6 @@ public class FragmentTrxLists extends Fragment {
         View root =  inflater.inflate(R.layout.fragment_transaction_page_list, null);
 
         recyclerView = root.findViewById(R.id.recyclerView_FragmentTransactionPageList);
-        floatingActionButton = root.findViewById(R.id.fab_FragmentTransactionPageList);
 
         return root;
     }
@@ -39,11 +35,6 @@ public class FragmentTrxLists extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        floatingActionButton.setOnClickListener(v -> {
-            if (callbacks != null) callbacks.onItemClicked(new TransactionPage());
-            else throw new ClassCastException("Must implement Callbacks");
-        });
 
         List<TransactionPage> pages = new ArrayList<>();
 
@@ -91,15 +82,17 @@ public class FragmentTrxLists extends Fragment {
         recyclerView.setAdapter(adapter);
 
         // set adapter listener
-        adapter.setCallbacks(transactionPage -> {
-            if (callbacks != null) callbacks.onItemClicked(transactionPage);
-        });
+        adapter.setOnItemClickedCallback(transactionPage -> {
+                    if (onItemClickedCallback != null) onItemClickedCallback.onItemClicked(transactionPage);
+                });
     }
 
-    public void setCallbacks(Callbacks callbacks) {
-        this.callbacks = callbacks;
+
+    public FragmentTrxPages setOnItemClickedCallback(OnItemClickedCallback onItemClickedCallback) {
+        this.onItemClickedCallback = onItemClickedCallback;
+        return this;
     }
-    public interface Callbacks {
+    public interface OnItemClickedCallback {
         void onItemClicked(TransactionPage transactionPage);
     }
 }

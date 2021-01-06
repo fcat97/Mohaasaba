@@ -3,7 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/transparent">
+    android:paddingStart="@dimen/dimen_small"
+    android:paddingEnd="@dimen/dimen_small"
+    android:paddingBottom="@dimen/dimen_mini"
+    android:background="@color/colorGray">
     <TextView
         android:id="@+id/text_TransactionItem_TextView_HisaabActivity"
         android:layout_width="0dp"

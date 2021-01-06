@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,10 +19,11 @@ import com.example.mohaasaba.R;
 import com.example.mohaasaba.adapter.TransactionAdapter;
 import com.example.mohaasaba.models.Transaction;
 import com.example.mohaasaba.models.TransactionPage;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class FragmentTrxPageEditor extends Fragment {
     private EditText labelEditText;
-    private Button addButton;
+    private FloatingActionButton addButton;
     private RecyclerView recyclerView;
     private TextView totalTextView;
     private TransactionPage transactionPage;
@@ -38,7 +40,7 @@ public class FragmentTrxPageEditor extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transaction_page_editor, null);
         labelEditText = view.findViewById(R.id.label_EditText_FragmentTrxPgEdit);
-        addButton = view.findViewById(R.id.add_Button_FragmentTrxPgEdit);
+        addButton = view.findViewById(R.id.fab__FragmentTrxPgEdit);
         recyclerView = view.findViewById(R.id.recyclerView_FragmentTrxPgEdit);
         totalTextView = view.findViewById(R.id.totalAmount_TextView_FragmentTrxPgEdit);
 
@@ -70,7 +72,13 @@ public class FragmentTrxPageEditor extends Fragment {
         totalTextView.setText(String.valueOf(transactionPage.calculateTransactions(transactionPage)));
     }
 
-    public void setCallbacks(Callbacks callbacks) {
+    @Override
+    public void onDetach() {
+        // Update transactions in Database
+        super.onDetach();
+    }
+
+    public void setOnAddButtonClickListener(Callbacks callbacks) {
         this.callbacks = callbacks;
     }
 

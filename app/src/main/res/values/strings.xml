@@ -100,12 +100,15 @@
     <string name="all_transactions">All Transactions</string>
     <string name="total">Total</string>
     <string name="ice_cream">Ice Cream</string>
-    <string name="_23_00">23.00 ৳</string>
-    <string name="_50_65">50.65 ৳</string>
+    <string name="_23_00">23.00</string>
+    <string name="_50_65">50.65</string>
     <string name="transaction_unit_bdt">৳</string>
     <string name="create_new_hisaab">Create New Hisaab</string>
     <string name="add_new">Add New</string>
     <string name="_0">0</string>
     <string name="expense">Expense</string>
     <string name="income">Income</string>
+    <string name="add_transaction">Add Transaction</string>
+    <string name="save_change">Save Change</string>
+    <string name="taka_sign">৳</string>
 </resources>

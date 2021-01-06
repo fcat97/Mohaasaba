@@ -9,51 +9,65 @@
     android:orientation="vertical"
     android:layout_gravity="center"
     android:elevation="@dimen/dimen_mini"
-    android:foreground="?attr/selectableItemBackground"
+    android:padding="1dp"
     android:layout_marginBottom="@dimen/dimen_small"
     android:layout_marginStart="@dimen/dimen_small"
     android:layout_marginEnd="@dimen/dimen_small"
     android:background="@drawable/checkbox_drawable">
-    <TextView
-        android:id="@+id/label_TransactionPage_TextView_HisaabActivity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/textSmall"
-        android:layout_margin="@dimen/dimen_small"
-        android:lines="1"
-        android:ellipsize="end"
-        android:text="@string/all_transactions"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_TransactionPage_TextView_HisaabActivity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorGray"
-        android:paddingStart="@dimen/dimen_small"
-        android:paddingEnd="@dimen/dimen_small"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_transaction"/>
     <RelativeLayout
-        android:id="@+id/____asda"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground">
         <TextView
-            android:id="@+id/total_TextView_HisaabActivity"
+            android:id="@+id/label_TransactionPage_TextView_HisaabActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/textSmall"
+            android:background="@android:color/transparent"
+            android:padding="@dimen/dimen_small"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/all_transactions"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_TransactionPage_TextView_HisaabActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_transaction"
+            android:layout_below="@id/label_TransactionPage_TextView_HisaabActivity"/>
+        <RelativeLayout
+            android:id="@+id/____asda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_small"
+            android:layout_below="@id/recyclerView_TransactionPage_TextView_HisaabActivity">
+            <TextView
+                android:id="@+id/total_TextView_HisaabActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/textSmall"
+                android:text="@string/total"/>
+            <TextView
+                android:id="@+id/totalAmount_TransactionPage_TextView_HisaabActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/textSmall"
+                android:textAlignment="viewEnd"
+                android:text="@string/_50_65"
+                android:layout_marginStart="@dimen/dimen_small"
+                android:layout_toEndOf="@id/total_TextView_HisaabActivity"/>
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/addTransactionButton_ImageView_HisaabActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/textSmall"
-            android:text="@string/total"
-            android:padding="@dimen/dimen_small"
-            android:layout_marginEnd="@dimen/dimen_small"
-            android:layout_alignParentStart="true"/>
-        <TextView
-            android:id="@+id/totalAmount_TransactionPage_TextView_HisaabActivity"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/textSmall"
-            android:textAlignment="viewEnd"
-            android:text="@string/_50_65"
-            android:padding="@dimen/dimen_small"
-            android:layout_toEndOf="@id/total_TextView_HisaabActivity"
+            android:src="@drawable/ic_add"
+            android:background="@drawable/button_circle_ripple"
+            android:layout_below="@id/recyclerView_TransactionPage_TextView_HisaabActivity"
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 </LinearLayout>

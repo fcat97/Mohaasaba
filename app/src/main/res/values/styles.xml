@@ -165,6 +165,11 @@
     </style>
     <style name="textLarge">
         <item name="android:textSize">24sp</item>
+        <item name="fontFamily">@font/open_sans_regular</item>
+        <item name="background">@android:color/transparent</item>
+    </style>
+    <style name="textLarge.Bold">
+        <item name="android:textSize">24sp</item>
         <item name="fontFamily">@font/open_sans_bold</item>
         <item name="background">@android:color/transparent</item>
     </style>

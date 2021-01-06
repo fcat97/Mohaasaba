@@ -12,9 +12,10 @@
         android:layout_height="wrap_content"
         android:hint="@string/title_request_text"
         android:inputType="text"
-        android:layout_margin="@dimen/dimen_small"
-        android:textAppearance="@style/textMedium"
-        style="@style/AppTheme.EditText"/>
+        android:textAppearance="@style/textSmall"
+        android:padding="@dimen/dimen_small"
+        android:textSize="24sp"
+        android:background="@android:color/transparent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_FragmentTrxPgEdit"
@@ -27,27 +28,31 @@
         android:layout_above="@id/bottom_RelativeLayout_FragmentTrxPgEdit"
         android:layout_below="@id/label_EditText_FragmentTrxPgEdit"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab__FragmentTrxPgEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_large"
+        android:src="@drawable/ic_add"
+        android:elevation="12dp"
+
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:contentDescription="@string/add_transaction" />
+
+
     <RelativeLayout
         android:id="@+id/bottom_RelativeLayout_FragmentTrxPgEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_small"
         android:layout_alignParentBottom="true">
-        <Button
-            android:id="@+id/add_Button_FragmentTrxPgEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_new"
-            style="@style/AppTheme.Button"
-            android:layout_marginEnd="@dimen/dimen_small"
-            android:drawableLeft="@drawable/ic_add"
-
-            android:layout_alignParentEnd="true"/>
         <TextView
             android:id="@+id/total_TextView_FragmentTrxPgEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/total"
-            android:textAppearance="@style/textLarge"
+            android:textAppearance="@style/textLarge.Bold"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
             android:layout_marginStart="@dimen/dimen_small"/>
@@ -56,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_50_65"
-            android:textAppearance="@style/textLarge"
+            android:textAppearance="@style/textLarge.Bold"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/total_TextView_FragmentTrxPgEdit"
             android:layout_marginStart="@dimen/dimen_small"/>
