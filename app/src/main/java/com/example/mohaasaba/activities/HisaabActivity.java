@@ -126,7 +126,11 @@ public class HisaabActivity extends AppCompatActivity {
         FragmentTransactionEditor fragmentTransactionEditor = new FragmentTransactionEditor()
                 .setTransactionAccounts(transactionAccounts)
                 .setTransaction(transaction)
-                .setConfirmListener(repository::insertTransaction)
+                .setConfirmListener(transaction1 -> {
+                    if (transactions.contains(transaction1)) repository.updateTransaction(transaction1);
+                    else repository.insertTransaction(transaction1);
+                    // replace with functional style
+                })
                 .setDeleteListener(repository::deleteTransaction);
 
         fragmentTransactionEditor.show(getSupportFragmentManager(), "Transaction Editor");

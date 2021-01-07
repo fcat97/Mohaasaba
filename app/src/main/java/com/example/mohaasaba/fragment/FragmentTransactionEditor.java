@@ -69,6 +69,9 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
         if (transaction == null) transaction = new Transaction(0f);
 
         amountEditText.setText(String.valueOf(transaction.amount));
+        noteEditText.setText(transaction.note);
+        tagEditText.setText(transaction.tags);
+
         selectAccountButton.setOnClickListener(this::openAccountMenu);
         selectedPageButton.setOnClickListener(this::openPageMenu);
 
