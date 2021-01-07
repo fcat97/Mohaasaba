@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,15 +15,16 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 
 import com.example.mohaasaba.R;
 
 import com.example.mohaasaba.activities.HisaabActivity;
 import com.example.mohaasaba.models.Transaction;
+import com.example.mohaasaba.models.TransactionAccount;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -32,7 +32,6 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
     public static final String TAG = FragmentTransactionEditor.class.getName();
     private DeleteListener deleteListener;
     private ConfirmListener confirmListener;
-    private SharedPreferences sharedPreferences;
 
     private EditText amountEditText;
     private EditText noteEditText;
@@ -42,6 +41,8 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
     private TextView selectAccountButton;
     private Button deleteButton, confirmButton;
     private Transaction transaction;
+    private List<TransactionAccount> transactionAccounts;
+
 
     @Nullable
     @Override
@@ -62,8 +63,9 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        sharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences(
-                HisaabActivity.HISAAB_SHARED_PREF, Context.MODE_PRIVATE);
+
+
+        // For adding new Transaction
         if (transaction == null) transaction = new Transaction(0f);
 
         amountEditText.setText(String.valueOf(transaction.amount));
@@ -75,16 +77,19 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
 
         deleteButton.setOnClickListener(v -> {
             if (deleteListener != null) deleteListener.onClick(transaction);
+            dismiss();
+            Toast.makeText(getContext(), "Transaction Deleted", Toast.LENGTH_SHORT).show();
         });
         confirmButton.setOnClickListener(v -> {
             if (! amountEditText.getText().toString().isEmpty())
-                transaction.amount = Integer.parseInt(amountEditText.getText().toString().trim());
+                transaction.amount = Float.parseFloat(amountEditText.getText().toString().trim());
             if (! noteEditText.getText().toString().isEmpty())
                 transaction.note = noteEditText.getText().toString().trim();
             if (! tagEditText.getText().toString().isEmpty())
                 transaction.tags = tagEditText.getText().toString().trim();
-
             if (confirmListener != null) confirmListener.onClick(transaction);
+            dismiss();
+            Toast.makeText(getContext(), "Transaction Added", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -104,24 +109,25 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
             popupMenu.getMenu().add(s);
         }
         popupMenu.show();
-     }
+    }
     private void openAccountMenu(View view) {
-        Set<String> account = sharedPreferences.getStringSet(HisaabActivity.ACCOUNT_SHARED_PREF, new HashSet<>());
-        if (account.size() == 0) account.add(Transaction.Account.getDefaultAccount());
         PopupMenu popupMenu = new PopupMenu(getContext(), view);
-        for (String s :
-                account) {
-            popupMenu.getMenu().add(s);
+        for (TransactionAccount account :
+                transactionAccounts) {
+            popupMenu.getMenu().add(account.name);
         }
-
         popupMenu.setOnMenuItemClickListener(item -> {
-            transaction.account = Transaction.Account.parseAccount(item.getTitle().toString()).name;
+            transaction.account = item.getTitle().toString();
             selectAccountButton.setText(transaction.account);
             return true;
         });
         popupMenu.show();
     }
 
+    public FragmentTransactionEditor setTransactionAccounts(List<TransactionAccount> transactionAccounts) {
+        this.transactionAccounts = transactionAccounts;
+        return this;
+    }
     public FragmentTransactionEditor setTransaction(Transaction transaction) {
         this.transaction = transaction;
         return this;
@@ -140,5 +146,4 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
     public interface DeleteListener {
         void onClick(Transaction transaction);
     }
-
 }

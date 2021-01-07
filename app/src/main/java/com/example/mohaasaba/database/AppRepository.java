@@ -12,6 +12,8 @@ import com.example.mohaasaba.models.Note;
 import com.example.mohaasaba.models.Reminder;
 import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.models.ScheduleType;
+import com.example.mohaasaba.models.Transaction;
+import com.example.mohaasaba.models.TransactionAccount;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,6 +30,8 @@ public class AppRepository {
     private ScheduleDao mScheduleDao;
     private NoteDao mNoteDao;
     private ReminderDao mReminderDao;
+    private TransactionDao mTransactionDao;
+    private TransactionAccountDao mTransactionAccountDao;
 
     public AppRepository(Context context) {
         AppDatabase appDatabase = AppDatabase.getInstance(context);
@@ -39,6 +43,8 @@ public class AppRepository {
         this.mScheduleDao = appDatabase.scheduleDao();
         this.mNoteDao = appDatabase.noteDao();
         this.mReminderDao = appDatabase.reminderDao();
+        this.mTransactionDao = appDatabase.transactionDao();
+        this.mTransactionAccountDao = appDatabase.accountDao();
     }
 
     public void insertSchedule(Schedule schedule) {
@@ -190,6 +196,53 @@ public class AppRepository {
         });
 
         return result.get();
+    }
+
+    public void insertTransaction(Transaction transaction) {
+        Thread thread = new Thread(() -> {
+            mTransactionDao.insert(transaction);
+        });
+        thread.start();
+    }
+    public void updateTransaction(Transaction transaction) {
+        Thread thread = new Thread(() -> {
+            mTransactionDao.update(transaction);
+        });
+        thread.start();
+    }
+    public void deleteTransaction(Transaction transaction) {
+        Thread thread = new Thread(() -> {
+            mTransactionDao.delete(transaction);
+        });
+        thread.start();
+    }
+    public LiveData<List<Transaction>> getAllTransactions() {
+        String query = "SELECT * FROM transaction_table";
+
+        return mTransactionDao.getAllTransaction(new SimpleSQLiteQuery(query));
+    }
+
+    public void insertTransactionAccount(TransactionAccount transactionAccount) {
+        Thread thread = new Thread(() -> {
+            mTransactionAccountDao.insert(transactionAccount);
+        });
+        thread.start();
+    }
+    public void updateTransactionAccount(TransactionAccount transactionAccount) {
+        Thread thread = new Thread(() -> {
+            mTransactionAccountDao.update(transactionAccount);
+        });
+        thread.start();
+    }
+    public void deleteTransactionAccount(TransactionAccount transactionAccount) {
+        Thread thread = new Thread(() -> {
+            mTransactionAccountDao.delete(transactionAccount);
+        });
+        thread.start();
+    }
+    public LiveData<List<TransactionAccount>> getAllTransactionAccounts() {
+        String query = "SELECT * FROM transaction_table";
+        return mTransactionAccountDao.getAllAccounts(new SimpleSQLiteQuery(query));
     }
 
     private String getDayOfWeek() {

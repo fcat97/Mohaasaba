@@ -16,7 +16,7 @@ import com.example.mohaasaba.models.Transaction;
 import java.util.Calendar;
 
 public class TransactionDetailAdapter extends ListAdapter<Transaction, TransactionDetailAdapter.ViewHolder> {
-
+    private OnItemClickedListener listener;
 
     public TransactionDetailAdapter() {
         super(DIFF_UTILS);
@@ -48,6 +48,11 @@ public class TransactionDetailAdapter extends ListAdapter<Transaction, Transacti
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Transaction transaction = getItem(position);
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) listener.onClick(transaction);
+        });
+
+
         holder.label.setText(transaction.note);
         holder.tags.setText(transaction.tags);
         holder.amount.setText(String.valueOf(transaction.amount));
@@ -76,5 +81,13 @@ public class TransactionDetailAdapter extends ListAdapter<Transaction, Transacti
             tags = itemView.findViewById(R.id.tag_TextView_ItemTransactionDetails);
             amount = itemView.findViewById(R.id.amount_TextView__ItemTransactionDetails);
         }
+    }
+
+    public TransactionDetailAdapter setListener(OnItemClickedListener listener) {
+        this.listener = listener;
+        return this;
+    }
+    public interface OnItemClickedListener {
+        void onClick(Transaction transaction);
     }
 }

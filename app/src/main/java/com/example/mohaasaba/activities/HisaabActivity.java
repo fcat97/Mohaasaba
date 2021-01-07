@@ -6,6 +6,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -16,23 +18,31 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.mohaasaba.R;
+import com.example.mohaasaba.database.AppRepository;
 import com.example.mohaasaba.fragment.FragmentAllTransactions;
 import com.example.mohaasaba.fragment.FragmentTransactionEditor;
 import com.example.mohaasaba.models.Transaction;
+import com.example.mohaasaba.models.TransactionAccount;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 
 public class HisaabActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
     private SharedPreferences sharedPreferences;
+    private AppRepository repository;
+    private LiveData<List<Transaction>> transactionLiveData;
+    private List<Transaction> transactions;
+    private LiveData<List<TransactionAccount>> accountLiveData;
+    private List<TransactionAccount> transactionAccounts;
+    private boolean fragmentAllTransactionsCreated = false;
 
     public static final String HISAAB_SHARED_PREF = "com.mohaasaba.HISAAB_SHARED_PREF";
     public static final String PAGES_SHARED_PREF = "com.mohaasaba.HISAB_PAGES";
-    public static final String ACCOUNT_SHARED_PREF = "com.mohaasaba.HISAB_ACCOUNTS";
 
     private FragmentAllTransactions fragmentAllTransactions;
 
@@ -50,16 +60,20 @@ public class HisaabActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_HisaabActivity);
         setSupportActionBar(toolbar);
 
+        repository = new AppRepository(getApplication());
+        transactionLiveData = repository.getAllTransactions();
+        transactionLiveData.observe(this, transactions -> {
+            this.transactions = transactions;
+            if (fragmentAllTransactionsCreated) submitTransactionList();
+        });
+        accountLiveData = repository.getAllTransactionAccounts();
+        accountLiveData.observe(this, transactionAccounts -> {
+            this.transactionAccounts = transactionAccounts;
+        });
+
+
         // Get shared pref of Page names
         sharedPreferences = getSharedPreferences(HISAAB_SHARED_PREF, MODE_PRIVATE);
-        Set<String> accounts = sharedPreferences.getStringSet(ACCOUNT_SHARED_PREF, new HashSet<>());
-        if (accounts.size() == 0) {
-            // remember to add balance at end when initializing account
-            accounts.add(Transaction.Account.getDefaultAccount());
-            sharedPreferences.edit()
-                    .putStringSet(ACCOUNT_SHARED_PREF, accounts)
-                    .apply();
-        }
         Set<String> pages = sharedPreferences.getStringSet(PAGES_SHARED_PREF, new HashSet<>());
         if (pages.size() == 0) {
             pages.add(Transaction.DEFAULT_PAGE);
@@ -75,7 +89,12 @@ public class HisaabActivity extends AppCompatActivity {
 
         // Instantiate FragmentAllTransactions
         fragmentAllTransactions = new FragmentAllTransactions()
-                .setAddButtonClickListener(this::openTransactionEditor); //set add button listener
+                .setAddButtonClickListener(this::openTransactionEditor) //set add button listener
+                .setOnReachListener(() -> {
+                    fragmentAllTransactionsCreated = true;
+                    submitTransactionList();
+                })
+                .setOnItemClickedListener(this::openTransactionEditor);
 
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle()));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -105,11 +124,15 @@ public class HisaabActivity extends AppCompatActivity {
 
     private void openTransactionEditor(Transaction transaction) {
         FragmentTransactionEditor fragmentTransactionEditor = new FragmentTransactionEditor()
+                .setTransactionAccounts(transactionAccounts)
                 .setTransaction(transaction)
-                .setConfirmListener(transaction1 -> {})
-                .setDeleteListener(transaction1 -> {});
+                .setConfirmListener(repository::insertTransaction)
+                .setDeleteListener(repository::deleteTransaction);
 
         fragmentTransactionEditor.show(getSupportFragmentManager(), "Transaction Editor");
+    }
+    private void submitTransactionList() {
+        fragmentAllTransactions.updateList(transactions);
     }
 
     private final class ViewPagerAdapter extends FragmentStateAdapter {

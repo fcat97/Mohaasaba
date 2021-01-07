@@ -11,16 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.adapter.TransactionPageAdapter;
-import com.example.mohaasaba.models.Transaction;
-import com.example.mohaasaba.models.TransactionPage;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FragmentTrxPages extends Fragment {
     private RecyclerView recyclerView;
-    private OnItemClickedCallback onItemClickedCallback;
 
     @Nullable
     @Override
@@ -35,64 +28,6 @@ public class FragmentTrxPages extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        List<TransactionPage> pages = new ArrayList<>();
-
-        TransactionPage tp1 = new TransactionPage();
-        tp1.label = "All Transactions";
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        tp1.transactions.add(new Transaction(23f));
-        pages.add(tp1);
-
-
-        TransactionPage tp2 = new TransactionPage();
-        tp2.label = "All Transactions";
-        tp2.transactions.add(new Transaction(23f));
-        tp2.transactions.add(new Transaction(23f));
-        tp2.transactions.add(new Transaction(23f));
-        tp2.transactions.add(new Transaction(23f));
-        tp2.transactions.add(new Transaction(23f));
-        tp2.transactions.add(new Transaction(23f));
-        tp2.transactions.add(new Transaction(23f));
-        tp2.transactions.add(new Transaction(23f));
-        tp2.transactions.add(new Transaction(23f));
-        tp2.transactions.add(new Transaction(23f));
-        pages.add(tp2);
-
-        TransactionPageAdapter adapter = new TransactionPageAdapter();
-        adapter.submitList(pages);
-        recyclerView.setAdapter(adapter);
-
-        // set adapter listener
-        adapter.setOnItemClickedCallback(transactionPage -> {
-                    if (onItemClickedCallback != null) onItemClickedCallback.onItemClicked(transactionPage);
-                });
     }
 
-
-    public FragmentTrxPages setOnItemClickedCallback(OnItemClickedCallback onItemClickedCallback) {
-        this.onItemClickedCallback = onItemClickedCallback;
-        return this;
-    }
-    public interface OnItemClickedCallback {
-        void onItemClicked(TransactionPage transactionPage);
-    }
 }

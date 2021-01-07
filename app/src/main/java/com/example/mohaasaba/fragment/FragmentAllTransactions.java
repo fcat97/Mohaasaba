@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mohaasaba.R;
@@ -16,7 +15,6 @@ import com.example.mohaasaba.adapter.TransactionDetailAdapter;
 import com.example.mohaasaba.models.Transaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentAllTransactions extends Fragment {
@@ -24,6 +22,8 @@ public class FragmentAllTransactions extends Fragment {
     private FloatingActionButton addButton;
     private AddButtonClickListener addButtonClickListener;
     private TransactionDetailAdapter transactionDetailAdapter;
+    private OnCreateViewFinishedListener onFinishListener;
+    private OnItemClickedListener onItemClickedListener;
 
 
     @Nullable
@@ -41,38 +41,46 @@ public class FragmentAllTransactions extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        transactionDetailAdapter = new TransactionDetailAdapter();
+        transactionDetailAdapter = new TransactionDetailAdapter()
+                .setListener(transaction -> {
+                   if (onItemClickedListener != null) onItemClickedListener.onClicked(transaction);
+                });
         recyclerView.setAdapter(transactionDetailAdapter);
-
-        List<Transaction> transactions = new ArrayList<>();
-        transactions.add(new Transaction(45f));
-        transactions.add(new Transaction(45f));
-        transactions.add(new Transaction(45f));
-        transactions.add(new Transaction(45f));
-        transactions.add(new Transaction(45f));
-        transactions.add(new Transaction(45f));
-        transactions.add(new Transaction(45f));
-        transactions.add(new Transaction(45f));
-        transactions.add(new Transaction(45f));
-        transactions.add(new Transaction(45f));
-        transactions.add(new Transaction(45f));
-
-        transactionDetailAdapter.submitList(transactions);
-
         addButton.setOnClickListener(v -> {
             if (addButtonClickListener != null) addButtonClickListener.onClick(new Transaction(0f));
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (onFinishListener != null) onFinishListener.onFinished();
+    }
+
     public void updateList(List<Transaction> transactionList) {
         transactionDetailAdapter.submitList(transactionList);
+    }
+
+    public FragmentAllTransactions setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
+        this.onItemClickedListener = onItemClickedListener;
+        return this;
     }
     public FragmentAllTransactions setAddButtonClickListener(AddButtonClickListener addButtonClickListener) {
         this.addButtonClickListener = addButtonClickListener;
         return this;
     }
+    public FragmentAllTransactions setOnReachListener(OnCreateViewFinishedListener listener) {
+        this.onFinishListener = listener;
+        return this;
+    }
     public interface AddButtonClickListener {
         void onClick(Transaction transaction);
+    }
+    public interface OnCreateViewFinishedListener {
+        void onFinished();
+    }
+    public interface OnItemClickedListener {
+        void onClicked(Transaction transaction);
     }
 
 }

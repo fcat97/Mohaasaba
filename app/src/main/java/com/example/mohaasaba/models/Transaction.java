@@ -4,15 +4,22 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.example.mohaasaba.helper.IdGenerator;
 
 import java.io.Serializable;
 
+@Entity(tableName = "transaction_table")
 public class Transaction implements Parcelable, Serializable {
-    public final String entryKey; // Final Primary Key
     public static final String DEFAULT_PAGE = "Untitled";
+
+    @PrimaryKey
+    @NonNull
+    public String entryKey; // Final Primary Key
     public String commitTime; // Default is Entry Time
     public String note;
     public String tags;
@@ -28,7 +35,7 @@ public class Transaction implements Parcelable, Serializable {
         this.amount = amount;
         this.note = "";
         this.unit = "৳";
-        this.account = Account.DEFAULT_ACCOUNT;
+        this.account = TransactionAccount.DEFAULT_ACCOUNT;
         this.page = DEFAULT_PAGE;
     }
 
@@ -80,32 +87,5 @@ public class Transaction implements Parcelable, Serializable {
     @Override
     public boolean equals(@Nullable Object obj) {
         return super.equals(obj);
-    }
-
-    public static class Account {
-        public static final String DEFAULT_ACCOUNT = "Cash";
-        public static final String DEFAULT_BALANCE = "0.0";
-        public static final String DELIMITER = "-->";
-        public String name;
-        public String balance;
-
-        public static Account parseAccount(String string) {
-            Account account1 = new Account();
-            string = string.substring(0, string.length() - 1);
-            account1.name = string.split(DELIMITER)[0];
-            account1.balance = string.split(DELIMITER)[1];
-            return account1;
-        }
-
-
-
-        public static String toString(Account account) {
-            return account.name + DELIMITER + account.balance;
-        }
-
-        public static String getDefaultAccount() {
-            return DEFAULT_ACCOUNT + DELIMITER + DEFAULT_BALANCE;
-        }
-
     }
 }
