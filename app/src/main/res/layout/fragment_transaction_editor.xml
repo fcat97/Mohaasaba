@@ -11,33 +11,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_small"
         android:orientation="vertical">
-        <RelativeLayout
+        <FrameLayout
+            android:id="@+id/amount_FrameLayout_FragmentTransactionEditor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_small">
-            <EditText
-                android:id="@+id/amount_EditText_FragmentTransactionEditor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorGray"
-                android:padding="@dimen/dimen_small"
-                android:hint="@string/_50_65"
-                android:textAlignment="textEnd"
-                android:inputType="numberDecimal"
-                android:layout_toStartOf="@id/unit_TextView_FragmentTransactionEditor"
-                android:textAppearance="@style/textLarge"/>
-            <TextView
-                android:id="@+id/unit_TextView_FragmentTransactionEditor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/colorGray"
-                android:padding="@dimen/dimen_small"
-                android:text="@string/taka_sign"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/textLarge"
-                android:layout_alignParentEnd="true"/>
-        </RelativeLayout>
-
+            android:layout_margin="@dimen/dimen_small"/>
 
         <EditText
             android:id="@+id/note_EditText_FragmentTransactionEditor"

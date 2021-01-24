@@ -10,6 +10,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,6 +44,10 @@ public class ViewMaker {
     public DateSelectorView getDateSelectorView() {
         return new DateSelectorView(mContext);
     }
+    public IncomeExpenseSelector getIESelector() {
+        return new IncomeExpenseSelector(mContext);
+    }
+
 
     private class NoteView {
         private TextView noteTitle, noteDetail;
@@ -365,5 +370,55 @@ public class ViewMaker {
 
     }
 
+    public class IncomeExpenseSelector{
+        private final View rootView;
+        public TextView income;
+        public TextView expense;
+        private EditText amountEditText;
 
+        public IncomeExpenseSelector(Context context) {
+            rootView = LayoutInflater.from(context)
+                    .inflate(R.layout.view_inceome_expense_selector, null, false);
+            income = rootView.findViewById(R.id.income_TextView_amountEditor_FragmentTransactionEditor);
+            expense = rootView.findViewById(R.id.expense_TextView_amountEditor_FragmentTransactionEditor);
+            amountEditText = rootView.findViewById(R.id.amount_EditText_amountEditor_FragmentTransactionEditor);
+
+            income.setOnClickListener(v -> {
+                setAsIncome();
+            });
+            expense.setOnClickListener(v -> {
+                setAsExpense();
+            });
+        }
+        private void setAsIncome() {
+            float amount = Float.parseFloat(amountEditText.getText().toString());
+            if (amount < 0.0) {
+                amountEditText.setText(String.valueOf(-1 * amount));
+            }
+            income.setBackgroundColor(Color.LTGRAY);
+            income.setTextColor(Color.BLACK);
+
+            expense.setBackgroundColor(Color.TRANSPARENT);
+        }
+        private void setAsExpense() {
+            float amount = Float.parseFloat(amountEditText.getText().toString());
+            if (amount > 0.0) {
+                amountEditText.setText(String.valueOf(-1 * amount));
+            }
+            expense.setBackgroundColor(Color.LTGRAY);
+            expense.setTextColor(Color.BLACK);
+
+            income.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        public float getAmount() {
+            return Float.parseFloat(amountEditText.getText().toString());
+        }
+        public void setAmount(float amount) {
+            amountEditText.setText(String.valueOf(amount));
+            if (amount < 0.0) setAsExpense();
+            else setAsIncome();
+        }
+        public View getIESelectorView() { return rootView; }
+    }
 }

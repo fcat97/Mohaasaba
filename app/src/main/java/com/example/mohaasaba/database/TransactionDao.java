@@ -30,4 +30,7 @@ public interface TransactionDao {
 
     @RawQuery(observedEntities = Transaction.class)
     public LiveData<List<Transaction>> getAllTransaction(SimpleSQLiteQuery query);
+
+    @Query("SELECT * FROM transaction_table WHERE entryKey IS :entryKey")
+    public Transaction getTransaction(String entryKey);
 }

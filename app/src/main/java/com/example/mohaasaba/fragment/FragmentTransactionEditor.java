@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import androidx.annotation.Nullable;
 import com.example.mohaasaba.R;
 
 import com.example.mohaasaba.activities.HisaabActivity;
+import com.example.mohaasaba.helper.ViewMaker;
 import com.example.mohaasaba.models.Transaction;
 import com.example.mohaasaba.models.TransactionAccount;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -33,9 +35,10 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
     private DeleteListener deleteListener;
     private ConfirmListener confirmListener;
 
-    private EditText amountEditText;
     private EditText noteEditText;
     private EditText tagEditText;
+    private FrameLayout amountFrameLayout;
+    private ViewMaker.IncomeExpenseSelector incomeExpenseSelector;
     private ImageView addPageButton;
     private TextView selectedPageButton;
     private TextView selectAccountButton;
@@ -48,7 +51,7 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = View.inflate(getContext(), R.layout.fragment_transaction_editor, null);
-        amountEditText = rootView.findViewById(R.id.amount_EditText_FragmentTransactionEditor);
+        amountFrameLayout = rootView.findViewById(R.id.amount_FrameLayout_FragmentTransactionEditor);
         noteEditText = rootView.findViewById(R.id.note_EditText_FragmentTransactionEditor);
         tagEditText = rootView.findViewById(R.id.tag_EditText_FragmentTransactionEditor);
         addPageButton = rootView.findViewById(R.id.addPage_Button_FragmentTransactionEditor);
@@ -63,12 +66,14 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        ViewMaker viewMaker = new ViewMaker(getContext());
+        incomeExpenseSelector = viewMaker.getIESelector();
+        amountFrameLayout.addView(incomeExpenseSelector.getIESelectorView());
 
         // For adding new Transaction
         if (transaction == null) transaction = new Transaction(0f);
 
-        amountEditText.setText(String.valueOf(transaction.amount));
+        incomeExpenseSelector.setAmount(transaction.amount);
         noteEditText.setText(transaction.note);
         tagEditText.setText(transaction.tags);
 
@@ -84,15 +89,14 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
             Toast.makeText(getContext(), "Transaction Deleted", Toast.LENGTH_SHORT).show();
         });
         confirmButton.setOnClickListener(v -> {
-            if (! amountEditText.getText().toString().isEmpty())
-                transaction.amount = Float.parseFloat(amountEditText.getText().toString().trim());
+            transaction.amount = incomeExpenseSelector.getAmount();
             if (! noteEditText.getText().toString().isEmpty())
                 transaction.note = noteEditText.getText().toString().trim();
             if (! tagEditText.getText().toString().isEmpty())
                 transaction.tags = tagEditText.getText().toString().trim();
             if (confirmListener != null) confirmListener.onClick(transaction);
             dismiss();
-            Toast.makeText(getContext(), "Transaction Added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Transaction Updated", Toast.LENGTH_SHORT).show();
         });
     }
 

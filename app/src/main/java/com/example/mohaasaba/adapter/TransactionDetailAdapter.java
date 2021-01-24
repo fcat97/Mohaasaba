@@ -13,16 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.models.Transaction;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class TransactionDetailAdapter extends ListAdapter<Transaction, TransactionDetailAdapter.ViewHolder> {
     private OnItemClickedListener listener;
 
     public TransactionDetailAdapter() {
-        super(DIFF_UTILS);
+        super(DIFF_CALLBACK);
     }
 
-    private static DiffUtil.ItemCallback<Transaction> DIFF_UTILS = new DiffUtil.ItemCallback<Transaction>() {
+    private static final DiffUtil.ItemCallback<Transaction> DIFF_CALLBACK = new DiffUtil.ItemCallback<Transaction>() {
         @Override
         public boolean areItemsTheSame(@NonNull Transaction oldItem, @NonNull Transaction newItem) {
             return oldItem.entryKey.equals(newItem.entryKey);
@@ -30,10 +32,13 @@ public class TransactionDetailAdapter extends ListAdapter<Transaction, Transacti
 
         @Override
         public boolean areContentsTheSame(@NonNull Transaction oldItem, @NonNull Transaction newItem) {
-            return oldItem.amount == newItem.amount &&
+            return oldItem.commitTime.equals(newItem.commitTime) &&
+                    oldItem.page.equals(newItem.page) &&
+                    oldItem.account.equals(newItem.account) &&
+                    oldItem.unit.equals(newItem.unit) &&
+                    oldItem.amount == newItem.amount &&
                     oldItem.tags.equals(newItem.tags) &&
-                    oldItem.note.equals(newItem.note) &&
-                    oldItem.unit.equals(newItem.unit);
+                    oldItem.note.equals(newItem.note);
         }
     };
 
@@ -48,6 +53,7 @@ public class TransactionDetailAdapter extends ListAdapter<Transaction, Transacti
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Transaction transaction = getItem(position);
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) listener.onClick(transaction);
         });

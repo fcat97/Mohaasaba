@@ -28,6 +28,21 @@ public class Transaction implements Parcelable, Serializable {
     public String account; // Default is Cash;
     public String page; // Default is Untitled;
 
+    /**
+     * Make a Deep copy of Transaction.class
+     * @param t object on which new copy will be made
+     */
+    public Transaction(Transaction t) {
+        this.entryKey = t.entryKey;
+        this.commitTime = t.commitTime;
+        this.note = t.note;
+        this.tags = t.tags;
+        this.amount = t.amount;
+        this.unit = t.unit;
+        this.account = t.account;
+        this.page = t.page;
+    }
+
     public Transaction(float amount) {
         this.entryKey = IdGenerator.getNewID();
         this.commitTime = entryKey;

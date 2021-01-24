@@ -36,6 +36,7 @@ public class AppRepository {
     public AppRepository(Context context) {
         AppDatabase appDatabase = AppDatabase.getInstance(context);
         this.mScheduleDao = appDatabase.scheduleDao();
+        this.mTransactionDao = appDatabase.transactionDao();
     }
 
     public AppRepository(Application application) {
@@ -109,7 +110,7 @@ public class AppRepository {
         String conditions = getQueryString(datesList);
         Log.i(TAG, "getScheduleOfToday: " + conditions);
 
-        String query = "SELECT * FROM schedule_table WHERE " +
+        final String query = "SELECT * FROM schedule_table WHERE " +
                 "((type LIKE '%WeekDays%') AND (" +  dayOfWeek + " IS 1)) OR " +
                 conditions + " ORDER BY scheduleID DESC";
         Log.d(TAG, "getScheduleOfToday: " + query);
@@ -153,7 +154,7 @@ public class AppRepository {
         Log.i(TAG, "getSchedulesOfThisWeek: " + customDates);
 
 
-        String query = "SELECT * FROM schedule_table WHERE " +
+        final String query = "SELECT * FROM schedule_table WHERE " +
                 "(type LIKE '%WeekDays%') OR " +
                 customDates + " ORDER BY scheduleID DESC";
         Log.i(TAG, "getSchedulesOfThisWeek: " + query);
@@ -172,7 +173,7 @@ public class AppRepository {
             Log.i(TAG, "getSchedulesOfThisMonth: " + date.toString());
         }
         String customDates = getQueryString(datesList);
-        String query = "SELECT * FROM schedule_table WHERE " +
+        final String query = "SELECT * FROM schedule_table WHERE " +
                 "(type LIKE '%WeekDays%') OR " +
                 customDates + " ORDER BY scheduleID DESC";
         Log.i(TAG, "getSchedulesOfThisMonth: " + query);
@@ -198,26 +199,31 @@ public class AppRepository {
         return result.get();
     }
 
-    public void insertTransaction(Transaction transaction) {
-        Thread thread = new Thread(() -> {
-            mTransactionDao.insert(transaction);
-        });
-        thread.start();
-    }
     public void updateTransaction(Transaction transaction) {
         Thread thread = new Thread(() -> {
-            mTransactionDao.update(transaction);
+            Transaction t = mTransactionDao.getTransaction(transaction.entryKey);
+            if (t != null) mTransactionDao.update(transaction);
+            else mTransactionDao.insert(transaction);
+
+            TransactionAccount account = mTransactionAccountDao.getAccount(transaction.account);
+            account.balance += transaction.amount;
+            mTransactionAccountDao.update(account);
         });
         thread.start();
     }
     public void deleteTransaction(Transaction transaction) {
         Thread thread = new Thread(() -> {
             mTransactionDao.delete(transaction);
+            TransactionAccount account = mTransactionAccountDao.getAccount(transaction.account);
+            account.balance -= transaction.amount;
+            mTransactionAccountDao.update(account);
         });
         thread.start();
     }
+
+
     public LiveData<List<Transaction>> getAllTransactions() {
-        String query = "SELECT * FROM transaction_table";
+        final String query = "SELECT * FROM transaction_table";
 
         return mTransactionDao.getAllTransaction(new SimpleSQLiteQuery(query));
     }
@@ -241,7 +247,7 @@ public class AppRepository {
         thread.start();
     }
     public LiveData<List<TransactionAccount>> getAllTransactionAccounts() {
-        String query = "SELECT * FROM transaction_table";
+        String query = "SELECT * FROM transaction_account";
         return mTransactionAccountDao.getAllAccounts(new SimpleSQLiteQuery(query));
     }
 

@@ -24,9 +24,9 @@ public interface TransactionAccountDao {
     @Delete
     public void delete(TransactionAccount account);
 
-    @Query("SELECT * FROM transaction_account")
-    public LiveData<TransactionAccount> getAllAccount();
-
     @RawQuery(observedEntities = TransactionAccount.class)
     public LiveData<List<TransactionAccount>> getAllAccounts(SimpleSQLiteQuery query);
+
+    @Query("SELECT * FROM transaction_account WHERE name is :accountName")
+    public TransactionAccount getAccount(String accountName);
 }
