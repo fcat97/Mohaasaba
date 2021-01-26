@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-@Database(entities = {Schedule.class, Note.class, Reminder.class, Transaction.class, TransactionAccount.class}, version = 50)
+@Database(entities = {Schedule.class, Note.class, Reminder.class, Transaction.class, TransactionAccount.class}, version = 1)
 @TypeConverters({DataConverter.class})
 public abstract class AppDatabase extends RoomDatabase{
     private static AppDatabase appDatabaseInstance;
@@ -38,7 +38,7 @@ public abstract class AppDatabase extends RoomDatabase{
     public static synchronized AppDatabase getInstance(Context context) {
         if (appDatabaseInstance == null) {
             appDatabaseInstance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "appDB")
-                    .addMigrations(MIGRATION_48_49, MIGRATION_49_50)
+                    .fallbackToDestructiveMigration()
                     .addCallback(roomCallbacks)
                     .build();
         }
@@ -106,7 +106,7 @@ public abstract class AppDatabase extends RoomDatabase{
         List<Task> taskList = new ArrayList<>();
         taskList.add(new Task("You can add new task from bottom"));
         taskList.add(new Task("Each can contain certain specification"));
-        taskList.add(new Task("Progress is saved per day"));
+        taskList.add(new Task("Task Progress is saved per day"));
         taskList.add(new Task("New Day New Progress"));
         taskList.add(new Task("Tap and hold to progress task"));
         taskList.add(new Task("the trash icon will delete task"));
@@ -117,5 +117,13 @@ public abstract class AppDatabase extends RoomDatabase{
         schedule.getHistory().commitTodo(Calendar.getInstance(), taskList);
 
         scheduleDao.insertSchedule(schedule);
+
+        // Add default Transaction Account to Database
+        TransactionAccountDao accountDao = appDatabaseInstance.accountDao();
+        TransactionAccount transactionAccount = new TransactionAccount();
+        transactionAccount.name = TransactionAccount.DEFAULT_ACCOUNT;
+        transactionAccount.balance = TransactionAccount.DEFAULT_BALANCE;
+        accountDao.insert(transactionAccount);
+
     }
 }

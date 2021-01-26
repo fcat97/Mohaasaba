@@ -11,8 +11,8 @@
     android:elevation="@dimen/dimen_mini"
     android:padding="1dp"
     android:layout_marginBottom="@dimen/dimen_small"
-    android:layout_marginStart="@dimen/dimen_small"
-    android:layout_marginEnd="@dimen/dimen_small"
+    android:layout_marginStart="@dimen/dimen_mini"
+    android:layout_marginEnd="@dimen/dimen_mini"
     android:background="@drawable/checkbox_drawable">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -59,15 +59,15 @@
                 android:textAlignment="viewEnd"
                 android:text="@string/_50_65"
                 android:layout_marginStart="@dimen/dimen_small"
-                android:layout_toEndOf="@id/total_TextView_HisaabActivity"/>
+                android:layout_alignParentEnd="true"/>
         </RelativeLayout>
-        <ImageView
+<!--        <ImageView
             android:id="@+id/addTransactionButton_ImageView_HisaabActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add"
             android:background="@drawable/button_circle_ripple"
             android:layout_below="@id/recyclerView_TransactionPage_TextView_HisaabActivity"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"/>-->
     </RelativeLayout>
 </LinearLayout>

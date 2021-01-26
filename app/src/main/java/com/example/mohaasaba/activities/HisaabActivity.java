@@ -20,8 +20,12 @@ import android.view.View;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.database.AppRepository;
+import com.example.mohaasaba.database.TransactionRepository;
+import com.example.mohaasaba.fragment.FragmentAccountEditor;
+import com.example.mohaasaba.fragment.FragmentAccounts;
 import com.example.mohaasaba.fragment.FragmentAllTransactions;
 import com.example.mohaasaba.fragment.FragmentTransactionEditor;
+import com.example.mohaasaba.fragment.FragmentTransactionPages;
 import com.example.mohaasaba.models.Transaction;
 import com.example.mohaasaba.models.TransactionAccount;
 import com.google.android.material.tabs.TabLayout;
@@ -37,7 +41,7 @@ public class HisaabActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
     private SharedPreferences sharedPreferences;
-    private AppRepository repository;
+    private TransactionRepository repository;
     private List<Transaction> transactions = new ArrayList<>();
     private LiveData<List<TransactionAccount>> accountLiveData;
     private List<TransactionAccount> transactionAccounts;
@@ -46,6 +50,8 @@ public class HisaabActivity extends AppCompatActivity {
     public static final String PAGES_SHARED_PREF = "com.mohaasaba.HISAB_PAGES";
 
     private FragmentAllTransactions fragmentAllTransactions;
+    private FragmentTransactionPages fragmentTransactionPages;
+    private FragmentAccounts fragmentAccounts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +67,11 @@ public class HisaabActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_HisaabActivity);
         setSupportActionBar(toolbar);
 
-        repository = new AppRepository(getApplication());
+        // initiate tabLayout and viewPager
+        tabLayout = findViewById(R.id.tabLayout_HisaabActivity);
+        viewPager = findViewById(R.id.viewPager_HisaabActivity);
+
+        repository = new TransactionRepository(this);
         accountLiveData = repository.getAllTransactionAccounts();
         accountLiveData.observe(this, transactionAccounts -> {
             this.transactionAccounts = transactionAccounts;
@@ -79,14 +89,20 @@ public class HisaabActivity extends AppCompatActivity {
         }
 
 
-        // initiate tabLayout and viewPager
-        tabLayout = findViewById(R.id.tabLayout_HisaabActivity);
-        viewPager = findViewById(R.id.viewPager_HisaabActivity);
-
         // Instantiate FragmentAllTransactions
         fragmentAllTransactions = new FragmentAllTransactions()
                 .setAddButtonClickListener(this::openTransactionEditor) //set add button listener
                 .setOnItemClickedListener(this::openTransactionEditor);
+
+        // Instantiate FragmentTransactionPages
+        fragmentTransactionPages = new FragmentTransactionPages()
+                .setCallback(this::openTransactionEditor);
+
+        // Instantiate FragmentTransactionAccount
+        fragmentAccounts = new FragmentAccounts()
+                .setAddButtonListener(this::openTransactionAccountEditor)
+                .setItemClickListener(this::openTransactionAccountEditor);
+
 
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle()));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -124,6 +140,15 @@ public class HisaabActivity extends AppCompatActivity {
         fragmentTransactionEditor.show(getSupportFragmentManager(), "Transaction Editor");
     }
 
+    private void openTransactionAccountEditor(TransactionAccount account) {
+        FragmentAccountEditor accountEditor = new FragmentAccountEditor()
+                .setAccount(account)
+                .setConfirmListener(repository::updateTransactionAccount)
+                .setDeleteListener(repository::deleteTransactionAccount);
+
+        accountEditor.show(getSupportFragmentManager(), "FragmentAccountEditor");
+    }
+
     private final class ViewPagerAdapter extends FragmentStateAdapter {
         public ViewPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
             super(fragmentManager, lifecycle);
@@ -135,6 +160,10 @@ public class HisaabActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     return fragmentAllTransactions;
+                case 1:
+                    return fragmentTransactionPages;
+                case 2:
+                    return fragmentAccounts;
                 default:
                     return null;
             }
@@ -142,7 +171,7 @@ public class HisaabActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 1;
+            return 3;
         }
     }
 

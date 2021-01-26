@@ -199,57 +199,6 @@ public class AppRepository {
         return result.get();
     }
 
-    public void updateTransaction(Transaction transaction) {
-        Thread thread = new Thread(() -> {
-            Transaction t = mTransactionDao.getTransaction(transaction.entryKey);
-            if (t != null) mTransactionDao.update(transaction);
-            else mTransactionDao.insert(transaction);
-
-            TransactionAccount account = mTransactionAccountDao.getAccount(transaction.account);
-            account.balance += transaction.amount;
-            mTransactionAccountDao.update(account);
-        });
-        thread.start();
-    }
-    public void deleteTransaction(Transaction transaction) {
-        Thread thread = new Thread(() -> {
-            mTransactionDao.delete(transaction);
-            TransactionAccount account = mTransactionAccountDao.getAccount(transaction.account);
-            account.balance -= transaction.amount;
-            mTransactionAccountDao.update(account);
-        });
-        thread.start();
-    }
-
-
-    public LiveData<List<Transaction>> getAllTransactions() {
-        final String query = "SELECT * FROM transaction_table";
-
-        return mTransactionDao.getAllTransaction(new SimpleSQLiteQuery(query));
-    }
-
-    public void insertTransactionAccount(TransactionAccount transactionAccount) {
-        Thread thread = new Thread(() -> {
-            mTransactionAccountDao.insert(transactionAccount);
-        });
-        thread.start();
-    }
-    public void updateTransactionAccount(TransactionAccount transactionAccount) {
-        Thread thread = new Thread(() -> {
-            mTransactionAccountDao.update(transactionAccount);
-        });
-        thread.start();
-    }
-    public void deleteTransactionAccount(TransactionAccount transactionAccount) {
-        Thread thread = new Thread(() -> {
-            mTransactionAccountDao.delete(transactionAccount);
-        });
-        thread.start();
-    }
-    public LiveData<List<TransactionAccount>> getAllTransactionAccounts() {
-        String query = "SELECT * FROM transaction_account";
-        return mTransactionAccountDao.getAllAccounts(new SimpleSQLiteQuery(query));
-    }
 
     private String getDayOfWeek() {
         Calendar c = Calendar.getInstance();

@@ -112,4 +112,9 @@
     <string name="save_change">Save Change</string>
     <string name="taka_sign">৳</string>
     <string name="_23_12">23/12</string>
+    <string name="create_hisaab_account">Create Hisaab Account</string>
+    <string name="transaction_page">Transaction Page</string>
+    <string name="cash">Cash</string>
+    <string name="enter_account_name">Enter Account Name</string>
+    <string name="balance">Balance</string>
 </resources>

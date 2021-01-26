@@ -26,11 +26,14 @@ public interface TransactionDao {
     public void delete(Transaction transaction);
 
     @Query("SELECT * FROM transaction_table")
-    public LiveData<Transaction> getAllTransaction();
+    public LiveData<List<Transaction>> getAllTransaction();
 
     @RawQuery(observedEntities = Transaction.class)
     public LiveData<List<Transaction>> getAllTransaction(SimpleSQLiteQuery query);
 
     @Query("SELECT * FROM transaction_table WHERE entryKey IS :entryKey")
     public Transaction getTransaction(String entryKey);
+
+    @Query("SELECT * FROM transaction_table WHERE page IS :pageName")
+    public List<Transaction> getTransactionOf(String pageName);
 }

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.adapter.TransactionDetailAdapter;
 import com.example.mohaasaba.database.AppRepository;
+import com.example.mohaasaba.database.TransactionRepository;
 import com.example.mohaasaba.models.Transaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -43,7 +44,7 @@ public class FragmentAllTransactions extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        AppRepository repository = new AppRepository(Objects.requireNonNull(getContext()).getApplicationContext());
+        TransactionRepository repository = new TransactionRepository(getContext());
         LiveData<List<Transaction>> listLiveData = repository.getAllTransactions();
 
         TransactionDetailAdapter transactionDetailAdapter = new TransactionDetailAdapter()
