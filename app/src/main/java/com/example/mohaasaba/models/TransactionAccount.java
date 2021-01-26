@@ -18,8 +18,8 @@ public class TransactionAccount implements Parcelable{
     @PrimaryKey
     @NonNull
     public String accountID;
-    public String name;
-    public float balance;
+    public String name = "";
+    public float balance = DEFAULT_BALANCE;
 
     public TransactionAccount() {
         this.accountID = IdGenerator.getNewID();

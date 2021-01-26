@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -15,39 +14,39 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.database.AppRepository;
 import com.example.mohaasaba.database.TransactionRepository;
+import com.example.mohaasaba.fragment.FragmentAccountEditor;
+import com.example.mohaasaba.fragment.FragmentAccounts;
 import com.example.mohaasaba.fragment.FragmentAllTransactions;
 import com.example.mohaasaba.fragment.FragmentTransactionEditor;
-import com.example.mohaasaba.fragment.FragmentTrxPages;
+import com.example.mohaasaba.fragment.FragmentTransactionPages;
 import com.example.mohaasaba.models.Transaction;
 import com.example.mohaasaba.models.TransactionAccount;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Set;
 
 public class HisaabActivity extends AppCompatActivity {
     private static final String TAG = HisaabActivity.class.getCanonicalName();
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
+
+    private SharedPreferences sharedPreferences;
     private TransactionRepository repository;
     private List<Transaction> transactions = new ArrayList<>();
     private LiveData<List<TransactionAccount>> accountLiveData;
     private List<TransactionAccount> transactionAccounts = new ArrayList<>();
-    private FragmentTrxPages fragmentTrxPages;
 
     public static final String HISAAB_SHARED_PREF = "com.mohaasaba.HISAAB_SHARED_PREF";
     public static final String PAGES_SHARED_PREF = "com.mohaasaba.HISAB_PAGES";
 
     private FragmentAllTransactions fragmentAllTransactions;
+    private FragmentTransactionPages fragmentTransactionPages;
+    private FragmentAccounts fragmentAccounts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,23 +62,34 @@ public class HisaabActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_HisaabActivity);
         setSupportActionBar(toolbar);
 
-        // Get Repository
-        repository = new TransactionRepository(this);
-
-
-        // Set Transactions Accounts
-        accountLiveData = repository.getAllTransactionAccounts();
-        accountLiveData.observe(this, transactionAccounts1 -> {
-            transactionAccounts = transactionAccounts1;
-        });
-
-        fragmentAllTransactions = new FragmentAllTransactions()
-                .setAddButtonClickListener(this::openTransactionEditor);
-        fragmentTrxPages = new FragmentTrxPages();
 
         // initiate tabLayout and viewPager
         tabLayout = findViewById(R.id.tabLayout_HisaabActivity);
         viewPager = findViewById(R.id.viewPager_HisaabActivity);
+
+        repository = new TransactionRepository(this);
+
+        // Set Transactions Accounts
+        accountLiveData = repository.getAllTransactionAccounts();
+        accountLiveData.observe(this, transactionAccounts -> {
+            this.transactionAccounts = transactionAccounts;
+        });
+
+        // Instantiate FragmentAllTransactions
+        fragmentAllTransactions = new FragmentAllTransactions()
+                .setAddButtonClickListener(this::openTransactionEditor) //set add button listener
+                .setOnItemClickedListener(this::openTransactionEditor);
+
+        // Instantiate FragmentTransactionPages
+        fragmentTransactionPages = new FragmentTransactionPages()
+                .setCallback(this::openTransactionEditor);
+
+        // Instantiate FragmentTransactionAccount
+        fragmentAccounts = new FragmentAccounts()
+                .setAddButtonListener(this::openTransactionAccountEditor)
+                .setItemClickListener(this::openTransactionAccountEditor);
+
+
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle()));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -109,9 +119,20 @@ public class HisaabActivity extends AppCompatActivity {
     private void openTransactionEditor(Transaction transaction) {
         FragmentTransactionEditor fragmentTransactionEditor = new FragmentTransactionEditor()
                 .setTransactionAccounts(transactionAccounts)
-                .setTransaction(new Transaction(transaction));
+                .setTransaction(new Transaction(transaction))
+                .setConfirmListener(repository::updateTransaction)
+                .setDeleteListener(repository::deleteTransaction);
 
         fragmentTransactionEditor.show(getSupportFragmentManager(), "Transaction Editor");
+    }
+
+    private void openTransactionAccountEditor(TransactionAccount account) {
+        FragmentAccountEditor accountEditor = new FragmentAccountEditor()
+                .setAccount(account)
+                .setConfirmListener(repository::updateTransactionAccount)
+                .setDeleteListener(repository::deleteTransactionAccount);
+
+        accountEditor.show(getSupportFragmentManager(), "FragmentAccountEditor");
     }
 
     private final class ViewPagerAdapter extends FragmentStateAdapter {
@@ -126,7 +147,9 @@ public class HisaabActivity extends AppCompatActivity {
                 case 0:
                     return fragmentAllTransactions;
                 case 1:
-                    return fragmentTrxPages;
+                    return fragmentTransactionPages;
+                case 2:
+                    return fragmentAccounts;
                 default:
                     return null;
             }
@@ -134,7 +157,7 @@ public class HisaabActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 2;
+            return 3;
         }
     }
 

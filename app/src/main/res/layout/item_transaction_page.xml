@@ -62,12 +62,12 @@
                 android:layout_alignParentEnd="true"/>
         </RelativeLayout>
 <!--        <ImageView
-            android:id="@+id/addButton_ImageView_ItemTransactionPage"
+            android:id="@+id/addTransactionButton_ImageView_HisaabActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add"
             android:background="@drawable/button_circle_ripple"
-            android:layout_below="@id/recyclerView_ItemTransactionPage"
+            android:layout_below="@id/recyclerView_TransactionPage_TextView_HisaabActivity"
             android:layout_alignParentEnd="true"/>-->
     </RelativeLayout>
 </LinearLayout>

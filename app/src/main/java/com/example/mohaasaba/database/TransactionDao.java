@@ -16,7 +16,6 @@ import java.util.List;
 
 @Dao
 public interface TransactionDao {
-    /*
     @Insert
     public void insert(Transaction transaction);
 
@@ -25,10 +24,9 @@ public interface TransactionDao {
 
     @Delete
     public void delete(Transaction transaction);
-*/
-    /**
+
     @Query("SELECT * FROM transaction_table")
-    public LiveData<Transaction> getAllTransaction();
+    public LiveData<List<Transaction>> getAllTransaction();
 
     @RawQuery(observedEntities = Transaction.class)
     public LiveData<List<Transaction>> getAllTransaction(SimpleSQLiteQuery query);
@@ -37,6 +35,5 @@ public interface TransactionDao {
     public Transaction getTransaction(String entryKey);
 
     @Query("SELECT * FROM transaction_table WHERE page IS :pageName")
-    public List<Transaction> getTransactionOfPage(String pageName);
-    **/
+    public List<Transaction> getTransactionOf(String pageName);
 }
