@@ -10,9 +10,9 @@
         android:id="@+id/recyclerView_FragmentTransactionPageList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_transaction_page"
-        app:spanCount="2"
-        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"/>
+        tools:listitem="@layout/item_transaction_page2"
+        android:padding="@dimen/dimen_mini"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_FragmentTransactionPageList"

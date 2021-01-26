@@ -20,8 +20,10 @@ import android.view.View;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.database.AppRepository;
+import com.example.mohaasaba.database.TransactionRepository;
 import com.example.mohaasaba.fragment.FragmentAllTransactions;
 import com.example.mohaasaba.fragment.FragmentTransactionEditor;
+import com.example.mohaasaba.fragment.FragmentTrxPages;
 import com.example.mohaasaba.models.Transaction;
 import com.example.mohaasaba.models.TransactionAccount;
 import com.google.android.material.tabs.TabLayout;
@@ -36,11 +38,11 @@ public class HisaabActivity extends AppCompatActivity {
     private static final String TAG = HisaabActivity.class.getCanonicalName();
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
-    private SharedPreferences sharedPreferences;
-    private AppRepository repository;
+    private TransactionRepository repository;
     private List<Transaction> transactions = new ArrayList<>();
     private LiveData<List<TransactionAccount>> accountLiveData;
-    private List<TransactionAccount> transactionAccounts;
+    private List<TransactionAccount> transactionAccounts = new ArrayList<>();
+    private FragmentTrxPages fragmentTrxPages;
 
     public static final String HISAAB_SHARED_PREF = "com.mohaasaba.HISAAB_SHARED_PREF";
     public static final String PAGES_SHARED_PREF = "com.mohaasaba.HISAB_PAGES";
@@ -61,33 +63,23 @@ public class HisaabActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_HisaabActivity);
         setSupportActionBar(toolbar);
 
-        repository = new AppRepository(getApplication());
+        // Get Repository
+        repository = new TransactionRepository(this);
+
+
+        // Set Transactions Accounts
         accountLiveData = repository.getAllTransactionAccounts();
-        accountLiveData.observe(this, transactionAccounts -> {
-            this.transactionAccounts = transactionAccounts;
+        accountLiveData.observe(this, transactionAccounts1 -> {
+            transactionAccounts = transactionAccounts1;
         });
 
-
-        // Get shared pref of Page names
-        sharedPreferences = getSharedPreferences(HISAAB_SHARED_PREF, MODE_PRIVATE);
-        Set<String> pages = sharedPreferences.getStringSet(PAGES_SHARED_PREF, new HashSet<>());
-        if (pages.size() == 0) {
-            pages.add(Transaction.DEFAULT_PAGE);
-            sharedPreferences.edit()
-                    .putStringSet(PAGES_SHARED_PREF, pages)
-                    .apply();
-        }
-
+        fragmentAllTransactions = new FragmentAllTransactions()
+                .setAddButtonClickListener(this::openTransactionEditor);
+        fragmentTrxPages = new FragmentTrxPages();
 
         // initiate tabLayout and viewPager
         tabLayout = findViewById(R.id.tabLayout_HisaabActivity);
         viewPager = findViewById(R.id.viewPager_HisaabActivity);
-
-        // Instantiate FragmentAllTransactions
-        fragmentAllTransactions = new FragmentAllTransactions()
-                .setAddButtonClickListener(this::openTransactionEditor) //set add button listener
-                .setOnItemClickedListener(this::openTransactionEditor);
-
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle()));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -117,9 +109,7 @@ public class HisaabActivity extends AppCompatActivity {
     private void openTransactionEditor(Transaction transaction) {
         FragmentTransactionEditor fragmentTransactionEditor = new FragmentTransactionEditor()
                 .setTransactionAccounts(transactionAccounts)
-                .setTransaction(new Transaction(transaction))
-                .setConfirmListener(repository::updateTransaction)
-                .setDeleteListener(repository::deleteTransaction);
+                .setTransaction(new Transaction(transaction));
 
         fragmentTransactionEditor.show(getSupportFragmentManager(), "Transaction Editor");
     }
@@ -135,6 +125,8 @@ public class HisaabActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     return fragmentAllTransactions;
+                case 1:
+                    return fragmentTrxPages;
                 default:
                     return null;
             }
@@ -142,7 +134,7 @@ public class HisaabActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 1;
+            return 2;
         }
     }
 

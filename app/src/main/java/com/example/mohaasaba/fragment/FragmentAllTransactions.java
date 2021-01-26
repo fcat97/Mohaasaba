@@ -13,29 +13,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.adapter.TransactionDetailAdapter;
-import com.example.mohaasaba.database.AppRepository;
+import com.example.mohaasaba.database.TransactionRepository;
 import com.example.mohaasaba.models.Transaction;
+import com.example.mohaasaba.models.TransactionPage;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class FragmentAllTransactions extends Fragment {
     private RecyclerView recyclerView;
     private FloatingActionButton addButton;
     private AddButtonClickListener addButtonClickListener;
     private OnItemClickedListener onItemClickedListener;
+    private TransactionDetailAdapter adapter;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_all_transaction, null, false);
-
         recyclerView = rootView.findViewById(R.id.recyclerView_FragmentAllTransaction);
         addButton = rootView.findViewById(R.id.addButton_FragmentAllTransaction);
-
         return rootView;
     }
 
@@ -43,21 +42,25 @@ public class FragmentAllTransactions extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        AppRepository repository = new AppRepository(Objects.requireNonNull(getContext()).getApplicationContext());
-        LiveData<List<Transaction>> listLiveData = repository.getAllTransactions();
+        adapter = new TransactionDetailAdapter();
+        recyclerView.setAdapter(adapter);
 
-        TransactionDetailAdapter transactionDetailAdapter = new TransactionDetailAdapter()
-                .setListener(transaction -> {
-                    if (onItemClickedListener != null) onItemClickedListener.onClicked(transaction);
-                });
-        recyclerView.setAdapter(transactionDetailAdapter);
-
-        // set observer to live data
-        listLiveData.observe(getViewLifecycleOwner(), transactionDetailAdapter::submitList);
+        TransactionRepository repository = new TransactionRepository(getContext());
+        LiveData<List<TransactionPage>> listLiveData = repository.getAllTransactionPages();
+        listLiveData.observe(getViewLifecycleOwner(), this::submitList);
 
         addButton.setOnClickListener(v -> {
             if (addButtonClickListener != null) addButtonClickListener.onClick(new Transaction(0f));
         });
+    }
+
+    private void submitList(List<TransactionPage> transactionPages) {
+        List<Transaction> transactions = new ArrayList<>();
+        for (TransactionPage transactionPage: transactionPages) {
+            transactions.addAll(transactionPage.transactionList);
+        }
+
+        adapter.submitList(transactions);
     }
 
 

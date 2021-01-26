@@ -19,12 +19,13 @@ import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.models.Task;
 import com.example.mohaasaba.models.Transaction;
 import com.example.mohaasaba.models.TransactionAccount;
+import com.example.mohaasaba.models.TransactionPage;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-@Database(entities = {Schedule.class, Note.class, Reminder.class, Transaction.class, TransactionAccount.class}, version = 50)
+@Database(entities = {Schedule.class, Note.class, Reminder.class, TransactionPage.class, TransactionAccount.class}, version = 1)
 @TypeConverters({DataConverter.class})
 public abstract class AppDatabase extends RoomDatabase{
     private static AppDatabase appDatabaseInstance;
@@ -32,13 +33,14 @@ public abstract class AppDatabase extends RoomDatabase{
     public abstract ScheduleDao scheduleDao();
     public abstract NoteDao noteDao();
     public abstract ReminderDao reminderDao();
-    public abstract TransactionAccountDao accountDao();
+    public abstract TransactionAccountDao transactionAccountDao();
     public abstract TransactionDao transactionDao();
+    public abstract TransactionPageDao transactionPageDao();
 
     public static synchronized AppDatabase getInstance(Context context) {
         if (appDatabaseInstance == null) {
             appDatabaseInstance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "appDB")
-                    .addMigrations(MIGRATION_48_49, MIGRATION_49_50)
+                    .fallbackToDestructiveMigration()
                     .addCallback(roomCallbacks)
                     .build();
         }

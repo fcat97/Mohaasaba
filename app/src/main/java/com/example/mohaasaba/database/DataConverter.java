@@ -184,4 +184,24 @@ public class DataConverter {
 
         return gson.fromJson(string, type);
     }
+
+    @TypeConverter
+    public static List<Transaction> fromStringToTransactionList(String string) {
+        if (string == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Transaction>>(){}.getType();
+
+        return gson.fromJson(string, type);
+    }
+
+    @TypeConverter
+    public static String fromTransactionListToString(List<Transaction> transactionList) {
+        if (transactionList == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Transaction>>(){}.getType();
+
+        return gson.toJson(transactionList, type);
+    }
 }

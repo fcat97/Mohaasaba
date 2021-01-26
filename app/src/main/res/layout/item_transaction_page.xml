@@ -11,15 +11,15 @@
     android:elevation="@dimen/dimen_mini"
     android:padding="1dp"
     android:layout_marginBottom="@dimen/dimen_small"
-    android:layout_marginStart="@dimen/dimen_small"
-    android:layout_marginEnd="@dimen/dimen_small"
+    android:layout_marginStart="@dimen/dimen_mini"
+    android:layout_marginEnd="@dimen/dimen_mini"
     android:background="@drawable/checkbox_drawable">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/selectableItemBackground">
         <TextView
-            android:id="@+id/label_TransactionPage_TextView_HisaabActivity"
+            android:id="@+id/label_TextView_ItemTransactionPage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/textSmall"
@@ -31,43 +31,43 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"/>
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_TransactionPage_TextView_HisaabActivity"
+            android:id="@+id/recyclerView_ItemTransactionPage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
 
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_transaction"
-            android:layout_below="@id/label_TransactionPage_TextView_HisaabActivity"/>
+            android:layout_below="@id/label_TextView_ItemTransactionPage"/>
         <RelativeLayout
             android:id="@+id/____asda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen_small"
-            android:layout_below="@id/recyclerView_TransactionPage_TextView_HisaabActivity">
+            android:layout_below="@id/recyclerView_ItemTransactionPage">
             <TextView
-                android:id="@+id/total_TextView_HisaabActivity"
+                android:id="@+id/total_TextView_ItemTransactionPage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/textSmall"
                 android:text="@string/total"/>
             <TextView
-                android:id="@+id/totalAmount_TransactionPage_TextView_HisaabActivity"
+                android:id="@+id/totalAmount_TextView_ItemTransactionPage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/textSmall"
                 android:textAlignment="viewEnd"
                 android:text="@string/_50_65"
                 android:layout_marginStart="@dimen/dimen_small"
-                android:layout_toEndOf="@id/total_TextView_HisaabActivity"/>
+                android:layout_alignParentEnd="true"/>
         </RelativeLayout>
-        <ImageView
-            android:id="@+id/addTransactionButton_ImageView_HisaabActivity"
+<!--        <ImageView
+            android:id="@+id/addButton_ImageView_ItemTransactionPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add"
             android:background="@drawable/button_circle_ripple"
-            android:layout_below="@id/recyclerView_TransactionPage_TextView_HisaabActivity"
-            android:layout_alignParentEnd="true"/>
+            android:layout_below="@id/recyclerView_ItemTransactionPage"
+            android:layout_alignParentEnd="true"/>-->
     </RelativeLayout>
 </LinearLayout>
