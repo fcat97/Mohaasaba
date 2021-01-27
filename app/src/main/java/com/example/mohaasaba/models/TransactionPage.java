@@ -21,25 +21,21 @@ public class TransactionPage implements Parcelable, Serializable {
     @PrimaryKey
     public String pageID;
 
-    public List<Transaction> transactionList;
     public String pageLabel;
 
     public TransactionPage(String pageLabel) {
         this.pageID = IdGenerator.getNewID();
-        this.transactionList = new ArrayList<>();
         this.pageLabel = pageLabel;
     }
 
     protected TransactionPage(Parcel in) {
         pageID = in.readString();
-        transactionList = in.createTypedArrayList(Transaction.CREATOR);
         pageLabel = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(pageID);
-        dest.writeTypedList(transactionList);
         dest.writeString(pageLabel);
     }
 
@@ -60,7 +56,7 @@ public class TransactionPage implements Parcelable, Serializable {
         }
     };
 
-    public float getTotal() {
+    public float getTotal(List<Transaction> transactionList) {
         float total = 0f;
         for (Transaction t :
                 transactionList) {

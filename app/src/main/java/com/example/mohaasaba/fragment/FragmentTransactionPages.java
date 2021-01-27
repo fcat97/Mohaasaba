@@ -25,7 +25,6 @@ import java.util.Set;
 
 public class FragmentTransactionPages extends Fragment {
     private RecyclerView recyclerView;
-    private TransactionRepository repository;
     private TransactionPageAdapter adapter;
     private AddButtonCallback callback;
     private FloatingActionButton addButton;
@@ -55,7 +54,6 @@ public class FragmentTransactionPages extends Fragment {
        addButton.setOnClickListener(v -> {
            if (callback != null) callback.onClick(new Transaction(0f));
        });
-
     }
 
     public FragmentTransactionPages setAddButtonClickListener(AddButtonCallback callback) {

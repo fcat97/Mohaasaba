@@ -13,8 +13,9 @@ import com.example.mohaasaba.helper.IdGenerator;
 
 import java.io.Serializable;
 
+@Entity(tableName = "transaction_table")
 public class Transaction implements Parcelable, Serializable {
-    public static final String DEFAULT_PAGE = "Untitled";
+    public static final String DEFAULT_PAGE = "Default Page";
 
     @NonNull
     @PrimaryKey

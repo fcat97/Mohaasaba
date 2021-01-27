@@ -24,9 +24,9 @@ import java.util.List;
 public class FragmentAllTransactions extends Fragment {
     private RecyclerView recyclerView;
     private OnItemClickedListener onItemClickedListener;
-    private List<Transaction> transactionList;
     private TransactionDetailAdapter adapter;
-
+    private FloatingActionButton addButton;
+    private AddButtonListener addButtonListener;
 
     @Nullable
     @Override
@@ -34,6 +34,7 @@ public class FragmentAllTransactions extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_all_transaction, null, false);
 
         recyclerView = rootView.findViewById(R.id.recyclerView_FragmentAllTransaction);
+        addButton = rootView.findViewById(R.id.fab_FragmentAllTransaction);
 
         return rootView;
     }
@@ -42,33 +43,35 @@ public class FragmentAllTransactions extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TransactionRepository repository = new TransactionRepository(getContext());
-        LiveData<List<TransactionPage>> transactionPagesLiveData = repository.getAllTransactionPages();
-        transactionPagesLiveData.observe(getViewLifecycleOwner(), this::submitList);
+        addButton.setOnClickListener(v -> {
+            if (addButtonListener != null) addButtonListener.onClick(new Transaction(0f));
+        });
 
         adapter = new TransactionDetailAdapter()
                 .setListener(transaction -> {
                     if (onItemClickedListener != null) onItemClickedListener.onClicked(transaction);
                 });
         recyclerView.setAdapter(adapter);
-    }
 
-
-    private void submitList(List<TransactionPage> transactionPageList) {
-        transactionList = new ArrayList<>();
-        for (TransactionPage t :
-                transactionPageList) {
-            transactionList.addAll(t.transactionList);
-        }
-        adapter.submitList(transactionList);
+        TransactionRepository repository = new TransactionRepository(getContext());
+        LiveData<List<Transaction>> transactionLiveData = repository.getAllTransactions();
+        transactionLiveData.observe(getViewLifecycleOwner(), adapter::submitList);
     }
 
     public FragmentAllTransactions setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
         this.onItemClickedListener = onItemClickedListener;
         return this;
     }
+    public FragmentAllTransactions setAddButtonListener(AddButtonListener addButtonListener) {
+        this.addButtonListener = addButtonListener;
+        return this;
+    }
+
     public interface OnItemClickedListener {
         void onClicked(Transaction transaction);
+    }
+    public interface AddButtonListener {
+        void onClick(Transaction transaction);
     }
 
 }

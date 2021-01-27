@@ -16,7 +16,6 @@ import java.util.List;
 
 @Dao
 public interface TransactionDao {
-    /*
     @Insert
     public void insert(Transaction transaction);
 
@@ -37,6 +36,4 @@ public interface TransactionDao {
 
     @Query("SELECT * FROM transaction_table WHERE page IS :pageName")
     public List<Transaction> getTransactionOf(String pageName);
-
-     */
 }

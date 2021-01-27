@@ -23,6 +23,7 @@ import com.example.mohaasaba.activities.HisaabActivity;
 import com.example.mohaasaba.helper.ViewMaker;
 import com.example.mohaasaba.models.Transaction;
 import com.example.mohaasaba.models.TransactionAccount;
+import com.example.mohaasaba.models.TransactionPage;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.HashSet;
@@ -40,9 +41,11 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
     private FrameLayout amountFrameLayout;
     private ViewMaker.IncomeExpenseSelector incomeExpenseSelector;
     private TextView selectAccountButton;
+    private TextView selectPageButton;
     private Button deleteButton, confirmButton;
     private Transaction transaction;
     private List<TransactionAccount> transactionAccounts;
+    private List<TransactionPage> transactionPages;
 
 
     @Nullable
@@ -53,8 +56,10 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
         noteEditText = rootView.findViewById(R.id.note_EditText_FragmentTransactionEditor);
         tagEditText = rootView.findViewById(R.id.tag_EditText_FragmentTransactionEditor);
         selectAccountButton = rootView.findViewById(R.id.account_TextView_FragmentTransactionEditor);
+        selectPageButton = rootView.findViewById(R.id.page_TextView_FragmentTransactionEditor);
         deleteButton = rootView.findViewById(R.id.delete_Button_FragmentTransactionEditor);
         confirmButton = rootView.findViewById(R.id.confirm_Button_FragmentTransactionEditor);
+
 
         return rootView;
     }
@@ -74,8 +79,11 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
         tagEditText.setText(transaction.tags);
 
         selectAccountButton.setOnClickListener(this::openAccountMenu);
-
         selectAccountButton.setText(transaction.account);
+
+        selectPageButton.setText(transaction.page);
+        selectPageButton.setOnClickListener(this::openPageMenu);
+
 
         deleteButton.setOnClickListener(v -> {
             if (deleteListener != null) deleteListener.onClick(transaction);
@@ -94,6 +102,21 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
         });
     }
 
+    private void openPageMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(getContext(), view);
+        for (TransactionPage tp :
+                transactionPages) {
+            popupMenu.getMenu().add(tp.pageLabel);
+        }
+
+        popupMenu.setOnMenuItemClickListener(item -> {
+            transaction.page = item.getTitle().toString();
+            selectPageButton.setText(transaction.page);
+            return true;
+        });
+
+        popupMenu.show();
+    }
 
     private void openAccountMenu(View view) {
         PopupMenu popupMenu = new PopupMenu(getContext(), view);
@@ -111,6 +134,10 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
 
     public FragmentTransactionEditor setTransactionAccounts(List<TransactionAccount> transactionAccounts) {
         this.transactionAccounts = transactionAccounts;
+        return this;
+    }
+    public FragmentTransactionEditor setTransactionPages(List<TransactionPage> transactionPages) {
+        this.transactionPages = transactionPages;
         return this;
     }
     public FragmentTransactionEditor setTransaction(Transaction transaction) {

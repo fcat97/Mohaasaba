@@ -30,9 +30,10 @@ public class TransactionRepository {
         this.database = AppDatabase.getInstance(context);
         this.transactionPageDao = database.transactionPageDao();
         this.accountDao = database.accountDao();
+        this.transactionDao = database.transactionDao();
     }
 
-    /*
+
     public void updateTransaction(Transaction transaction) {
         Thread thread = new Thread(() -> {
             TransactionAccount account = accountDao.getAccount(transaction.account);
@@ -80,7 +81,7 @@ public class TransactionRepository {
 
         return transactionDao.getAllTransaction(new SimpleSQLiteQuery(query));
     }
-    */
+
 
 
     public void updatePage(TransactionPage page) {

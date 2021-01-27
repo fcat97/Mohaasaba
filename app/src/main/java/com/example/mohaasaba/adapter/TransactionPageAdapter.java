@@ -37,7 +37,7 @@ public class TransactionPageAdapter  extends ListAdapter<TransactionPage, Transa
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_transaction_page, parent, false));
+                .inflate(R.layout.item_transaction_page2, parent, false));
     }
 
     @Override
@@ -45,11 +45,7 @@ public class TransactionPageAdapter  extends ListAdapter<TransactionPage, Transa
         TransactionPage transactionPage = getItem(position);
 
         holder.labelTextView.setText(transactionPage.pageLabel);
-        holder.totalTextView.setText(String.valueOf(transactionPage.getTotal()));
 
-        TransactionAdapter adapter = new TransactionAdapter();
-        holder.recyclerView.setAdapter(adapter);
-        adapter.submitList(transactionPage.transactionList);
     }
 
 
@@ -57,17 +53,11 @@ public class TransactionPageAdapter  extends ListAdapter<TransactionPage, Transa
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView labelTextView;
-        private RecyclerView recyclerView;
-        private TextView totalTextView;
-        private ImageView addButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            labelTextView = itemView.findViewById(R.id.label_TextView_ItemTransactionPage);
-            recyclerView = itemView.findViewById(R.id.recyclerView_ItemTransactionPage);
-            addButton = itemView.findViewById(R.id.addButton_ItemTransactionPage);
-            totalTextView = itemView.findViewById(R.id.totalAmount_TextView_ItemTransactionPage);
+            labelTextView = itemView.findViewById(R.id.pageLabel_TextView_ItemTransactionPage2);
         }
     }
 

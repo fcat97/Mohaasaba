@@ -15,19 +15,21 @@
         android:paddingTop="@dimen/dimen_large"
         android:paddingBottom="@dimen/dimen_large">
         <TextView
+            android:id="@+id/pageLabel_TextView_ItemTransactionPage2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/transaction_page"
             android:textAppearance="@style/textLarge"
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@id/total_textView"/>
-        <TextView
-            android:id="@+id/total_textView"
+            android:layout_alignParentStart="true"/>
+
+<!--            android:layout_toStartOf="@id/total_textView_ItemTransactionPage2"/>-->
+<!--        <TextView
+            android:id="@+id/total_textView_ItemTransactionPage2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_50_65"
             android:textAppearance="@style/textLarge"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"/>-->
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

@@ -45,6 +45,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/__tv1_FragmentTransactionEditor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Page"
+                android:padding="@dimen/dimen_small"
+                android:layout_margin="@dimen/dimen_small"
+                android:layout_alignBaseline="@id/page_TextView_FragmentTransactionEditor"
+                android:textAppearance="@style/textMedium"/>
+            <TextView
+                android:id="@+id/page_TextView_FragmentTransactionEditor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_mini"
+                android:textAppearance="@style/textMedium"
+                android:text="Untitled"
+                android:lines="1"
+                android:textAlignment="center"
+                android:layout_toEndOf="@id/__tv1_FragmentTransactionEditor"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/button_ripple_gray"/>
+
+            <TextView
                 android:id="@+id/__tv2_FragmentTransactionEditor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,11 +80,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dimen_mini"
+                android:layout_marginTop="@dimen/dimen_small"
                 android:textAppearance="@style/textMedium"
                 android:text="Credit Card"
                 android:lines="1"
                 android:textAlignment="center"
                 android:layout_toEndOf="@id/__tv2_FragmentTransactionEditor"
+                android:layout_below="@id/page_TextView_FragmentTransactionEditor"
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/button_ripple_gray"/>
         </RelativeLayout>

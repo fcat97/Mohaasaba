@@ -25,6 +25,7 @@ import com.example.mohaasaba.fragment.FragmentTransactionPages;
 import com.example.mohaasaba.helper.TabPagerBinder;
 import com.example.mohaasaba.models.Transaction;
 import com.example.mohaasaba.models.TransactionAccount;
+import com.example.mohaasaba.models.TransactionPage;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class HisaabActivity extends AppCompatActivity {
 
     private TransactionRepository repository;
     private List<TransactionAccount> transactionAccounts = new ArrayList<>();
+    private List<TransactionPage> transactionPages = new ArrayList<>();
 
     private FragmentAllTransactions fragmentAllTransactions;
     private FragmentTransactionPages fragmentTransactionPages;
@@ -58,21 +60,23 @@ public class HisaabActivity extends AppCompatActivity {
         // initiate tabLayout and viewPager
         TabLayout tabLayout = findViewById(R.id.tabLayout_HisaabActivity);
         ViewPager2 viewPager = findViewById(R.id.viewPager_HisaabActivity);
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle()));
+        new TabPagerBinder(tabLayout, viewPager);
 
         repository = new TransactionRepository(this);
 
         // Set Transactions Accounts
         LiveData<List<TransactionAccount>> accountLiveData = repository.getAllTransactionAccounts();
-        accountLiveData.observe(this, transactionAccounts -> {
-            this.transactionAccounts = transactionAccounts;
-        });
+        accountLiveData.observe(this, transactionAccounts -> this.transactionAccounts = transactionAccounts);
 
-        // Get All Names of Pages From DB
+        LiveData<List<TransactionPage>> pageLiveData = repository.getAllTransactionPages();
+        pageLiveData.observe(this, transactionPageList -> this.transactionPages = transactionPageList);
 
 
         // Instantiate FragmentAllTransactions
         fragmentAllTransactions = new FragmentAllTransactions()
-                .setOnItemClickedListener(this::openTransactionEditor);
+                .setOnItemClickedListener(this::openTransactionEditor)
+                .setAddButtonListener(this::openTransactionEditor);
 
         // Instantiate FragmentTransactionPages
         fragmentTransactionPages = new FragmentTransactionPages()
@@ -83,15 +87,15 @@ public class HisaabActivity extends AppCompatActivity {
                 .setAddButtonListener(this::openTransactionAccountEditor)
                 .setItemClickListener(this::openTransactionAccountEditor);
 
-
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle()));
-        new TabPagerBinder(tabLayout, viewPager);
     }
 
     private void openTransactionEditor(Transaction transaction) {
         FragmentTransactionEditor fragmentTransactionEditor = new FragmentTransactionEditor()
                 .setTransactionAccounts(transactionAccounts)
-                .setTransaction(new Transaction(transaction));
+                .setTransactionPages(transactionPages)
+                .setTransaction(new Transaction(transaction))
+                .setConfirmListener(repository::updateTransaction)
+                .setDeleteListener(repository::deleteTransaction);
 
         fragmentTransactionEditor.show(getSupportFragmentManager(), "Transaction Editor");
     }
