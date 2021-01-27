@@ -21,6 +21,8 @@ import com.example.mohaasaba.fragment.FragmentAccountEditor;
 import com.example.mohaasaba.fragment.FragmentAccounts;
 import com.example.mohaasaba.fragment.FragmentAllTransactions;
 import com.example.mohaasaba.fragment.FragmentTransactionEditor;
+import com.example.mohaasaba.fragment.FragmentTransactionPage;
+import com.example.mohaasaba.fragment.FragmentTransactionPageEditor;
 import com.example.mohaasaba.fragment.FragmentTransactionPages;
 import com.example.mohaasaba.helper.TabPagerBinder;
 import com.example.mohaasaba.models.Transaction;
@@ -80,7 +82,8 @@ public class HisaabActivity extends AppCompatActivity {
 
         // Instantiate FragmentTransactionPages
         fragmentTransactionPages = new FragmentTransactionPages()
-                .setAddButtonClickListener(this::openTransactionEditor);
+                .setAddButtonClickListener(this::openTransactionPageEditor)
+                .setOnItemClickListener(this::openFragmentTransactionPage);
 
         // Instantiate FragmentTransactionAccount
         fragmentAccounts = new FragmentAccounts()
@@ -107,6 +110,24 @@ public class HisaabActivity extends AppCompatActivity {
                 .setDeleteListener(repository::deleteTransactionAccount);
 
         accountEditor.show(getSupportFragmentManager(), "FragmentAccountEditor");
+    }
+
+    private void openFragmentTransactionPage(TransactionPage transactionPage) {
+        FragmentTransactionPage fragmentTransactionPage = new FragmentTransactionPage()
+                .setTransactionPage(transactionPage)
+                .setAddButtonListener(this::openTransactionEditor)
+                .setItemClickListener(this::openTransactionEditor)
+                .setEditButtonListener(this::openTransactionPageEditor);
+
+        fragmentTransactionPage.show(getSupportFragmentManager(), "Fragment Transaction Page");
+    }
+
+    private void openTransactionPageEditor(TransactionPage transactionPage) {
+        FragmentTransactionPageEditor pageEditor = new FragmentTransactionPageEditor()
+                .setTransactionPage(transactionPage)
+                .setConfirmButtonListener(repository::updatePage)
+                .setDeleteButtonListener(repository::deletePage);
+        pageEditor.show(getSupportFragmentManager(),"Fragment Transaction Page Editor");
     }
 
     private final class ViewPagerAdapter extends FragmentStateAdapter {

@@ -35,5 +35,6 @@ public interface TransactionDao {
     public Transaction getTransaction(String entryKey);
 
     @Query("SELECT * FROM transaction_table WHERE page IS :pageName")
-    public List<Transaction> getTransactionOf(String pageName);
+    public LiveData<List<Transaction>> getTransactionOf(String pageName);
+
 }

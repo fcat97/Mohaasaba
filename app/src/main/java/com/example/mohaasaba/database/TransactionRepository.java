@@ -59,8 +59,8 @@ public class TransactionRepository {
         thread.start();
     }
 
-    public List<Transaction> getTransactionOf(String page) {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
+    public LiveData<List<Transaction>> getTransactionOf(String page) {
+        /*ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<List<Transaction>> result = executorService.submit(new Callable<List<Transaction>>() {
             @Override
             public List<Transaction> call() throws Exception {
@@ -74,8 +74,10 @@ public class TransactionRepository {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-        return transactions;
+        return transactions;*/
+        return transactionDao.getTransactionOf(page);
     }
+
     public LiveData<List<Transaction>> getAllTransactions() {
         final String query = "SELECT * FROM transaction_table";
 

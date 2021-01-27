@@ -28,6 +28,7 @@ public class FragmentTransactionPages extends Fragment {
     private TransactionPageAdapter adapter;
     private AddButtonCallback callback;
     private FloatingActionButton addButton;
+    private ItemClickListener itemClickListener;
 
     @Nullable
     @Override
@@ -44,7 +45,10 @@ public class FragmentTransactionPages extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = new TransactionPageAdapter();
+        adapter = new TransactionPageAdapter()
+                .setItemClickListener(transactionPage -> {
+                    if (itemClickListener != null) itemClickListener.onClick(transactionPage);
+                });
         recyclerView.setAdapter(adapter);
 
        TransactionRepository repository = new TransactionRepository(getContext());
@@ -52,7 +56,7 @@ public class FragmentTransactionPages extends Fragment {
        transactionPagesLiveData.observe(getViewLifecycleOwner(), adapter::submitList);
 
        addButton.setOnClickListener(v -> {
-           if (callback != null) callback.onClick(new Transaction(0f));
+           if (callback != null) callback.onClick(new TransactionPage("Untitled"));
        });
     }
 
@@ -60,8 +64,15 @@ public class FragmentTransactionPages extends Fragment {
         this.callback = callback;
         return this;
     }
+    public FragmentTransactionPages setOnItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+        return this;
+    }
     public interface AddButtonCallback {
-        void onClick(Transaction transaction);
+        void onClick(TransactionPage transactionPage);
+    }
+    public interface ItemClickListener {
+        void onClick(TransactionPage transactionPage);
     }
 
 }

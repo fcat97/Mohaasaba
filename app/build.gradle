@@ -57,7 +57,7 @@ android {
         versionName _versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        versionNameSuffix '_ae74d3d_beta'
+        versionNameSuffix '_fc2bb7d_beta'
     }
 
     buildTypes {

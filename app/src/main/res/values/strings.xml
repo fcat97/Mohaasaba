@@ -117,4 +117,5 @@
     <string name="cash">Cash</string>
     <string name="enter_account_name">Enter Account Name</string>
     <string name="balance">Balance</string>
+    <string name="enter_page_name">Enter Page Name</string>
 </resources>

@@ -16,6 +16,7 @@ import com.example.mohaasaba.models.TransactionPage;
 
 
 public class TransactionPageAdapter  extends ListAdapter<TransactionPage, TransactionPageAdapter.ViewHolder> {
+    private ItemClickListener itemClickListener;
 
     public TransactionPageAdapter() {
         super(DIFF_CALLBACK);
@@ -24,12 +25,16 @@ public class TransactionPageAdapter  extends ListAdapter<TransactionPage, Transa
     private static DiffUtil.ItemCallback<TransactionPage> DIFF_CALLBACK = new DiffUtil.ItemCallback<TransactionPage>() {
         @Override
         public boolean areItemsTheSame(@NonNull TransactionPage oldItem, @NonNull TransactionPage newItem) {
-            return false;
+            if (oldItem == null && newItem != null) return false;
+            else if (oldItem != null && newItem == null) return false;
+            else return oldItem.pageID.equals(newItem.pageID);
         }
 
         @Override
         public boolean areContentsTheSame(@NonNull TransactionPage oldItem, @NonNull TransactionPage newItem) {
-            return false;
+            if (oldItem == null && newItem != null) return false;
+            else if (oldItem != null && newItem == null) return false;
+            else return oldItem.pageLabel.equals(newItem.pageLabel);
         }
     };
 
@@ -45,7 +50,9 @@ public class TransactionPageAdapter  extends ListAdapter<TransactionPage, Transa
         TransactionPage transactionPage = getItem(position);
 
         holder.labelTextView.setText(transactionPage.pageLabel);
-
+        holder.itemView.setOnClickListener(v -> {
+            if (itemClickListener != null) itemClickListener.onClick(transactionPage);
+        });
     }
 
 
@@ -61,4 +68,12 @@ public class TransactionPageAdapter  extends ListAdapter<TransactionPage, Transa
         }
     }
 
+    public TransactionPageAdapter setItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+        return this;
+    }
+
+    public interface ItemClickListener {
+        void onClick(TransactionPage transactionPage);
+    }
 }
