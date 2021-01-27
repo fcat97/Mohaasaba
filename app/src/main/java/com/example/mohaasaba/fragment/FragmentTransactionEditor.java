@@ -39,8 +39,6 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
     private EditText tagEditText;
     private FrameLayout amountFrameLayout;
     private ViewMaker.IncomeExpenseSelector incomeExpenseSelector;
-    private ImageView addPageButton;
-    private TextView selectedPageButton;
     private TextView selectAccountButton;
     private Button deleteButton, confirmButton;
     private Transaction transaction;
@@ -54,8 +52,6 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
         amountFrameLayout = rootView.findViewById(R.id.amount_FrameLayout_FragmentTransactionEditor);
         noteEditText = rootView.findViewById(R.id.note_EditText_FragmentTransactionEditor);
         tagEditText = rootView.findViewById(R.id.tag_EditText_FragmentTransactionEditor);
-        addPageButton = rootView.findViewById(R.id.addPage_Button_FragmentTransactionEditor);
-        selectedPageButton = rootView.findViewById(R.id.page_TextView_FragmentTransactionEditor);
         selectAccountButton = rootView.findViewById(R.id.account_TextView_FragmentTransactionEditor);
         deleteButton = rootView.findViewById(R.id.delete_Button_FragmentTransactionEditor);
         confirmButton = rootView.findViewById(R.id.confirm_Button_FragmentTransactionEditor);
@@ -78,9 +74,7 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
         tagEditText.setText(transaction.tags);
 
         selectAccountButton.setOnClickListener(this::openAccountMenu);
-        selectedPageButton.setOnClickListener(this::openPageMenu);
 
-        selectedPageButton.setText(transaction.page);
         selectAccountButton.setText(transaction.account);
 
         deleteButton.setOnClickListener(v -> {
@@ -100,23 +94,7 @@ public class FragmentTransactionEditor extends BottomSheetDialogFragment {
         });
     }
 
-    private void openPageMenu(View v) {
-        SharedPreferences sharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences(
-                HisaabActivity.HISAAB_SHARED_PREF, Context.MODE_PRIVATE);
-        Set<String> pages = sharedPreferences.getStringSet(HisaabActivity.PAGES_SHARED_PREF, new HashSet<>());
-        if (pages.size() == 0) pages.add(Transaction.DEFAULT_PAGE);
-        PopupMenu popupMenu = new PopupMenu(getContext(), v);
-        popupMenu.setOnMenuItemClickListener(item -> {
-            transaction.page = item.getTitle().toString();
-            selectedPageButton.setText(transaction.page);
-            return true;
-        });
-        for (String s :
-                pages) {
-            popupMenu.getMenu().add(s);
-        }
-        popupMenu.show();
-    }
+
     private void openAccountMenu(View view) {
         PopupMenu popupMenu = new PopupMenu(getContext(), view);
         for (TransactionAccount account :

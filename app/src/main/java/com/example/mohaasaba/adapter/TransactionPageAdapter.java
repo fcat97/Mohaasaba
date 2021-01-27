@@ -3,6 +3,7 @@ package com.example.mohaasaba.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -58,12 +59,14 @@ public class TransactionPageAdapter  extends ListAdapter<TransactionPage, Transa
         private TextView labelTextView;
         private RecyclerView recyclerView;
         private TextView totalTextView;
+        private ImageView addButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             labelTextView = itemView.findViewById(R.id.label_TextView_ItemTransactionPage);
             recyclerView = itemView.findViewById(R.id.recyclerView_ItemTransactionPage);
+            addButton = itemView.findViewById(R.id.addButton_ItemTransactionPage);
             totalTextView = itemView.findViewById(R.id.totalAmount_TextView_ItemTransactionPage);
         }
     }

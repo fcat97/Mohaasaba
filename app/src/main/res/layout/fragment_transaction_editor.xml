@@ -45,45 +45,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/__tv1_FragmentTransactionEditor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pages"
-                android:textAlignment="center"
-                android:layout_margin="@dimen/dimen_small"
-                android:padding="@dimen/dimen_small"
-                android:textAppearance="@style/textMedium"/>
-            <ImageView
-                android:id="@+id/addPage_Button_FragmentTransactionEditor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_add"
-                android:background="@drawable/button_circle_ripple"
-                app:tint="@android:color/black"
-                android:layout_alignTop="@id/__tv1_FragmentTransactionEditor"
-                android:layout_toEndOf="@id/__tv1_FragmentTransactionEditor"/>
-            <TextView
-                android:id="@+id/page_TextView_FragmentTransactionEditor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_mini"
-                android:textAppearance="@style/textMedium"
-                android:text="Education"
-                android:lines="1"
-                android:textAlignment="center"
-                android:background="@drawable/button_ripple_gray"
-                android:layout_alignTop="@id/__tv1_FragmentTransactionEditor"
-                android:layout_toEndOf="@id/addPage_Button_FragmentTransactionEditor"
-                android:layout_alignParentEnd="true"/>
-            <TextView
                 android:id="@+id/__tv2_FragmentTransactionEditor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Account"
                 android:padding="@dimen/dimen_small"
                 android:layout_margin="@dimen/dimen_small"
-                android:textAppearance="@style/textMedium"
-                android:layout_below="@id/__tv1_FragmentTransactionEditor"/>
+                android:layout_alignBaseline="@id/account_TextView_FragmentTransactionEditor"
+                android:textAppearance="@style/textMedium"/>
             <TextView
                 android:id="@+id/account_TextView_FragmentTransactionEditor"
                 android:layout_width="match_parent"
@@ -93,7 +62,6 @@
                 android:text="Credit Card"
                 android:lines="1"
                 android:textAlignment="center"
-                android:layout_alignTop="@id/__tv2_FragmentTransactionEditor"
                 android:layout_toEndOf="@id/__tv2_FragmentTransactionEditor"
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/button_ripple_gray"/>

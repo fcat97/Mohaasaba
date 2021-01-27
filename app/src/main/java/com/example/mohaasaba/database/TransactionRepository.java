@@ -8,9 +8,11 @@ import androidx.sqlite.db.SimpleSQLiteQuery;
 import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.models.Transaction;
 import com.example.mohaasaba.models.TransactionAccount;
+import com.example.mohaasaba.models.TransactionPage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
@@ -22,14 +24,15 @@ public class TransactionRepository {
     private AppDatabase database;
     private TransactionAccountDao accountDao;
     private TransactionDao transactionDao;
+    private TransactionPageDao transactionPageDao;
 
     public TransactionRepository(Context context) {
         this.database = AppDatabase.getInstance(context);
-        this.transactionDao = database.transactionDao();
+        this.transactionPageDao = database.transactionPageDao();
         this.accountDao = database.accountDao();
     }
 
-
+    /*
     public void updateTransaction(Transaction transaction) {
         Thread thread = new Thread(() -> {
             TransactionAccount account = accountDao.getAccount(transaction.account);
@@ -77,7 +80,31 @@ public class TransactionRepository {
 
         return transactionDao.getAllTransaction(new SimpleSQLiteQuery(query));
     }
+    */
 
+
+    public void updatePage(TransactionPage page) {
+        Thread thread = new Thread(() -> {
+           TransactionPage _page = transactionPageDao.getPageWithID(page.pageID);
+
+           if (_page != null) transactionPageDao.update(page);
+           else transactionPageDao.insert(page);
+        });
+
+        thread.start();
+    }
+
+    public void deletePage(TransactionPage page) {
+        Thread thread = new Thread(() -> {
+            transactionPageDao.delete(page);
+        });
+
+        thread.start();
+    }
+
+    public LiveData<List<TransactionPage>> getAllTransactionPages() {
+        return transactionPageDao.getAllPages();
+    }
 
     public void updateTransactionAccount(TransactionAccount transactionAccount) {
         Thread thread = new Thread(() -> {

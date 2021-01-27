@@ -48,35 +48,17 @@ public class FragmentTransactionPages extends Fragment {
         adapter = new TransactionPageAdapter();
         recyclerView.setAdapter(adapter);
 
-        repository = new TransactionRepository(getContext());
-        LiveData<List<Transaction>> transactionLiveData = repository.getAllTransactions();
-        transactionLiveData.observe(getViewLifecycleOwner(), this::submitList);
+       TransactionRepository repository = new TransactionRepository(getContext());
+       LiveData<List<TransactionPage>> transactionPagesLiveData = repository.getAllTransactionPages();
+       transactionPagesLiveData.observe(getViewLifecycleOwner(), adapter::submitList);
+
+       addButton.setOnClickListener(v -> {
+           if (callback != null) callback.onClick(new Transaction(0f));
+       });
 
     }
 
-    private void submitList(List<Transaction> transactionList) {
-        Set<String> pages = new HashSet<>();
-        for (Transaction t :
-                transactionList) {
-            pages.add(t.page);
-        }
-
-        List<TransactionPage> transactionPages = new ArrayList<>();
-        for (String s:
-             pages) {
-            transactionPages.add(new TransactionPage(repository.getTransactionOf(s), s));
-        }
-
-        adapter.submitList(transactionPages);
-
-        addButton.setOnClickListener(v -> {
-            if (callback != null) callback.onClick(new Transaction(0f));
-        });
-
-    }
-
-
-    public FragmentTransactionPages setCallback(AddButtonCallback callback) {
+    public FragmentTransactionPages setAddButtonClickListener(AddButtonCallback callback) {
         this.callback = callback;
         return this;
     }

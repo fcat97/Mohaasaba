@@ -10,7 +10,6 @@ import androidx.lifecycle.LiveData;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +22,7 @@ import com.example.mohaasaba.fragment.FragmentAccounts;
 import com.example.mohaasaba.fragment.FragmentAllTransactions;
 import com.example.mohaasaba.fragment.FragmentTransactionEditor;
 import com.example.mohaasaba.fragment.FragmentTransactionPages;
+import com.example.mohaasaba.helper.TabPagerBinder;
 import com.example.mohaasaba.models.Transaction;
 import com.example.mohaasaba.models.TransactionAccount;
 import com.google.android.material.tabs.TabLayout;
@@ -32,17 +32,9 @@ import java.util.List;
 
 public class HisaabActivity extends AppCompatActivity {
     private static final String TAG = HisaabActivity.class.getCanonicalName();
-    private ViewPager2 viewPager;
-    private TabLayout tabLayout;
 
-    private SharedPreferences sharedPreferences;
     private TransactionRepository repository;
-    private List<Transaction> transactions = new ArrayList<>();
-    private LiveData<List<TransactionAccount>> accountLiveData;
     private List<TransactionAccount> transactionAccounts = new ArrayList<>();
-
-    public static final String HISAAB_SHARED_PREF = "com.mohaasaba.HISAAB_SHARED_PREF";
-    public static final String PAGES_SHARED_PREF = "com.mohaasaba.HISAB_PAGES";
 
     private FragmentAllTransactions fragmentAllTransactions;
     private FragmentTransactionPages fragmentTransactionPages;
@@ -64,25 +56,27 @@ public class HisaabActivity extends AppCompatActivity {
 
 
         // initiate tabLayout and viewPager
-        tabLayout = findViewById(R.id.tabLayout_HisaabActivity);
-        viewPager = findViewById(R.id.viewPager_HisaabActivity);
+        TabLayout tabLayout = findViewById(R.id.tabLayout_HisaabActivity);
+        ViewPager2 viewPager = findViewById(R.id.viewPager_HisaabActivity);
 
         repository = new TransactionRepository(this);
 
         // Set Transactions Accounts
-        accountLiveData = repository.getAllTransactionAccounts();
+        LiveData<List<TransactionAccount>> accountLiveData = repository.getAllTransactionAccounts();
         accountLiveData.observe(this, transactionAccounts -> {
             this.transactionAccounts = transactionAccounts;
         });
 
+        // Get All Names of Pages From DB
+
+
         // Instantiate FragmentAllTransactions
         fragmentAllTransactions = new FragmentAllTransactions()
-                .setAddButtonClickListener(this::openTransactionEditor) //set add button listener
                 .setOnItemClickedListener(this::openTransactionEditor);
 
         // Instantiate FragmentTransactionPages
         fragmentTransactionPages = new FragmentTransactionPages()
-                .setCallback(this::openTransactionEditor);
+                .setAddButtonClickListener(this::openTransactionEditor);
 
         // Instantiate FragmentTransactionAccount
         fragmentAccounts = new FragmentAccounts()
@@ -91,37 +85,13 @@ public class HisaabActivity extends AppCompatActivity {
 
 
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle()));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                tabLayout.selectTab(tabLayout.getTabAt(position));
-            }
-        });
+        new TabPagerBinder(tabLayout, viewPager);
     }
 
     private void openTransactionEditor(Transaction transaction) {
         FragmentTransactionEditor fragmentTransactionEditor = new FragmentTransactionEditor()
                 .setTransactionAccounts(transactionAccounts)
-                .setTransaction(new Transaction(transaction))
-                .setConfirmListener(repository::updateTransaction)
-                .setDeleteListener(repository::deleteTransaction);
+                .setTransaction(new Transaction(transaction));
 
         fragmentTransactionEditor.show(getSupportFragmentManager(), "Transaction Editor");
     }

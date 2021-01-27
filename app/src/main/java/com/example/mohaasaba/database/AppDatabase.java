@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-@Database(entities = {Schedule.class, Note.class, Reminder.class, Transaction.class, TransactionAccount.class}, version = 1)
+@Database(entities = {Schedule.class, Note.class, Reminder.class, TransactionPage.class, TransactionAccount.class}, version = 1)
 @TypeConverters({DataConverter.class})
 public abstract class AppDatabase extends RoomDatabase{
     private static AppDatabase appDatabaseInstance;
@@ -34,7 +34,7 @@ public abstract class AppDatabase extends RoomDatabase{
     public abstract NoteDao noteDao();
     public abstract ReminderDao reminderDao();
     public abstract TransactionAccountDao accountDao();
-    public abstract TransactionDao transactionDao();
+    public abstract TransactionPageDao transactionPageDao();
 
     public static synchronized AppDatabase getInstance(Context context) {
         if (appDatabaseInstance == null) {
@@ -126,5 +126,9 @@ public abstract class AppDatabase extends RoomDatabase{
         transactionAccount.balance = TransactionAccount.DEFAULT_BALANCE;
         accountDao.insert(transactionAccount);
 
+        // Create A default page
+        TransactionPageDao pageDao = appDatabaseInstance.transactionPageDao();
+        TransactionPage transactionPage = new TransactionPage("Default Page");
+        pageDao.insert(transactionPage);
     }
 }
