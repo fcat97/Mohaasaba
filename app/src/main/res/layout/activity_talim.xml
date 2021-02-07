@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dashboard_gradient"
+    tools:context=".bookshelf.TalimActivity">
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager_TalimActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tabLayout_TalimActivity"/>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout_TalimActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_small"
+        android:layout_marginEnd="@dimen/dimen_small"
+        android:layout_alignParentBottom="true"
+        app:tabMode="scrollable"
+        app:tabGravity="center"
+        app:tabIndicatorColor="?attr/colorPrimary"
+        app:tabSelectedTextColor="?attr/colorPrimary">
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItem_todo_TalimActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/reading"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItem_other_TalimActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/collection"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItem_wishlist_TalimActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/wishlist"/>
+    </com.google.android.material.tabs.TabLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_TalimActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:src="@drawable/ic_add"
+        android:elevation="12dp"
+
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

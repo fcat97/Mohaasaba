@@ -122,6 +122,20 @@ public abstract class AppDatabase extends RoomDatabase{
 
         scheduleDao.insertSchedule(schedule);
 
+
+        /*Schedule bookReading = new Schedule("Book Reading");
+        bookReading.setThemeID(ThemeUtils.THEME_PURPLE_DARK);
+        bookReading.getTags().add("Reading");
+        bookReading.getNotifyList().add(new Notify(7,35));
+        List<Task> readingTask = new ArrayList<>();
+        Task task1 = new Task("ইসলামী আকিদা");
+        task1.maxProgress = 260;
+        task1.taskType = Task.Type.Mustahab;
+        task1.currentProgress = 204;
+        readingTask.add(task1);
+        bookReading.getHistory().commitTodo(Calendar.getInstance(), readingTask);
+        scheduleDao.insertSchedule(bookReading);*/
+
         // Add default Transaction Account to Database
         TransactionAccountDao accountDao = appDatabaseInstance.accountDao();
         TransactionAccount transactionAccount = new TransactionAccount();

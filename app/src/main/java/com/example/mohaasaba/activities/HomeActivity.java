@@ -39,6 +39,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         } else if (v.getId() == R.id.btn2_HomeActivity) {
             Intent intent = new Intent(this, HisaabActivity.class);
             startActivity(intent);
+        } else if (v.getId() == R.id.btn3_HomeActivity) {
+            Intent intent = new Intent(this, IbadahActivity.class);
+            startActivity(intent);
         }
     }
 }

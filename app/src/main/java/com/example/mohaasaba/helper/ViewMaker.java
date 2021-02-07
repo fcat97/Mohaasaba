@@ -292,7 +292,6 @@ public class ViewMaker {
         public View getView() {
             return rootView;
         }
-
         public void setScheduleType(ScheduleType type) {
             this.type = type;
 

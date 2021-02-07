@@ -45,7 +45,7 @@ android {
     else {
         throw new GradleException("Could not read version.properties!")
     }
-    def _versionName = "${_major}.${_versionCode}.${_minor}.${_patch}"
+    def _versionName = "${_major}.${_minor}.${_patch}_${_versionCode}"
 
     // ------------------------------------------------------------------------------------------- //
 
@@ -57,7 +57,7 @@ android {
         versionName _versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        versionNameSuffix '_fc2bb7d_beta'
+        //versionNameSuffix '_fc2bb7d_beta'
     }
 
     buildTypes {

@@ -118,4 +118,8 @@
     <string name="enter_account_name">Enter Account Name</string>
     <string name="balance">Balance</string>
     <string name="enter_page_name">Enter Page Name</string>
+    <string name="ibadah">Ibadah</string>
+    <string name="reading">Reading</string>
+    <string name="collection">Collection</string>
+    <string name="wishlist">WishList</string>
 </resources>
