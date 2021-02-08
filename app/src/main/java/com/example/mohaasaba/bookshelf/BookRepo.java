@@ -67,7 +67,7 @@ public class BookRepo {
     public LiveData<List<Book>> getAllReadingBooks() {
         return bookDao.getAllReadingBooks();
     }
-    public LiveData<List<Book>> getAllCollectedBooks() {
+    public LiveData<List<Book>> getAllReadBooks() {
         return bookDao.getAllCollectedBooks();
     }
     public LiveData<List<Book>> getAllWishListedBooks() {

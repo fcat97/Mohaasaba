@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dashboard_gradient"
-    tools:context=".bookshelf.TalimActivity">
-    <!--<androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager_TalimActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager_FragmentTalimMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/tabLayout_TalimActivity"/>
+        android:layout_above="@id/tabLayout_FragmentTalimMain"/>
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout_TalimActivity"
+        android:id="@+id/tabLayout_FragmentTalimMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_small"
@@ -24,23 +20,23 @@
         app:tabIndicatorColor="?attr/colorPrimary"
         app:tabSelectedTextColor="?attr/colorPrimary">
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabItem_other_TalimActivity"
+            android:id="@+id/tabItem_other_FragmentTalimMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/read"/>
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabItem_todo_TalimActivity"
+            android:id="@+id/tabItem_todo_FragmentTalimMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/reading"/>
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabItem_wishlist_TalimActivity"
+            android:id="@+id/tabItem_wishlist_FragmentTalimMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/wishlist"/>
     </com.google.android.material.tabs.TabLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_TalimActivity"
+        android:id="@+id/fab_FragmentTalimMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
@@ -48,9 +44,5 @@
         android:elevation="12dp"
 
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"/>-->
-    <FrameLayout
-        android:id="@+id/frameLayout_TalimActivity"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

@@ -23,7 +23,7 @@ public interface BookDao {
     @Query("SELECT * FROM bookshelf WHERE readingStatus LIKE '%READING%'")
     LiveData<List<Book>> getAllReadingBooks();
 
-    @Query("SELECT * FROM bookshelf WHERE readingStatus LIKE '%COLLECTED%'")
+    @Query("SELECT * FROM bookshelf WHERE readingStatus LIKE '%READ%'")
     LiveData<List<Book>> getAllCollectedBooks();
 
     @Query("SELECT * FROM bookshelf WHERE readingStatus LIKE '%WISH_LISTED%'")

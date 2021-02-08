@@ -120,6 +120,6 @@
     <string name="enter_page_name">Enter Page Name</string>
     <string name="ibadah">Ibadah</string>
     <string name="reading">Reading</string>
-    <string name="collection">Collection</string>
+    <string name="read">Read</string>
     <string name="wishlist">WishList</string>
 </resources>

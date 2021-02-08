@@ -1,5 +1,8 @@
 package com.example.mohaasaba.bookshelf;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Entity;
@@ -12,10 +15,10 @@ import com.example.mohaasaba.models.ScheduleType;
 import java.util.Calendar;
 
 @Entity(tableName = "bookshelf")
-public class Book {
+public class Book implements Parcelable {
     public enum ReadingStatus {
         READING,
-        COLLECTED,
+        READ,
         WISH_LISTED
     }
 
@@ -43,5 +46,51 @@ public class Book {
         this.scheduleType = new ScheduleType();
         this.readingHistory = new ProgressHistory();
         this.readingStatus = ReadingStatus.WISH_LISTED;
+    }
+
+    protected Book(Parcel in) {
+        bookID = in.readString();
+        title = in.readString();
+        author = in.readString();
+        publication = in.readString();
+        totalPages = in.readInt();
+        price = in.readFloat();
+        owner = in.readString();
+        purchaseTime = in.readLong();
+        scheduleType = in.readParcelable(ScheduleType.class.getClassLoader());
+        readingHistory = in.readParcelable(ProgressHistory.class.getClassLoader());
+        readingStatus = ReadingStatus.values()[in.readInt()];
+    }
+
+    public static final Creator<Book> CREATOR = new Creator<Book>() {
+        @Override
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(bookID);
+        dest.writeString(title);
+        dest.writeString(author);
+        dest.writeString(publication);
+        dest.writeInt(totalPages);
+        dest.writeFloat(price);
+        dest.writeString(owner);
+        dest.writeLong(purchaseTime);
+        dest.writeParcelable(scheduleType, flags);
+        dest.writeParcelable(readingHistory, flags);
+        dest.writeInt(readingStatus.ordinal());
     }
 }

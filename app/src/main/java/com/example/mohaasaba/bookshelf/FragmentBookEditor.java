@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.helper.ViewMaker;
@@ -20,7 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import java.util.Calendar;
 
 
-public class FragmentBookEditor extends BottomSheetDialogFragment {
+public class FragmentBookEditor extends Fragment {
     private Book book;
     private BookRepo bookRepo;
 
@@ -42,7 +44,7 @@ public class FragmentBookEditor extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = View.inflate(getContext(), R.layout.view_book_details, container);
+        View view = inflater.inflate(R.layout.view_book_details, container, false);
         titleEditText = view.findViewById(R.id.title_EditText_ViewBookDetails);
         authorEditText = view.findViewById(R.id.author_EditText_ViewBookDetails);
         publicationEditText = view.findViewById(R.id.publication_EditText_ViewBookDetails);
@@ -110,13 +112,13 @@ public class FragmentBookEditor extends BottomSheetDialogFragment {
                     todayProgressEditText.getText().toString().isEmpty() ? "0" : todayProgressEditText.getText().toString());
             book.readingHistory.commitProgress(progress, Calendar.getInstance());
             bookRepo.updateBook(book);
-            dismiss();
+
         });
 
         // Setting Delete Button Logic ------------------------------------------------------------
         deleteButton.setOnClickListener(v -> {
             bookRepo.deleteBook(book);
-            dismiss();
+
         });
 
         // Setting progress Button Logic -----------------------------------------------------------
@@ -129,28 +131,28 @@ public class FragmentBookEditor extends BottomSheetDialogFragment {
         });
 
         // Setting Move to other reading status buttons logic --------------------------------------
-        if (book.readingStatus == Book.ReadingStatus.READING ) moveButton1.setText("Collection");
-        else if (book.readingStatus == Book.ReadingStatus.COLLECTED ||
-                book.readingStatus == Book.ReadingStatus.WISH_LISTED) moveButton1.setText("Reading");
+        if (book.readingStatus == Book.ReadingStatus.READING ) moveButton1.setText(R.string.read);
+        else if (book.readingStatus == Book.ReadingStatus.READ ||
+                book.readingStatus == Book.ReadingStatus.WISH_LISTED) moveButton1.setText(R.string.reading);
 
         if (book.readingStatus == Book.ReadingStatus.READING ||
-                book.readingStatus == Book.ReadingStatus.COLLECTED) moveButton2.setText("WishList");
-        else if (book.readingStatus == Book.ReadingStatus.WISH_LISTED) moveButton2.setText("Collected");
+                book.readingStatus == Book.ReadingStatus.READ) moveButton2.setText(R.string.wishlist);
+        else if (book.readingStatus == Book.ReadingStatus.WISH_LISTED) moveButton2.setText(R.string.read);
 
         moveButton1.setOnClickListener(v -> {
-            if (book.readingStatus == Book.ReadingStatus.READING) book.readingStatus = Book.ReadingStatus.COLLECTED;
-            else if (book.readingStatus == Book.ReadingStatus.COLLECTED) book.readingStatus = Book.ReadingStatus.READING;
+            if (book.readingStatus == Book.ReadingStatus.READING) book.readingStatus = Book.ReadingStatus.READ;
+            else if (book.readingStatus == Book.ReadingStatus.READ) book.readingStatus = Book.ReadingStatus.READING;
             else book.readingStatus = Book.ReadingStatus.READING;
             bookRepo.updateBook(book);
-            dismiss();
+
         });
 
         moveButton2.setOnClickListener(v -> {
             if (book.readingStatus == Book.ReadingStatus.READING) book.readingStatus = Book.ReadingStatus.WISH_LISTED;
-            else if (book.readingStatus == Book.ReadingStatus.COLLECTED) book.readingStatus = Book.ReadingStatus.WISH_LISTED;
-            else book.readingStatus = Book.ReadingStatus.COLLECTED;
+            else if (book.readingStatus == Book.ReadingStatus.READ) book.readingStatus = Book.ReadingStatus.WISH_LISTED;
+            else book.readingStatus = Book.ReadingStatus.READ;
             bookRepo.updateBook(book);
-            dismiss();
+
         });
         //------------------------------------------------------------------------------------------
 

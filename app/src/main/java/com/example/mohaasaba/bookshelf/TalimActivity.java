@@ -4,14 +4,15 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LiveData;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -24,13 +25,10 @@ import java.util.List;
 
 public class TalimActivity extends AppCompatActivity {
     public static final String TAG = TalimActivity.class.getCanonicalName();
-    private FloatingActionButton addButton;
-    private BookRepo bookRepo;
-    private ViewPager2 viewPager;
-    private TabLayout tabLayout;
-    private FragmentBooks fragmentBooksReading;
-    private FragmentBooks fragmentBooksCollected;
-    private FragmentBooks fragmentBooksWishListed;
+    public static final String BOOK_BUNDLE = "TalimActivity.BOOK_BUNDLE";
+    private FragmentTalimMain fragmentTalimMain;
+    private FrameLayout frameLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,57 +40,19 @@ public class TalimActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.WHITE);
         }
 
-        addButton = findViewById(R.id.fab_TalimActivity);
-        viewPager = findViewById(R.id.viewPager_TalimActivity);
-        tabLayout = findViewById(R.id.tabLayout_TalimActivity);
-        new TabPagerBinder(tabLayout, viewPager);
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle()));
+        frameLayout = findViewById(R.id.frameLayout_TalimActivity);
+        fragmentTalimMain = new FragmentTalimMain()
+                .setItemListener(this::openBookEditor);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.frameLayout_TalimActivity, fragmentTalimMain)
+                .commit();
 
-        this.bookRepo = new BookRepo(this);
-        LiveData<List<Book>> readingBooks = bookRepo.getAllReadingBooks();
-        LiveData<List<Book>> collectedBooks = bookRepo.getAllCollectedBooks();
-        LiveData<List<Book>> wishListedBooks = bookRepo.getAllWishListedBooks();
-
-        fragmentBooksReading = new FragmentBooks(readingBooks)
-                .setItemClickedListener(this::openFragmentBookEditor);
-        fragmentBooksCollected = new FragmentBooks(collectedBooks)
-                .setItemClickedListener(this::openFragmentBookEditor);
-        fragmentBooksWishListed = new FragmentBooks(wishListedBooks)
-                .setItemClickedListener(this::openFragmentBookEditor);
-
-        addButton.setOnClickListener(v -> openFragmentBookEditor(new Book(" ")));
     }
 
-
-    private void openFragmentBookEditor(Book book) {
-        FragmentBookEditor fragmentBookEditor = new FragmentBookEditor()
-                .setBook(book);
-        fragmentBookEditor.show(getSupportFragmentManager(), "FragmentBookEditor");
-    }
-
-    private final class ViewPagerAdapter extends FragmentStateAdapter {
-        public ViewPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
-            super(fragmentManager, lifecycle);
-        }
-
-        @NonNull
-        @Override
-        public Fragment createFragment(int position) {
-            switch (position) {
-                case 0:
-                    return fragmentBooksReading;
-                case 1:
-                    return fragmentBooksCollected;
-                case 2:
-                    return fragmentBooksWishListed;
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            return 3;
-        }
+    private void openBookEditor(Book book) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameLayout_TalimActivity, new FragmentBookEditor().setBook(book))
+                .addToBackStack("FragmentBookEditor")
+                .commit();
     }
 }
