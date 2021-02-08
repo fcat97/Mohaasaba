@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         style="@style/AppTheme.EditText"
         android:layout_marginTop="9dp"
-        android:inputType="textImeMultiLine"
+        android:inputType="text"
         android:imeOptions="actionNext"
         android:layout_below="@id/title_EditText_ViewBookDetails"/>
     <TextView
