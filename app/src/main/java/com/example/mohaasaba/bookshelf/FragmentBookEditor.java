@@ -1,6 +1,7 @@
 package com.example.mohaasaba.bookshelf;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import java.util.Calendar;
 
 
-public class FragmentBookEditor extends Fragment {
+public class FragmentBookEditor extends DialogFragment {
+    private static final String TAG = FragmentBookEditor.class.getCanonicalName();
     private Book book;
     private BookRepo bookRepo;
+    private DismissListener dismissListener;
 
     private EditText titleEditText;
     private EditText authorEditText;
@@ -44,21 +47,21 @@ public class FragmentBookEditor extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.view_book_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_book_details, container, false);
         titleEditText = view.findViewById(R.id.title_EditText_ViewBookDetails);
         authorEditText = view.findViewById(R.id.author_EditText_ViewBookDetails);
         publicationEditText = view.findViewById(R.id.publication_EditText_ViewBookDetails);
         pagesEditText = view.findViewById(R.id.pages_EditText_ViewBookDetails);
         targetEditText = view.findViewById(R.id.target_EditText_ViewBookDetails);
         totalProgressTextView = view.findViewById(R.id.totalProgress_EditText_ViewBookDetails);
-        todayProgressEditText = view.findViewById(R.id.todayProgress_EditText_ViewBookDetails);
+        todayProgressEditText = view.findViewById(R.id.todayProgress_EditText_FragmentBookDetails);
 
-        frameLayout = view.findViewById(R.id.frameLayout_ViewBookDetails);
+        frameLayout = view.findViewById(R.id.frameLayout_FragmentBookDetails);
         confirmButton = view.findViewById(R.id.confirm_TextView_ViewBookDetails);
-        deleteButton = view.findViewById(R.id.deleteButton_ViewBookDetails);
-        moveButton1 = view.findViewById(R.id.moveButton1_ViewBookDetails);
-        moveButton2 = view.findViewById(R.id.moveButton2_ViewBookDetails);
-        progressButton = view.findViewById(R.id.progressButton_ImageView_ViewBookDetails);
+        deleteButton = view.findViewById(R.id.deleteButton_FragmentBookDetails);
+        moveButton1 = view.findViewById(R.id.moveButton1_FragmentBookDetails);
+        moveButton2 = view.findViewById(R.id.moveButton2_FragmentBookDetails);
+        progressButton = view.findViewById(R.id.progressButton_ImageView_FragmentBookDetails);
 
 
         return view;
@@ -112,12 +115,14 @@ public class FragmentBookEditor extends Fragment {
                     todayProgressEditText.getText().toString().isEmpty() ? "0" : todayProgressEditText.getText().toString());
             book.readingHistory.commitProgress(progress, Calendar.getInstance());
             bookRepo.updateBook(book);
+            closeFragment();
 
         });
 
         // Setting Delete Button Logic ------------------------------------------------------------
         deleteButton.setOnClickListener(v -> {
             bookRepo.deleteBook(book);
+            closeFragment();
 
         });
 
@@ -144,6 +149,7 @@ public class FragmentBookEditor extends Fragment {
             else if (book.readingStatus == Book.ReadingStatus.READ) book.readingStatus = Book.ReadingStatus.READING;
             else book.readingStatus = Book.ReadingStatus.READING;
             bookRepo.updateBook(book);
+            closeFragment();
 
         });
 
@@ -152,10 +158,23 @@ public class FragmentBookEditor extends Fragment {
             else if (book.readingStatus == Book.ReadingStatus.READ) book.readingStatus = Book.ReadingStatus.WISH_LISTED;
             else book.readingStatus = Book.ReadingStatus.READ;
             bookRepo.updateBook(book);
-
+            closeFragment();
         });
         //------------------------------------------------------------------------------------------
 
+    }
+
+    private void closeFragment() {
+        if (dismissListener != null) dismissListener.onDismiss();
+        dismiss();
+    }
+    public FragmentBookEditor setDismissListener(DismissListener dismissListener) {
+        this.dismissListener = dismissListener;
+        return this;
+    }
+
+    public interface DismissListener {
+        void onDismiss();
     }
 
     public FragmentBookEditor setBook(Book book) {

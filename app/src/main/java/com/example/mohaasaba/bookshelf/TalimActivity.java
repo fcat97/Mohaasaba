@@ -27,7 +27,6 @@ public class TalimActivity extends AppCompatActivity {
     public static final String TAG = TalimActivity.class.getCanonicalName();
     public static final String BOOK_BUNDLE = "TalimActivity.BOOK_BUNDLE";
     private FragmentTalimMain fragmentTalimMain;
-    private FrameLayout frameLayout;
 
 
     @Override
@@ -40,18 +39,22 @@ public class TalimActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.WHITE);
         }
 
-        frameLayout = findViewById(R.id.frameLayout_TalimActivity);
-        fragmentTalimMain = new FragmentTalimMain()
-                .setItemListener(this::openBookEditor);
+        openFragmentMain();
+    }
+
+    private void openFragmentMain() {
+        if (fragmentTalimMain == null) {
+            fragmentTalimMain = new FragmentTalimMain()
+                    .setItemListener(this::openBookEditor);
+        }
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.frameLayout_TalimActivity, fragmentTalimMain)
                 .commit();
-
     }
-
     private void openBookEditor(Book book) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameLayout_TalimActivity, new FragmentBookEditor().setBook(book))
+                .replace(R.id.frameLayout_TalimActivity, new FragmentBookEditor().setBook(book)
+                        .setDismissListener(this::openFragmentMain))
                 .addToBackStack("FragmentBookEditor")
                 .commit();
     }

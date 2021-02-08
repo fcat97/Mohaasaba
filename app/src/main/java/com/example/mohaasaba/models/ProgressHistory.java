@@ -2,6 +2,7 @@ package com.example.mohaasaba.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class ProgressHistory implements Parcelable {
 
+    private static final String TAG = ProgressHistory.class.getCanonicalName();
     public HashMap<Long, Progress> progressHashMap = new HashMap<>();
 
     public ProgressHistory() { };
@@ -33,7 +35,9 @@ public class ProgressHistory implements Parcelable {
         int total = 0;
         for (Long key :
                 keyList) {
-            total += progressHashMap.get(key).currentProgress;
+            int c = progressHashMap.get(key).currentProgress;
+            Log.d(TAG, "getTotalProgress: called c = " + c + " key = " + key);
+            total += c;
         }
 
         return total;
@@ -54,14 +58,24 @@ public class ProgressHistory implements Parcelable {
     public final Progress getProgress(Calendar calendar) {
         long key = getKey(calendar);
         if (progressHashMap.containsKey(key)) return progressHashMap.get(key);
-
+        Log.d(TAG, "getProgress: called 1");
         List<Long> keyList = new ArrayList<>(progressHashMap.keySet());
         if (! keyList.contains(key)) keyList.add(key);
 
         Collections.sort(keyList);
         int index = keyList.indexOf(key);
         if (index == 0) return new Progress(key);
-        else return progressHashMap.get(keyList.get(index - 1));
+        else {
+            long preKey = keyList.get(index - 1);
+            Progress progress = new Progress(preKey);
+            Progress oldProgress = progressHashMap.get(preKey);
+
+            progress.currentProgress = 0;
+            progress.maxProgress = oldProgress.maxProgress;
+            progress.progressStep = oldProgress.progressStep;
+            progress.progressUnit = oldProgress.progressUnit;
+            return progress;
+        }
     }
 
 

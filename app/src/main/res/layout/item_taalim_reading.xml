@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/button_ripple_gray">
+        android:background="@drawable/button_ripple_box">
         <ImageView
             android:id="@+id/bookIcon_ImageView_ItemTaalim"
             android:layout_width="120dp"
