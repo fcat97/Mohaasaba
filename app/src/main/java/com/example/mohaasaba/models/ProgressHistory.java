@@ -25,7 +25,7 @@ public class ProgressHistory implements Parcelable {
 
     public int getDailyTarget() {
         Progress progress = getProgress(Calendar.getInstance());
-        return progress.maxProgress;
+        return progress.target;
     }
 
     public int getTotalProgress() {
@@ -35,7 +35,7 @@ public class ProgressHistory implements Parcelable {
         int total = 0;
         for (Long key :
                 keyList) {
-            int c = progressHashMap.get(key).currentProgress;
+            int c = progressHashMap.get(key).progress;
             Log.d(TAG, "getTotalProgress: called c = " + c + " key = " + key);
             total += c;
         }
@@ -70,10 +70,10 @@ public class ProgressHistory implements Parcelable {
             Progress progress = new Progress(preKey);
             Progress oldProgress = progressHashMap.get(preKey);
 
-            progress.currentProgress = 0;
-            progress.maxProgress = oldProgress.maxProgress;
-            progress.progressStep = oldProgress.progressStep;
-            progress.progressUnit = oldProgress.progressUnit;
+            progress.progress = 0;
+            progress.target = oldProgress.target;
+            progress.step = oldProgress.step;
+            progress.unit = oldProgress.unit;
             return progress;
         }
     }

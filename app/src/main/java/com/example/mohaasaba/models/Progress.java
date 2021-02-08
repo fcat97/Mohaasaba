@@ -2,7 +2,6 @@ package com.example.mohaasaba.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -12,26 +11,26 @@ public class Progress implements Parcelable, Serializable {
     private static final String TAG = Progress.class.getCanonicalName();
     public long commitDate;
 
-    public int maxProgress;
-    public int currentProgress;
-    public int progressStep;
-    public String progressUnit = "";
+    public int target;
+    public int progress;
+    public int step = 1;
+    public String unit = "";
 
     public Progress(long commitDate) {
         this.commitDate = commitDate;
     }
 
     public Progress doProgress() {
-        currentProgress = currentProgress + 1;
+        progress = progress + step;
         return this;
     }
 
     protected Progress(Parcel in) {
         commitDate = in.readLong();
-        maxProgress = in.readInt();
-        currentProgress = in.readInt();
-        progressStep = in.readInt();
-        progressUnit = in.readString();
+        target = in.readInt();
+        progress = in.readInt();
+        step = in.readInt();
+        unit = in.readString();
     }
 
     public static final Creator<Progress> CREATOR = new Creator<Progress>() {
@@ -54,10 +53,10 @@ public class Progress implements Parcelable, Serializable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(commitDate);
-        dest.writeInt(maxProgress);
-        dest.writeInt(currentProgress);
-        dest.writeInt(progressStep);
-        dest.writeString(progressUnit);
+        dest.writeInt(target);
+        dest.writeInt(progress);
+        dest.writeInt(step);
+        dest.writeString(unit);
     }
 
     @Override

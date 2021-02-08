@@ -1,7 +1,6 @@
 package com.example.mohaasaba.bookshelf;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.helper.ViewMaker;
 import com.example.mohaasaba.models.Progress;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.Calendar;
 
@@ -80,7 +77,7 @@ public class FragmentBookEditor extends DialogFragment {
         targetEditText.setText(String.valueOf(book.readingHistory.getDailyTarget()));
         totalProgressTextView.setText(String.valueOf(book.readingHistory.getTotalProgress()));
         todayProgressEditText.setText(String.valueOf(book.readingHistory
-                .getProgress(Calendar.getInstance()).currentProgress));
+                .getProgress(Calendar.getInstance()).progress));
 
 
         // Setting DateSelectorView Logic ------------------------------------------------------------
@@ -109,9 +106,9 @@ public class FragmentBookEditor extends DialogFragment {
             book.publication = publicationEditText.getText().toString();
             book.totalPages = Integer.parseInt(pagesEditText.getText().toString());
             Progress progress = book.readingHistory.getProgress(Calendar.getInstance());
-            progress.maxProgress = Integer.parseInt(
+            progress.target = Integer.parseInt(
                     targetEditText.getText().toString().isEmpty() ? "0" : targetEditText.getText().toString());
-            progress.currentProgress = Integer.parseInt(
+            progress.progress = Integer.parseInt(
                     todayProgressEditText.getText().toString().isEmpty() ? "0" : todayProgressEditText.getText().toString());
             book.readingHistory.commitProgress(progress, Calendar.getInstance());
             bookRepo.updateBook(book);
@@ -132,7 +129,7 @@ public class FragmentBookEditor extends DialogFragment {
                     .doProgress(), Calendar.getInstance());
             totalProgressTextView.setText(String.valueOf(book.readingHistory.getTotalProgress()));
             todayProgressEditText.setText(String.valueOf(book.readingHistory
-                    .getProgress(Calendar.getInstance()).currentProgress));
+                    .getProgress(Calendar.getInstance()).progress));
         });
 
         // Setting Move to other reading status buttons logic --------------------------------------

@@ -33,6 +33,10 @@ public class FragmentTalimMain extends Fragment {
     private BookRepo bookRepo;
     private ItemListener itemListener;
 
+    public FragmentTalimMain(){
+        setRetainInstance(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -97,7 +101,7 @@ public class FragmentTalimMain extends Fragment {
                 case 2:
                     return fragmentBooksWishListed;
                 default:
-                    return null;
+                    return fragmentBooksReading;
             }
         }
 
