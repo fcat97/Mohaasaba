@@ -16,15 +16,15 @@ import androidx.fragment.app.DialogFragment;
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.helper.ViewMaker;
 import com.example.mohaasaba.models.Progress;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.Calendar;
 
 
-public class FragmentBookEditor extends DialogFragment {
+public class FragmentBookEditor extends BottomSheetDialogFragment {
     private static final String TAG = FragmentBookEditor.class.getCanonicalName();
     private Book book;
     private BookRepo bookRepo;
-    private DismissListener dismissListener;
 
     private EditText titleEditText;
     private EditText authorEditText;
@@ -44,7 +44,7 @@ public class FragmentBookEditor extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_book_details, container, false);
+        View view = View.inflate(getContext(), R.layout.fragment_book_details, container);
         titleEditText = view.findViewById(R.id.title_EditText_ViewBookDetails);
         authorEditText = view.findViewById(R.id.author_EditText_ViewBookDetails);
         publicationEditText = view.findViewById(R.id.publication_EditText_ViewBookDetails);
@@ -112,14 +112,14 @@ public class FragmentBookEditor extends DialogFragment {
                     todayProgressEditText.getText().toString().isEmpty() ? "0" : todayProgressEditText.getText().toString());
             book.readingHistory.commitProgress(progress, Calendar.getInstance());
             bookRepo.updateBook(book);
-            closeFragment();
+            dismiss();
 
         });
 
         // Setting Delete Button Logic ------------------------------------------------------------
         deleteButton.setOnClickListener(v -> {
             bookRepo.deleteBook(book);
-            closeFragment();
+            dismiss();
 
         });
 
@@ -146,7 +146,7 @@ public class FragmentBookEditor extends DialogFragment {
             else if (book.readingStatus == Book.ReadingStatus.READ) book.readingStatus = Book.ReadingStatus.READING;
             else book.readingStatus = Book.ReadingStatus.READING;
             bookRepo.updateBook(book);
-            closeFragment();
+            dismiss();
 
         });
 
@@ -155,23 +155,10 @@ public class FragmentBookEditor extends DialogFragment {
             else if (book.readingStatus == Book.ReadingStatus.READ) book.readingStatus = Book.ReadingStatus.WISH_LISTED;
             else book.readingStatus = Book.ReadingStatus.READ;
             bookRepo.updateBook(book);
-            closeFragment();
+            dismiss();
         });
         //------------------------------------------------------------------------------------------
 
-    }
-
-    private void closeFragment() {
-        if (dismissListener != null) dismissListener.onDismiss();
-        dismiss();
-    }
-    public FragmentBookEditor setDismissListener(DismissListener dismissListener) {
-        this.dismissListener = dismissListener;
-        return this;
-    }
-
-    public interface DismissListener {
-        void onDismiss();
     }
 
     public FragmentBookEditor setBook(Book book) {

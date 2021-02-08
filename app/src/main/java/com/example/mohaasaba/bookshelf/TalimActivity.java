@@ -25,9 +25,14 @@ import java.util.List;
 
 public class TalimActivity extends AppCompatActivity {
     public static final String TAG = TalimActivity.class.getCanonicalName();
-    public static final String BOOK_BUNDLE = "TalimActivity.BOOK_BUNDLE";
-    private FragmentTalimMain fragmentTalimMain;
 
+    private ViewPager2 viewPager;
+    private TabLayout tabLayout;
+    private FloatingActionButton addButton;
+
+    private FragmentBooks fragmentBooksRead;
+    private FragmentBooks fragmentBooksReading;
+    private FragmentBooks fragmentBooksWishListed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,23 +44,59 @@ public class TalimActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.WHITE);
         }
 
-        openFragmentMain();
+        tabLayout = findViewById(R.id.tabLayout_TalimActivity);
+        viewPager = findViewById(R.id.viewPager_TalimActivity);
+        addButton = findViewById(R.id.fab_TalimActivity);
+
+        BookRepo bookRepo = new BookRepo(this);
+        LiveData<List<Book>> readingBooks = bookRepo.getAllReadingBooks();
+        LiveData<List<Book>> readBooks = bookRepo.getAllReadBooks();
+        LiveData<List<Book>> wishListedBooks = bookRepo.getAllWishListedBooks();
+
+        new TabPagerBinder(tabLayout, viewPager);
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle()));
+        tabLayout.selectTab(tabLayout.getTabAt(1)); // default selection
+
+        fragmentBooksReading = new FragmentBooks(readingBooks)
+                .setItemClickedListener(this::openBookEditor);
+        fragmentBooksRead = new FragmentBooks(readBooks)
+                .setItemClickedListener(this::openBookEditor);
+        fragmentBooksWishListed = new FragmentBooks(wishListedBooks)
+                .setItemClickedListener(this::openBookEditor);
+
+        addButton.setOnClickListener(v -> openBookEditor(new Book(" ")));
     }
 
-    private void openFragmentMain() {
-        if (fragmentTalimMain == null) {
-            fragmentTalimMain = new FragmentTalimMain()
-                    .setItemListener(this::openBookEditor);
-        }
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.frameLayout_TalimActivity, fragmentTalimMain)
-                .commit();
-    }
     private void openBookEditor(Book book) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameLayout_TalimActivity, new FragmentBookEditor().setBook(book)
-                        .setDismissListener(this::openFragmentMain))
-                .addToBackStack("FragmentBookEditor")
-                .commit();
+        FragmentBookEditor fragmentBookEditor = new FragmentBookEditor()
+                .setBook(book);
+        fragmentBookEditor.show(getSupportFragmentManager(), "Fragment BookEditor");
+    }
+
+
+    private final class ViewPagerAdapter extends FragmentStateAdapter {
+        public ViewPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+            super(fragmentManager, lifecycle);
+        }
+
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
+            switch (position) {
+                case 0:
+                    return fragmentBooksRead;
+                case 1:
+                    return fragmentBooksReading;
+                case 2:
+                    return fragmentBooksWishListed;
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return 3;
+        }
     }
 }

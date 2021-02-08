@@ -15,7 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/AppTheme.EditText"
+        android:inputType="textImeMultiLine"
         android:layout_marginTop="9dp"
+        android:imeOptions="actionNext"
         android:layout_toStartOf="@id/confirm_TextView_ViewBookDetails"/>
     <TextView
         android:id="@+id/text_title_ViewBookDetails"
@@ -45,6 +47,8 @@
         android:layout_height="wrap_content"
         style="@style/AppTheme.EditText"
         android:layout_marginTop="9dp"
+        android:inputType="textImeMultiLine"
+        android:imeOptions="actionNext"
         android:layout_below="@id/title_EditText_ViewBookDetails"/>
     <TextView
         android:id="@+id/text_author_ViewBookDetails"
@@ -63,6 +67,8 @@
         android:layout_height="wrap_content"
         style="@style/AppTheme.EditText"
         android:layout_marginTop="9dp"
+        android:inputType="textImeMultiLine"
+        android:imeOptions="actionNext"
         android:layout_below="@id/author_EditText_ViewBookDetails"/>
     <TextView
         android:id="@+id/text_publication_ViewBookDetails"
@@ -83,6 +89,7 @@
         android:inputType="numberSigned"
         android:layout_marginTop="9dp"
         android:layout_marginEnd="@dimen/dimen_small"
+        android:imeOptions="actionNext"
         android:layout_toStartOf="@id/horizontalLine_ViewBookDetails"
         android:layout_below="@id/publication_EditText_ViewBookDetails"/>
     <TextView
@@ -134,7 +141,7 @@
         android:paddingEnd="@dimen/dimen_small"
         android:background="@android:color/white"
         android:layout_marginEnd="@dimen/dimen_small"
-        android:text="Target"
+        android:text="Daily Target"
         android:layout_alignEnd="@id/target_EditText_ViewBookDetails"
         android:layout_below="@id/publication_EditText_ViewBookDetails"/>
 
@@ -160,7 +167,7 @@
             android:paddingEnd="@dimen/dimen_small"
             android:background="@android:color/white"
             android:layout_marginEnd="@dimen/dimen_small"
-            android:text="Completed"
+            android:text="Today Read"
             android:layout_alignParentEnd="true"/>
         <ImageView
             android:id="@+id/progressButton_ImageView_FragmentBookDetails"
@@ -215,8 +222,7 @@
         android:textColor="?attr/colorPrimary"
         android:layout_toEndOf="@id/moveButton1_FragmentBookDetails"
         android:layout_below="@id/frameLayout_FragmentBookDetails"/>
-
-    <com.google.android.material.appbar.AppBarLayout
+<!--    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarLayout_FragmentBookDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -229,5 +235,5 @@
         android:layout_height="?attr/actionBarSize"
         app:popupTheme="@style/AppTheme.PopupOverlay"
         app:titleTextColor="?attr/colorAccent"/>
-    </com.google.android.material.appbar.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>-->
 </RelativeLayout>
