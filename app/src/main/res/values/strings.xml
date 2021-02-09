@@ -2,7 +2,7 @@
     <string name="app_name">Mohaasaba</string>
     <string name="dummy_text">This is a Sample Text for rabbit purpose</string>
     <string name="dummy_tags">tag1, tag2, tag3</string>
-    <string name="title_request_text">"Enter Title Here</string>
+    <string name="title_request_text">Enter Title Here</string>
     <string name="notify_message_request">Enter a Message to Notify</string>
     <string name="title_request_warning">Enter a valid title</string>
     <string name="edit_text">Edit</string>
@@ -43,7 +43,6 @@
     <string name="today_s_schedules">Today\'s Schedules</string>
     <string name="all_schedules">All Schedules</string>
     <string name="text_request">Start Writing…</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="confirm_text">Confirm</string>
     <string name="add_target">Add Target</string>
@@ -96,4 +95,31 @@
     <string name="progress_type">Progress Type</string>
     <string name="change_the_type_of_task">Change the Type of Task</string>
     <string name="mubah">Mubah</string>
+    <string name="schedules">Schedules</string>
+    <string name="hishab">Hisaab</string>
+    <string name="all_transactions">All Transactions</string>
+    <string name="total">Total</string>
+    <string name="ice_cream">Ice Cream</string>
+    <string name="_23_00">23.00</string>
+    <string name="_50_65">50.65</string>
+    <string name="transaction_unit_bdt">৳</string>
+    <string name="create_new_hisaab">Create New Hisaab</string>
+    <string name="add_new">Add New</string>
+    <string name="_0">0</string>
+    <string name="expense">Expense</string>
+    <string name="income">Income</string>
+    <string name="add_transaction">Add Transaction</string>
+    <string name="save_change">Save Change</string>
+    <string name="taka_sign">৳</string>
+    <string name="_23_12">23/12</string>
+    <string name="create_hisaab_account">Create Hisaab Account</string>
+    <string name="transaction_page">Transaction Page</string>
+    <string name="cash">Cash</string>
+    <string name="enter_account_name">Enter Account Name</string>
+    <string name="balance">Balance</string>
+    <string name="enter_page_name">Enter Page Name</string>
+    <string name="ibadah">Ibadah</string>
+    <string name="reading">Reading</string>
+    <string name="read">Read</string>
+    <string name="wishlist">WishList</string>
 </resources>

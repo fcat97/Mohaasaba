@@ -2,9 +2,13 @@ package com.example.mohaasaba.database;
 
 import androidx.room.TypeConverter;
 
+import com.example.mohaasaba.bookshelf.Book;
 import com.example.mohaasaba.models.History;
 import com.example.mohaasaba.models.Notify;
+import com.example.mohaasaba.models.Progress;
+import com.example.mohaasaba.models.ProgressHistory;
 import com.example.mohaasaba.models.ScheduleType;
+import com.example.mohaasaba.models.Transaction;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -162,5 +166,85 @@ public class DataConverter {
         Type type = new TypeToken<ScheduleType.Type>(){}.getType();
 
         return gson.fromJson(string, type);
+    }
+
+    @TypeConverter
+    public static String fromTransactionToString(Transaction transaction) {
+        if (transaction == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<Transaction>(){}.getType();
+
+        return gson.toJson(transaction, type);
+    }
+
+    @TypeConverter
+    public static Transaction fromStringToTransaction(String string) {
+        if (string == null ) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<Transaction>(){}.getType();
+
+        return gson.fromJson(string, type);
+    }
+
+    @TypeConverter
+    public static List<Transaction> fromStringToTransactionList(String string) {
+        if (string == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Transaction>>(){}.getType();
+
+        return gson.fromJson(string, type);
+    }
+
+    @TypeConverter
+    public static String fromTransactionListToString(List<Transaction> transactionList) {
+        if (transactionList == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Transaction>>(){}.getType();
+
+        return gson.toJson(transactionList, type);
+    }
+
+    @TypeConverter
+    public static ProgressHistory fromStringToProgressHistory(String string) {
+        if (string == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<ProgressHistory>(){}.getType();
+
+        return gson.fromJson(string, type);
+    }
+
+    @TypeConverter
+    public static String fromProgressHistoryToString(ProgressHistory progressHistory) {
+        if (progressHistory == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<ProgressHistory>(){}.getType();
+
+        return gson.toJson(progressHistory, type);
+    }
+
+    @TypeConverter
+    public static Book.ReadingStatus fromStringToReadingStatus(String string) {
+        if (string == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<Book.ReadingStatus>(){}.getType();
+
+        return gson.fromJson(string, type);
+    }
+
+    @TypeConverter
+    public static String fromReadingStatusToString(Book.ReadingStatus readingStatus) {
+        if (readingStatus == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<Book.ReadingStatus>(){}.getType();
+
+        return gson.toJson(readingStatus, type);
     }
 }

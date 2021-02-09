@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/dimen_mini"
+    app:cardCornerRadius="@dimen/cardCornerRadius"
+    app:cardElevation="@dimen/cardElevation">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/dimen_small"
+        android:paddingEnd="@dimen/dimen_small"
+        android:paddingTop="@dimen/dimen_large"
+        android:paddingBottom="@dimen/dimen_large">
+        <TextView
+            android:id="@+id/pageLabel_TextView_ItemTransactionPage2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/transaction_page"
+            android:textAppearance="@style/textLarge"
+            android:layout_alignParentStart="true"/>
+
+<!--            android:layout_toStartOf="@id/total_textView_ItemTransactionPage2"/>-->
+<!--        <TextView
+            android:id="@+id/total_textView_ItemTransactionPage2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_50_65"
+            android:textAppearance="@style/textLarge"
+            android:layout_alignParentEnd="true"/>-->
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
