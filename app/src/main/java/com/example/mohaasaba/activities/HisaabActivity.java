@@ -52,12 +52,8 @@ public class HisaabActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // https://medium.com/@imstudio/android-change-status-bar-text-color-659680fce49b
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            getWindow().setStatusBarColor(Color.WHITE);
+            getWindow().setStatusBarColor(getColor(R.color.colorGray));
         }
-
-        Toolbar toolbar = findViewById(R.id.toolbar_HisaabActivity);
-        setSupportActionBar(toolbar);
-
 
         // initiate tabLayout and viewPager
         TabLayout tabLayout = findViewById(R.id.tabLayout_HisaabActivity);

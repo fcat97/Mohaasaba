@@ -46,6 +46,7 @@
             android:textAppearance="@style/textSmall.Italic"
             android:textAlignment="center"
             android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
             android:layout_below="@id/title_TextView_ItemTalim"/>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

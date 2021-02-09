@@ -374,6 +374,7 @@ public class ViewMaker {
         public TextView income;
         public TextView expense;
         private EditText amountEditText;
+        private int selectedColor;
 
         public IncomeExpenseSelector(Context context) {
             rootView = LayoutInflater.from(context)
@@ -381,6 +382,11 @@ public class ViewMaker {
             income = rootView.findViewById(R.id.income_TextView_amountEditor_FragmentTransactionEditor);
             expense = rootView.findViewById(R.id.expense_TextView_amountEditor_FragmentTransactionEditor);
             amountEditText = rootView.findViewById(R.id.amount_EditText_amountEditor_FragmentTransactionEditor);
+
+            // Get the color of selected state of buttons
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                selectedColor = mContext.getColor(R.color.colorGray);
+            } else selectedColor = Color.LTGRAY;
 
             income.setOnClickListener(v -> {
                 setAsIncome();
@@ -394,7 +400,7 @@ public class ViewMaker {
             if (amount < 0.0) {
                 amountEditText.setText(String.valueOf(-1 * amount));
             }
-            income.setBackgroundColor(Color.LTGRAY);
+            income.setBackgroundColor(selectedColor);
             income.setTextColor(Color.BLACK);
 
             expense.setBackgroundColor(Color.TRANSPARENT);
@@ -404,7 +410,7 @@ public class ViewMaker {
             if (amount > 0.0) {
                 amountEditText.setText(String.valueOf(-1 * amount));
             }
-            expense.setBackgroundColor(Color.LTGRAY);
+            expense.setBackgroundColor(selectedColor);
             expense.setTextColor(Color.BLACK);
 
             income.setBackgroundColor(Color.TRANSPARENT);

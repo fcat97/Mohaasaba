@@ -5,36 +5,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/dashboard_gradient"
     tools:context=".activities.HisaabActivity">
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbarLayout_HisaabActivity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_HisaabActivity"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:titleTextColor="?attr/colorAccent">
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager_HisaabActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/tabLayout_HisaabActivity"
-        android:layout_below="@id/appbarLayout_HisaabActivity"/>
+        android:layout_above="@id/tabLayout_HisaabActivity" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout_HisaabActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_small"
+        android:layout_marginEnd="@dimen/dimen_small"
+        android:layout_alignParentBottom="true"
+        app:tabMode="scrollable"
+        app:tabGravity="center"
         app:tabIndicatorGravity="top"
-        android:layout_alignParentBottom="true">
+        app:tabIndicatorColor="?attr/colorPrimary"
+        app:tabSelectedTextColor="?attr/colorPrimary">
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
