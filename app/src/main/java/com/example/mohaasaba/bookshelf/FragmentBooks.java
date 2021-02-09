@@ -23,6 +23,7 @@ public class FragmentBooks extends Fragment {
 
     public FragmentBooks(LiveData<List<Book>> bookList) {
         this.bookList = bookList;
+        setRetainInstance(true);
     }
 
     @Nullable
