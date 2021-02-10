@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,50 +8,46 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout_MainActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_mainActivity"
-            android:layout_width="match_parent"
-            android:theme="@style/AppTheme.ToolbarOverlay"
-            android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:titleTextColor="?attr/colorAccent"/>
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout_MainActivity"
-            android:layout_width="match_parent"
+        app:tabMode="scrollable"
+        app:tabGravity="center"
+        app:tabIndicatorColor="?attr/colorPrimary"
+        app:tabSelectedTextColor="?attr/colorPrimaryDark">
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItem_Today"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:tabMode="scrollable"
-            app:tabGravity="center"
-            app:tabIndicatorColor="?attr/colorPrimary"
-            app:tabSelectedTextColor="?attr/colorPrimaryDark">
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabItem_Today"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Today"/>
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabItem_ThisWeek"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="This Week"/>
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabItem_ThisMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="This Month"/>
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabItem_All"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="All"/>
-        </com.google.android.material.tabs.TabLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+            android:text="Today"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItem_ThisWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This Week"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItem_ThisMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This Month"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItem_All"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItem_Search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_search"/>
+    </com.google.android.material.tabs.TabLayout>
 
-    <include layout="@layout/content_activity_main"/>
+    <include
+        android:id="@+id/content_layout_MainActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabLayout_MainActivity"
+        layout="@layout/content_activity_main"/>
 
-</LinearLayout>
+</RelativeLayout>

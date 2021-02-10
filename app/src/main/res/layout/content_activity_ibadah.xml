@@ -11,8 +11,7 @@
         android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorGray">
+            android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/icon1"
                 android:layout_width="120dp"
@@ -38,8 +37,7 @@
         android:layout_toEndOf="@id/salat_CardView_IbadahActivity">
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorGray">
+            android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/icon2"
                 android:layout_width="120dp"
@@ -65,8 +63,7 @@
         android:layout_below="@id/salat_CardView_IbadahActivity">
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorGray">
+            android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/icon3"
                 android:layout_width="120dp"
@@ -93,8 +90,7 @@
         android:layout_toEndOf="@id/tilawat_CardView_IbadahActivity">
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_ripple_gray">
+            android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/icon4"
                 android:layout_width="120dp"

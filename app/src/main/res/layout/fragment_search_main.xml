@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.SearchActivity">
-    <com.google.android.material.appbar.AppBarLayout
+    <soup.neumorphism.NeumorphCardView
         android:id="@+id/appbarLayout_SearchActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             android:drawableTint="?attr/colorPrimary"
             android:inputType="text"
             android:layout_margin="@dimen/dimen_small"/>
-    </com.google.android.material.appbar.AppBarLayout>
+    </soup.neumorphism.NeumorphCardView>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_SearchActivity"
         android:layout_width="match_parent"
