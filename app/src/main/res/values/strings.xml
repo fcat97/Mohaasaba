@@ -123,4 +123,6 @@
     <string name="read">Read</string>
     <string name="wishlist">WishList</string>
     <string name="tags">Tags</string>
+    <string name="plans">Plans</string>
+    <string name="tweek">Tweek</string>
 </resources>

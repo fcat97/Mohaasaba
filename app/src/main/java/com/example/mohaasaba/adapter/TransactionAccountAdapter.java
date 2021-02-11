@@ -1,5 +1,6 @@
 package com.example.mohaasaba.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.example.mohaasaba.models.TransactionAccount;
 
 public class TransactionAccountAdapter extends ListAdapter<TransactionAccount, TransactionAccountAdapter.ViewHolder> {
     private ItemClickListener itemClickListener;
+    private Context context;
 
 
     public TransactionAccountAdapter() {
@@ -36,6 +38,7 @@ public class TransactionAccountAdapter extends ListAdapter<TransactionAccount, T
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
         return new ViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_transaction_account, parent, false));
     }
@@ -45,7 +48,8 @@ public class TransactionAccountAdapter extends ListAdapter<TransactionAccount, T
         TransactionAccount account = getItem(position);
 
         holder.accountName.setText(account.name);
-        holder.balance.setText(String.valueOf(account.balance));
+        String balance = account.balance + context.getString(R.string.taka_sign);
+        holder.balance.setText(balance);
 
         holder.itemView.setOnClickListener(v -> {
             if (itemClickListener != null) itemClickListener.onClick(account);
