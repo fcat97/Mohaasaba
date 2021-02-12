@@ -4,6 +4,8 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.mohaasaba.bookshelf.Book;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -20,22 +22,37 @@ public class NotifyRepository {
         this.notifyDao = notifyDatabase.notifyDao();
     }
 
-    public void insertNotify(Notify notify) {
-        Thread thread = new Thread(() -> {
-            notifyDao.insert(notify);
+    private Notify getNotify(String notifyID) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<Notify> result = executorService.submit(new Callable<Notify>() {
+            @Override
+            public Notify call() throws Exception {
+                return notifyDao.getNotify(notifyID);
+            }
         });
-        thread.start();
+
+        Notify notify = null;
+        try {
+            notify = result.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return notify;
     }
     public void updateNotify(Notify notify) {
-        Thread thread = new Thread(() -> {
-            notifyDao.update(notify);
-        });
+        Notify n = getNotify(notify.notifyID);
+        Thread thread;
+        if (n == null) {
+            thread = new Thread(() -> notifyDao.insert(notify));
+        } else {
+            thread = new Thread(() -> notifyDao.update(notify));
+        }
         thread.start();
+
     }
     public void deleteNotify(Notify notify) {
-        Thread thread = new Thread(() -> {
-            notifyDao.delete(notify);
-        });
+        Thread thread = new Thread(() -> notifyDao.delete(notify));
         thread.start();
     }
     public LiveData<List<Notify>> getNotifyOf(String ownerID) {

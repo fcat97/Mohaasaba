@@ -28,4 +28,7 @@ public interface NotifyDao {
 
     @Query("SELECT * FROM notification_table")
     List<Notify> getALlNotify();
+
+    @Query("SELECT * FROM notification_table WHERE notifyID IS :notifyID")
+    Notify getNotify(String notifyID);
 }

@@ -136,7 +136,7 @@ public class FragmentOther extends Fragment {
 //        notifyAdapter.notifyDataSetChanged();
 //        if (notifyList.size() > 0) notifyNoItemTextView.setVisibility(View.INVISIBLE);
         notify.notifyOwnerID = schedule.getScheduleID();
-        repository.insertNotify(notify);
+        repository.updateNotify(notify);
     }
     public interface FragmentOtherListeners {
         void onEditNotify(Notify notify);
