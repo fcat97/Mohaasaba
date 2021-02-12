@@ -28,7 +28,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.database.DataConverter;
-import com.example.mohaasaba.models.Notify;
+import com.example.mohaasaba.database.notify.Notify;
+import com.example.mohaasaba.helper.TabPagerBinder;
 import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.models.ScheduleType;
 import com.example.mohaasaba.dialog.DialogColorPicker;
@@ -76,36 +77,14 @@ public class AddScheduleActivity extends AppCompatActivity
         Toolbar mToolbar = findViewById(R.id.toolbar_addScheduleActivity);
         setSupportActionBar(mToolbar);
 
-        ViewPager2 viewPager = findViewById(R.id.viewPager_AddScheduleActivity);
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle()));
-        tabLayout = findViewById(R.id.tabLayout_AddScheduleActivity);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                tabLayout.selectTab(tabLayout.getTabAt(position));
-            }
-        });
-
         mTitleEditText = findViewById(R.id.title_EditText_addSchedule);
         mTagEditText = findViewById(R.id.tag_EditText_addSchedule);
         mScheduleTypeTextView = findViewById(R.id.scheduleType_TextView_Add_Schedule);
+
+        ViewPager2 viewPager = findViewById(R.id.viewPager_AddScheduleActivity);
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle()));
+        tabLayout = findViewById(R.id.tabLayout_AddScheduleActivity);
+        new TabPagerBinder(tabLayout, viewPager);
 
         try {
             setIntentData(); /*For Edit Schedule*/
@@ -282,7 +261,7 @@ public class AddScheduleActivity extends AppCompatActivity
 
         /*if (mViewModel.getReminder() != null) mViewModel.activateReminder(getApplicationContext());
         else mViewModel.deleteReminder(getApplicationContext());*/
-        if (mViewModel.getSchedule().getThemeID() == -1001) mViewModel.getSchedule().setThemeID(ThemeUtils.THEME_GREEN);
+//        if (mViewModel.getSchedule().getThemeID() == -1001) mViewModel.getSchedule().setThemeID(ThemeUtils.THEME_GREEN);
 
         /* Fix the edited title to Notification as well */
         mViewModel.setNotificationTitles();

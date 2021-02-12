@@ -4,6 +4,7 @@ import com.example.mohaasaba.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ThemeUtils {
 
@@ -120,5 +121,15 @@ public class ThemeUtils {
             default:
                 return R.style.AppTheme;
         }
+    }
+
+    /**
+     * Generates a random theme ID
+     * @return a random number that indicates a theme ID from above specified themes
+     */
+    public static int getRandomThemeID() {
+        Random random = new Random();
+        int i = random.nextInt(19);
+        return - 11000 - i;
     }
 }

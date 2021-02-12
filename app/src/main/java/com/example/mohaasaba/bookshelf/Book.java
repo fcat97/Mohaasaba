@@ -12,7 +12,9 @@ import com.example.mohaasaba.helper.IdGenerator;
 import com.example.mohaasaba.models.ProgressHistory;
 import com.example.mohaasaba.models.ScheduleType;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 @Entity(tableName = "bookshelf")
 public class Book implements Parcelable {
@@ -38,6 +40,7 @@ public class Book implements Parcelable {
     @Embedded public ScheduleType scheduleType;
     public ProgressHistory readingHistory;
     public ReadingStatus readingStatus;
+    public List<String> notifyIDList = new ArrayList<>();
 
     public Book(String title) {
         this.bookID = IdGenerator.getNewID();
@@ -60,6 +63,7 @@ public class Book implements Parcelable {
         scheduleType = in.readParcelable(ScheduleType.class.getClassLoader());
         readingHistory = in.readParcelable(ProgressHistory.class.getClassLoader());
         readingStatus = ReadingStatus.values()[in.readInt()];
+        notifyIDList = in.createStringArrayList();
     }
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {
@@ -92,5 +96,6 @@ public class Book implements Parcelable {
         dest.writeParcelable(scheduleType, flags);
         dest.writeParcelable(readingHistory, flags);
         dest.writeInt(readingStatus.ordinal());
+        dest.writeStringList(notifyIDList);
     }
 }

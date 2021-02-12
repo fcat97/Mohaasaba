@@ -4,8 +4,7 @@ import androidx.room.TypeConverter;
 
 import com.example.mohaasaba.bookshelf.Book;
 import com.example.mohaasaba.models.History;
-import com.example.mohaasaba.models.Notify;
-import com.example.mohaasaba.models.Progress;
+import com.example.mohaasaba.database.notify.Notify;
 import com.example.mohaasaba.models.ProgressHistory;
 import com.example.mohaasaba.models.ScheduleType;
 import com.example.mohaasaba.models.Transaction;
@@ -246,5 +245,25 @@ public class DataConverter {
         Type type = new TypeToken<Book.ReadingStatus>(){}.getType();
 
         return gson.toJson(readingStatus, type);
+    }
+
+    @TypeConverter
+    public static Notify.Priority fromStringToNotifyPriority(String string) {
+        if (string == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<Notify.Priority>(){}.getType();
+
+        return gson.fromJson(string, type);
+    }
+
+    @TypeConverter
+    public static String fromNotifyPriorityToString(Notify.Priority priority) {
+        if (priority == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<Notify.Priority>(){}.getType();
+
+        return gson.toJson(priority, type);
     }
 }

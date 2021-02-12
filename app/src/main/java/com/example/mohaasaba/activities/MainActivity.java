@@ -26,8 +26,12 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.mohaasaba.R;
+import com.example.mohaasaba.database.notify.Notify;
+import com.example.mohaasaba.database.notify.NotifyRepository;
+import com.example.mohaasaba.dialog.DialogAddSchedule;
 import com.example.mohaasaba.fragment.FragmentScheduleOptions;
 import com.example.mohaasaba.fragment.FragmentSearchMain;
+import com.example.mohaasaba.helper.TabPagerBinder;
 import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.fragment.FragmentMainActivity;
 import com.example.mohaasaba.receivers.BootReceiver;
@@ -137,29 +141,7 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
         TabLayout tabLayout = findViewById(R.id.tabLayout_MainActivity);
         ViewPager2 viewPager = findViewById(R.id.viewpager_MainActivity);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle()));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                tabLayout.selectTab(tabLayout.getTabAt(position));
-            }
-        });
+        new TabPagerBinder(tabLayout, viewPager);
     }
 
     @Override
@@ -186,12 +168,16 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
      * Method to remove all associated Database Entities when Schedule is deleted
      * @param schedule deleted schedule*/
     private void removeAttachments(Schedule schedule) {
+        NotifyRepository repository = new NotifyRepository(this);
+        repository.deleteNotifyIDs(schedule.getScheduleID());
         rescheduleNotification();
     }
 
     public void openAddScheduleActivity(View view) {
-        Intent intent = new Intent(this,AddScheduleActivity.class);
-        startActivityForResult(intent,ADD_NEW_SCHEDULE_REQUEST);
+        DialogAddSchedule dialogAddSchedule = new DialogAddSchedule();
+        dialogAddSchedule.show(getSupportFragmentManager(), "Dialogggg");
+//        Intent intent = new Intent(this,AddScheduleActivity.class);
+//        startActivityForResult(intent,ADD_NEW_SCHEDULE_REQUEST);
     }
 
     private void openEditScheduleActivity(Schedule schedule) {
