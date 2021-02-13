@@ -13,16 +13,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.adapter.NotifyAdapter;
-import com.example.mohaasaba.models.Notify;
+import com.example.mohaasaba.database.notify.Notify;
+import com.example.mohaasaba.database.notify.NotifyRepository;
 import com.example.mohaasaba.models.Schedule;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class FragmentOther extends Fragment {
     private static final String TAG = "FragmentOverview";
@@ -32,14 +37,14 @@ public class FragmentOther extends Fragment {
     // Notification fields
     private RecyclerView notifyRecyclerView;
     private FloatingActionButton notifyAddButton;
-    private List<Notify> notifyList;
     private NotifyAdapter notifyAdapter;
     private TextView notifyNoItemTextView;
     private EditText noteEditText;
+    private NotifyRepository repository;
 
     public FragmentOther(Schedule schedule) {
         this.schedule = schedule;
-        this.notifyList = schedule.getNotifyList();
+        this.repository = new NotifyRepository(getContext());
         setRetainInstance(true);
     }
 
@@ -85,43 +90,53 @@ public class FragmentOther extends Fragment {
         });
 
         // Notify Related --------------------------------------------------------------------------
-        if (notifyList.size() == 0) notifyNoItemTextView.setVisibility(View.VISIBLE);
+        repository = new NotifyRepository(getContext());
         notifyAdapter = new NotifyAdapter();
         notifyRecyclerView.setAdapter(notifyAdapter);
-        notifyAdapter.submitList(notifyList);
+        LiveData<List<Notify>> notifyListLiveData = repository.getNotifyOf(schedule.getScheduleID());
+        notifyListLiveData.observe(getViewLifecycleOwner(), notifies -> {
+            if (notifies.size() == 0) notifyNoItemTextView.setVisibility(View.VISIBLE);
+            else notifyNoItemTextView.setVisibility(View.INVISIBLE);
+            notifyAdapter.submitList(notifies);
+        });
+
 
         notifyAddButton.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
             if (listeners != null) listeners.onEditNotify(new Notify(
-                    calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)));
+                    calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), schedule.getScheduleID()));
             else throw new ClassCastException("Must Implement Listeners");
         });
 
 
         notifyAdapter.setListener(new NotifyAdapter.onItemClickedListener() {
             @Override
-            public void onItemClicked(int position) {
-                if (listeners != null) listeners.onEditNotify(notifyList.get(position));
+            public void onItemClicked(Notify notify) {
+                if (listeners != null) listeners.onEditNotify(notify);
                 else throw new ClassCastException("Must Implement Listeners");
             }
 
             @Override
-            public void onItemDeleted(int position) {
-                notifyList.remove(position);
-                notifyAdapter.notifyItemRemoved(position);
-                notifyAdapter.notifyItemRangeChanged(position, notifyAdapter.getItemCount());
+            public void onItemDeleted(Notify notify) {
+                repository.deleteNotify(notify);
+//                deletable.add(notify);
+//                int position = notifyAdapter.getCurrentList().indexOf(notify);
+//                notifyAdapter.notifyItemRemoved(position);
+//                notifyAdapter.notifyItemRangeChanged(position, notifyAdapter.getItemCount());
             }
         });
     }
 
 
     public void notifyEditConfirmed(Notify notify) {
-        Log.d(TAG, "notifyEditConfirmed: called");
-        Log.d(TAG, "notifyEditConfirmed: notify name " + notify.message);
-        if (! notifyList.contains(notify)) notifyList.add(notify);
-        notifyAdapter.submitList(notifyList);
-        notifyAdapter.notifyDataSetChanged();
-        if (notifyList.size() > 0) notifyNoItemTextView.setVisibility(View.INVISIBLE);
+//        Log.d(TAG, "notifyEditConfirmed: called");
+//        Log.d(TAG, "notifyEditConfirmed: notify name " + notify.message);
+//        if (! notifyList.contains(notify)) notifyList.add(notify);
+//        notifyAdapter.submitList(notifyList);
+//        notifyAdapter.notifyDataSetChanged();
+//        if (notifyList.size() > 0) notifyNoItemTextView.setVisibility(View.INVISIBLE);
+        notify.notifyOwnerID = schedule.getScheduleID();
+        repository.updateNotify(notify);
     }
     public interface FragmentOtherListeners {
         void onEditNotify(Notify notify);

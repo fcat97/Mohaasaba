@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <soup.neumorphism.NeumorphCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:neumorph_shapeType="basin">
+        <EditText
+            android:id="@+id/title_editText_DialogAddSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/title_request_text"
+            android:background="@android:color/transparent"
+            android:padding="@dimen/dimen_large"/>
+    </soup.neumorphism.NeumorphCardView>
+
+
+</RelativeLayout>

@@ -10,10 +10,11 @@ import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.mohaasaba.database.notify.NotifyRepository;
 import com.example.mohaasaba.helper.IdGenerator;
 import com.example.mohaasaba.helper.ThemeUtils;
 import com.example.mohaasaba.models.Note;
-import com.example.mohaasaba.models.Notify;
+import com.example.mohaasaba.database.notify.Notify;
 import com.example.mohaasaba.models.Reminder;
 import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.models.Task;
@@ -96,16 +97,17 @@ public abstract class AppDatabase extends RoomDatabase{
         Schedule schedule = new Schedule("Quick Tutorial");
         schedule.setThemeID(ThemeUtils.THEME_GREEN);
 
-        Notify notify1 = new Notify(0,0);
+        Notify notify1 = new Notify(0,0, schedule.getScheduleID());
         notify1.scheduleTitle = schedule.getTitle();
         notify1.message = "You can add Reminders here!";
+        notify1.notifyOwnerID = schedule.getScheduleID();
 
-        Notify notify2 = new Notify(0,0);
+        Notify notify2 = new Notify(0,0, schedule.getScheduleID());
         notify2.scheduleTitle = schedule.getTitle();
         notify2.message = "Click on the + icon in top right corner";
+        notify2.notifyOwnerID = schedule.getScheduleID();
 
-        schedule.getNotifyList().add(notify1);
-        schedule.getNotifyList().add(notify2);
+        // can't insertNotify from here
 
         List<Task> taskList = new ArrayList<>();
         taskList.add(new Task("You can add new task from bottom"));

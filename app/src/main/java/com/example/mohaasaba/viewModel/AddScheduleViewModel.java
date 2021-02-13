@@ -4,15 +4,12 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 import com.example.mohaasaba.database.AppRepository;
-import com.example.mohaasaba.models.Note;
-import com.example.mohaasaba.models.Notify;
+import com.example.mohaasaba.database.notify.Notify;
 import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.models.ScheduleType;
 
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class AddScheduleViewModel extends AndroidViewModel {
@@ -92,10 +89,10 @@ public class AddScheduleViewModel extends AndroidViewModel {
         schedule.setReminderID(null); *//* as no reminder Attached *//*
     }*/
     public void setNotificationTitles() {
-        for (Notify notify:
-             schedule.getNotifyList()) {
-            notify.scheduleTitle = schedule.getTitle();
-        }
+//        for (Notify notify:
+//             schedule.getNotifyList()) {
+//            notify.scheduleTitle = schedule.getTitle();
+//        }
     }
 
     public void insertSchedule() {
