@@ -18,26 +18,24 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.database.DataConverter;
-import com.example.mohaasaba.models.Note;
-import com.example.mohaasaba.models.Notify;
+import com.example.mohaasaba.database.notify.Notify;
+import com.example.mohaasaba.helper.TabPagerBinder;
 import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.models.ScheduleType;
 import com.example.mohaasaba.dialog.DialogColorPicker;
 import com.example.mohaasaba.dialog.DialogDatePicker;
 import com.example.mohaasaba.fragment.FragmentEditReminder;
-import com.example.mohaasaba.fragment.FragmentOverview;
+import com.example.mohaasaba.fragment.FragmentOther;
 import com.example.mohaasaba.fragment.FragmentTodo;
 import com.example.mohaasaba.helper.ThemeUtils;
 import com.example.mohaasaba.viewModel.AddScheduleViewModel;
@@ -47,7 +45,7 @@ import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
 public class AddScheduleActivity extends AppCompatActivity
-        implements DatePickerDialog.OnDateSetListener, FragmentOverview.FragmentOverviewListeners{
+        implements DatePickerDialog.OnDateSetListener, FragmentOther.FragmentOtherListeners {
     public static final int EDIT_SCHEDULE_TYPE_REQUEST = 2152;
     public static final String EXTRA_SCHEDULE = "com.example.mohasabap.EXTRA_SCHEDULE";
     public static final String EXTRA_THEME_ID = "com.example.mohasabap.EXTRA_SCHEDULE";
@@ -59,7 +57,7 @@ public class AddScheduleActivity extends AppCompatActivity
     private EditText mTagEditText;
     private TextView mScheduleTypeTextView;
     private TabLayout tabLayout;
-    private FragmentOverview fragmentOverview;
+    private FragmentOther fragmentOther;
     private FragmentTodo fragmentTodo;
 
     @Override
@@ -79,36 +77,14 @@ public class AddScheduleActivity extends AppCompatActivity
         Toolbar mToolbar = findViewById(R.id.toolbar_addScheduleActivity);
         setSupportActionBar(mToolbar);
 
-        ViewPager2 viewPager = findViewById(R.id.viewPager_AddScheduleActivity);
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle()));
-        tabLayout = findViewById(R.id.tabLayout_AddScheduleActivity);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                tabLayout.selectTab(tabLayout.getTabAt(position));
-            }
-        });
-
         mTitleEditText = findViewById(R.id.title_EditText_addSchedule);
         mTagEditText = findViewById(R.id.tag_EditText_addSchedule);
         mScheduleTypeTextView = findViewById(R.id.scheduleType_TextView_Add_Schedule);
+
+        ViewPager2 viewPager = findViewById(R.id.viewPager_AddScheduleActivity);
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle()));
+        tabLayout = findViewById(R.id.tabLayout_AddScheduleActivity);
+        new TabPagerBinder(tabLayout, viewPager);
 
         try {
             setIntentData(); /*For Edit Schedule*/
@@ -116,8 +92,8 @@ public class AddScheduleActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-        fragmentOverview = new FragmentOverview(mViewModel.getSchedule());
-        fragmentOverview.setListeners(this);
+        fragmentOther = new FragmentOther(mViewModel.getSchedule());
+        fragmentOther.setListeners(this);
 
         fragmentTodo = new FragmentTodo(mViewModel.getSchedule().getHistory());
         fragmentTodo.setFragmentListeners(this::openDatePickerDialog);
@@ -215,15 +191,15 @@ public class AddScheduleActivity extends AppCompatActivity
         fragmentEditReminder.setListeners(new FragmentEditReminder.EditFragmentListeners() {
             @Override
             public void onConfirm() {
-                fragmentOverview.notifyEditConfirmed(notify);
+                fragmentOther.notifyEditConfirmed(notify);
             }
         });
     }
 
-    // Fragment Overview Listeners------------------------------------------------------------------
+    // Fragment Other Listeners------------------------------------------------------------------
     @Override
     public void onEditNotify(Notify notify) {
-        // FragmentOverview Listener
+        // FragmentOther Listener
         showEditReminderFragment(notify);
     }
 
@@ -285,7 +261,7 @@ public class AddScheduleActivity extends AppCompatActivity
 
         /*if (mViewModel.getReminder() != null) mViewModel.activateReminder(getApplicationContext());
         else mViewModel.deleteReminder(getApplicationContext());*/
-        if (mViewModel.getSchedule().getThemeID() == -1001) mViewModel.getSchedule().setThemeID(ThemeUtils.THEME_GREEN);
+//        if (mViewModel.getSchedule().getThemeID() == -1001) mViewModel.getSchedule().setThemeID(ThemeUtils.THEME_GREEN);
 
         /* Fix the edited title to Notification as well */
         mViewModel.setNotificationTitles();
@@ -310,7 +286,7 @@ public class AddScheduleActivity extends AppCompatActivity
                 case 0:
                     return fragmentTodo;
                 case 1:
-                    return fragmentOverview;
+                    return fragmentOther;
                 default:
                     return null;
             }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dimen_small">
+
+    <EditText
+        android:id="@+id/pageLabel_EditText_FragmentTransactionPageEditor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_ripple_box"
+        android:padding="@dimen/dimen_large"
+        android:layout_margin="@dimen/dimen_small"
+        android:inputType="text"
+        android:lines="4"
+        android:gravity="start"
+        android:textAlignment="textStart"
+        android:textAppearance="@style/textMedium"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:text="@string/page_name"
+        android:paddingStart="@dimen/dimen_mini"
+        android:paddingEnd="@dimen/dimen_mini"
+        android:layout_marginStart="@dimen/dimen_large"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_small"
+        android:layout_below="@id/pageLabel_EditText_FragmentTransactionPageEditor">
+        <Button
+            android:id="@+id/delete_Button_FragmentTransactionPageEditor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_text"
+            android:background="@drawable/button_ripple_transparent"
+            android:textColor="@android:color/holo_red_light"
+            android:backgroundTint="@color/colorPurple"/>
+        <Button
+            android:id="@+id/confirm_Button_FragmentTransactionPageEditor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/confirm_text"
+            android:background="@drawable/button_ripple_transparent"
+            android:textColor="@color/colorGreenAccent"
+            android:backgroundTint="@color/colorBlue"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
+</RelativeLayout>

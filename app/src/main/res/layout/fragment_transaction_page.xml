@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorGray"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.FragmentTransactionPage">
+
+    <TextView
+        android:id="@+id/pageLabel_TextView_FragmentTransactionPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_small"
+        android:textAppearance="@style/textLarge"
+        android:background="@android:color/transparent"
+        android:text="Default Page"/>
+
+    <TextView
+        android:id="@+id/edit_TextView_FragmentTransactionPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_marginEnd="54dp"
+        android:textAppearance="@style/textMedium"
+        android:text="@string/edit_text"
+        android:textColor="@color/colorRed"
+        android:layout_alignBaseline="@id/pageLabel_TextView_FragmentTransactionPage"
+        android:layout_toEndOf="@id/pageLabel_TextView_FragmentTransactionPage"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_FragmentTransactionPage"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_transaction_details"
+        android:layout_below="@id/pageLabel_TextView_FragmentTransactionPage"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_FragmentTransactionPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_small"
+        android:src="@drawable/ic_add"
+        android:elevation="12dp"
+
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/create_new_hisaab"
+        tools:ignore="RelativeOverlap" />
+</RelativeLayout>

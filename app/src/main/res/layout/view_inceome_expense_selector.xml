@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/button_ripple_box">
+    <TextView
+        android:id="@+id/income_TextView_amountEditor_FragmentTransactionEditor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_mini"
+
+        android:text="@string/income"
+        android:textAllCaps="true"
+        android:textAppearance="@style/textSmall"
+        android:background="?attr/selectableItemBackgroundBorderless"/>
+    <TextView
+        android:id="@+id/expense_TextView_amountEditor_FragmentTransactionEditor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_mini"
+
+        android:text="@string/expense"
+        android:textAllCaps="true"
+        android:textAppearance="@style/textSmall"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_below="@id/income_TextView_amountEditor_FragmentTransactionEditor"/>
+    <EditText
+        android:id="@+id/amount_EditText_amountEditor_FragmentTransactionEditor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:padding="@dimen/dimen_small"
+        android:hint="@string/_50_65"
+        android:textAlignment="textEnd"
+        android:inputType="numberDecimal"
+        android:layout_toEndOf="@id/income_TextView_amountEditor_FragmentTransactionEditor"
+        android:layout_toStartOf="@id/unit_TextView_amountEditor_FragmentTransactionEditor"
+        android:textAppearance="@style/textLarge"/>
+    <TextView
+        android:id="@+id/unit_TextView_amountEditor_FragmentTransactionEditor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:padding="@dimen/dimen_small"
+        android:text="@string/taka_sign"
+        android:textAlignment="textEnd"
+        android:textAppearance="@style/textLarge"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>

@@ -12,6 +12,8 @@ import com.example.mohaasaba.models.Note;
 import com.example.mohaasaba.models.Reminder;
 import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.models.ScheduleType;
+import com.example.mohaasaba.models.Transaction;
+import com.example.mohaasaba.models.TransactionAccount;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -103,7 +105,7 @@ public class AppRepository {
         String conditions = getQueryString(datesList);
         Log.i(TAG, "getScheduleOfToday: " + conditions);
 
-        String query = "SELECT * FROM schedule_table WHERE " +
+        final String query = "SELECT * FROM schedule_table WHERE " +
                 "((type LIKE '%WeekDays%') AND (" +  dayOfWeek + " IS 1)) OR " +
                 conditions + " ORDER BY scheduleID DESC";
         Log.d(TAG, "getScheduleOfToday: " + query);
@@ -147,7 +149,7 @@ public class AppRepository {
         Log.i(TAG, "getSchedulesOfThisWeek: " + customDates);
 
 
-        String query = "SELECT * FROM schedule_table WHERE " +
+        final String query = "SELECT * FROM schedule_table WHERE " +
                 "(type LIKE '%WeekDays%') OR " +
                 customDates + " ORDER BY scheduleID DESC";
         Log.i(TAG, "getSchedulesOfThisWeek: " + query);
@@ -166,7 +168,7 @@ public class AppRepository {
             Log.i(TAG, "getSchedulesOfThisMonth: " + date.toString());
         }
         String customDates = getQueryString(datesList);
-        String query = "SELECT * FROM schedule_table WHERE " +
+        final String query = "SELECT * FROM schedule_table WHERE " +
                 "(type LIKE '%WeekDays%') OR " +
                 customDates + " ORDER BY scheduleID DESC";
         Log.i(TAG, "getSchedulesOfThisMonth: " + query);
@@ -191,6 +193,7 @@ public class AppRepository {
 
         return result.get();
     }
+
 
     private String getDayOfWeek() {
         Calendar c = Calendar.getInstance();
