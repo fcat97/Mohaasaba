@@ -22,7 +22,7 @@
     <string name="label_text">Label</string>
     <string name="reminder_time">Reminder Time</string>
     <string name="demo_date">Fri, 31 Jul 2020</string>
-    <string name="demo_time">12:10 am</string>
+    <string name="demo_time">12:10 AM</string>
     <string name="notify_text">Notify</string>
     <string name="repeat_text">Repeat Every</string>
     <string name="notify_before">Notify Before</string>

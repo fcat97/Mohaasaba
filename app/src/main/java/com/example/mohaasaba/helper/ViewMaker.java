@@ -165,6 +165,10 @@ public class ViewMaker {
         private TextView thu;
         private TextView fri;
 
+        private TextView timeSpanTextView;
+        private TextView notifyTimeTextView;
+        private ImageView cancelButtonImageView;
+
         public boolean saturday = false;
         public boolean sunday = false;
         public boolean monday = false;
@@ -183,6 +187,10 @@ public class ViewMaker {
             wed = rootView.findViewById(R.id.wednesdayLabel_DaysSelectorView);
             thu = rootView.findViewById(R.id.thursdayLabel_DaysSelectorView);
             fri = rootView.findViewById(R.id.fridayLabel_DaysSelectorView);
+
+            timeSpanTextView = rootView.findViewById(R.id.timeSpan_TextView_DateSelectorView);
+            notifyTimeTextView = rootView.findViewById(R.id.notifyTime_TextView_DateSelectorView);
+            cancelButtonImageView = rootView.findViewById(R.id.cancelButton_ImageView_DateSelectorView);
 
             // Set onClickListener to all views
             sat.setOnClickListener(this);
