@@ -27,6 +27,7 @@ public class DialogAddSchedule extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
                 .setView(rootView)
+                .setTitle(R.string.enter_plan_name)
                 .setPositiveButton(R.string.confirm_text, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -94,7 +94,7 @@ public class FragmentBookDetail extends Fragment {
             book.author = author_et.getText().toString().trim().isEmpty() ? "" : author_et.getText().toString().trim();
             book.publication = publication_et.getText().toString().trim().isEmpty() ? "" : publication_et.getText().toString().trim();
             book.totalPages = pages_et.getText().toString().trim().isEmpty() ? 0 : Integer.parseInt(pages_et.getText().toString().trim());
-            book.owner = owner_et.getText().toString().trim().isEmpty() ? "" : author_et.getText().toString().trim();
+            book.owner = owner_et.getText().toString().trim().isEmpty() ? "" : owner_et.getText().toString().trim();
 
 
             if (saveButtonListener != null && ! book.title.isEmpty()) saveButtonListener.onClick(book);
