@@ -21,11 +21,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LiveData;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.mohaasaba.R;
+import com.example.mohaasaba.database.notify.Notify;
+import com.example.mohaasaba.database.notify.NotifyRepository;
+import com.example.mohaasaba.dialog.DialogAddSchedule;
 import com.example.mohaasaba.fragment.FragmentScheduleOptions;
+import com.example.mohaasaba.fragment.FragmentSearchMain;
+import com.example.mohaasaba.helper.TabPagerBinder;
 import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.fragment.FragmentMainActivity;
 import com.example.mohaasaba.receivers.BootReceiver;
@@ -34,7 +40,10 @@ import com.example.mohaasaba.viewModel.ScheduleViewModel;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import soup.neumorphism.NeumorphImageView;
 
 public class MainActivity extends AppCompatActivity implements FragmentMainActivity.FragmentCallbacks{
     public static final int ADD_NEW_SCHEDULE_REQUEST = 1121;
@@ -48,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
     private FragmentMainActivity mAllSchedulesFragment;
     private FragmentMainActivity mThisWeekFragment;
     private FragmentMainActivity mThisMonthFragment;
+    private FragmentSearchMain fragmentSearchMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +65,8 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
         setContentView(R.layout.activity_main);
         Log.i(TAG, "onCreate: called");
 
-        Toolbar toolbar = findViewById(R.id.toolbar_mainActivity);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = findViewById(R.id.toolbar_mainActivity);
+//        setSupportActionBar(toolbar);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // https://medium.com/@imstudio/android-change-status-bar-text-color-659680fce49b
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -69,8 +79,8 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
 
 
         /* Enable the BootReceiver Broadcast Receiver explicitly
-        * This receiver is disabled in Manifest by default
-        * The following action will enable it */
+         * This receiver is disabled in Manifest by default
+         * The following action will enable it */
         ComponentName receiver = new ComponentName(this, BootReceiver.class);
         PackageManager pm = getPackageManager();
 
@@ -100,63 +110,38 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
             }
         }).attachToRecyclerView(mRecyclerView);*/
 
-        mTodayFragment = new FragmentMainActivity(mScheduleViewModel.getSchedulesOfToday());
-        mAllSchedulesFragment = new FragmentMainActivity(mScheduleViewModel.getAllSchedule());
-        mThisWeekFragment = new FragmentMainActivity(mScheduleViewModel.getSchedulesOfThisWeek());
-        mThisMonthFragment = new FragmentMainActivity(mScheduleViewModel.getSchedulesOfThisMonth());
+        LiveData<List<Schedule>> todaySchedules = mScheduleViewModel.getSchedulesOfToday();
+        LiveData<List<Schedule>> thisWeekSchedules = mScheduleViewModel.getSchedulesOfToday();
+        LiveData<List<Schedule>> thisMonthSchedules = mScheduleViewModel.getSchedulesOfToday();
+        LiveData<List<Schedule>> allSchedules = mScheduleViewModel.getSchedulesOfToday();
+
+        mTodayFragment = new FragmentMainActivity(todaySchedules);
+        mAllSchedulesFragment = new FragmentMainActivity(allSchedules);
+        mThisWeekFragment = new FragmentMainActivity(thisWeekSchedules);
+        mThisMonthFragment = new FragmentMainActivity(thisMonthSchedules);
+        fragmentSearchMain = new FragmentSearchMain(allSchedules);
 
 
         mTodayFragment.setCallbacks(this);
         mAllSchedulesFragment.setCallbacks(this);
         mThisWeekFragment.setCallbacks(this);
         mThisMonthFragment.setCallbacks(this);
+        fragmentSearchMain.setCallbacks(new FragmentSearchMain.FragmentCallbacks() {
+            @Override
+            public void onItemClicked(Schedule schedule) {
+                openEditScheduleActivity(schedule);
+            }
+
+            @Override
+            public void onItemLongClicked(Schedule schedule) throws ExecutionException, InterruptedException {
+                openScheduleOptions(schedule);
+            }
+        });
 
         TabLayout tabLayout = findViewById(R.id.tabLayout_MainActivity);
         ViewPager2 viewPager = findViewById(R.id.viewpager_MainActivity);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle()));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                tabLayout.selectTab(tabLayout.getTabAt(position));
-            }
-        });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_activity, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.filter_menuItem_MainActivity) {
-            openSearchActivity();
-            return true;
-        }
-        if (item.getItemId() == R.id.scheduleAlarm_menuItem_MainActivity) {
-            rescheduleNotification();
-            Toast.makeText(this, "Don't Disturb Me!", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        return false;
+        new TabPagerBinder(tabLayout, viewPager);
     }
 
     @Override
@@ -183,12 +168,16 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
      * Method to remove all associated Database Entities when Schedule is deleted
      * @param schedule deleted schedule*/
     private void removeAttachments(Schedule schedule) {
+        NotifyRepository repository = new NotifyRepository(this);
+        repository.deleteNotifyIDs(schedule.getScheduleID());
         rescheduleNotification();
     }
 
     public void openAddScheduleActivity(View view) {
-        Intent intent = new Intent(this,AddScheduleActivity.class);
-        startActivityForResult(intent,ADD_NEW_SCHEDULE_REQUEST);
+        DialogAddSchedule dialogAddSchedule = new DialogAddSchedule();
+        dialogAddSchedule.show(getSupportFragmentManager(), "Dialogggg");
+//        Intent intent = new Intent(this,AddScheduleActivity.class);
+//        startActivityForResult(intent,ADD_NEW_SCHEDULE_REQUEST);
     }
 
     private void openEditScheduleActivity(Schedule schedule) {
@@ -200,9 +189,21 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
         startActivityForResult(intent,EDIT_SCHEDULE_REQUEST);
     }
 
-    private void openSearchActivity() {
-        Intent intent = new Intent(this, SearchActivity.class);
-        startActivity(intent);
+    private void openScheduleOptions(Schedule schedule) {
+        FragmentScheduleOptions fragmentScheduleOptions = new FragmentScheduleOptions();
+        fragmentScheduleOptions.show(getSupportFragmentManager(), "Fragment Schedule Option");
+        fragmentScheduleOptions.setListeners(new FragmentScheduleOptions.FragmentScheduleOptionListeners() {
+            @Override
+            public void onCopyButtonClicked() {
+                mScheduleViewModel.copySchedule(schedule);
+            }
+
+            @Override
+            public void onDeleteButtonClicked() {
+                removeAttachments(schedule);
+                mScheduleViewModel.deleteSchedule(schedule);
+            }
+        });
     }
 
     @Override
@@ -226,20 +227,7 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
 
     @Override
     public void onItemLongClicked(Schedule schedule) {
-        FragmentScheduleOptions fragmentScheduleOptions = new FragmentScheduleOptions();
-        fragmentScheduleOptions.show(getSupportFragmentManager(), "Fragment Schedule Option");
-        fragmentScheduleOptions.setListeners(new FragmentScheduleOptions.FragmentScheduleOptionListeners() {
-            @Override
-            public void onCopyButtonClicked() {
-                mScheduleViewModel.copySchedule(schedule);
-            }
-
-            @Override
-            public void onDeleteButtonClicked() {
-                removeAttachments(schedule);
-                mScheduleViewModel.deleteSchedule(schedule);
-            }
-        });
+        openScheduleOptions(schedule);
     }
 
     private final class ViewPagerAdapter extends FragmentStateAdapter {
@@ -259,6 +247,8 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
                     return mThisMonthFragment;
                 case 3:
                     return mAllSchedulesFragment;
+                case 4:
+                    return fragmentSearchMain;
                 default:
                     return null;
             }
@@ -266,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
 
         @Override
         public int getItemCount() {
-            return 4;
+            return 5;
         }
     }
 }

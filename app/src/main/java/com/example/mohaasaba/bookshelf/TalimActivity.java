@@ -41,7 +41,7 @@ public class TalimActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // https://medium.com/@imstudio/android-change-status-bar-text-color-659680fce49b
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            getWindow().setStatusBarColor(Color.WHITE);
+            getWindow().setStatusBarColor(getColor(R.color.colorGray));
         }
 
         tabLayout = findViewById(R.id.tabLayout_TalimActivity);

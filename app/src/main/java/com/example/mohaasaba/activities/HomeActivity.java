@@ -13,6 +13,8 @@ import android.widget.Button;
 
 import com.example.mohaasaba.R;
 
+import soup.neumorphism.NeumorphCardView;
+
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +24,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // https://medium.com/@imstudio/android-change-status-bar-text-color-659680fce49b
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            getWindow().setStatusBarColor(Color.WHITE);
+            getWindow().setStatusBarColor(getColor(R.color.colorGray));
         }
 
-        CardView button_1 = findViewById(R.id.btn1_HomeActivity); button_1.setOnClickListener(this);
-        CardView button_2 = findViewById(R.id.btn2_HomeActivity); button_2.setOnClickListener(this);
-        CardView button_3 = findViewById(R.id.btn3_HomeActivity); button_3.setOnClickListener(this);
-        CardView button_4 = findViewById(R.id.btn4_HomeActivity); button_4.setOnClickListener(this);
+        NeumorphCardView button_1 = findViewById(R.id.btn1_HomeActivity); button_1.setOnClickListener(this);
+        NeumorphCardView button_2 = findViewById(R.id.btn2_HomeActivity); button_2.setOnClickListener(this);
+        NeumorphCardView button_3 = findViewById(R.id.btn3_HomeActivity); button_3.setOnClickListener(this);
+        NeumorphCardView button_4 = findViewById(R.id.btn4_HomeActivity); button_4.setOnClickListener(this);
     }
 
     @Override

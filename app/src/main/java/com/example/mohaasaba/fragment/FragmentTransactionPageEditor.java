@@ -26,7 +26,8 @@ public class FragmentTransactionPageEditor extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_transaction_page_editor, container, false);
+        View rootView = LayoutInflater.from(getContext())
+                .inflate(R.layout.fragment_transaction_page_editor, container, false);
         pageLabelEditText = rootView.findViewById(R.id.pageLabel_EditText_FragmentTransactionPageEditor);
         deleteButton = rootView.findViewById(R.id.delete_Button_FragmentTransactionPageEditor);
         confirmButton = rootView.findViewById(R.id.confirm_Button_FragmentTransactionPageEditor);

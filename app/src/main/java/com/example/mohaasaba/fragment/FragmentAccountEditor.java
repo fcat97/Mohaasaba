@@ -26,7 +26,8 @@ public class FragmentAccountEditor extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_transaction_account_editor, null, false);
+        View rootView = LayoutInflater.from(getContext())
+                .inflate(R.layout.fragment_transaction_account_editor, null, false);
 
         accountNameEditText = rootView.findViewById(R.id.accountLabel_EditText_FragmentAccountEditor);
         balanceEditText = rootView.findViewById(R.id.balance_EditText_FragmentAccountEditor);

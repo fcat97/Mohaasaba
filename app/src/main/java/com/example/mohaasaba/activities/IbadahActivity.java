@@ -12,6 +12,8 @@ import android.view.View;
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.bookshelf.TalimActivity;
 
+import soup.neumorphism.NeumorphCardView;
+
 public class IbadahActivity extends AppCompatActivity{
 
     @Override
@@ -22,10 +24,10 @@ public class IbadahActivity extends AppCompatActivity{
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // https://medium.com/@imstudio/android-change-status-bar-text-color-659680fce49b
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            getWindow().setStatusBarColor(Color.WHITE);
+            getWindow().setStatusBarColor(getColor(R.color.colorGray));
         }
 
-        CardView talimCard = findViewById(R.id.talim_CardView_IbadahActivity);
+        NeumorphCardView talimCard = findViewById(R.id.talim_CardView_IbadahActivity);
         talimCard.setOnClickListener(v -> {
             Intent intent = new Intent(this, TalimActivity.class);
             startActivity(intent);

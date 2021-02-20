@@ -60,13 +60,13 @@ public class FragmentBookEditor extends BottomSheetDialogFragment {
         moveButton2 = view.findViewById(R.id.moveButton2_FragmentBookDetails);
         progressButton = view.findViewById(R.id.progressButton_ImageView_FragmentBookDetails);
 
-
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setRetainInstance(true);
 
         this.bookRepo = new BookRepo(getContext());
 

@@ -115,11 +115,14 @@
     <string name="create_hisaab_account">Create Hisaab Account</string>
     <string name="transaction_page">Transaction Page</string>
     <string name="cash">Cash</string>
-    <string name="enter_account_name">Enter Account Name</string>
-    <string name="balance">Balance</string>
-    <string name="enter_page_name">Enter Page Name</string>
+    <string name="account_name">Account Name</string>
+    <string name="account_balance">Account Balance</string>
+    <string name="page_name">Page Name</string>
     <string name="ibadah">Ibadah</string>
     <string name="reading">Reading</string>
     <string name="read">Read</string>
     <string name="wishlist">WishList</string>
+    <string name="tags">Tags</string>
+    <string name="plans">Plans</string>
+    <string name="tweek">Tweek</string>
 </resources>

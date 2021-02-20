@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorGray"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -11,7 +12,8 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/item_transaction_account"
         android:padding="@dimen/dimen_mini"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        app:spanCount="2"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_FragmentTransactionAccount"

@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="240dp"
     android:layout_margin="@dimen/dimen_small"
-    app:cardElevation="@dimen/cardElevation"
+    android:elevation="@dimen/dimen_small"
+    app:cardCornerRadius="@dimen/dimen_extraLarge"
+    android:background="@color/colorGray"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -44,6 +46,7 @@
             android:textAppearance="@style/textSmall.Italic"
             android:textAlignment="center"
             android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
             android:layout_below="@id/title_TextView_ItemTalim"/>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

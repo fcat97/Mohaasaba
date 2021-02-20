@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.models.Notify;
+import com.example.mohaasaba.database.notify.Notify;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -27,14 +27,12 @@ public class NotifyAdapter extends ListAdapter<Notify, NotifyAdapter.NotifyHolde
     private static final DiffUtil.ItemCallback<Notify> DIFF_CALLBACK = new DiffUtil.ItemCallback<Notify>() {
         @Override
         public boolean areItemsTheSame(@NonNull Notify oldItem, @NonNull Notify newItem) {
-            return oldItem.uniqueID == newItem.uniqueID;
+            return oldItem.notifyID.equals(newItem.notifyID);
         }
 
         @Override
         public boolean areContentsTheSame(@NonNull Notify oldItem, @NonNull Notify newItem) {
-            if (oldItem == null && newItem != null) return false;
-            else if (oldItem != null && newItem == null) return false;
-            else if (oldItem.notificationHour != newItem.notificationHour) return false;
+            if (oldItem.notificationHour != newItem.notificationHour) return false;
             else if (oldItem.notificationMinute != newItem.notificationMinute) return false;
             else return oldItem.message.equals(newItem.message);
         }
@@ -60,12 +58,12 @@ public class NotifyAdapter extends ListAdapter<Notify, NotifyAdapter.NotifyHolde
         holder.time.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime()));
 
         holder.itemView.setOnClickListener(v -> {
-            if (listener != null) listener.onItemClicked(position);
+            if (listener != null) listener.onItemClicked(getItem(position));
             else throw new ClassCastException("Must implement Listener");
         });
 
         holder.deleteButton.setOnClickListener(v -> {
-            if (listener != null) listener.onItemDeleted(position);
+            if (listener != null) listener.onItemDeleted(getItem(position));
             else throw new ClassCastException("Must implement Listener");
         });
     }
@@ -89,7 +87,7 @@ public class NotifyAdapter extends ListAdapter<Notify, NotifyAdapter.NotifyHolde
         this.listener = listener;
     }
     public interface onItemClickedListener {
-        void onItemClicked(int position);
-        void onItemDeleted(int position);
+        void onItemClicked(Notify notify);
+        void onItemDeleted(Notify notify);
     }
 }

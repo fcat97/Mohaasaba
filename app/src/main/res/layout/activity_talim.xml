@@ -21,6 +21,7 @@
         android:layout_alignParentBottom="true"
         app:tabMode="scrollable"
         app:tabGravity="center"
+        app:tabIndicatorGravity="top"
         app:tabIndicatorColor="?attr/colorPrimary"
         app:tabSelectedTextColor="?attr/colorPrimary">
         <com.google.android.material.tabs.TabItem

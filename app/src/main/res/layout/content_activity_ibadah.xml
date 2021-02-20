@@ -2,20 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EFEFEF"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center">
-    <androidx.cardview.widget.CardView
+    <soup.neumorphism.NeumorphCardView
         android:id="@+id/salat_CardView_IbadahActivity"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:elevation="12dp"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="8dp">
+        android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorGray">
+            android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/icon1"
                 android:layout_width="120dp"
@@ -33,20 +29,15 @@
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/icon1"/>
         </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
+    </soup.neumorphism.NeumorphCardView>
+    <soup.neumorphism.NeumorphCardView
         android:id="@+id/zikir_CardView_IbadahActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="4dp"
-        android:layout_margin="8dp"
-        android:elevation="12dp"
         android:layout_toEndOf="@id/salat_CardView_IbadahActivity">
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorGray">
+            android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/icon2"
                 android:layout_width="120dp"
@@ -64,20 +55,15 @@
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/icon2"/>
         </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
+    </soup.neumorphism.NeumorphCardView>
+    <soup.neumorphism.NeumorphCardView
         android:id="@+id/tilawat_CardView_IbadahActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:elevation="12dp"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="4dp"
         android:layout_below="@id/salat_CardView_IbadahActivity">
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorGray">
+            android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/icon3"
                 android:layout_width="120dp"
@@ -95,21 +81,16 @@
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/icon3"/>
         </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
+    </soup.neumorphism.NeumorphCardView>
+    <soup.neumorphism.NeumorphCardView
         android:id="@+id/talim_CardView_IbadahActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardElevation="8dp"
-        android:layout_margin="8dp"
-        android:elevation="12dp"
-        app:cardCornerRadius="4dp"
         android:layout_below="@id/zikir_CardView_IbadahActivity"
         android:layout_toEndOf="@id/tilawat_CardView_IbadahActivity">
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_ripple_gray">
+            android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/icon4"
                 android:layout_width="120dp"
@@ -128,5 +109,5 @@
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/icon4"/>
         </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+    </soup.neumorphism.NeumorphCardView>
 </RelativeLayout>
