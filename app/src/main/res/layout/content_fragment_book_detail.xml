@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Book Title"
                 android:background="@android:color/transparent"
-                android:textAppearance="@style/textLarge"
+                android:textAppearance="@style/textMedium"
                 android:layout_below="@id/text_book_name"/>
         </RelativeLayout>
         <RelativeLayout
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Author"
                 android:background="@android:color/transparent"
-                android:textAppearance="@style/textLarge"
+                android:textAppearance="@style/textMedium"
                 android:layout_below="@id/text_author_name"/>
         </RelativeLayout>
         <RelativeLayout
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Publication"
                 android:background="@android:color/transparent"
-                android:textAppearance="@style/textLarge"
+                android:textAppearance="@style/textMedium"
                 android:layout_below="@id/text_publication_name"/>
         </RelativeLayout>
         <RelativeLayout
@@ -103,7 +103,7 @@
                 android:text="@string/_0"
                 android:inputType="numberSigned"
                 android:background="@android:color/transparent"
-                android:textAppearance="@style/textLarge"
+                android:textAppearance="@style/textMedium"
                 android:layout_below="@id/text_book_pages"/>
         </RelativeLayout>
         <RelativeLayout
@@ -127,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Tap to add"
-                android:textAppearance="@style/textLarge"
+                android:textAppearance="@style/textMedium"
                 android:layout_below="@id/text_entry_date"/>
         </RelativeLayout>
         <RelativeLayout
@@ -151,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Owner"
                 android:background="@android:color/transparent"
-                android:textAppearance="@style/textLarge"
+                android:textAppearance="@style/textMedium"
                 android:layout_below="@id/text_belong"/>
         </RelativeLayout>
     </RelativeLayout>
@@ -191,14 +191,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10"
-                    android:textAppearance="@style/textLarge"
+                    android:textAppearance="@style/textMedium"
                     android:layout_below="@id/text_daily_target"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pages"
                     android:layout_marginStart="@dimen/dimen_small"
-                    android:textAppearance="@style/textLarge"
+                    android:textAppearance="@style/textMedium"
                     android:layout_toEndOf="@id/dailyTarget_TextView_FragmentBookDetail"
                     android:layout_below="@id/text_daily_target"/>
             </RelativeLayout>
@@ -220,14 +220,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="8"
-                    android:textAppearance="@style/textLarge"
+                    android:textAppearance="@style/textMedium"
                     android:layout_below="@id/text_target_complete"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pages"
                     android:layout_marginStart="@dimen/dimen_small"
-                    android:textAppearance="@style/textLarge"
+                    android:textAppearance="@style/textMedium"
                     android:layout_toEndOf="@id/targetComplete_TextView_FragmentBookDetail"
                     android:layout_below="@id/text_target_complete"/>
             </RelativeLayout>
@@ -249,14 +249,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="110"
-                    android:textAppearance="@style/textLarge"
+                    android:textAppearance="@style/textMedium"
                     android:layout_below="@id/text_total_complete"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pages"
                     android:layout_marginStart="@dimen/dimen_small"
-                    android:textAppearance="@style/textLarge"
+                    android:textAppearance="@style/textMedium"
                     android:layout_toEndOf="@id/totalCompleted_TextView_FragmentBookDetail"
                     android:layout_below="@id/text_total_complete"/>
             </RelativeLayout>
