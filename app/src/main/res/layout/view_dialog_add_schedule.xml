@@ -8,6 +8,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/title_request_text"
-            android:background="@android:color/transparent"
+            android:layout_margin="@dimen/dimen_small"
             android:padding="@dimen/dimen_large"/>
 </RelativeLayout>
