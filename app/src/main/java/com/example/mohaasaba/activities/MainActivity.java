@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
 
     public void openAddScheduleActivity(View view) {
         DialogAddSchedule dialogAddSchedule = new DialogAddSchedule();
-        dialogAddSchedule.show(getSupportFragmentManager(), "Dialogggg");
+        dialogAddSchedule.show(getSupportFragmentManager(), "Add Schedule Dialog");
 //        Intent intent = new Intent(this,AddScheduleActivity.class);
 //        startActivityForResult(intent,ADD_NEW_SCHEDULE_REQUEST);
     }
