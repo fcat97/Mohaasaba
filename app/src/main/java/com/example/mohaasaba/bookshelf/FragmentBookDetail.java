@@ -1,5 +1,6 @@
 package com.example.mohaasaba.bookshelf;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,12 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.mohaasaba.R;
+import com.example.mohaasaba.dialog.DialogDatePicker;
 
+import java.time.Year;
 import java.util.Calendar;
 
 public class FragmentBookDetail extends Fragment {
@@ -31,6 +36,7 @@ public class FragmentBookDetail extends Fragment {
     private TextView entryDate_tv, dailyTarget_tv, completed_tv, totalComplete_tv;
     private Button progress_bt;
     private ImageButton saveButton;
+    private RelativeLayout rrl_5;
 
     public FragmentBookDetail() {
         // Required empty public constructor
@@ -71,6 +77,7 @@ public class FragmentBookDetail extends Fragment {
         totalComplete_tv = view.findViewById(R.id.totalCompleted_TextView_FragmentBookDetail);
         progress_bt = view.findViewById(R.id.progress_Button_FragmentBookDetail);
         saveButton = view.findViewById(R.id.saveButton_FragmentBookDetail);
+        rrl_5 = view.findViewById(R.id.rrl_5_FragmentBookDetail);
         return view;
     }
 
@@ -89,6 +96,19 @@ public class FragmentBookDetail extends Fragment {
         completed_tv.setText(String.valueOf(book.readingHistory.getProgress(Calendar.getInstance()).progress));
         totalComplete_tv.setText(String.valueOf(book.readingHistory.getTotalProgress()));
 
+        if (book.purchaseTime != 0) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.clear();
+            calendar.setTimeInMillis(book.purchaseTime);
+
+            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+            int month = calendar.get(Calendar.MONTH);
+            int year = calendar.get(Calendar.YEAR);
+
+            String date = dayOfMonth + "/" + (month + 1) + "/" + year;
+            entryDate_tv.setText(date);
+        }
+
         saveButton.setOnClickListener(v -> {
             book.title = bookTitle_et.getText().toString().trim().isEmpty() ? "" : bookTitle_et.getText().toString().trim();
             book.author = author_et.getText().toString().trim().isEmpty() ? "" : author_et.getText().toString().trim();
@@ -99,9 +119,35 @@ public class FragmentBookDetail extends Fragment {
 
             if (saveButtonListener != null && ! book.title.isEmpty()) saveButtonListener.onClick(book);
         });
+
+        rrl_5.setOnClickListener(this::openDatePickerDialog);
     }
 
 
+    private void openDatePickerDialog (View v) {
+        Calendar calendar = Calendar.getInstance();
+        if (book.purchaseTime != 0) {
+            calendar.clear();
+            calendar.setTimeInMillis(book.purchaseTime);
+        }
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), this::setEntryDate, year, month, day);
+        datePickerDialog.show();
+    }
+    private void setEntryDate (View view, int year, int month, int dayOfMonth) {
+        String date = dayOfMonth + "/" + (month + 1) + "/" + year;
+        entryDate_tv.setText(date);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.YEAR, year);
+        book.purchaseTime = calendar.getTimeInMillis();
+    }
     public FragmentBookDetail setSaveButtonListener(SaveButtonListener saveButtonListener) {
         this.saveButtonListener = saveButtonListener;
         return this;

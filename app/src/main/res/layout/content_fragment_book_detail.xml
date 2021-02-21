@@ -107,10 +107,10 @@
                 android:layout_below="@id/text_book_pages"/>
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/rrl_5"
+            android:id="@+id/rrl_5_FragmentBookDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorGray"
+            android:background="@drawable/button_ripple_gray"
             android:padding="@dimen/dimen_small"
             android:layout_margin="@dimen/dimen_mini"
             android:layout_toEndOf="@id/rrl_4"
