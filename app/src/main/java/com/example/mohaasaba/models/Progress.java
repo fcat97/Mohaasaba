@@ -25,6 +25,15 @@ public class Progress implements Parcelable, Serializable {
         return this;
     }
 
+    public void undoProgress() {
+        progress = Math.max(progress - step, 0);
+    }
+
+    // Do all the steps..
+    public void allDone() {
+        progress = target;
+    }
+
     protected Progress(Parcel in) {
         commitDate = in.readLong();
         target = in.readInt();
