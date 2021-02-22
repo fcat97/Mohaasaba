@@ -4,7 +4,7 @@ import androidx.room.TypeConverter;
 
 import com.example.mohaasaba.bookshelf.Book;
 import com.example.mohaasaba.models.History;
-import com.example.mohaasaba.database.notify.Notify;
+import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.ProgressHistory;
 import com.example.mohaasaba.models.ScheduleType;
 import com.example.mohaasaba.models.Transaction;

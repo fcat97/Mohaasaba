@@ -9,15 +9,12 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
@@ -26,8 +23,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.database.notify.Notify;
-import com.example.mohaasaba.database.notify.NotifyRepository;
 import com.example.mohaasaba.dialog.DialogAddSchedule;
 import com.example.mohaasaba.fragment.FragmentScheduleOptions;
 import com.example.mohaasaba.fragment.FragmentSearchMain;
@@ -39,11 +34,8 @@ import com.example.mohaasaba.receivers.NotificationScheduler;
 import com.example.mohaasaba.viewModel.ScheduleViewModel;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import soup.neumorphism.NeumorphImageView;
 
 public class MainActivity extends AppCompatActivity implements FragmentMainActivity.FragmentCallbacks{
     public static final int ADD_NEW_SCHEDULE_REQUEST = 1121;
@@ -168,8 +160,6 @@ public class MainActivity extends AppCompatActivity implements FragmentMainActiv
      * Method to remove all associated Database Entities when Schedule is deleted
      * @param schedule deleted schedule*/
     private void removeAttachments(Schedule schedule) {
-        NotifyRepository repository = new NotifyRepository(this);
-        repository.deleteNotifyIDs(schedule.getScheduleID());
         rescheduleNotification();
     }
 
