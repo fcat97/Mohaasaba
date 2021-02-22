@@ -8,7 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +21,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.mohaasaba.R;
+import com.example.mohaasaba.adapter.NotifyAdapter;
+import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.Progress;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,6 +37,7 @@ import java.util.List;
 
 public class FragmentBookDetail extends Fragment {
     private static final String ARG_BOOK = FragmentBookDetail.class.getCanonicalName() + "_BOOK";
+    private static final String TAG = FragmentBookDetail.class.getCanonicalName();
 
     private SaveButtonListener saveButtonListener;
     private Book book;
@@ -47,6 +52,12 @@ public class FragmentBookDetail extends Fragment {
     private EditText progressInput_et;
     private ImageButton inputDoneButton;
     private BarChart barChart;
+
+    private RecyclerView notify_rv;
+    private TextView noNotify_tv;
+    private FloatingActionButton addNotifyButton;
+    private NotifyAdapter notifyAdapter;
+    private NotifyListeners notifyListeners;
 
     public FragmentBookDetail() {
         // Required empty public constructor
@@ -95,6 +106,10 @@ public class FragmentBookDetail extends Fragment {
         barChart = view.findViewById(R.id.progress_chart_FragmentBookDetail);
         undoButton = view.findViewById(R.id.undoButton_ImageButton_FragmentBookDetail);
         allDoneButton = view.findViewById(R.id.allDone_ImageButton_FragmentBookDetail);
+
+        notify_rv = view.findViewById(R.id.recyclerView_FragmentReminder);
+        noNotify_tv = view.findViewById(R.id.noItem_FragmentReminder);
+        addNotifyButton = view.findViewById(R.id.addReminder_FAB_FragmentReminder);
         return view;
     }
 
@@ -138,8 +153,43 @@ public class FragmentBookDetail extends Fragment {
             String date = dayOfMonth + "/" + (month + 1) + "/" + year;
             entryDate_tv.setText(date);
         }
+
+        // Set Progress View
         setProgressView();
 
+        // Notify Related --------------------------------------------------------------------------
+        notifyAdapter = new NotifyAdapter();
+        notify_rv.setAdapter(notifyAdapter);
+        notifyAdapter.submitList(book.notifyList);
+        if (book.notifyList.size() > 0) noNotify_tv.setVisibility(View.INVISIBLE);
+        else noNotify_tv.setVisibility(View.VISIBLE);
+
+        addNotifyButton.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            if (notifyListeners != null) notifyListeners.onClick(new Notify(
+                    calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)));
+            else throw new ClassCastException("Must Implement Listeners");
+        });
+
+        notifyAdapter.setListener(new NotifyAdapter.onItemClickedListener() {
+            @Override
+            public void onItemClicked(Notify notify) {
+                if (notifyListeners != null) notifyListeners.onClick(notify);
+                else throw new ClassCastException("Must Implement Listeners");
+            }
+
+            @Override
+            public void onItemDeleted(Notify notify) {
+                int position = notifyAdapter.getCurrentList().indexOf(notify);
+                book.notifyList.remove(notify);
+                notifyAdapter.notifyItemRemoved(position);
+                notifyAdapter.notifyItemRangeChanged(position, notifyAdapter.getItemCount());
+                if (book.notifyList.size() > 0) noNotify_tv.setVisibility(View.INVISIBLE);
+                else noNotify_tv.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // FragmentBookDetail SaveButton Listener
         saveButton.setOnClickListener(v -> {
             book.title = bookTitle_et.getText().toString().trim().isEmpty() ? "" : bookTitle_et.getText().toString().trim();
             book.author = author_et.getText().toString().trim().isEmpty() ? "" : author_et.getText().toString().trim();
@@ -243,12 +293,34 @@ public class FragmentBookDetail extends Fragment {
         calendar.set(Calendar.YEAR, year);
         book.purchaseTime = calendar.getTimeInMillis();
     }
+
+
+
+    public void notifyEditConfirmed(Notify notify) {
+        Log.d(TAG, "notifyEditConfirmed: called");
+        Log.d(TAG, "notifyEditConfirmed: notify name " + notify.message);
+        notify.label = book.title; // Add the label to notify
+        if (! book.notifyList.contains(notify)) book.notifyList.add(notify);
+        notifyAdapter.submitList(book.notifyList);
+        notifyAdapter.notifyDataSetChanged();
+        if (book.notifyList.size() > 0) noNotify_tv.setVisibility(View.INVISIBLE);
+        else noNotify_tv.setVisibility(View.VISIBLE);
+    }
+
     public FragmentBookDetail setSaveButtonListener(SaveButtonListener saveButtonListener) {
         this.saveButtonListener = saveButtonListener;
         return this;
     }
 
+    public FragmentBookDetail setNotifyListeners(NotifyListeners notifyListeners) {
+        this.notifyListeners = notifyListeners;
+        return this;
+    }
+
     public interface SaveButtonListener {
         void onClick(Book book);
+    }
+    public interface NotifyListeners {
+        void onClick(Notify notify);
     }
 }

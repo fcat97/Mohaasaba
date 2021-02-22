@@ -37,7 +37,7 @@ public class Notify implements Parcelable {
     @Embedded
     public ScheduleType scheduleType;
 
-    public Notify(int notificationHour, int notificationMinute, String notifyOwnerID) {
+    public Notify(int notificationHour, int notificationMinute) {
         this.notifyID = IdGenerator.getNewID();
         this.notificationHour = notificationHour;
         this.notificationMinute = notificationMinute;

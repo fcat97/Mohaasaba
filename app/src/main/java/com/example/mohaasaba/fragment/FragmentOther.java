@@ -88,12 +88,14 @@ public class FragmentOther extends Fragment {
         notifyAdapter = new NotifyAdapter();
         notifyRecyclerView.setAdapter(notifyAdapter);
         notifyAdapter.submitList(notifyList);
+        if (notifyList.size() > 0) notifyNoItemTextView.setVisibility(View.INVISIBLE);
+        else notifyNoItemTextView.setVisibility(View.VISIBLE);
 
 
         notifyAddButton.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
             if (listeners != null) listeners.onEditNotify(new Notify(
-                    calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), schedule.getScheduleID()));
+                    calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)));
             else throw new ClassCastException("Must Implement Listeners");
         });
 
@@ -108,8 +110,11 @@ public class FragmentOther extends Fragment {
             @Override
             public void onItemDeleted(Notify notify) {
                 int position = notifyAdapter.getCurrentList().indexOf(notify);
+                notifyList.remove(notify);
                 notifyAdapter.notifyItemRemoved(position);
                 notifyAdapter.notifyItemRangeChanged(position, notifyAdapter.getItemCount());
+                if (notifyList.size() > 0) notifyNoItemTextView.setVisibility(View.INVISIBLE);
+                else notifyNoItemTextView.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -122,6 +127,7 @@ public class FragmentOther extends Fragment {
         notifyAdapter.submitList(notifyList);
         notifyAdapter.notifyDataSetChanged();
         if (notifyList.size() > 0) notifyNoItemTextView.setVisibility(View.INVISIBLE);
+        else notifyNoItemTextView.setVisibility(View.VISIBLE);
     }
     public interface FragmentOtherListeners {
         void onEditNotify(Notify notify);
