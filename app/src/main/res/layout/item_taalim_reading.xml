@@ -5,7 +5,7 @@
     android:layout_height="240dp"
     android:layout_margin="@dimen/dimen_small"
     android:elevation="@dimen/dimen_small"
-    app:cardCornerRadius="@dimen/dimen_extraLarge"
+    app:cardCornerRadius="@dimen/cardCornerRadius"
     android:background="@color/colorGray"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout

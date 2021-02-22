@@ -31,4 +31,7 @@ public interface BookDao {
 
     @Query("SELECT * FROM bookshelf WHERE bookID IS :bookID")
     Book getBook(String bookID);
+
+    @Query("SELECT * FROM bookshelf")
+    LiveData<List<Book>> getAllBooks();
 }

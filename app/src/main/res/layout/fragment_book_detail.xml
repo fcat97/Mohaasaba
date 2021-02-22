@@ -3,31 +3,31 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorGray"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/dimen_mini">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbarLayout_FragmentBooks"
+        android:id="@+id/appbarLayout_FragmentBookDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_FragmentBooks"
+                android:id="@+id/toolbar_FragmentBookDetail"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/white"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:titleTextColor="?attr/colorAccent"/>
             <ImageButton
-                android:id="@+id/addButton_FragmentBook"
+                android:id="@+id/saveButton_FragmentBookDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_add"
-                android:tint="?attr/colorAccent"
+                android:src="@drawable/ic_save"
+                android:padding="@dimen/dimen_mini"
                 android:layout_marginEnd="@dimen/dimen_small"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
@@ -35,13 +35,15 @@
         </RelativeLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_FragmentBooks"
+    <ScrollView
+        android:id="@+id/scrollView_FragmentBookDetail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/dimen_small"
-        tools:listitem="@layout/item_taalim_reading"
-        app:spanCount="2"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        android:layout_below="@id/appbarLayout_FragmentBooks"/>
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_mini"
+        android:layout_below="@id/appbarLayout_FragmentBookDetail">
+        <include
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            layout="@layout/content_fragment_book_detail"/>
+    </ScrollView>
 </RelativeLayout>

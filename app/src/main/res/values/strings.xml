@@ -125,4 +125,5 @@
     <string name="tags">Tags</string>
     <string name="plans">Plans</string>
     <string name="tweek">Tweek</string>
+    <string name="enter_plan_name">Enter Plan Name</string>
 </resources>

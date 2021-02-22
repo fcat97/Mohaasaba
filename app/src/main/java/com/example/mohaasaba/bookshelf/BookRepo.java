@@ -73,4 +73,7 @@ public class BookRepo {
     public LiveData<List<Book>> getAllWishListedBooks() {
         return bookDao.getAllWishListedBooks();
     }
+    public LiveData<List<Book>> getAllBooks() {
+        return bookDao.getAllBooks();
+    }
 }

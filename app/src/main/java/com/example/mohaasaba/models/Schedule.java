@@ -27,7 +27,7 @@ public class Schedule implements Parcelable {
     private String title;
     private String note;
     private List<String> tags = new ArrayList<>();
-//    private List<String> notifyList = new ArrayList<>();
+    private List<Notify> notifyList = new ArrayList<>();
     private History history = new History();
     private int themeID = -1001;
     private int priority;
@@ -84,12 +84,12 @@ public class Schedule implements Parcelable {
     public void setThemeID(int themeID) {
         this.themeID = themeID;
     }
-//    public List<String> getNotifyList() {
-//        return notifyList;
-//    }
-//    public void setNotifyList(List<String> notifyList) {
-//        this.notifyList = notifyList;
-//    }
+    public List<Notify> getNotifyList() {
+        return notifyList;
+    }
+    public void setNotifyList(List<Notify> notifyList) {
+        this.notifyList = notifyList;
+    }
     public int getPriority() {
         return priority;
     }
@@ -102,7 +102,7 @@ public class Schedule implements Parcelable {
         item.setScheduleType(getScheduleType());
         item.setNote(getNote());
         item.setTags(getTags());
-//        item.setNotifyList(getNotifyList());
+        item.setNotifyList(new ArrayList<>(getNotifyList()));
         item.setHistory(getHistory().duplicate());  // Get New History with existing tasksList
         item.setThemeID(getThemeID());
         item.setPriority(getPriority());
@@ -124,7 +124,7 @@ public class Schedule implements Parcelable {
         dest.writeStringList(this.tags);
         dest.writeParcelable(this.history, flags);
         dest.writeInt(this.themeID);
-//        dest.writeStringList(this.notifyList);
+        dest.writeTypedList(this.notifyList);
         dest.writeInt(this.priority);
     }
 
@@ -137,7 +137,7 @@ public class Schedule implements Parcelable {
         this.history = in.readParcelable(History.class.getClassLoader());
         this.themeID = in.readInt();
 //        this.notifyList = in.createStringArrayList();
-//        this.notifyList = in.createTypedArrayList(Notify.CREATOR);
+        this.notifyList = in.createTypedArrayList(Notify.CREATOR);
         this.priority = in.readInt();
     }
 

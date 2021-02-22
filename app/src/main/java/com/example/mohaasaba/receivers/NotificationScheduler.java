@@ -9,8 +9,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.mohaasaba.database.AppRepository;
-import com.example.mohaasaba.database.notify.Notify;
-import com.example.mohaasaba.database.notify.NotifyRepository;
+import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.Schedule;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
 public class NotificationScheduler extends BroadcastReceiver{
     private static final String TAG = NotificationScheduler.class.getSimpleName();
@@ -26,16 +24,17 @@ public class NotificationScheduler extends BroadcastReceiver{
     public static final String RUNNING_PID = "com.mohaasaba.RUNNING_PENDING_INTENTS";
     public static final String NOTIFY_SHARED_PREF = "com.mohaasaba.NOTIFY_SHARED_PREF";
 
-    private NotifyRepository repository;
     private Context mContext;
     private SharedPreferences sharedPreferences;
     private AlarmManager alarmManager;
+
+    private AppRepository appRepository;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "onReceive: called");
         this.mContext = context;
-        this.repository = new NotifyRepository(context);
+        this.appRepository = new AppRepository(context);
         this.sharedPreferences = context.getSharedPreferences(NOTIFY_SHARED_PREF, Context.MODE_PRIVATE);
         this.alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
@@ -49,6 +48,12 @@ public class NotificationScheduler extends BroadcastReceiver{
         activeNextMidnight(); //  active for next midnight
     }
 
+    private void activateAllOfToday() {
+        for (Notify notify:
+                getScheduleNotifications()) {
+            activeNotification(notify);
+        }
+    }
     private void activeNextMidnight() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MILLISECOND, 0);
@@ -64,6 +69,36 @@ public class NotificationScheduler extends BroadcastReceiver{
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 
+    private void activeNotification(Notify notify) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        if (hour > notify.notificationHour) return;
+        else if (hour == notify.notificationHour && minute >= notify.notificationMinute) return;
+
+        Intent intent = new Intent(mContext.getApplicationContext(), NotyFire.class);
+        intent.putExtra(NotyFire.NOTIFICATION_TITLE, notify.label);
+        intent.putExtra(NotyFire.NOTIFICATION_MESSAGE, notify.message);
+        intent.putExtra(NotyFire.NOTIFICATION_ID, notify.uniqueID);
+
+        calendar.set(Calendar.HOUR_OF_DAY, notify.notificationHour);
+        calendar.set(Calendar.MINUTE, notify.notificationMinute - notify.beforeMinute);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext.getApplicationContext(), notify.uniqueID,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        if (notify.repeatMinute == 0) {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        } else {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                    notify.repeatMinute * Notify.MINUTE, pendingIntent);
+        }
+
+        savePendingID(notify.message, notify.uniqueID);
+        Log.d(TAG, "activateAllOfToday:  Activated for " + notify.toString());
+    }
     private void cancelAll() {
         for (Notify notify:
                 getAllNotifications()) {
@@ -79,42 +114,33 @@ public class NotificationScheduler extends BroadcastReceiver{
         cancelPIdFromSharedPref();
 
     }
-    private void activateAllOfToday() {
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+    private List<Notify> getAllNotifications() {
+        List<Notify> notifyList = new ArrayList<>();
 
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-
-        for (Notify notify:
-                getNotificationsOfToday()) {
-            // Check if time already passed or not
-            if (hour > notify.notificationHour) continue;
-            else if (hour == notify.notificationHour && minute >= notify.notificationMinute) continue;
-
-            Intent intent = new Intent(mContext.getApplicationContext(), NotyFire.class);
-            intent.putExtra(NotyFire.NOTIFICATION_TITLE, notify.scheduleTitle);
-            intent.putExtra(NotyFire.NOTIFICATION_MESSAGE, notify.message);
-            intent.putExtra(NotyFire.NOTIFICATION_ID, notify.uniqueID);
-
-            calendar.set(Calendar.HOUR_OF_DAY, notify.notificationHour);
-            calendar.set(Calendar.MINUTE, notify.notificationMinute - notify.beforeMinute);
-
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext.getApplicationContext(), notify.uniqueID,
-                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            if (notify.repeatMinute == 0) {
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-            } else {
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                        notify.repeatMinute * Notify.MINUTE, pendingIntent);
-            }
-
-            savePendingID(notify.message, notify.uniqueID);
-            Log.d(TAG, "activateAllOfToday:  Activated for " + notify.toString());
+        // Get Notify from schedule_table
+        List<Schedule> schedules = appRepository.getAllSchedules();
+        for (Schedule s :
+                schedules) {
+            notifyList.addAll(s.getNotifyList());
         }
+
+        return notifyList;
     }
+
+    private List<Notify> getScheduleNotifications() {
+        List<Schedule> schedules = appRepository.getAllSchedules();
+        List<Notify> notifyList = new ArrayList<>();
+
+        // Get notifications from schedule of today
+        for (Schedule s :
+                schedules) {
+            if (s.getScheduleType().isToday()) notifyList.addAll(s.getNotifyList());
+        }
+
+        return notifyList;
+    }
+
 
     /**
      * Called when Notification scheduled correctly
@@ -150,9 +176,6 @@ public class NotificationScheduler extends BroadcastReceiver{
             int uniqueID = Integer.parseInt(value.split("<<:>>")[1]);
 
             Intent intent = new Intent(mContext.getApplicationContext(), NotyFire.class);
-            /*intent.putExtra(NotyFire.NOTIFICATION_TITLE, "Mohaasaba");
-            intent.putExtra(NotyFire.NOTIFICATION_MESSAGE, message);
-            intent.putExtra(NotyFire.NOTIFICATION_ID, uniqueID);*/
             Log.d(TAG, "cancelPIdFromSharedPref:  intent created " + intent.toString());
 
             Log.d(TAG, "cancelPIdFromSharedPref:  pendingIntentID " + uniqueID);
@@ -179,28 +202,5 @@ public class NotificationScheduler extends BroadcastReceiver{
         Log.d(TAG, "cancelPIdFromSharedPref:  sharedPref committed");
         int size = sharedPreferences.getStringSet(RUNNING_PID, new HashSet<>()).size();
         Log.d(TAG, "cancelPIdFromSharedPref: size after " +size);
-    }
-
-    private List<Notify> getAllNotifications() {
-        List<Notify> notifyList = repository.getAllNotify();
-
-        Log.d(TAG, "getAllNotifications:  allNotification.size() " + notifyList.size());
-        return notifyList;
-    }
-    private List<Notify> getNotificationsOfToday()  {
-        Log.d(TAG, "getNotifications: operation started");
-        List<Notify> notifyList = repository.getAllNotify();
-        List<Notify> today = new ArrayList<>();
-
-        for (Notify notify :
-                notifyList) {
-            if (notify.scheduleType.isToday()) today.add(notify);
-        }
-
-        Log.d(TAG, "getNotifications: operation ended");
-        Log.d(TAG, "getNotifications: operation size " + notifyList.size());
-
-        Log.d(TAG, "getAllNotifications:  todayNotifications.size() " + today.size());
-        return today;
     }
 }

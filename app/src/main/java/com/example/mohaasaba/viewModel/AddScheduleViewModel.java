@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.example.mohaasaba.database.AppRepository;
-import com.example.mohaasaba.database.notify.Notify;
+import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.models.ScheduleType;
 
@@ -89,10 +89,10 @@ public class AddScheduleViewModel extends AndroidViewModel {
         schedule.setReminderID(null); *//* as no reminder Attached *//*
     }*/
     public void setNotificationTitles() {
-//        for (Notify notify:
-//             schedule.getNotifyList()) {
-//            notify.scheduleTitle = schedule.getTitle();
-//        }
+        for (Notify notify:
+             schedule.getNotifyList()) {
+            notify.label = schedule.getTitle();
+        }
     }
 
     public void insertSchedule() {

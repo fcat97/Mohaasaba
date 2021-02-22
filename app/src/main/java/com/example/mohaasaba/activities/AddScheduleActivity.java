@@ -28,7 +28,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.database.DataConverter;
-import com.example.mohaasaba.database.notify.Notify;
+import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.helper.TabPagerBinder;
 import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.models.ScheduleType;
