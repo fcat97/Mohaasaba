@@ -121,7 +121,7 @@ public class AppRepository {
         return result.get();
     }
 
-    public List<Schedule> getAllSchedules() throws ExecutionException, InterruptedException {
+    public List<Schedule> getAllSchedules() {
         String query = "SELECT * FROM schedule_table";
 
         ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -132,7 +132,14 @@ public class AppRepository {
             }
         });
 
-        return result.get();
+        List<Schedule> scheduleList = new ArrayList<>();
+        try {
+            scheduleList = result.get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return scheduleList;
     }
     public LiveData<List<Schedule>> getSchedulesOfThisWeek() {
         Calendar calendar = Calendar.getInstance();

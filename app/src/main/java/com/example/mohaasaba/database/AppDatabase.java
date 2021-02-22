@@ -10,11 +10,10 @@ import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.mohaasaba.database.notify.NotifyRepository;
 import com.example.mohaasaba.helper.IdGenerator;
 import com.example.mohaasaba.helper.ThemeUtils;
 import com.example.mohaasaba.models.Note;
-import com.example.mohaasaba.database.notify.Notify;
+import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.Reminder;
 import com.example.mohaasaba.models.Schedule;
 import com.example.mohaasaba.models.Task;
@@ -98,16 +97,16 @@ public abstract class AppDatabase extends RoomDatabase{
         schedule.setThemeID(ThemeUtils.THEME_GREEN);
 
         Notify notify1 = new Notify(0,0, schedule.getScheduleID());
-        notify1.scheduleTitle = schedule.getTitle();
+        notify1.label = schedule.getTitle();
         notify1.message = "You can add Reminders here!";
-        notify1.notifyOwnerID = schedule.getScheduleID();
 
         Notify notify2 = new Notify(0,0, schedule.getScheduleID());
-        notify2.scheduleTitle = schedule.getTitle();
+        notify2.label = schedule.getTitle();
         notify2.message = "Click on the + icon in top right corner";
-        notify2.notifyOwnerID = schedule.getScheduleID();
 
-        // can't insertNotify from here
+        schedule.getNotifyList().add(notify1);
+        schedule.getNotifyList().add(notify2);
+
 
         List<Task> taskList = new ArrayList<>();
         taskList.add(new Task("You can add new task from bottom"));
@@ -123,20 +122,6 @@ public abstract class AppDatabase extends RoomDatabase{
         schedule.getHistory().commitTodo(Calendar.getInstance(), taskList);
 
         scheduleDao.insertSchedule(schedule);
-
-
-        /*Schedule bookReading = new Schedule("Book Reading");
-        bookReading.setThemeID(ThemeUtils.THEME_PURPLE_DARK);
-        bookReading.getTags().add("Reading");
-        bookReading.getNotifyList().add(new Notify(7,35));
-        List<Task> readingTask = new ArrayList<>();
-        Task task1 = new Task("ইসলামী আকিদা");
-        task1.maxProgress = 260;
-        task1.taskType = Task.Type.Mustahab;
-        task1.currentProgress = 204;
-        readingTask.add(task1);
-        bookReading.getHistory().commitTodo(Calendar.getInstance(), readingTask);
-        scheduleDao.insertSchedule(bookReading);*/
 
         // Add default Transaction Account to Database
         TransactionAccountDao accountDao = appDatabaseInstance.accountDao();
