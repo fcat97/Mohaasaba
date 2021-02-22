@@ -41,7 +41,7 @@ public class Book implements Parcelable {
     @Embedded public ScheduleType scheduleType;
     public ProgressHistory readingHistory;
     public ReadingStatus readingStatus;
-    public List<Notify> notifyIDList = new ArrayList<>();
+    public List<Notify> notifyList = new ArrayList<>();
 
     public Book(String title) {
         this.bookID = IdGenerator.getNewID();
@@ -64,7 +64,7 @@ public class Book implements Parcelable {
         scheduleType = in.readParcelable(ScheduleType.class.getClassLoader());
         readingHistory = in.readParcelable(ProgressHistory.class.getClassLoader());
         readingStatus = ReadingStatus.values()[in.readInt()];
-        notifyIDList = in.createTypedArrayList(Notify.CREATOR);
+        notifyList = in.createTypedArrayList(Notify.CREATOR);
     }
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {
@@ -97,6 +97,6 @@ public class Book implements Parcelable {
         dest.writeParcelable(scheduleType, flags);
         dest.writeParcelable(readingHistory, flags);
         dest.writeInt(readingStatus.ordinal());
-        dest.writeTypedList(notifyIDList);
+        dest.writeTypedList(notifyList);
     }
 }

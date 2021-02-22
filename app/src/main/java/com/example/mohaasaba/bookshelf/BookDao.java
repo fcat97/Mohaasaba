@@ -34,4 +34,7 @@ public interface BookDao {
 
     @Query("SELECT * FROM bookshelf")
     LiveData<List<Book>> getAllBooks();
+
+    @Query("SELECT * FROm bookshelf")
+    List<Book> getAllBook();
 }
