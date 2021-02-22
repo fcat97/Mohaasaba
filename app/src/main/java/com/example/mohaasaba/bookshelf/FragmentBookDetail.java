@@ -42,7 +42,7 @@ public class FragmentBookDetail extends Fragment {
     private EditText bookTitle_et, author_et, publication_et, pages_et, owner_et;
     private TextView entryDate_tv, dailyTarget_tv, completed_tv, totalComplete_tv;
     private Button progress_bt;
-    private ImageButton saveButton;
+    private ImageButton saveButton, undoButton, allDoneButton;
     private RelativeLayout rrl_5, input_RL, dailyTarget_rl;
     private EditText progressInput_et;
     private ImageButton inputDoneButton;
@@ -93,6 +93,8 @@ public class FragmentBookDetail extends Fragment {
         progressInput_et = view.findViewById(R.id.progressInput_EditText_FragmentBookDetail);
         inputDoneButton = view.findViewById(R.id.checkButton_ImageButton_FragmentBookDetail);
         barChart = view.findViewById(R.id.progress_chart_FragmentBookDetail);
+        undoButton = view.findViewById(R.id.undoButton_ImageButton_FragmentBookDetail);
+        allDoneButton = view.findViewById(R.id.allDone_ImageButton_FragmentBookDetail);
         return view;
     }
 
@@ -151,6 +153,8 @@ public class FragmentBookDetail extends Fragment {
 
         rrl_5.setOnClickListener(this::openDatePickerDialog);
         progress_bt.setOnClickListener(this::doProgress);
+        undoButton.setOnClickListener(this::undoProgress);
+        allDoneButton.setOnClickListener(this::allDone);
         dailyTarget_rl.setOnClickListener(this::showTargetInput);
         inputDoneButton.setOnClickListener(this::onTargetInputDone);
     }
@@ -189,6 +193,14 @@ public class FragmentBookDetail extends Fragment {
     }
     private void doProgress(View view) {
         book.readingHistory.getProgress(Calendar.getInstance()).doProgress();
+        setProgressView();
+    }
+    private void undoProgress(View view) {
+        book.readingHistory.getProgress(Calendar.getInstance()).undoProgress();
+        setProgressView();
+    }
+    private void allDone(View view) {
+        book.readingHistory.getProgress(Calendar.getInstance()).allDone();
         setProgressView();
     }
     private void showTargetInput(View view) {
