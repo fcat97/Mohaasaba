@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -75,5 +76,18 @@ public class BookRepo {
     }
     public LiveData<List<Book>> getAllBooks() {
         return bookDao.getAllBooks();
+    }
+    public List<Book> getAllBook() {
+        List<Book> books = new ArrayList<>();
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<List<Book>> result = executorService.submit(() -> bookDao.getAllBook());
+
+        try {
+            books.addAll(result.get());
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return books;
     }
 }

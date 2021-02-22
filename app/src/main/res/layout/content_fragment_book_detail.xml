@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:id="@+id/rrl_0"
         android:layout_width="match_parent"
@@ -156,6 +156,7 @@
         </RelativeLayout>
     </RelativeLayout>
     <LinearLayout
+        android:id="@+id/ll_0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_mini"
@@ -320,6 +321,17 @@
                 android:tint="?attr/colorAccent"
                 android:layout_toEndOf="@id/progress_Button_FragmentBookDetail" />
         </RelativeLayout>
-
     </LinearLayout>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:padding="@dimen/dimen_mini"
+        app:cardCornerRadius="12dp"
+        android:layout_below="@id/ll_0"
+        android:layout_marginTop="@dimen/dimen_large">
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/view_reminder"/>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>

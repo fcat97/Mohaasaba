@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.example.mohaasaba.bookshelf.Book;
+import com.example.mohaasaba.bookshelf.BookRepo;
 import com.example.mohaasaba.database.AppRepository;
 import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.Schedule;
@@ -29,12 +31,14 @@ public class NotificationScheduler extends BroadcastReceiver{
     private AlarmManager alarmManager;
 
     private AppRepository appRepository;
+    private BookRepo bookRepo;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "onReceive: called");
         this.mContext = context;
         this.appRepository = new AppRepository(context);
+        this.bookRepo = new BookRepo(context);
         this.sharedPreferences = context.getSharedPreferences(NOTIFY_SHARED_PREF, Context.MODE_PRIVATE);
         this.alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
@@ -50,7 +54,7 @@ public class NotificationScheduler extends BroadcastReceiver{
 
     private void activateAllOfToday() {
         for (Notify notify:
-                getScheduleNotifications()) {
+                getNotificationsOfToday()) {
             activeNotification(notify);
         }
     }
@@ -119,24 +123,34 @@ public class NotificationScheduler extends BroadcastReceiver{
         List<Notify> notifyList = new ArrayList<>();
 
         // Get Notify from schedule_table
-        List<Schedule> schedules = appRepository.getAllSchedules();
         for (Schedule s :
-                schedules) {
+                appRepository.getAllSchedules()) {
             notifyList.addAll(s.getNotifyList());
+        }
+
+        // Get All notifications from book_table
+        for (Book b :
+                bookRepo.getAllBook()) {
+            notifyList.addAll(b.notifyList);
         }
 
         return notifyList;
     }
 
-    private List<Notify> getScheduleNotifications() {
-        List<Schedule> schedules = appRepository.getAllSchedules();
+    private List<Notify> getNotificationsOfToday() {
         List<Notify> notifyList = new ArrayList<>();
 
         // Get notifications from schedule of today
         for (Schedule s :
-                schedules) {
+                appRepository.getAllSchedules()) {
             if (s.getScheduleType().isToday()) notifyList.addAll(s.getNotifyList());
         }
+
+        // Get Notifications from Book of Today
+        for (Book b : bookRepo.getAllBook()) {
+            if (b.scheduleType.isToday()) notifyList.addAll(b.notifyList);
+        }
+
 
         return notifyList;
     }
