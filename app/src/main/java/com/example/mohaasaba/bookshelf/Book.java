@@ -9,6 +9,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.example.mohaasaba.helper.IdGenerator;
+import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.ProgressHistory;
 import com.example.mohaasaba.models.ScheduleType;
 
@@ -40,7 +41,7 @@ public class Book implements Parcelable {
     @Embedded public ScheduleType scheduleType;
     public ProgressHistory readingHistory;
     public ReadingStatus readingStatus;
-    public List<String> notifyIDList = new ArrayList<>();
+    public List<Notify> notifyIDList = new ArrayList<>();
 
     public Book(String title) {
         this.bookID = IdGenerator.getNewID();
@@ -63,7 +64,7 @@ public class Book implements Parcelable {
         scheduleType = in.readParcelable(ScheduleType.class.getClassLoader());
         readingHistory = in.readParcelable(ProgressHistory.class.getClassLoader());
         readingStatus = ReadingStatus.values()[in.readInt()];
-        notifyIDList = in.createStringArrayList();
+        notifyIDList = in.createTypedArrayList(Notify.CREATOR);
     }
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {
@@ -96,6 +97,6 @@ public class Book implements Parcelable {
         dest.writeParcelable(scheduleType, flags);
         dest.writeParcelable(readingHistory, flags);
         dest.writeInt(readingStatus.ordinal());
-        dest.writeStringList(notifyIDList);
+        dest.writeTypedList(notifyIDList);
     }
 }
