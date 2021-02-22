@@ -1,6 +1,9 @@
 package com.example.mohaasaba.bookshelf;
 
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +17,14 @@ import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mohaasaba.R;
+import com.example.mohaasaba.receivers.NotificationScheduler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
+import java.util.Objects;
 
 public class FragmentBooks extends Fragment {
+    private static final String TAG = FragmentBooks.class.getCanonicalName();
     private RecyclerView recyclerView;
     private LiveData<List<Book>> bookList;
     private BookAdapter adapter;
@@ -57,6 +63,23 @@ public class FragmentBooks extends Fragment {
         addButton.setOnClickListener(v -> {
             if (addButtonListener != null) addButtonListener.onClick(new Book(" "));
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: called");
+        Log.d(TAG, "rescheduleNotification: called");
+        Intent intent = new Intent(getContext(), NotificationScheduler.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), NotificationScheduler.MIDNIGHT_REQUEST_PID,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        try {
+            pendingIntent.send(Objects.requireNonNull(getContext()).getApplicationContext(), 10099, intent);
+            Log.d(TAG, "rescheduleNotification: done");
+        } catch (PendingIntent.CanceledException e) {
+            Log.d(TAG, "rescheduleNotification: failed");
+            e.printStackTrace();
+        }
     }
 
     public FragmentBooks setItemClickedListener(ItemClickedListener itemClickedListener) {

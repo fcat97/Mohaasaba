@@ -96,11 +96,11 @@ public abstract class AppDatabase extends RoomDatabase{
         Schedule schedule = new Schedule("Quick Tutorial");
         schedule.setThemeID(ThemeUtils.THEME_GREEN);
 
-        Notify notify1 = new Notify(0,0, schedule.getScheduleID());
+        Notify notify1 = new Notify(0,0);
         notify1.label = schedule.getTitle();
         notify1.message = "You can add Reminders here!";
 
-        Notify notify2 = new Notify(0,0, schedule.getScheduleID());
+        Notify notify2 = new Notify(0,0);
         notify2.label = schedule.getTitle();
         notify2.message = "Click on the + icon in top right corner";
 

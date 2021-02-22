@@ -1,28 +1,19 @@
 package com.example.mohaasaba.bookshelf;
 
-import android.app.DatePickerDialog;
-import android.graphics.Color;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
-import android.widget.FrameLayout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LiveData;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.dialog.DialogDatePicker;
-import com.example.mohaasaba.helper.TabPagerBinder;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
+import com.example.mohaasaba.fragment.FragmentEditReminder;
+import com.example.mohaasaba.models.Notify;
+import com.example.mohaasaba.receivers.NotificationScheduler;
 
 import java.util.List;
 
@@ -30,6 +21,7 @@ public class TalimActivity extends AppCompatActivity {
     public static final String TAG = TalimActivity.class.getCanonicalName();
 
     private FragmentBooks fragmentBooksReading;
+    private FragmentBookDetail fragmentBookDetail;
     private BookRepo bookRepo;
 
     @Override
@@ -48,23 +40,33 @@ public class TalimActivity extends AppCompatActivity {
         fragmentBooksReading = new FragmentBooks(allBooks)
                 .setItemClickedListener(this::openBookEditor)
                 .setAddButtonListener(this::openBookEditor);
+
         openFragmentBooks();
     }
 
     private void openBookEditor(Book book) {
+        fragmentBookDetail = FragmentBookDetail.newInstance(book)
+                .setSaveButtonListener(book1 -> {
+                    bookRepo.updateBook(book1);
+                    getSupportFragmentManager().popBackStack();
+                })
+                .setNotifyListeners(this::showEditReminderFragment);
+
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameLayout_TalimActivity, FragmentBookDetail.newInstance(book)
-                    .setSaveButtonListener(book1 -> {
-                        bookRepo.updateBook(book1);
-                        getSupportFragmentManager().popBackStack();
-                    }))
+                .replace(R.id.frameLayout_TalimActivity, fragmentBookDetail)
                 .addToBackStack("Fragment Book Detail")
                 .commit();
     }
-    
+
+
     private void openFragmentBooks() {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.frameLayout_TalimActivity, fragmentBooksReading)
                 .commit();
+    }
+    private void showEditReminderFragment(Notify notify) {
+        FragmentEditReminder fragmentEditReminder = new FragmentEditReminder(notify);
+        fragmentEditReminder.show(getSupportFragmentManager(), "Fragment Edit Reminder");
+        fragmentEditReminder.setListeners(() -> fragmentBookDetail.notifyEditConfirmed(notify));
     }
 }
