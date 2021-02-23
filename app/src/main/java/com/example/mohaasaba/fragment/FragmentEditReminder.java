@@ -91,8 +91,8 @@ public class FragmentEditReminder extends BottomSheetDialogFragment {
     }
     private String getTimeString(int hour, int minute) {
         if (hour >= 12) {
-            return (hour - 12) + " " + minute + " PM";
-        } else return hour + " " + minute + " AM";
+            return (hour - 12) + " : " + minute + " PM";
+        } else return hour + " : " + minute + " AM";
     }
 
     public void setListeners(EditFragmentListeners listeners) {
