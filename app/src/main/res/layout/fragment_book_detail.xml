@@ -39,7 +39,10 @@
         android:id="@+id/scrollView_FragmentBookDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dimen_mini"
+        android:paddingTop="@dimen/dimen_mini"
+        android:paddingBottom="@dimen/dimen_large"
+        android:paddingStart="@dimen/dimen_mini"
+        android:paddingEnd="@dimen/dimen_mini"
         android:layout_below="@id/appbarLayout_FragmentBookDetail">
         <include
             android:layout_height="wrap_content"

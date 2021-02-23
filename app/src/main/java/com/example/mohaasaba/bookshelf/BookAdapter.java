@@ -62,6 +62,15 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
             if (itemClickListener != null) itemClickListener.onClick(book);
         });
 
+        // set the color of ScheduleType Indicator
+        holder.sat.setBackgroundColor(book.scheduleType.everySaturday ? Color.GREEN : Color.LTGRAY);
+        holder.sun.setBackgroundColor(book.scheduleType.everySunday ? Color.GREEN : Color.LTGRAY);
+        holder.mon.setBackgroundColor(book.scheduleType.everyMonday ? Color.GREEN : Color.LTGRAY);
+        holder.tue.setBackgroundColor(book.scheduleType.everyTuesday ? Color.GREEN : Color.LTGRAY);
+        holder.wed.setBackgroundColor(book.scheduleType.everyWednesday ? Color.GREEN : Color.LTGRAY);
+        holder.thu.setBackgroundColor(book.scheduleType.everyThursday ? Color.GREEN : Color.LTGRAY);
+        holder.fri.setBackgroundColor(book.scheduleType.everyFriday ? Color.GREEN : Color.LTGRAY);
+
         // set schedule time
         /*
         int startTime = book.scheduleType.startingMinute;
@@ -82,12 +91,22 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
         private TextView tv_bookAuthor;
         private ImageView bookIcon;
 
+        private View sat, sun, mon, tue, wed, thu, fri;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tv_bookTitle = itemView.findViewById(R.id.title_TextView_ItemTalim);
             tv_bookAuthor = itemView.findViewById(R.id.author_TextView_ItemTalim);
             bookIcon = itemView.findViewById(R.id.bookIcon_ImageView_ItemTaalim);
+
+            sat = itemView.findViewById(R.id.sat_ItemTalim);
+            sun = itemView.findViewById(R.id.sun_ItemTalim);
+            mon = itemView.findViewById(R.id.mon_ItemTalim);
+            tue = itemView.findViewById(R.id.tue_ItemTalim);
+            wed = itemView.findViewById(R.id.wed_ItemTalim);
+            thu = itemView.findViewById(R.id.thu_ItemTalim);
+            fri = itemView.findViewById(R.id.fri_ItemTalim);
         }
     }
 
