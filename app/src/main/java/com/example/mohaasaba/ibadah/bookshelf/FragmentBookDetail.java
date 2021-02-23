@@ -1,4 +1,4 @@
-package com.example.mohaasaba.bookshelf;
+package com.example.mohaasaba.ibadah.bookshelf;
 
 import android.app.DatePickerDialog;
 import android.graphics.Color;
@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.adapter.NotifyAdapter;
+import com.example.mohaasaba.fragment.FragmentEditReminder;
 import com.example.mohaasaba.helper.ViewMaker;
 import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.Progress;
@@ -41,9 +42,8 @@ public class FragmentBookDetail extends Fragment {
     private static final String ARG_BOOK = FragmentBookDetail.class.getCanonicalName() + "_BOOK";
     private static final String TAG = FragmentBookDetail.class.getCanonicalName();
 
-    private SaveButtonListener saveButtonListener;
     private Book book;
-    private BookRepo repo;
+    private BookRepo bookRepo;
 
     private Toolbar toolbar;
     private EditText bookTitle_et, author_et, publication_et, pages_et, owner_et;
@@ -59,7 +59,6 @@ public class FragmentBookDetail extends Fragment {
     private TextView noNotify_tv;
     private FloatingActionButton addNotifyButton;
     private NotifyAdapter notifyAdapter;
-    private NotifyListeners notifyListeners;
     private FrameLayout dateSelector_fl;
 
     public FragmentBookDetail() {
@@ -80,7 +79,7 @@ public class FragmentBookDetail extends Fragment {
         if (getArguments() != null) {
             book = getArguments().getParcelable(ARG_BOOK);
         }
-        if (repo == null) repo = new BookRepo(getContext());
+        if (bookRepo == null) bookRepo = new BookRepo(getContext());
     }
 
     @Override
@@ -170,16 +169,13 @@ public class FragmentBookDetail extends Fragment {
 
         addNotifyButton.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
-            if (notifyListeners != null) notifyListeners.onClick(new Notify(
-                    calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)));
-            else throw new ClassCastException("Must Implement Listeners");
+            openNotifyEditorFragment(new Notify(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)));
         });
 
         notifyAdapter.setListener(new NotifyAdapter.onItemClickedListener() {
             @Override
             public void onItemClicked(Notify notify) {
-                if (notifyListeners != null) notifyListeners.onClick(notify);
-                else throw new ClassCastException("Must Implement Listeners");
+                openNotifyEditorFragment(notify);
             }
 
             @Override
@@ -208,7 +204,8 @@ public class FragmentBookDetail extends Fragment {
             book.owner = owner_et.getText().toString().trim().isEmpty() ? "" : owner_et.getText().toString().trim();
 
 
-            if (saveButtonListener != null && ! book.title.isEmpty()) saveButtonListener.onClick(book);
+            if (! book.title.isEmpty()) bookRepo.updateBook(book);
+            getParentFragmentManager().popBackStack();
         });
 
         rrl_5.setOnClickListener(this::openDatePickerDialog);
@@ -304,6 +301,12 @@ public class FragmentBookDetail extends Fragment {
         book.purchaseTime = calendar.getTimeInMillis();
     }
 
+    private void openNotifyEditorFragment(Notify notify) {
+        FragmentEditReminder fragmentEditReminder = new FragmentEditReminder(notify)
+                .setOnConfirmListeners(this::notifyEditConfirmed);
+        fragmentEditReminder.show(getParentFragmentManager(), "Fragment Edit Reminder");
+    }
+
 
 
     public void notifyEditConfirmed(Notify notify) {
@@ -315,22 +318,5 @@ public class FragmentBookDetail extends Fragment {
         notifyAdapter.notifyDataSetChanged();
         if (book.notifyList.size() > 0) noNotify_tv.setVisibility(View.INVISIBLE);
         else noNotify_tv.setVisibility(View.VISIBLE);
-    }
-
-    public FragmentBookDetail setSaveButtonListener(SaveButtonListener saveButtonListener) {
-        this.saveButtonListener = saveButtonListener;
-        return this;
-    }
-
-    public FragmentBookDetail setNotifyListeners(NotifyListeners notifyListeners) {
-        this.notifyListeners = notifyListeners;
-        return this;
-    }
-
-    public interface SaveButtonListener {
-        void onClick(Book book);
-    }
-    public interface NotifyListeners {
-        void onClick(Notify notify);
     }
 }

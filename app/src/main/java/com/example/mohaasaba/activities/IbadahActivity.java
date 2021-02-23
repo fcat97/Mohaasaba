@@ -1,16 +1,16 @@
 package com.example.mohaasaba.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.bookshelf.TalimActivity;
+import com.example.mohaasaba.ibadah.bookshelf.TalimActivity;
+import com.example.mohaasaba.ibadah.tasbih.TasbihActivity;
+import com.example.mohaasaba.ibadah.tasbih.TasbihAdapter;
 
 import soup.neumorphism.NeumorphCardView;
 
@@ -30,6 +30,12 @@ public class IbadahActivity extends AppCompatActivity{
         NeumorphCardView talimCard = findViewById(R.id.talim_CardView_IbadahActivity);
         talimCard.setOnClickListener(v -> {
             Intent intent = new Intent(this, TalimActivity.class);
+            startActivity(intent);
+        });
+
+        NeumorphCardView zikirCard = findViewById(R.id.zikir_CardView_IbadahActivity);
+        zikirCard.setOnClickListener(v -> {
+            Intent intent = new Intent(this, TasbihActivity.class);
             startActivity(intent);
         });
 

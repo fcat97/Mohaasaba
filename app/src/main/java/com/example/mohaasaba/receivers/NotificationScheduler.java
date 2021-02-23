@@ -8,8 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.example.mohaasaba.bookshelf.Book;
-import com.example.mohaasaba.bookshelf.BookRepo;
+import com.example.mohaasaba.ibadah.bookshelf.Book;
+import com.example.mohaasaba.ibadah.bookshelf.BookRepo;
 import com.example.mohaasaba.database.AppRepository;
 import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.Schedule;

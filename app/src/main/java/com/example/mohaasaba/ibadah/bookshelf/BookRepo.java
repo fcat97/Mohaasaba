@@ -1,8 +1,10 @@
-package com.example.mohaasaba.bookshelf;
+package com.example.mohaasaba.ibadah.bookshelf;
 
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
+
+import com.example.mohaasaba.ibadah.IbadahDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +15,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class BookRepo {
-    private BookDB bookDB;
+    private IbadahDB ibadahDB;
     private BookDao bookDao;
 
     public BookRepo(Context context) {
-        this.bookDB = BookDB.getInstance(context);
-        this.bookDao = bookDB.bookDao();
+        this.ibadahDB = IbadahDB.getInstance(context);
+        this.bookDao = ibadahDB.bookDao();
     }
 
 

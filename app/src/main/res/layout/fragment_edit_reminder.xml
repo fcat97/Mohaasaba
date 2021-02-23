@@ -57,7 +57,7 @@
             android:textColor="?attr/colorPrimary"
             android:text="@string/demo_time"
             android:textAlignment="center"
-            android:textAppearance="@style/textLarge"
+            android:textAppearance="@style/textMedium"
             android:background="@drawable/button_ripple_gray"
             android:padding="@dimen/dimen_small"
 

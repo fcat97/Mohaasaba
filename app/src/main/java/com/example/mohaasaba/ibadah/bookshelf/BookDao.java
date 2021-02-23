@@ -1,4 +1,4 @@
-package com.example.mohaasaba.bookshelf;
+package com.example.mohaasaba.ibadah.bookshelf;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

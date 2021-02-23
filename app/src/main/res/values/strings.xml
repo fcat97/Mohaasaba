@@ -126,4 +126,14 @@
     <string name="plans">Plans</string>
     <string name="tweek">Tweek</string>
     <string name="enter_plan_name">Enter Plan Name</string>
+    <string name="tasbih">Tasbih</string>
+    <string name="sample_label">কোনো খাবার সামনে এলে এ দু‘আ পড়বে</string>
+    <string name="sample_ar">اللَّهُمَّ بَارِكْ لَنَا فِيهِ، وَأَطْعِمْنَا خَيْرًا مِنْه</string>
+    <string name="sample_bn">হে আল্লাহ! আমদের এই খাবারে বরকত দাও, এর চেও উত্তম খাবার আমাদেরকে দান করো।</string>
+    <string name="sample_ref">-সুনানে আবু দাউদ, ৩৭৩০. হাদীসের সূত্র: হাসান</string>
+    <string name="label">Label</string>
+    <string name="arabic_text">Arabic Text</string>
+    <string name="bangla_text">Bangla Text</string>
+    <string name="reference">Reference</string>
+    <string name="rewards">Rewards</string>
 </resources>

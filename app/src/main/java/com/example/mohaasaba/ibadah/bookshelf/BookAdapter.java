@@ -1,30 +1,19 @@
-package com.example.mohaasaba.bookshelf;
+package com.example.mohaasaba.ibadah.bookshelf;
 
-import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.helper.ViewMaker;
-import com.example.mohaasaba.models.Schedule;
-import com.example.mohaasaba.models.ScheduleType;
-
-import at.grabner.circleprogress.CircleProgressView;
 
 public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
     private ItemClickListener itemClickListener;
