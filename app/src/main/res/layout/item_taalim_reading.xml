@@ -46,8 +46,8 @@
             android:textAppearance="@style/textSmall.Italic"
             android:textAlignment="center"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@id/title_TextView_ItemTalim"/>
+            android:layout_below="@id/title_TextView_ItemTalim"
+            android:layout_above="@id/progressBar_ItemTalim"/>
         <LinearLayout
             android:id="@+id/ll_0"
             android:layout_width="wrap_content"
@@ -98,5 +98,14 @@
                 android:background="@color/colorCyan"
                 android:layout_margin="2dp"/>
         </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progressBar_ItemTalim"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:padding="@dimen/dimen_mini"
+            android:layout_marginStart="@dimen/dimen_large"
+            android:layout_marginEnd="@dimen/dimen_large"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

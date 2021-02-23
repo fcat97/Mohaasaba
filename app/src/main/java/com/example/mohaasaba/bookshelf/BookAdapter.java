@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -71,6 +72,10 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
         holder.thu.setBackgroundColor(book.scheduleType.everyThursday ? Color.GREEN : Color.LTGRAY);
         holder.fri.setBackgroundColor(book.scheduleType.everyFriday ? Color.GREEN : Color.LTGRAY);
 
+        int totalProgress = book.readingHistory.getTotalProgress();
+        int progress = totalProgress == 0 ? 0 : book.totalPages / totalProgress;
+        holder.progressBar.setProgress(progress);
+
         // set schedule time
         /*
         int startTime = book.scheduleType.startingMinute;
@@ -92,6 +97,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
         private ImageView bookIcon;
 
         private View sat, sun, mon, tue, wed, thu, fri;
+        private ProgressBar progressBar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -107,6 +113,8 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
             wed = itemView.findViewById(R.id.wed_ItemTalim);
             thu = itemView.findViewById(R.id.thu_ItemTalim);
             fri = itemView.findViewById(R.id.fri_ItemTalim);
+
+            progressBar = itemView.findViewById(R.id.progressBar_ItemTalim);
         }
     }
 
