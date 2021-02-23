@@ -322,16 +322,31 @@
                 android:layout_toEndOf="@id/progress_Button_FragmentBookDetail" />
         </RelativeLayout>
     </LinearLayout>
-    <androidx.cardview.widget.CardView
+    <LinearLayout
+        android:id="@+id/ll_1"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:padding="@dimen/dimen_mini"
-        app:cardCornerRadius="12dp"
-        android:layout_below="@id/ll_0"
-        android:layout_marginTop="@dimen/dimen_large">
-        <include
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/checkbox_drawable"
+        android:layout_marginTop="@dimen/dimen_small"
+        android:layout_marginBottom="@dimen/dimen_small"
+        android:padding="@dimen/dimen_small"
+        android:layout_below="@id/ll_0">
+        <FrameLayout
+            android:id="@+id/dateSelector_FrameLayout_FragmentBookDetail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            layout="@layout/view_reminder"/>
-    </androidx.cardview.widget.CardView>
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_small"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:padding="@dimen/dimen_mini"
+            app:cardCornerRadius="12dp"
+            android:layout_marginTop="@dimen/dimen_large">
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/view_reminder"/>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
 </RelativeLayout>

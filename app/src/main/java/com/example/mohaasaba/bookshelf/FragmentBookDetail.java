@@ -16,12 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.adapter.NotifyAdapter;
+import com.example.mohaasaba.helper.ViewMaker;
 import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.Progress;
 import com.github.mikephil.charting.charts.BarChart;
@@ -58,6 +60,7 @@ public class FragmentBookDetail extends Fragment {
     private FloatingActionButton addNotifyButton;
     private NotifyAdapter notifyAdapter;
     private NotifyListeners notifyListeners;
+    private FrameLayout dateSelector_fl;
 
     public FragmentBookDetail() {
         // Required empty public constructor
@@ -110,6 +113,7 @@ public class FragmentBookDetail extends Fragment {
         notify_rv = view.findViewById(R.id.recyclerView_FragmentReminder);
         noNotify_tv = view.findViewById(R.id.noItem_FragmentReminder);
         addNotifyButton = view.findViewById(R.id.addReminder_FAB_FragmentReminder);
+        dateSelector_fl = view.findViewById(R.id.dateSelector_FrameLayout_FragmentBookDetail);
         return view;
     }
 
@@ -188,6 +192,12 @@ public class FragmentBookDetail extends Fragment {
                 else noNotify_tv.setVisibility(View.VISIBLE);
             }
         });
+
+        // ScheduleType-----------------------------------------------------------------------------
+        ViewMaker.DateSelectorView dateSelectorView = new ViewMaker.DateSelectorView(getContext());
+        dateSelectorView.setScheduleType(book.scheduleType);
+        dateSelector_fl.addView(dateSelectorView.getView());
+        
 
         // FragmentBookDetail SaveButton Listener
         saveButton.setOnClickListener(v -> {
