@@ -43,6 +43,7 @@
         android:paddingBottom="@dimen/dimen_large"
         android:paddingStart="@dimen/dimen_mini"
         android:paddingEnd="@dimen/dimen_mini"
+        android:scrollbars="none"
         android:layout_below="@id/appbarLayout_FragmentBookDetail">
         <include
             android:layout_height="wrap_content"

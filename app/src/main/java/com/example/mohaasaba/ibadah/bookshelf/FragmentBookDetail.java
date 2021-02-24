@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -60,6 +62,10 @@ public class FragmentBookDetail extends Fragment {
     private FloatingActionButton addNotifyButton;
     private NotifyAdapter notifyAdapter;
     private FrameLayout dateSelector_fl;
+
+    private SwitchCompat hardcopy_sw, softcopy_sw;
+    private EditText hardcopyLocation_et, softcopyLocation_et;
+    private RadioButton status_read_rb, status_reading_rb, status_wishlist_rb;
 
     public FragmentBookDetail() {
         // Required empty public constructor
@@ -113,6 +119,14 @@ public class FragmentBookDetail extends Fragment {
         noNotify_tv = view.findViewById(R.id.noItem_FragmentReminder);
         addNotifyButton = view.findViewById(R.id.addReminder_FAB_FragmentReminder);
         dateSelector_fl = view.findViewById(R.id.dateSelector_FrameLayout_FragmentBookDetail);
+
+        hardcopy_sw = view.findViewById(R.id.hardcopy_Switch_FragmentBookDetail);
+        softcopy_sw = view.findViewById(R.id.softcopy_Switch_FragmentBookDetail);
+        hardcopyLocation_et = view.findViewById(R.id.hardcopy_location_FragmentBookDetail);
+        softcopyLocation_et = view.findViewById(R.id.softcopy_location_FragmentBookDetail);
+        status_read_rb = view.findViewById(R.id.read_radioButton_FragmentBookDetail);
+        status_reading_rb = view.findViewById(R.id.reading_radioButton_FragmentBookDetail);
+        status_wishlist_rb = view.findViewById(R.id.wishlist_radioButton_FragmentBookDetail);
         return view;
     }
 
@@ -130,6 +144,14 @@ public class FragmentBookDetail extends Fragment {
         dailyTarget_tv.setText(String.valueOf(book.readingHistory.getDailyTarget()));
         completed_tv.setText(String.valueOf(book.readingHistory.getProgress(Calendar.getInstance()).progress));
         totalComplete_tv.setText(String.valueOf(book.readingHistory.getTotalProgress()));
+
+        hardcopyLocation_et.setText(book.hardCopyLocation);
+        softcopyLocation_et.setText(book.softCopyLocation);
+        hardcopy_sw.setChecked(book.hardCopyCollected);
+        softcopy_sw.setChecked(book.softCopyCollected);
+        status_read_rb.setChecked(book.readingStatus == Book.ReadingStatus.READ);
+        status_reading_rb.setChecked(book.readingStatus == Book.ReadingStatus.READING);
+        status_wishlist_rb.setChecked(book.readingStatus == Book.ReadingStatus.WISH_LISTED);
 
         // set Bar Chart
         barChart.setBackgroundColor(Color.TRANSPARENT);
@@ -203,6 +225,14 @@ public class FragmentBookDetail extends Fragment {
             book.totalPages = pages_et.getText().toString().trim().isEmpty() ? 0 : Integer.parseInt(pages_et.getText().toString().trim());
             book.owner = owner_et.getText().toString().trim().isEmpty() ? "" : owner_et.getText().toString().trim();
 
+            book.hardCopyCollected = hardcopy_sw.isChecked();
+            book.softCopyCollected = softcopy_sw.isChecked();
+            book.hardCopyLocation = hardcopyLocation_et.getText().toString().trim();
+            book.softCopyLocation = softcopyLocation_et.getText().toString().trim();
+
+            if (status_read_rb.isChecked()) book.readingStatus = Book.ReadingStatus.READ;
+            else if (status_reading_rb.isChecked()) book.readingStatus = Book.ReadingStatus.READING;
+            else book.readingStatus = Book.ReadingStatus.WISH_LISTED;
 
             if (! book.title.isEmpty()) bookRepo.updateBook(book);
             getParentFragmentManager().popBackStack();
