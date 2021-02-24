@@ -5,12 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".ibadah.bookshelf.TalimActivity">
+    tools:context=".ibadah.tasbih.TasbihActivity">
 
     <FrameLayout
-        android:id="@+id/frameLayout_TalimActivity"
+        android:id="@+id/frameLayout_TasbihActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
 </RelativeLayout>

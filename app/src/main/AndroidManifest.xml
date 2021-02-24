@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mohaasaba">
-        <activity android:name=".activities.IbadahActivity"
+        <activity android:name=".ibadah.tasbih.TasbihActivity"
+            android:label="@string/tasbih"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.IbadahActivity"
             android:label="@string/ibadah"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -71,9 +75,10 @@
             android:name=".activities.MainActivity"
             android:label="@string/schedules"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".bookshelf.TalimActivity"
+        <activity
+            android:name=".ibadah.bookshelf.TalimActivity"
             android:label="Talim"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver android:name=".receivers.NotyFire" />
         <receiver android:name=".receivers.NotificationScheduler" />

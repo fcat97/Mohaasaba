@@ -45,7 +45,7 @@ import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
 public class AddScheduleActivity extends AppCompatActivity
-        implements DatePickerDialog.OnDateSetListener, FragmentOther.FragmentOtherListeners {
+        implements FragmentOther.FragmentOtherListeners {
     public static final int EDIT_SCHEDULE_TYPE_REQUEST = 2152;
     public static final String EXTRA_SCHEDULE = "com.example.mohasabap.EXTRA_SCHEDULE";
     public static final String EXTRA_THEME_ID = "com.example.mohasabap.EXTRA_SCHEDULE";
@@ -96,7 +96,6 @@ public class AddScheduleActivity extends AppCompatActivity
         fragmentOther.setListeners(this);
 
         fragmentTodo = new FragmentTodo(mViewModel.getSchedule().getHistory());
-        fragmentTodo.setFragmentListeners(this::openDatePickerDialog);
     }
 
     private void setIntentData() throws ExecutionException, InterruptedException {
@@ -174,26 +173,11 @@ public class AddScheduleActivity extends AppCompatActivity
         });
         colorPicker.showNow(getSupportFragmentManager(), "ColorPicker");
     }
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.clear();
-        calendar.set(year, month, dayOfMonth);
-        fragmentTodo.setSelectedDate(calendar);
-    }
-    private void openDatePickerDialog() {
-        DialogDatePicker dialogDatePicker = new DialogDatePicker();
-        dialogDatePicker.show(getSupportFragmentManager(), "Date Picker Dialog");
-    }
+
     private void showEditReminderFragment(Notify notify) {
         FragmentEditReminder fragmentEditReminder = new FragmentEditReminder(notify);
         fragmentEditReminder.show(getSupportFragmentManager(), "Fragment Edit Reminder");
-        fragmentEditReminder.setListeners(new FragmentEditReminder.EditFragmentListeners() {
-            @Override
-            public void onConfirm() {
-                fragmentOther.notifyEditConfirmed(notify);
-            }
-        });
+        fragmentEditReminder.setOnConfirmListeners(fragmentOther::notifyEditConfirmed);
     }
 
     // Fragment Other Listeners------------------------------------------------------------------

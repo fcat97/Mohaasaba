@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +24,7 @@ public class FragmentEditReminder extends BottomSheetDialogFragment {
     private EditText repeatIntervalEditText;
     private FloatingActionButton confirmButton;
     private Notify notify;
-    private EditFragmentListeners listeners;
+    private OnConfirmListener listeners;
     private TextView notifyTime;
 
     public FragmentEditReminder(Notify notify) {
@@ -68,7 +67,7 @@ public class FragmentEditReminder extends BottomSheetDialogFragment {
                 if (notify.notificationMinute < 0) notify.notificationMinute = 0;
                 if (notify.repeatMinute > 0 && notify.repeatMinute < 15) notify.repeatMinute = 15;
 
-                listeners.onConfirm();
+                listeners.onConfirm(notify);
                 dismiss();
             } else throw new ClassCastException("Must Implement Listeners");
         });
@@ -90,15 +89,17 @@ public class FragmentEditReminder extends BottomSheetDialogFragment {
         timePickerDialog.show();
     }
     private String getTimeString(int hour, int minute) {
+        String mm = minute < 10 ? "0" + minute : String.valueOf(minute);
         if (hour >= 12) {
-            return (hour - 12) + " " + minute + " PM";
-        } else return hour + " " + minute + " AM";
+            return (hour - 12) + " : " + mm + " PM";
+        } else return hour + " : " + mm + " AM";
     }
 
-    public void setListeners(EditFragmentListeners listeners) {
+    public FragmentEditReminder setOnConfirmListeners(OnConfirmListener listeners) {
         this.listeners = listeners;
+        return this;
     }
-    public interface EditFragmentListeners {
-        void onConfirm();
+    public interface OnConfirmListener {
+        void onConfirm(Notify notify);
     }
 }

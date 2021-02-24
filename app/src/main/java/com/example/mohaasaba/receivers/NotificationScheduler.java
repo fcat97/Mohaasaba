@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.example.mohaasaba.bookshelf.Book;
-import com.example.mohaasaba.bookshelf.BookRepo;
+import com.example.mohaasaba.ibadah.bookshelf.Book;
+import com.example.mohaasaba.ibadah.bookshelf.BookRepo;
 import com.example.mohaasaba.database.AppRepository;
+import com.example.mohaasaba.ibadah.tasbih.Tasbih;
+import com.example.mohaasaba.ibadah.tasbih.TasbihRepository;
 import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.Schedule;
 
@@ -32,6 +34,7 @@ public class NotificationScheduler extends BroadcastReceiver{
 
     private AppRepository appRepository;
     private BookRepo bookRepo;
+    private TasbihRepository tasbihRepository;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -39,6 +42,7 @@ public class NotificationScheduler extends BroadcastReceiver{
         this.mContext = context;
         this.appRepository = new AppRepository(context);
         this.bookRepo = new BookRepo(context);
+        this.tasbihRepository = new TasbihRepository(context);
         this.sharedPreferences = context.getSharedPreferences(NOTIFY_SHARED_PREF, Context.MODE_PRIVATE);
         this.alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
@@ -134,6 +138,11 @@ public class NotificationScheduler extends BroadcastReceiver{
             notifyList.addAll(b.notifyList);
         }
 
+        // Get All Notifications from tasbih_table
+        for (Tasbih t :
+                tasbihRepository.getTasbihList())
+            notifyList.addAll(t.notifyList);
+
         return notifyList;
     }
 
@@ -151,6 +160,10 @@ public class NotificationScheduler extends BroadcastReceiver{
             if (b.scheduleType.isToday()) notifyList.addAll(b.notifyList);
         }
 
+        // Get Notifications from Tasbih of Today
+        for (Tasbih t: tasbihRepository.getTasbihList()) {
+            if (t.scheduleType.isToday()) notifyList.addAll(t.notifyList);
+        }
 
         return notifyList;
     }

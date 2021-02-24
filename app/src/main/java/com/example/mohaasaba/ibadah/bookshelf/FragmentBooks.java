@@ -1,4 +1,4 @@
-package com.example.mohaasaba.bookshelf;
+package com.example.mohaasaba.ibadah.bookshelf;
 
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.receivers.NotificationScheduler;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 import java.util.Objects;

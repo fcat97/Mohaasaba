@@ -3,31 +3,31 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/dimen_mini">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorGray"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbarLayout_FragmentBookDetail"
+        android:id="@+id/appbarLayout_FragmentTasbih"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:orientation="vertical">
+        android:background="@android:color/white">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_FragmentBookDetail"
+                android:id="@+id/toolbar_FragmentTasbih"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/white"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:titleTextColor="?attr/colorAccent"/>
             <ImageButton
-                android:id="@+id/saveButton_FragmentBookDetail"
+                android:id="@+id/addButton_FragmentTasbih"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_save"
-                android:padding="@dimen/dimen_mini"
+                android:src="@drawable/ic_add"
+                android:tint="?attr/colorAccent"
                 android:layout_marginEnd="@dimen/dimen_small"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
@@ -35,18 +35,12 @@
         </RelativeLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
-        android:id="@+id/scrollView_FragmentBookDetail"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_FragmentTasbih"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dimen_mini"
-        android:paddingBottom="@dimen/dimen_large"
-        android:paddingStart="@dimen/dimen_mini"
-        android:paddingEnd="@dimen/dimen_mini"
-        android:layout_below="@id/appbarLayout_FragmentBookDetail">
-        <include
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            layout="@layout/content_fragment_book_detail"/>
-    </ScrollView>
+        android:layout_height="match_parent"
+        android:padding="@dimen/dimen_small"
+        tools:listitem="@layout/item_tasbih"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_below="@id/appbarLayout_FragmentTasbih"/>
 </RelativeLayout>

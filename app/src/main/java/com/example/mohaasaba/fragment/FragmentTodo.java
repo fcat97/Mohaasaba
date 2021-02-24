@@ -1,5 +1,6 @@
 package com.example.mohaasaba.fragment;
 
+import android.app.DatePickerDialog;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -23,7 +25,6 @@ import com.example.mohaasaba.R;
 import com.example.mohaasaba.adapter.TaskAdapter;
 import com.example.mohaasaba.models.History;
 import com.example.mohaasaba.models.Task;
-import com.example.mohaasaba.dialog.DialogDatePicker;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -49,12 +50,10 @@ public class FragmentTodo extends Fragment {
     private TextView selectedTextView;
     private RecyclerView mRecyclerView;
     private LineChart lineChart;
-    private RelativeLayout datePickerRecyclerView;
+    private RelativeLayout datePickerRelativeLayout;
 
     private List<Task> taskList;
     private Calendar selectedDate;
-
-    private FragmentTodoListeners listeners;
 
     public FragmentTodo(History history) {
         this.history = history;
@@ -76,7 +75,7 @@ public class FragmentTodo extends Fragment {
         selectedTextView = rootView.findViewById(R.id.textView_header_FragmentTodo);
         addTodoEditText = rootView.findViewById(R.id.addTodo_EditText_FragmentTodo);
         lineChart = rootView.findViewById(R.id.lineChart_header_FragmentTodo);
-        datePickerRecyclerView = rootView.findViewById(R.id.recyclerView_Header_FragmentTodo);
+        datePickerRelativeLayout = rootView.findViewById(R.id.recyclerView_Header_FragmentTodo);
 
 
         /* Set the properties of LineChart */
@@ -130,9 +129,7 @@ public class FragmentTodo extends Fragment {
         setHeaderView();
 
         // Set Listener for opening Date Picker Dialog
-        datePickerRecyclerView.setOnClickListener(v -> {
-            if (listeners != null) listeners.onClicked();
-        });
+        datePickerRelativeLayout.setOnClickListener(this::openDatePickerDialog);
 
         /** Adapter Listeners */
         mAdapter.setListener(new TaskAdapter.ItemClickedListener() {
@@ -190,9 +187,9 @@ public class FragmentTodo extends Fragment {
         setChartData(); // Set the LineChart Data
     }
 
-    public void setSelectedDate(Calendar calendar) {
+    public void setSelectedDate(DatePicker view, int year, int month, int dayOfMonth) {
         selectedDate.clear();
-        selectedDate.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        selectedDate.set(year, month, dayOfMonth);
         taskList = history.getTasks(selectedDate);
         mAdapter.submitList(taskList);
         mAdapter.notifyDataSetChanged();
@@ -251,14 +248,12 @@ public class FragmentTodo extends Fragment {
         lineChart.animateX(600);
     }
 
-    //TODO: Implement DatePicker Dialog From FragmentTodo;
-    //TODO: Implement OnItemSwipe methods
+    private void openDatePickerDialog(View view) {
+        int year = selectedDate.get(Calendar.YEAR);
+        int month = selectedDate.get(Calendar.MONTH);
+        int day = selectedDate.get(Calendar.DAY_OF_MONTH);
 
-    public void setFragmentListeners(FragmentTodoListeners listeners) {
-        this.listeners = listeners;
-    }
-
-    public interface FragmentTodoListeners {
-        void onClicked();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), this::setSelectedDate, year, month, day);
+        datePickerDialog.show();
     }
 }

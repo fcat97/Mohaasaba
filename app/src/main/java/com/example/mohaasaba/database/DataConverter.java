@@ -2,7 +2,7 @@ package com.example.mohaasaba.database;
 
 import androidx.room.TypeConverter;
 
-import com.example.mohaasaba.bookshelf.Book;
+import com.example.mohaasaba.ibadah.bookshelf.Book;
 import com.example.mohaasaba.models.History;
 import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.ProgressHistory;
