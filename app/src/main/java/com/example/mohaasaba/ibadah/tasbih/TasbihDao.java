@@ -26,4 +26,7 @@ public interface TasbihDao {
 
     @Query("SELECT * FROM tasbih_table WHERE tasbihID IS :tasbihID")
     Tasbih getTasbih(String tasbihID);
+
+    @Query("SELECT * FROM tasbih_table")
+    List<Tasbih> getTasbihList();
 }
