@@ -42,6 +42,10 @@ public class Book implements Parcelable {
     public ProgressHistory readingHistory;
     public ReadingStatus readingStatus;
     public List<Notify> notifyList = new ArrayList<>();
+    public boolean hardCopyCollected = false;
+    public boolean softCopyCollected = false;
+    public String hardCopyLocation = "";
+    public String softCopyLocation = "";
 
     public Book(String title) {
         this.bookID = IdGenerator.getNewID();
@@ -65,6 +69,10 @@ public class Book implements Parcelable {
         readingHistory = in.readParcelable(ProgressHistory.class.getClassLoader());
         readingStatus = ReadingStatus.values()[in.readInt()];
         notifyList = in.createTypedArrayList(Notify.CREATOR);
+        hardCopyCollected = in.readByte() != 0;
+        softCopyCollected = in.readByte() != 0;
+        hardCopyLocation = in.readString();
+        softCopyLocation = in.readString();
     }
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {
@@ -98,5 +106,9 @@ public class Book implements Parcelable {
         dest.writeParcelable(readingHistory, flags);
         dest.writeInt(readingStatus.ordinal());
         dest.writeTypedList(notifyList);
+        dest.writeByte((byte) (hardCopyCollected ? 1 : 0));
+        dest.writeByte((byte) (softCopyCollected ? 1 : 0));
+        dest.writeString(hardCopyLocation);
+        dest.writeString(softCopyLocation);
     }
 }
