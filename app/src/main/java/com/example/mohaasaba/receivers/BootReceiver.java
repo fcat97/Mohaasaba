@@ -12,7 +12,7 @@ import java.util.Calendar;
 
 public class BootReceiver extends BroadcastReceiver {
     public static final int BOOT_RECEIVED_ID = 90077;
-    private static final String TAG = BootReceiver.class.getSimpleName();
+    private static final String TAG = BootReceiver.class.getSimpleName() + "AlarmIssue";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -22,11 +22,13 @@ public class BootReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), BOOT_RECEIVED_ID,
                 alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         if (pendingIntent != null) Log.d(TAG, "onReceive: pending Intent created");
-        Calendar calendar = Calendar.getInstance();
 
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        if (alarmIntent != null) Log.d(TAG, "onReceive: alarm manager created");
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-        Log.d(TAG, "onReceive: done");
+        try {
+            pendingIntent.send(context.getApplicationContext(), 10099, alarmIntent);
+            Log.d(TAG, "BootReceive: done");
+        } catch (PendingIntent.CanceledException e) {
+            Log.d(TAG, "BootReceiver: failed");
+            e.printStackTrace();
+        }
     }
 }

@@ -34,6 +34,13 @@ public class ScheduleType implements Parcelable, Serializable {
     private List<Dates> selectedDates = new ArrayList<>();
     private Interval interval;
 
+
+    public int startingMinute; // starting minute of day; default 0
+    public int endingMinute; // ending minute of day; default 24*60-1
+
+    public boolean disposable = false;
+    public long disposeTime; // calender.timeInMillisecond();
+
     public ScheduleType() {
         this.type = Type.WeekDays;
         this.everySaturday = true;
@@ -43,6 +50,9 @@ public class ScheduleType implements Parcelable, Serializable {
         this.everyWednesday = true;
         this.everyThursday = true;
         this.everyFriday = true;
+
+        this.startingMinute = 0;
+        this.endingMinute = 24*60 - 1;
     }
 
     public void initialize() {
@@ -56,8 +66,14 @@ public class ScheduleType implements Parcelable, Serializable {
         this.everyThursday = true;
         this.everyFriday = true;
 
-        selectedDates = new ArrayList<>();
-        interval = null;
+        this.selectedDates = new ArrayList<>();
+        this.interval = null;
+
+        this.startingMinute = 0;
+        this.endingMinute = 24*60 - 1;
+
+        this.disposable = false;
+        this.disposeTime = -1001; // randomTime with negative value
     }
 
     // Class related Getter and Setter -------------------------------------------------------------
@@ -69,10 +85,12 @@ public class ScheduleType implements Parcelable, Serializable {
     }
     public Interval getInterval() {
         /* Required for RoomDB */
+        // Do not edit this method //
         return interval;
     }
     public void setInterval(Interval interval) {
         /* Required for RoomDB */
+        // Do not edit this method //
         this.interval = interval;
     }
     private void setSelectedDates(Interval interval) {
@@ -259,6 +277,10 @@ public class ScheduleType implements Parcelable, Serializable {
         dest.writeByte(this.everyFriday ? (byte) 1 : (byte) 0);
         dest.writeTypedList(this.selectedDates);
         dest.writeParcelable(this.interval, flags);
+        dest.writeInt(this.startingMinute);
+        dest.writeInt(this.endingMinute);
+        dest.writeByte(this.disposable ? (byte) 1 : (byte) 0);
+        dest.writeLong(this.disposeTime);
     }
 
     protected ScheduleType(Parcel in) {
@@ -272,6 +294,10 @@ public class ScheduleType implements Parcelable, Serializable {
         this.everyFriday = in.readByte() != 0;
         this.selectedDates = in.createTypedArrayList(Dates.CREATOR);
         this.interval = in.readParcelable(Interval.class.getClassLoader());
+        this.startingMinute = in.readInt();
+        this.endingMinute = in.readInt();
+        this.disposable = in.readByte() != 0;
+        this.disposeTime = in.readLong();
     }
 
     public static final Creator<ScheduleType> CREATOR = new Creator<ScheduleType>() {

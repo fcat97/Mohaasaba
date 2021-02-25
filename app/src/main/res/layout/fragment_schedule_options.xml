@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen_large">
+    <Button
+        android:id="@+id/copyButton_FragmentScheduleOption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_copy"
+        android:text="Copy Schedule"
+        android:backgroundTint="@color/colorLightGreen"
+        android:textColor="@android:color/white"
+
+        android:layout_alignParentTop="true"/>
+    <Button
+        android:id="@+id/deleteButton_FragmentScheduleOption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_delete"
+        android:text="Delete Schedule"
+        android:backgroundTint="@color/colorRedAccent"
+        android:textColor="@android:color/white"
+
+        android:layout_below="@id/copyButton_FragmentScheduleOption"/>
+</RelativeLayout>

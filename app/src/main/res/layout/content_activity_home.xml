@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#EFEFEF"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:gravity="center">
+<soup.neumorphism.NeumorphCardView
+    android:id="@+id/btn1_HomeActivity"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/icon1"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:padding="12dp"
+            app:tint="@color/colorGrayDark"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_planning"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/plans"
+            android:textSize="24sp"
+            android:padding="2dp"
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/icon1"/>
+    </RelativeLayout>
+</soup.neumorphism.NeumorphCardView>
+<soup.neumorphism.NeumorphCardView
+    android:id="@+id/btn2_HomeActivity"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toEndOf="@id/btn1_HomeActivity">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/icon2"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:padding="12dp"
+            app:tint="@color/colorGrayDark"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_money"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hishab"
+            android:textSize="24sp"
+            android:padding="2dp"
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/icon2"/>
+    </RelativeLayout>
+</soup.neumorphism.NeumorphCardView>
+<soup.neumorphism.NeumorphCardView
+    android:id="@+id/btn3_HomeActivity"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/btn1_HomeActivity">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/icon3"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:padding="12dp"
+            app:tint="@color/colorGrayDark"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_kaaba"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ibadah"
+            android:textSize="24sp"
+            android:padding="2dp"
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/icon3"/>
+    </RelativeLayout>
+</soup.neumorphism.NeumorphCardView>
+<soup.neumorphism.NeumorphCardView
+    android:id="@+id/btn4_HomeActivity"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/btn2_HomeActivity"
+    android:layout_toEndOf="@id/btn3_HomeActivity">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/icon4"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:padding="12dp"
+            app:tint="@color/colorGrayDark"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_palette"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tweek"
+            android:textSize="24sp"
+            android:padding="2dp"
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/icon4"/>
+    </RelativeLayout>
+</soup.neumorphism.NeumorphCardView>
+</RelativeLayout>

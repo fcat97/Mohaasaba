@@ -5,6 +5,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.example.mohaasaba.helper.IdGenerator;
 
@@ -18,7 +21,8 @@ public class Notify implements Parcelable {
         HIGH
     }
 
-    public String scheduleTitle;
+    public String notifyID;
+    public String label;
     public String message;
     public int notificationHour;
     public int notificationMinute;
@@ -29,16 +33,22 @@ public class Notify implements Parcelable {
     public int uniqueID;  // must be unique; Pending Intent ID
     public Priority priority;
 
+    @NonNull
+    @Embedded
+    public ScheduleType scheduleType;
+
     public Notify(int notificationHour, int notificationMinute) {
+        this.notifyID = IdGenerator.getNewID();
         this.notificationHour = notificationHour;
         this.notificationMinute = notificationMinute;
         this.priority = Priority.DEFAULT;
         this.uniqueID = IdGenerator.getShortID();
-        this.message = " ";
+        this.message = "";
+        this.scheduleType = new ScheduleType();
     }
 
     protected Notify(Parcel in) {
-        scheduleTitle = in.readString();
+        label = in.readString();
         message = in.readString();
         notificationHour = in.readInt();
         notificationMinute = in.readInt();
@@ -46,11 +56,13 @@ public class Notify implements Parcelable {
         repeatMinute = in.readInt();
         uniqueID = in.readInt();
         priority = Priority.values()[in.readInt()];
+        notifyID = in.readString();
+        scheduleType = in.readParcelable(ScheduleType.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(scheduleTitle);
+        dest.writeString(label);
         dest.writeString(message);
         dest.writeInt(notificationHour);
         dest.writeInt(notificationMinute);
@@ -58,6 +70,8 @@ public class Notify implements Parcelable {
         dest.writeInt(repeatMinute);
         dest.writeInt(uniqueID);
         dest.writeInt(priority.ordinal());
+        dest.writeString(notifyID);
+        dest.writeParcelable(this.scheduleType, flags);
     }
 
     @Override
@@ -84,7 +98,7 @@ public class Notify implements Parcelable {
     @Override
     public String toString() {
         return " unique_ID: " + uniqueID +
-                " Schedule Title " + scheduleTitle +
+                " Title " + label +
                 " Message: " + message +
                 " Hour: " + notificationHour +
                 " Minute: " + notificationMinute +

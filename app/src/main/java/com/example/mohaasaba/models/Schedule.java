@@ -9,6 +9,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.example.mohaasaba.helper.IdGenerator;
+import com.example.mohaasaba.helper.ThemeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,25 +24,21 @@ public class Schedule implements Parcelable {
     @Embedded
     private ScheduleType scheduleType;
 
-    private List<String> subSchedulesID = new ArrayList<>();
     private String title;
-    private String noteID;
+    private String note;
     private List<String> tags = new ArrayList<>();
-    private String renewInterval;
     private List<Notify> notifyList = new ArrayList<>();
     private History history = new History();
     private int themeID = -1001;
-    private int startingMinute; // starting minute of day; default 0
-    private int endingMinute; // ending minute of day; default 24*60-1
     private int priority;
 
     public Schedule(String title) {
         this.scheduleID = IdGenerator.getNewID();
         this.title = title;
         this.setScheduleType(new ScheduleType());
-        this.startingMinute = 0;
-        this.endingMinute = 24*60 - 1;
         this.priority = 1;
+        this.note = "";
+        this.themeID = ThemeUtils.getRandomThemeID();
     }
 
     @NonNull
@@ -57,23 +54,17 @@ public class Schedule implements Parcelable {
     public void setTitle(String title) {
         this.title = title;
     }
-    public String getNoteID() {
-        return noteID;
+    public String getNote() {
+        return note;
     }
-    public void setNoteID(String noteID) {
-        this.noteID = noteID;
+    public void setNote(String note) {
+        this.note = note;
     }
     public List<String> getTags() {
         return tags;
     }
     public void setTags(List<String> tags) {
         this.tags = tags;
-    }
-    public String getRenewInterval() {
-        return renewInterval;
-    }
-    public void setRenewInterval(String renewInterval) {
-        this.renewInterval = renewInterval;
     }
     public ScheduleType getScheduleType() {
         return scheduleType;
@@ -93,35 +84,30 @@ public class Schedule implements Parcelable {
     public void setThemeID(int themeID) {
         this.themeID = themeID;
     }
-    public List<String> getSubSchedulesID() {
-        return subSchedulesID;
-    }
-    public void setSubSchedulesID(List<String> subSchedulesID) {
-        this.subSchedulesID = subSchedulesID;
-    }
     public List<Notify> getNotifyList() {
         return notifyList;
     }
     public void setNotifyList(List<Notify> notifyList) {
         this.notifyList = notifyList;
     }
-    public void setStartingMinute(int startingMinute) {
-        this.startingMinute = startingMinute;
-    }
-    public int getStartingMinute() {
-        return startingMinute;
-    }
-    public int getEndingMinute() {
-        return endingMinute;
-    }
-    public void setEndingMinute(int endingMinute) {
-        this.endingMinute = endingMinute;
-    }
     public int getPriority() {
         return priority;
     }
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public Schedule duplicate() {
+        Schedule item = new Schedule(title);
+        item.setScheduleType(getScheduleType());
+        item.setNote(getNote());
+        item.setTags(getTags());
+        item.setNotifyList(new ArrayList<>(getNotifyList()));
+        item.setHistory(getHistory().duplicate());  // Get New History with existing tasksList
+        item.setThemeID(getThemeID());
+        item.setPriority(getPriority());
+
+        return item;
     }
 
     @Override
@@ -133,32 +119,25 @@ public class Schedule implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.scheduleID);
         dest.writeParcelable(this.scheduleType, flags);
-        dest.writeStringList(this.subSchedulesID);
         dest.writeString(this.title);
-        dest.writeString(this.noteID);
+        dest.writeString(this.note);
         dest.writeStringList(this.tags);
-        dest.writeString(this.renewInterval);
         dest.writeParcelable(this.history, flags);
         dest.writeInt(this.themeID);
         dest.writeTypedList(this.notifyList);
-        dest.writeInt(this.startingMinute);
-        dest.writeInt(this.endingMinute);
         dest.writeInt(this.priority);
     }
 
     protected Schedule(Parcel in) {
         this.scheduleID = in.readString();
         this.scheduleType = in.readParcelable(ScheduleType.class.getClassLoader());
-        this.subSchedulesID = in.createStringArrayList();
         this.title = in.readString();
-        this.noteID = in.readString();
+        this.note = in.readString();
         this.tags = in.createStringArrayList();
-        this.renewInterval = in.readString();
         this.history = in.readParcelable(History.class.getClassLoader());
         this.themeID = in.readInt();
+//        this.notifyList = in.createStringArrayList();
         this.notifyList = in.createTypedArrayList(Notify.CREATOR);
-        this.startingMinute = in.readInt();
-        this.endingMinute = in.readInt();
         this.priority = in.readInt();
     }
 

@@ -47,63 +47,22 @@
 
             android:layout_below="@id/textView1_FragmentEditReminder"/>
 
-        <EditText
-            android:id="@+id/reminderHour_EditText_FragmentEditReminder"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/textRegular"
-            android:inputType="numberSigned"
-            style="@style/AppTheme.EditText"
-            android:text="0"
-            android:textAlignment="viewEnd"
-
-
-            android:layout_alignTop="@id/textView1_FragmentEditReminder"
-            android:layout_toStartOf="@id/hour_TextView_FragmentEditReminder"/>
 
         <TextView
-            android:id="@+id/hour_TextView_FragmentEditReminder"
-            android:layout_width="wrap_content"
+            android:id="@+id/notifyTime_textView_FragmentEditReminder"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_mini"
 
             android:textColor="?attr/colorPrimary"
-            android:text="Hr"
+            android:text="@string/demo_time"
             android:textAlignment="center"
             android:textAppearance="@style/textMedium"
-
-            android:layout_alignTop="@id/reminderHour_EditText_FragmentEditReminder"
-            android:layout_alignBottom="@id/reminderHour_EditText_FragmentEditReminder"
-            android:layout_toStartOf="@id/reminderMinute_EditText_FragmentEditReminder"/>
-
-        <EditText
-            android:id="@+id/reminderMinute_EditText_FragmentEditReminder"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/textRegular"
-            android:inputType="numberSigned"
-            style="@style/AppTheme.EditText"
-            android:text="0"
-            android:textAlignment="viewEnd"
-
-
-            android:layout_alignTop="@id/textView1_FragmentEditReminder"
-            android:layout_toStartOf="@id/minute_textView_FragmentEditReminder"/>
-
-        <TextView
-            android:id="@+id/minute_textView_FragmentEditReminder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_mini"
-
-            android:textColor="?attr/colorPrimary"
-            android:text="M"
-            android:textAlignment="center"
-            android:textAppearance="@style/textMedium"
+            android:background="@drawable/button_ripple_gray"
+            android:padding="@dimen/dimen_small"
 
             android:layout_alignParentEnd="true"
-            android:layout_alignTop="@id/reminderMinute_EditText_FragmentEditReminder"
-            android:layout_alignBottom="@id/reminderMinute_EditText_FragmentEditReminder"/>
+            android:layout_alignTop="@id/textView1_FragmentEditReminder" />
 
         <TextView
             android:id="@+id/textView3_FragmentEditReminder"

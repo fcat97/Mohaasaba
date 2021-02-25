@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/demo_time"
-            android:textAppearance="@style/textLarge"
+            android:textAppearance="@style/textLarge.Bold"
             android:textColor="@android:color/white"/>
         <TextView
             android:id="@+id/reminderDate_TextView_ReminderView"

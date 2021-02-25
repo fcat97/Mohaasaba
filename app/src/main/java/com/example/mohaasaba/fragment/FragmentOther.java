@@ -1,9 +1,14 @@
 package com.example.mohaasaba.fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,37 +16,46 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.adapter.RecyclerViewAdapter;
+import com.example.mohaasaba.adapter.NotifyAdapter;
+import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.Schedule;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class FragmentOther extends Fragment {
-    private FragmentOtherCallbacks callbacks;
-    private RecyclerView recyclerView;
-    private FloatingActionButton addSubScheduleButton;
-    private RecyclerViewAdapter adapter;
+    private static final String TAG = "FragmentOverview";
+    private FragmentOtherListeners listeners;
+    private Schedule schedule;
 
-    public FragmentOther(FragmentOtherCallbacks callbacks) {
-        this.callbacks = callbacks;
-    }
+    // Notification fields
+    private RecyclerView notifyRecyclerView;
+    private FloatingActionButton notifyAddButton;
+    private NotifyAdapter notifyAdapter;
+    private TextView notifyNoItemTextView;
+    private EditText noteEditText;
+    private List<Notify> notifyList;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public FragmentOther(Schedule schedule) {
+        this.schedule = schedule;
         setRetainInstance(true);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_other_add_schedule, container,false);
-        recyclerView = rootView.findViewById(R.id.recyclerView_FragmentOther_AddScheduleActivity);
-        addSubScheduleButton = rootView.findViewById(R.id.fab_FragmentOther_AddScheduleActivity);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
-        adapter = new RecyclerViewAdapter();
-        recyclerView.setAdapter(adapter);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_other, container, false);
+
+        notifyRecyclerView = rootView.findViewById(R.id.recyclerView_FragmentReminder);
+        notifyAddButton = rootView.findViewById(R.id.addReminder_FAB_FragmentReminder);
+        notifyNoItemTextView = rootView.findViewById(R.id.noItem_FragmentReminder);
+        noteEditText = rootView.findViewById(R.id.note_EditText_viewNote_FragmentOverView);
 
         return rootView;
     }
@@ -49,18 +63,76 @@ public class FragmentOther extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (callbacks != null) callbacks.onReach();
-        addSubScheduleButton.setOnClickListener(v -> {
-            callbacks.onAddButtonClicked();
+
+        noteEditText.setText(schedule.getNote());
+        noteEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.d(TAG, "afterTextChanged: " + s.toString());
+                schedule.setNote(s.toString());
+            }
+        });
+
+        // Notify Related --------------------------------------------------------------------------
+        notifyList = schedule.getNotifyList();
+        notifyAdapter = new NotifyAdapter();
+        notifyRecyclerView.setAdapter(notifyAdapter);
+        notifyAdapter.submitList(notifyList);
+        if (notifyList.size() > 0) notifyNoItemTextView.setVisibility(View.INVISIBLE);
+        else notifyNoItemTextView.setVisibility(View.VISIBLE);
+
+
+        notifyAddButton.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            if (listeners != null) listeners.onEditNotify(new Notify(
+                    calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)));
+            else throw new ClassCastException("Must Implement Listeners");
+        });
+
+
+        notifyAdapter.setListener(new NotifyAdapter.onItemClickedListener() {
+            @Override
+            public void onItemClicked(Notify notify) {
+                if (listeners != null) listeners.onEditNotify(notify);
+                else throw new ClassCastException("Must Implement Listeners");
+            }
+
+            @Override
+            public void onItemDeleted(Notify notify) {
+                int position = notifyAdapter.getCurrentList().indexOf(notify);
+                notifyList.remove(notify);
+                notifyAdapter.notifyItemRemoved(position);
+                notifyAdapter.notifyItemRangeChanged(position, notifyAdapter.getItemCount());
+                if (notifyList.size() > 0) notifyNoItemTextView.setVisibility(View.INVISIBLE);
+                else notifyNoItemTextView.setVisibility(View.VISIBLE);
+            }
         });
     }
 
-    public void submitList(List<Schedule> scheduleList) {
-        adapter.submitList(scheduleList);
-    }
 
-    public interface FragmentOtherCallbacks {
-        void onReach();
-        void onAddButtonClicked();
+    public void notifyEditConfirmed(Notify notify) {
+        Log.d(TAG, "notifyEditConfirmed: called");
+        Log.d(TAG, "notifyEditConfirmed: notify name " + notify.message);
+        if (! notifyList.contains(notify)) notifyList.add(notify);
+        notifyAdapter.submitList(notifyList);
+        notifyAdapter.notifyDataSetChanged();
+        if (notifyList.size() > 0) notifyNoItemTextView.setVisibility(View.INVISIBLE);
+        else notifyNoItemTextView.setVisibility(View.VISIBLE);
+    }
+    public interface FragmentOtherListeners {
+        void onEditNotify(Notify notify);
+    }
+    public void setListeners(FragmentOtherListeners listeners) {
+        this.listeners = listeners;
     }
 }

@@ -42,6 +42,18 @@ public class Task implements Parcelable, Serializable {
         this.scheduleType = new ScheduleType();
     }
 
+    public Task duplicate() {
+        Task t = new Task(text);
+        t.taskType = this.taskType;
+        t.maxProgress = this.maxProgress;
+        t.currentProgress = 0;
+        t.step = this.step;
+        t.priority = this.priority;
+        t.unit = this.unit;
+        t.scheduleType = this.scheduleType;
+
+        return t;
+    }
     public float getProgress() {
         return currentProgress * 100 / maxProgress;
     }

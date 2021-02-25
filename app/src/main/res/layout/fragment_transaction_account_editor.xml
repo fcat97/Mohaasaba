@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dimen_small">
+
+    <EditText
+        android:id="@+id/accountLabel_EditText_FragmentAccountEditor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_ripple_box"
+        android:padding="@dimen/dimen_large"
+        android:layout_margin="@dimen/dimen_small"
+        android:inputType="text"
+        android:lines="4"
+        android:gravity="start"
+        android:textAlignment="textStart"
+        android:textAppearance="@style/textMedium"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:text="@string/account_name"
+        android:paddingStart="@dimen/dimen_mini"
+        android:paddingEnd="@dimen/dimen_mini"
+        android:layout_marginStart="@dimen/dimen_large"/>
+
+    <EditText
+        android:id="@+id/balance_EditText_FragmentAccountEditor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_ripple_box"
+        android:padding="@dimen/dimen_large"
+        android:hint="@string/_50_65"
+        android:layout_margin="@dimen/dimen_small"
+        android:textAlignment="textEnd"
+        android:inputType="numberDecimal"
+        android:textAppearance="@style/textLarge"
+        android:layout_below="@id/accountLabel_EditText_FragmentAccountEditor"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:text="@string/account_balance"
+        android:paddingStart="@dimen/dimen_mini"
+        android:paddingEnd="@dimen/dimen_mini"
+        android:layout_below="@id/accountLabel_EditText_FragmentAccountEditor"
+        android:layout_marginStart="@dimen/dimen_large"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_small"
+        android:layout_below="@id/balance_EditText_FragmentAccountEditor">
+        <Button
+            android:id="@+id/delete_Button_FragmentAccountEditor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_text"
+            android:background="@drawable/button_ripple_transparent"
+            android:textColor="@android:color/holo_red_light"
+            android:backgroundTint="@color/colorPurple"/>
+        <Button
+            android:id="@+id/confirm_Button_FragmentAccountEditor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/confirm_text"
+            android:background="@drawable/button_ripple_transparent"
+            android:textColor="@color/colorGreenAccent"
+            android:backgroundTint="@color/colorBlue"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+</RelativeLayout>

@@ -3,7 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/dimen_large">
+    android:paddingStart="@dimen/dimen_large"
+    android:paddingEnd="@dimen/dimen_large"
+    android:paddingTop="@dimen/dimen_small"
+    android:paddingBottom="@dimen/dimen_large">
+    <View
+        android:id="@+id/view_FragmentTaskEditor"
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dimen_small"
+        android:background="@color/colorGray"/>
+
     <EditText
         android:id="@+id/title_EditText_FragmentTaskEditor"
         android:layout_width="match_parent"
@@ -15,7 +27,7 @@
         android:layout_marginEnd="@dimen/dimen_small"
 
         android:layout_toStartOf="@id/confirm_button_FragmentTaskEditor"
-        android:layout_alignParentTop="true"/>
+        android:layout_below="@id/view_FragmentTaskEditor"/>
 
     <ImageButton
         android:id="@+id/confirm_button_FragmentTaskEditor"
@@ -34,7 +46,7 @@
         android:layout_marginTop="@dimen/dimen_large"
 
         android:textColor="?attr/colorPrimary"
-        android:text="Current Progress"
+        android:text="@string/current_progress"
         android:textAlignment="center"
         android:textAppearance="@style/textMedium"
 
@@ -44,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:text="Complete task to Increment"
+        android:text="@string/complete_task_to_increment"
         android:textAlignment="center"
         android:textAppearance="@style/textRegular"
 
@@ -52,11 +64,11 @@
 
     <ImageButton
         android:id="@+id/decrementProgress_ImageButton_FragmentTaskEditor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="36dp"
         android:src="@drawable/ic_step"
         android:rotation="180"
-        android:background="@android:color/transparent"
+        android:background="@drawable/button_circle_ripple"
         android:layout_marginEnd="@dimen/dimen_small"
 
         android:layout_alignTop="@id/currentProgress_TextView_FragmentTaskEditor"
@@ -69,7 +81,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/dimen_small"
 
-        android:text="24"
+        android:text="@string/_24"
         android:textAlignment="center"
         android:textAppearance="@style/textMedium"
 
@@ -83,7 +95,7 @@
         android:layout_marginTop="@dimen/dimen_large"
 
         android:textColor="?attr/colorPrimary"
-        android:text="Maximum Progress"
+        android:text="@string/maximum_progress"
         android:textAlignment="center"
         android:textAppearance="@style/textMedium"
 
@@ -94,7 +106,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:text="Define Maximum Progress"
+        android:text="@string/define_maximum_progress"
         android:textAlignment="center"
         android:textAppearance="@style/textRegular"
 
@@ -131,7 +143,7 @@
         android:layout_marginTop="@dimen/dimen_large"
 
         android:textColor="?attr/colorPrimary"
-        android:text="Progress Steps"
+        android:text="@string/progress_steps"
         android:textAlignment="center"
         android:textAppearance="@style/textMedium"
 
@@ -142,7 +154,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:text="Steps of Progress Increment"
+        android:text="@string/steps_of_progress_increment"
         android:textAlignment="center"
         android:textAppearance="@style/textRegular"
 
@@ -166,7 +178,7 @@
         android:layout_marginTop="@dimen/dimen_large"
 
         android:textColor="?attr/colorPrimary"
-        android:text="Progress Type"
+        android:text="@string/progress_type"
         android:textAlignment="center"
         android:textAppearance="@style/textMedium"
 
@@ -177,7 +189,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:text="Change the Type of Task"
+        android:text="@string/change_the_type_of_task"
         android:textAlignment="center"
         android:textAppearance="@style/textRegular"
 
@@ -191,7 +203,7 @@
         android:background="@drawable/checkbox_drawable"
         android:padding="@dimen/dimen_small"
 
-        android:text="Mubah"
+        android:text="@string/mubah"
         android:textAlignment="center"
 
         android:layout_alignTop="@id/textView7_FragmentTaskEditor"

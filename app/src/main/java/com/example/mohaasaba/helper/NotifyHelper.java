@@ -50,7 +50,7 @@ public class NotifyHelper {
 
     // Step 2: Create A Notification
     private NotificationCompat.Builder getBuilder(Context context, String title, String message) {
-        return new NotificationCompat.Builder(context.getApplicationContext(),DEFAULT_CHANNEL_ID)
+        return new NotificationCompat.Builder(context.getApplicationContext(), DEFAULT_CHANNEL_ID)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setSmallIcon(R.mipmap.ic_launcher_round)

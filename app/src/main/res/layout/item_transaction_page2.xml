@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_margin="@dimen/dimen_small"
+    android:elevation="@dimen/dimen_small"
+    app:cardCornerRadius="@dimen/dimen_extraLarge"
+    android:background="@color/colorGray"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/button_ripple_white">
+        <ImageView
+            android:id="@+id/pageIcon_ImageView_ItemTaalim"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:padding="12dp"
+            android:layout_marginTop="@dimen/dimen_small"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_notebook"
+            app:tint="?attr/colorPrimary" />
+
+        <TextView
+            android:id="@+id/pageLabel_TextView_ItemTransactionPage2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Taalim"
+            android:padding="2dp"
+            android:ellipsize="middle"
+            android:maxLines="3"
+            android:textAppearance="@style/textMedium"
+            android:layout_margin="@dimen/dimen_small"
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/pageIcon_ImageView_ItemTaalim"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
