@@ -39,7 +39,7 @@ public class ScheduleType implements Parcelable, Serializable {
     public int endingMinute; // ending minute of day; default 24*60-1
 
     public boolean disposable = false;
-    public long disposeTime; // calender.timeInMillisecond();
+    public long disposeTime = -1001; // calender.timeInMillisecond();
 
     public ScheduleType() {
         this.type = Type.WeekDays;
@@ -130,7 +130,8 @@ public class ScheduleType implements Parcelable, Serializable {
         }
     }
     public boolean isToday() {
-        if (type == Type.WeekDays) {
+        if (disposable && disposeTime < Calendar.getInstance().getTimeInMillis()) return false;
+        else if (type == Type.WeekDays) {
             Calendar calendar = Calendar.getInstance();
             int d_of_week = calendar.get(Calendar.DAY_OF_WEEK);
             Log.d(TAG, "isToday: called");
@@ -145,7 +146,18 @@ public class ScheduleType implements Parcelable, Serializable {
             else if (d_of_week == Calendar.SATURDAY && everySaturday) return true;
             else return false;
         }
-        else return false;
+        else {
+            // Check if any selectedDates contains today or not
+            Calendar c = Calendar.getInstance();
+            boolean state = false;
+            for (Dates d : selectedDates) {
+                if (d.month == c.get(Calendar.MONTH) && d.dayOfMonth == c.get(Calendar.DAY_OF_MONTH)) {
+                    state = true;
+                    break;
+                }
+            }
+            return state;
+        }
     }
 
     public void setInterval(int dayLength, int interval, boolean isContinuous) {
