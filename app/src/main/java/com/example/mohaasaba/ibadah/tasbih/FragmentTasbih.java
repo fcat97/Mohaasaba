@@ -31,7 +31,7 @@ public class FragmentTasbih extends Fragment {
     private Toolbar toolbar;
     private FragmentTasbihListener listener;
 
-    private ImageButton addButton;
+    private ImageButton addButton, backButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +40,7 @@ public class FragmentTasbih extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView_FragmentTasbih);
         addButton = view.findViewById(R.id.addButton_FragmentTasbih);
+        backButton = view.findViewById(R.id.backButton_FragmentTasbih);
         toolbar = view.findViewById(R.id.toolbar_FragmentTasbih);
 
         return view;
@@ -55,6 +56,9 @@ public class FragmentTasbih extends Fragment {
         addButton.setOnClickListener(v -> {
             if (listener != null) listener.onClick(new Tasbih());
         });
+
+        backButton.setOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
+
         tasbihAdapter = new TasbihAdapter()
                 .setItemClickListener(tasbih -> {
                     if (listener != null) listener.onClick(tasbih);

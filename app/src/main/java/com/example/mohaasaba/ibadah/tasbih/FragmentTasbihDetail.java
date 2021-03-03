@@ -39,7 +39,7 @@ public class FragmentTasbihDetail extends Fragment {
 
     private EditText label_et, ar_et, bn_et, ref_et, rewards_et;
     private Toolbar toolbar;
-    private ImageButton saveButton;
+    private ImageButton saveButton, backButton;
 
     private RecyclerView notify_rv;
     private TextView noNotify_tv;
@@ -77,6 +77,7 @@ public class FragmentTasbihDetail extends Fragment {
 
         toolbar = view.findViewById(R.id.toolbar_FragmentTasbihDetail);
         saveButton = view.findViewById(R.id.saveButton_FragmentTasbihDetail);
+        backButton = view.findViewById(R.id.backButton_FragmentTasbihDetail);
 
         label_et = view.findViewById(R.id.label_EditText_FragmentTasbihDetail);
         ar_et = view.findViewById(R.id.ar_EditText_FragmentTasbihDetail);
@@ -120,6 +121,8 @@ public class FragmentTasbihDetail extends Fragment {
             if (tasbih.label != null) repository.updateTasbih(tasbih);
             getParentFragmentManager().popBackStack();
         });
+
+        backButton.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
 
         // Notify Related --------------------------------------------------------------------------

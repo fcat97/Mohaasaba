@@ -67,7 +67,7 @@ public class ProgressHistory implements Parcelable {
         if (index == 0) return new Progress(key);
         else {
             long preKey = keyList.get(index - 1);
-            Progress progress = new Progress(preKey);
+            Progress progress = new Progress(key);
             Progress oldProgress = progressHashMap.get(preKey);
 
             progress.progress = 0;

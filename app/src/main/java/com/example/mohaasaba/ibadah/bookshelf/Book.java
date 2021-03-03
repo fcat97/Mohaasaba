@@ -106,8 +106,8 @@ public class Book implements Parcelable {
         dest.writeParcelable(readingHistory, flags);
         dest.writeInt(readingStatus.ordinal());
         dest.writeTypedList(notifyList);
-        dest.writeByte((byte) (hardCopyCollected ? 1 : 0));
-        dest.writeByte((byte) (softCopyCollected ? 1 : 0));
+        dest.writeByte(hardCopyCollected ? (byte) 1 : (byte) 0);
+        dest.writeByte(softCopyCollected ? (byte) 1 : (byte) 0);
         dest.writeString(hardCopyLocation);
         dest.writeString(softCopyLocation);
     }

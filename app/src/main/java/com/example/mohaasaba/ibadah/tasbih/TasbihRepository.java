@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.mohaasaba.ibadah.IbadahDB;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -39,6 +40,20 @@ public class TasbihRepository {
     }
     public LiveData<List<Tasbih>> getAllTasbih() {
         return tasbihDao.getAllTasbih();
+    }
+    public List<Tasbih> getTasbihList() {
+        ExecutorService service = Executors.newSingleThreadExecutor();
+
+        Future<List<Tasbih>> result = service.submit(() -> tasbihDao.getTasbihList());
+        List<Tasbih> tasbihList = new ArrayList<>();
+
+        try {
+            tasbihList = result.get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return tasbihList;
     }
     public void updateTasbih(Tasbih tasbih) {
         Tasbih tasbih1 = getTasbih(tasbih.tasbihID);

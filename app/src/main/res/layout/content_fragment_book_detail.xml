@@ -174,13 +174,13 @@
                 android:id="@+id/text_harccopy_collected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hard Copy Collected"
+                android:text="Hard Copy"
                 android:textAppearance="@style/textSmall"
                 android:textColor="?attr/colorPrimary"
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
-            <androidx.appcompat.widget.SwitchCompat
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/hardcopy_Switch_FragmentBookDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -223,13 +223,13 @@
                 android:id="@+id/text_softcopy_collected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Soft Copy Collected"
+                android:text="Soft Copy"
                 android:textAppearance="@style/textSmall"
                 android:textColor="?attr/colorPrimary"
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
-            <androidx.appcompat.widget.SwitchCompat
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/softcopy_Switch_FragmentBookDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

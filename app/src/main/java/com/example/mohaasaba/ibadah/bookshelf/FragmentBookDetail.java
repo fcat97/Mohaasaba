@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -51,7 +52,7 @@ public class FragmentBookDetail extends Fragment {
     private EditText bookTitle_et, author_et, publication_et, pages_et, owner_et;
     private TextView entryDate_tv, dailyTarget_tv, completed_tv, totalComplete_tv;
     private Button progress_bt;
-    private ImageButton saveButton, undoButton, allDoneButton;
+    private ImageButton saveButton, backButton, undoButton, allDoneButton;
     private RelativeLayout rrl_5, input_RL, dailyTarget_rl;
     private EditText progressInput_et;
     private ImageButton inputDoneButton;
@@ -63,7 +64,7 @@ public class FragmentBookDetail extends Fragment {
     private NotifyAdapter notifyAdapter;
     private FrameLayout dateSelector_fl;
 
-    private SwitchCompat hardcopy_sw, softcopy_sw;
+    private AppCompatCheckBox hardcopy_sw, softcopy_sw;
     private EditText hardcopyLocation_et, softcopyLocation_et;
     private RadioButton status_read_rb, status_reading_rb, status_wishlist_rb;
 
@@ -106,6 +107,7 @@ public class FragmentBookDetail extends Fragment {
         totalComplete_tv = view.findViewById(R.id.totalCompleted_TextView_FragmentBookDetail);
         progress_bt = view.findViewById(R.id.progress_Button_FragmentBookDetail);
         saveButton = view.findViewById(R.id.saveButton_FragmentBookDetail);
+        backButton = view.findViewById(R.id.backButton_FragmentBookDetail);
         rrl_5 = view.findViewById(R.id.rrl_5_FragmentBookDetail);
         dailyTarget_rl = view.findViewById(R.id.dailyTarget_RelativeLayout_FragmentBookDetail);
         input_RL = view.findViewById(R.id.progressInput_RelativeLayout_FragmentBookDetail);
@@ -161,7 +163,7 @@ public class FragmentBookDetail extends Fragment {
         barChart.getDescription().setEnabled(false);
         barChart.setPinchZoom(false);
         barChart.getLegend().setEnabled(false);
-        barChart.getAxisLeft().setEnabled(false);
+        barChart.getAxisLeft().setEnabled(true);
         barChart.getAxisRight().setEnabled(false);
         barChart.getXAxis().setDrawGridLines(false);
         barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -238,6 +240,9 @@ public class FragmentBookDetail extends Fragment {
             getParentFragmentManager().popBackStack();
         });
 
+        // On back Button Press close to parent fragment
+        backButton.setOnClickListener(v -> getParentFragmentManager().popBackStack());
+
         rrl_5.setOnClickListener(this::openDatePickerDialog);
         progress_bt.setOnClickListener(this::doProgress);
         undoButton.setOnClickListener(this::undoProgress);
@@ -279,15 +284,21 @@ public class FragmentBookDetail extends Fragment {
 
     }
     private void doProgress(View view) {
-        book.readingHistory.getProgress(Calendar.getInstance()).doProgress();
+        book.readingHistory.commitProgress(
+                book.readingHistory.getProgress(Calendar.getInstance()).doProgress(),
+                Calendar.getInstance());
         setProgressView();
     }
     private void undoProgress(View view) {
-        book.readingHistory.getProgress(Calendar.getInstance()).undoProgress();
+        book.readingHistory.commitProgress(
+                book.readingHistory.getProgress(Calendar.getInstance()).undoProgress(),
+                Calendar.getInstance());
         setProgressView();
     }
     private void allDone(View view) {
-        book.readingHistory.getProgress(Calendar.getInstance()).allDone();
+        book.readingHistory.commitProgress(
+                book.readingHistory.getProgress(Calendar.getInstance()).allDone(),
+                Calendar.getInstance());
         setProgressView();
     }
     private void showTargetInput(View view) {

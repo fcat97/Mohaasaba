@@ -21,7 +21,21 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/white"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:titleTextColor="?attr/colorAccent"/>
+                app:titleTextColor="?attr/colorAccent"
+
+                android:layout_toEndOf="@id/backButton_FragmentTasbihDetail"
+                android:layout_toStartOf="@id/saveButton_FragmentTasbihDetail"/>
+            <ImageButton
+                android:id="@+id/backButton_FragmentTasbihDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_left"
+                android:tint="@color/colorGrayDark"
+                android:padding="@dimen/dimen_mini"
+                android:layout_marginEnd="@dimen/dimen_small"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/button_circle_ripple"/>
             <ImageButton
                 android:id="@+id/saveButton_FragmentTasbihDetail"
                 android:layout_width="wrap_content"

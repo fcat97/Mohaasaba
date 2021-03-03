@@ -21,13 +21,28 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/white"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:titleTextColor="?attr/colorAccent"/>
+                app:titleTextColor="?attr/colorAccent"
+
+                android:layout_toEndOf="@id/backButton_FragmentBookDetail"
+                android:layout_toStartOf="@id/saveButton_FragmentBookDetail"/>
+            <ImageButton
+                android:id="@+id/backButton_FragmentBookDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_left"
+                android:padding="@dimen/dimen_mini"
+                android:tint="@color/black"
+                android:layout_marginEnd="@dimen/dimen_small"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/button_circle_ripple"/>
             <ImageButton
                 android:id="@+id/saveButton_FragmentBookDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_save"
                 android:padding="@dimen/dimen_mini"
+                android:tint="@color/colorGrayDark"
                 android:layout_marginEnd="@dimen/dimen_small"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"

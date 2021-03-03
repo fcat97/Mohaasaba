@@ -30,6 +30,7 @@ public class FragmentBooks extends Fragment {
     private ItemClickedListener itemClickedListener;
     private AddButtonListener addButtonListener;
     private ImageButton addButton;
+    private ImageButton backButton;
     private Toolbar toolbar;
 
     public FragmentBooks(LiveData<List<Book>> bookList) {
@@ -43,6 +44,7 @@ public class FragmentBooks extends Fragment {
         View view = View.inflate(getContext(), R.layout.fragment_books, null);
         recyclerView = view.findViewById(R.id.recyclerView_FragmentBooks);
         addButton = view.findViewById(R.id.addButton_FragmentBook);
+        backButton = view.findViewById(R.id.backButton_FragmentBook);
         toolbar = view.findViewById(R.id.toolbar_FragmentBooks);
         return view;
     }
@@ -61,6 +63,10 @@ public class FragmentBooks extends Fragment {
 
         addButton.setOnClickListener(v -> {
             if (addButtonListener != null) addButtonListener.onClick(new Book(" "));
+        });
+
+        backButton.setOnClickListener(v -> {
+            Objects.requireNonNull(getActivity()).onBackPressed();
         });
     }
 

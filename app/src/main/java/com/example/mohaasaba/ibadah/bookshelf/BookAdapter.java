@@ -38,7 +38,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_taalim_reading, parent, false));
+                .inflate(R.layout.item_book, parent, false));
     }
 
     @Override

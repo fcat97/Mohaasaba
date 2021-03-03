@@ -25,13 +25,15 @@ public class Progress implements Parcelable, Serializable {
         return this;
     }
 
-    public void undoProgress() {
+    public Progress undoProgress() {
         progress = Math.max(progress - step, 0);
+        return this;
     }
 
     // Do all the steps..
-    public void allDone() {
+    public Progress allDone() {
         progress = target;
+        return this;
     }
 
     protected Progress(Parcel in) {
