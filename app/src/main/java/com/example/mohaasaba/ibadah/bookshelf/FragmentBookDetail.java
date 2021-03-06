@@ -1,13 +1,11 @@
 package com.example.mohaasaba.ibadah.bookshelf;
 
 import android.app.DatePickerDialog;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,15 +30,9 @@ import com.example.mohaasaba.helper.ViewMaker;
 import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.Progress;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class FragmentBookDetail extends Fragment {
     private static final String ARG_BOOK = FragmentBookDetail.class.getCanonicalName() + "_BOOK";
@@ -67,6 +60,8 @@ public class FragmentBookDetail extends Fragment {
     private AppCompatCheckBox hardcopy_sw, softcopy_sw;
     private EditText hardcopyLocation_et, softcopyLocation_et;
     private RadioButton status_read_rb, status_reading_rb, status_wishlist_rb;
+
+    private LinearLayout ll_0;
 
     public FragmentBookDetail() {
         // Required empty public constructor
@@ -102,20 +97,10 @@ public class FragmentBookDetail extends Fragment {
         pages_et = view.findViewById(R.id.pages_EditText_FragmentBookDetail);
         entryDate_tv = view.findViewById(R.id.entryDate_TextView_FragmentBookDetail);
         owner_et = view.findViewById(R.id.ownerName_EditText_FragmentBookDetail);
-        dailyTarget_tv = view.findViewById(R.id.dailyTarget_TextView_FragmentBookDetail);
-        completed_tv = view.findViewById(R.id.targetComplete_TextView_FragmentBookDetail);
-        totalComplete_tv = view.findViewById(R.id.totalCompleted_TextView_FragmentBookDetail);
-        progress_bt = view.findViewById(R.id.progress_Button_FragmentBookDetail);
         saveButton = view.findViewById(R.id.saveButton_FragmentBookDetail);
         backButton = view.findViewById(R.id.backButton_FragmentBookDetail);
         rrl_5 = view.findViewById(R.id.rrl_5_FragmentBookDetail);
-        dailyTarget_rl = view.findViewById(R.id.dailyTarget_RelativeLayout_FragmentBookDetail);
-        input_RL = view.findViewById(R.id.progressInput_RelativeLayout_FragmentBookDetail);
-        progressInput_et = view.findViewById(R.id.progressInput_EditText_FragmentBookDetail);
-        inputDoneButton = view.findViewById(R.id.checkButton_ImageButton_FragmentBookDetail);
-        barChart = view.findViewById(R.id.progress_chart_FragmentBookDetail);
-        undoButton = view.findViewById(R.id.undoButton_ImageButton_FragmentBookDetail);
-        allDoneButton = view.findViewById(R.id.allDone_ImageButton_FragmentBookDetail);
+        ll_0 = view.findViewById(R.id.ll_0_FragmentBookDetail);
 
         notify_rv = view.findViewById(R.id.recyclerView_FragmentReminder);
         noNotify_tv = view.findViewById(R.id.noItem_FragmentReminder);
@@ -143,9 +128,6 @@ public class FragmentBookDetail extends Fragment {
         pages_et.setText(String.valueOf(book.totalPages));
 
         owner_et.setText(book.owner);
-        dailyTarget_tv.setText(String.valueOf(book.readingHistory.getDailyTarget()));
-        completed_tv.setText(String.valueOf(book.readingHistory.getProgress(Calendar.getInstance()).progress));
-        totalComplete_tv.setText(String.valueOf(book.readingHistory.getTotalProgress()));
 
         hardcopyLocation_et.setText(book.hardCopyLocation);
         softcopyLocation_et.setText(book.softCopyLocation);
@@ -155,18 +137,6 @@ public class FragmentBookDetail extends Fragment {
         status_reading_rb.setChecked(book.readingStatus == Book.ReadingStatus.READING);
         status_wishlist_rb.setChecked(book.readingStatus == Book.ReadingStatus.WISH_LISTED);
 
-        // set Bar Chart
-        barChart.setBackgroundColor(Color.TRANSPARENT);
-        barChart.setDrawGridBackground(false);
-        barChart.setGridBackgroundColor(Color.GREEN);
-        barChart.setDrawBorders(false);
-        barChart.getDescription().setEnabled(false);
-        barChart.setPinchZoom(false);
-        barChart.getLegend().setEnabled(false);
-        barChart.getAxisLeft().setEnabled(true);
-        barChart.getAxisRight().setEnabled(false);
-        barChart.getXAxis().setDrawGridLines(false);
-        barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
 
         if (book.purchaseTime != 0) {
             Calendar calendar = Calendar.getInstance();
@@ -182,7 +152,9 @@ public class FragmentBookDetail extends Fragment {
         }
 
         // Set Progress View
-        setProgressView();
+        ViewMaker.ProgressHistoryView progressHistoryView = new ViewMaker.ProgressHistoryView(getContext())
+                .setProgressHistory(book.readingHistory);
+        ll_0.addView(progressHistoryView.getView());
 
         // Notify Related --------------------------------------------------------------------------
         notifyAdapter = new NotifyAdapter();
@@ -244,78 +216,8 @@ public class FragmentBookDetail extends Fragment {
         backButton.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         rrl_5.setOnClickListener(this::openDatePickerDialog);
-        progress_bt.setOnClickListener(this::doProgress);
-        undoButton.setOnClickListener(this::undoProgress);
-        allDoneButton.setOnClickListener(this::allDone);
-        dailyTarget_rl.setOnClickListener(this::showTargetInput);
-        inputDoneButton.setOnClickListener(this::onTargetInputDone);
     }
 
-    private void setProgressView() {
-        dailyTarget_tv.setText(String.valueOf(book.readingHistory.getProgress(Calendar.getInstance()).target));
-        completed_tv.setText(String.valueOf(book.readingHistory.getProgress(Calendar.getInstance()).progress));
-        totalComplete_tv.setText(String.valueOf(book.readingHistory.getTotalProgress()));
-        setChartData();
-    }
-    private void setChartData() {
-        // month starting date and ending date
-        Calendar selectedDate = Calendar.getInstance();
-        selectedDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH),1);
-        int lastDayOfMonth = selectedDate.getMaximum(Calendar.DAY_OF_MONTH);
-
-        List<Integer> progressList = new ArrayList<>();
-        for (int i = 1; i <= lastDayOfMonth; i++) {
-            progressList.add( book.readingHistory.getProgress(selectedDate).progress);
-            selectedDate.add(Calendar.DAY_OF_MONTH, 1);
-        }
-
-        // This is a long step. think minimizing the process
-        List<BarEntry> yAxis = new ArrayList<>();
-        for (int i = 1; i <= progressList.size(); i++) {
-            yAxis.add(new BarEntry(i, progressList.get(i - 1)));
-        }
-
-        BarDataSet dataSet = new BarDataSet(yAxis, "Progress");
-        BarData barData = new BarData(dataSet);
-        barData.setDrawValues(false);
-        barChart.setData(barData);
-        barChart.invalidate();
-        barChart.animateX(600);
-
-    }
-    private void doProgress(View view) {
-        book.readingHistory.commitProgress(
-                book.readingHistory.getProgress(Calendar.getInstance()).doProgress(),
-                Calendar.getInstance());
-        setProgressView();
-    }
-    private void undoProgress(View view) {
-        book.readingHistory.commitProgress(
-                book.readingHistory.getProgress(Calendar.getInstance()).undoProgress(),
-                Calendar.getInstance());
-        setProgressView();
-    }
-    private void allDone(View view) {
-        book.readingHistory.commitProgress(
-                book.readingHistory.getProgress(Calendar.getInstance()).allDone(),
-                Calendar.getInstance());
-        setProgressView();
-    }
-    private void showTargetInput(View view) {
-        if (input_RL.getVisibility() == View.VISIBLE) {
-            input_RL.setVisibility(View.GONE);
-        } else {
-            input_RL.setVisibility(View.VISIBLE);
-            progressInput_et.setText(String.valueOf(book.readingHistory.getDailyTarget()));
-        }
-    }
-    private void onTargetInputDone(View view) {
-        Progress progress = book.readingHistory.getProgress(Calendar.getInstance());
-        progress.target = progressInput_et.getText().toString().trim().isEmpty() ? 0 : Integer.parseInt(progressInput_et.getText().toString().trim());
-        book.readingHistory.commitProgress(progress, Calendar.getInstance());
-        input_RL.setVisibility(View.GONE);
-        setProgressView();
-    }
 
     private void openDatePickerDialog (View v) {
         Calendar calendar = Calendar.getInstance();

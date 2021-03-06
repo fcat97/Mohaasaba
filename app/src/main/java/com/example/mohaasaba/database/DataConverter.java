@@ -3,6 +3,7 @@ package com.example.mohaasaba.database;
 import androidx.room.TypeConverter;
 
 import com.example.mohaasaba.ibadah.bookshelf.Book;
+import com.example.mohaasaba.ibadah.tasbih.Tasbih;
 import com.example.mohaasaba.models.History;
 import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.ProgressHistory;
@@ -265,5 +266,25 @@ public class DataConverter {
         Type type = new TypeToken<Notify.Priority>(){}.getType();
 
         return gson.toJson(priority, type);
+    }
+
+    @TypeConverter
+    public static Tasbih.TasbihType fromStringToTasbihType(String string) {
+        if (string == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<Tasbih.TasbihType>(){}.getType();
+
+        return gson.fromJson(string, type);
+    }
+
+    @TypeConverter
+    public static String fromTasbihTypeToString(Tasbih.TasbihType tasbihType) {
+        if (tasbihType == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<Tasbih.TasbihType>(){}.getType();
+
+        return gson.toJson(tasbihType, type);
     }
 }

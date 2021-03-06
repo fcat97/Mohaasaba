@@ -29,4 +29,31 @@ public interface TasbihDao {
 
     @Query("SELECT * FROM tasbih_table")
     List<Tasbih> getTasbihList();
+
+    @Query("SELECT * FROM tasbih_table WHERE tasbihType LIKE '%MUSTAHAB%'")
+    LiveData<List<Tasbih>> getTasbihMustahab();
+
+    @Query("SELECT * FROM tasbih_table WHERE tasbihType LIKE '%AFTER_FAZR%'")
+    LiveData<List<Tasbih>> getTasbihFazr();
+
+    @Query("SELECT * FROM tasbih_table WHERE tasbihType LIKE '%AFTER_JUHR%'")
+    LiveData<List<Tasbih>> getTasbihJuhr();
+
+    @Query("SELECT * FROM tasbih_table WHERE tasbihType LIKE '%AFTER_ASR%'")
+    LiveData<List<Tasbih>> getTasbihAsr();
+
+    @Query("SELECT * FROM tasbih_table WHERE tasbihType LIKE '%AFTER_MAGRIB%'")
+    LiveData<List<Tasbih>> getTasbihMagrib();
+
+    @Query("SELECT * FROM tasbih_table WHERE tasbihType LIKE '%AFTER_ESHA%'")
+    LiveData<List<Tasbih>> getTasbihEsha();
+
+    @Query("SELECT * FROM tasbih_table WHERE tasbihType LIKE '%BEFORE_SLEEP%'")
+    LiveData<List<Tasbih>> getTasbihSleep();
+
+    @Query("SELECT * FROM tasbih_table WHERE tasbihType LIKE '%MORNING_TASBIH%'")
+    LiveData<List<Tasbih>> getTasbihMorning();
+
+    @Query("SELECT * FROM tasbih_table WHERE tasbihType LIKE '%EVENING_TASBIH%'")
+    LiveData<List<Tasbih>> getTasbihEvening();
 }

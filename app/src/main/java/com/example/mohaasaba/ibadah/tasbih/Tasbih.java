@@ -12,13 +12,28 @@ import androidx.room.PrimaryKey;
 import com.example.mohaasaba.helper.IdGenerator;
 import com.example.mohaasaba.models.History;
 import com.example.mohaasaba.models.Notify;
+import com.example.mohaasaba.models.Progress;
+import com.example.mohaasaba.models.ProgressHistory;
 import com.example.mohaasaba.models.ScheduleType;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Entity(tableName = "tasbih_table")
 public class Tasbih implements Parcelable {
+    public enum TasbihType {
+        MUSTAHAB,
+        AFTER_FAZR,
+        AFTER_JUHR,
+        AFTER_ASR,
+        AFTER_MAGRIB,
+        AFTER_ESHA,
+        BEFORE_SLEEP,
+        MORNING_TASBIH,
+        EVENING_TASBIH
+    }
+
     @PrimaryKey @NonNull
     public String tasbihID;
     public String label;
@@ -27,8 +42,9 @@ public class Tasbih implements Parcelable {
     public String hadith_bn;
     public String references;
     public String tags;
+    public TasbihType tasbihType;
 
-    public History history;
+    public ProgressHistory history;
 
     @Embedded
     public ScheduleType scheduleType;
@@ -42,9 +58,15 @@ public class Tasbih implements Parcelable {
         this.reward = "";
         this.references = "";
         this.tags = "";
-        this.history = new History();
+        this.history = new ProgressHistory();
         this.scheduleType = new ScheduleType();
         this.notifyList = new ArrayList<>();
+        this.tasbihType = TasbihType.MUSTAHAB;
+
+        // Initialize daily target to 1
+        Progress p = history.getProgress(Calendar.getInstance());
+        p.target = 1;
+        history.commitProgress(p, Calendar.getInstance());
     }
 
 
@@ -56,9 +78,10 @@ public class Tasbih implements Parcelable {
         hadith_bn = in.readString();
         references = in.readString();
         tags = in.readString();
-        history = in.readParcelable(History.class.getClassLoader());
+        history = in.readParcelable(ProgressHistory.class.getClassLoader());
         scheduleType = in.readParcelable(ScheduleType.class.getClassLoader());
         notifyList = in.createTypedArrayList(Notify.CREATOR);
+        tasbihType = TasbihType.values()[in.readInt()];
     }
 
     @Override
@@ -73,6 +96,7 @@ public class Tasbih implements Parcelable {
         dest.writeParcelable(history, flags);
         dest.writeParcelable(scheduleType, flags);
         dest.writeTypedList(notifyList);
+        dest.writeInt(tasbihType.ordinal());
     }
 
     @Override

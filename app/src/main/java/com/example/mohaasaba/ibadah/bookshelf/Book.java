@@ -10,6 +10,7 @@ import androidx.room.PrimaryKey;
 
 import com.example.mohaasaba.helper.IdGenerator;
 import com.example.mohaasaba.models.Notify;
+import com.example.mohaasaba.models.Progress;
 import com.example.mohaasaba.models.ProgressHistory;
 import com.example.mohaasaba.models.ScheduleType;
 
@@ -54,6 +55,11 @@ public class Book implements Parcelable {
         this.scheduleType = new ScheduleType();
         this.readingHistory = new ProgressHistory();
         this.readingStatus = ReadingStatus.WISH_LISTED;
+
+        // Change Progress Unit to Pages
+        Progress p = readingHistory.getProgress(Calendar.getInstance());
+        p.unit = "Page";
+        readingHistory.commitProgress(p, Calendar.getInstance());
     }
 
     protected Book(Parcel in) {

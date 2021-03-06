@@ -38,7 +38,7 @@
             android:background="@android:color/transparent"
             android:textAlignment="center"
             android:padding="@dimen/dimen_small"
-            android:textAppearance="@style/textLarge"
+            android:textAppearance="@style/textMedium"
             android:layout_below="@id/v1_FragmentTasbihDetail"/>
         <EditText
             android:id="@+id/bn_EditText_FragmentTasbihDetail"
@@ -79,7 +79,7 @@
             android:layout_marginEnd="@dimen/dimen_small"
             android:padding="@dimen/dimen_small"
             android:textColor="@android:color/darker_gray"
-            android:textAppearance="@style/textMedium"/>
+            android:textAppearance="@style/textSmall"/>
         <EditText
             android:id="@+id/reward_EditText_FragmentTasbihDetail"
             android:layout_width="match_parent"
@@ -94,11 +94,17 @@
             android:layout_below="@id/text_reward_FragmentTasbihDetail"/>
     </RelativeLayout>
 
+    <FrameLayout
+        android:id="@+id/type_FrameLayout_FragmentTasbihDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_small"
+        android:background="@drawable/checkbox_drawable"/>
 
     <FrameLayout
-        android:id="@+id/frameLayout_FragmentTasbihDetail"
+        android:id="@+id/preogress_FrameLayout_FragmentTasbihDetail"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dimen_small"
         android:background="@drawable/checkbox_drawable"/>
 
@@ -131,5 +137,14 @@
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/deleteButton_FragmentTasbihDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:drawableStart="@drawable/ic_delete"
+        style="@style/AppTheme.Button"
+        android:text="Delete"/>
 
 </LinearLayout>

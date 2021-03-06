@@ -34,7 +34,7 @@
             android:layout_margin="@dimen/dimen_small"
             android:textAlignment="center"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/ll_0"/>
+            android:layout_below="@id/ll_0_FragmentBookDetail"/>
         <TextView
             android:id="@+id/author_TextView_ItemTalim"
             android:layout_width="match_parent"
@@ -49,7 +49,7 @@
             android:layout_below="@id/title_TextView_ItemTalim"
             android:layout_above="@id/progressBar_ItemTalim"/>
         <LinearLayout
-            android:id="@+id/ll_0"
+            android:id="@+id/ll_0_FragmentBookDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

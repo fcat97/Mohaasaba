@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -20,7 +21,6 @@ import android.widget.TextView;
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.adapter.NotifyAdapter;
 import com.example.mohaasaba.fragment.FragmentEditReminder;
-import com.example.mohaasaba.fragment.FragmentTodo;
 import com.example.mohaasaba.helper.ViewMaker;
 import com.example.mohaasaba.models.Notify;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -46,6 +46,10 @@ public class FragmentTasbihDetail extends Fragment {
     private FloatingActionButton addNotifyButton;
     private NotifyAdapter notifyAdapter;
     private FrameLayout dateSelector_fl;
+
+    private FrameLayout progressLayout;
+    private FrameLayout typeLayout;
+    private Button deleteButton;
 
 
     public FragmentTasbihDetail() {
@@ -90,6 +94,11 @@ public class FragmentTasbihDetail extends Fragment {
         addNotifyButton = view.findViewById(R.id.addReminder_FAB_FragmentReminder);
         dateSelector_fl = view.findViewById(R.id.dateSelector_FrameLayout_FragmentTasbihDetail);
 
+        progressLayout = view.findViewById(R.id.preogress_FrameLayout_FragmentTasbihDetail);
+        typeLayout = view.findViewById(R.id.type_FrameLayout_FragmentTasbihDetail);
+
+        deleteButton = view.findViewById(R.id.deleteButton_FragmentTasbihDetail);
+
         return view;
     }
 
@@ -104,10 +113,15 @@ public class FragmentTasbihDetail extends Fragment {
         ref_et.setText(tasbih.references);
         rewards_et.setText(tasbih.reward);
 
-        FragmentTodo fragmentTodo = new FragmentTodo(tasbih.history);
-        getChildFragmentManager().beginTransaction()
-                .add(R.id.frameLayout_FragmentTasbihDetail, fragmentTodo)
-                .commit();
+        // Set Progress History View
+        ViewMaker.ProgressHistoryView progressHistoryView = new ViewMaker.ProgressHistoryView(getContext())
+                .setProgressHistory(tasbih.history);
+        progressLayout.addView(progressHistoryView.getView());
+
+        // Set TasbihType View
+        ViewMaker.TasbihTypeSelector tasbihTypeSelector = new ViewMaker.TasbihTypeSelector(getContext())
+                .setTasbihType(tasbih.tasbihType);
+        typeLayout.addView(tasbihTypeSelector.getView());
 
         TasbihRepository repository = new TasbihRepository(getContext());
 
@@ -118,11 +132,17 @@ public class FragmentTasbihDetail extends Fragment {
             tasbih.references = ref_et.getText().toString().trim().isEmpty() ? "" : ref_et.getText().toString().trim();
             tasbih.reward = rewards_et.getText().toString().trim().isEmpty() ? "" : rewards_et.getText().toString().trim();
 
+            tasbih.tasbihType = tasbihTypeSelector.getTasbihType();
+
             if (tasbih.label != null) repository.updateTasbih(tasbih);
             getParentFragmentManager().popBackStack();
         });
 
         backButton.setOnClickListener(v -> getParentFragmentManager().popBackStack());
+        deleteButton.setOnClickListener(v -> {
+            repository.deleteTasbih(tasbih);
+            getParentFragmentManager().popBackStack();
+        });
 
 
         // Notify Related --------------------------------------------------------------------------

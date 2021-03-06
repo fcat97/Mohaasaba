@@ -38,9 +38,39 @@ public class TasbihRepository {
 
         return tasbih;
     }
+
     public LiveData<List<Tasbih>> getAllTasbih() {
         return tasbihDao.getAllTasbih();
     }
+    public LiveData<List<Tasbih>> getTasbihFazr() {
+        return tasbihDao.getTasbihFazr();
+    }
+    public LiveData<List<Tasbih>> getTasbihJuhr() {
+        return tasbihDao.getTasbihJuhr();
+    }
+    public LiveData<List<Tasbih>> getTasbihAsr() {
+        return tasbihDao.getTasbihAsr();
+    }
+    public LiveData<List<Tasbih>> getTasbihMagrib() {
+        return tasbihDao.getTasbihMagrib();
+    }
+    public LiveData<List<Tasbih>> getTasbihEsha() {
+        return tasbihDao.getTasbihEsha();
+    }
+    public LiveData<List<Tasbih>> getTasbihSleep() {
+        return tasbihDao.getTasbihSleep();
+    }
+    public LiveData<List<Tasbih>> getTasbihMorning() {
+        return tasbihDao.getTasbihMorning();
+    }
+    public LiveData<List<Tasbih>> getTasbihEvening() {
+        return tasbihDao.getTasbihEvening();
+    }
+    public LiveData<List<Tasbih>> getTasbihMustahab() {
+        return tasbihDao.getTasbihMustahab();
+    }
+
+
     public List<Tasbih> getTasbihList() {
         ExecutorService service = Executors.newSingleThreadExecutor();
 

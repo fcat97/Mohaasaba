@@ -1,41 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="140dp"
+    android:layout_height="220dp"
     android:elevation="@dimen/cardElevation"
     app:cardCornerRadius="@dimen/dimen_small"
     android:layout_margin="2dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/dimen_small">
+    android:padding="@dimen/dimen_small"
+    android:layout_gravity="center">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
-            android:id="@+id/itemSL_TextView_ItemTasbih"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-
-            android:layout_centerVertical="true"
-            android:text="1"
-            android:textColor="?attr/colorAccent"
-            android:layout_margin="@dimen/dimen_mini"
-            android:textAlignment="center"
-            android:textAppearance="@style/textMedium"
-            android:background="@drawable/button_circle"/>
-
-
-        <TextView
             android:id="@+id/label_TextView_ItemTasbih"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="1"
+            android:lines="3"
+            android:ellipsize="end"
+            android:textAlignment="center"
             android:textAppearance="@style/textMedium"
             android:text="@string/sample_label"
-            android:layout_marginStart="@dimen/dimen_small"
-            android:layout_marginEnd="@dimen/dimen_small"
-            android:layout_toStartOf="@id/circularProgressView_ItemTasbih"
-            android:layout_toEndOf="@id/itemSL_TextView_ItemTasbih"/>
+            android:layout_margin="@dimen/dimen_small"/>
         <TextView
             android:id="@+id/reward_TextView_ItemTasbih"
             android:layout_width="match_parent"
@@ -43,10 +29,15 @@
             android:text="@string/sample_bn"
             android:textColor="@color/colorGrayDark"
             android:textAppearance="@style/textSmall.Italic"
+            android:textAlignment="center"
+            android:maxLines="5"
+            android:ellipsize="end"
+            android:layout_marginBottom="@dimen/dimen_mini"
 
             android:layout_alignStart="@id/label_TextView_ItemTasbih"
             android:layout_alignEnd="@id/label_TextView_ItemTasbih"
-            android:layout_below="@id/label_TextView_ItemTasbih"/>
+            android:layout_below="@id/label_TextView_ItemTasbih"
+            android:layout_above="@id/circularProgressView_ItemTasbih"/>
         <at.grabner.circleprogress.CircleProgressView
             android:id="@+id/circularProgressView_ItemTasbih"
             android:layout_width="40dp"
@@ -73,8 +64,8 @@
             app:cpv_innerContourColor="@android:color/transparent"
             app:cpv_outerContourColor="@android:color/transparent"
 
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
