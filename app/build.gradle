@@ -113,4 +113,7 @@ dependencies {
 
     // Neumorphism
     implementation 'com.github.fornewid:neumorphism:0.3.0'
+
+    // JexcelAPI
+    implementation 'net.sourceforge.jexcelapi:jxl:2.6.12'
 }
