@@ -8,7 +8,6 @@ import com.example.mohaasaba.ibadah.IbadahDB;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -42,20 +41,8 @@ public class TasbihRepository {
     public LiveData<List<Tasbih>> getAllTasbih() {
         return tasbihDao.getAllTasbih();
     }
-    public LiveData<List<Tasbih>> getTasbihFazr() {
-        return tasbihDao.getTasbihFazr();
-    }
-    public LiveData<List<Tasbih>> getTasbihJuhr() {
-        return tasbihDao.getTasbihJuhr();
-    }
-    public LiveData<List<Tasbih>> getTasbihAsr() {
-        return tasbihDao.getTasbihAsr();
-    }
-    public LiveData<List<Tasbih>> getTasbihMagrib() {
-        return tasbihDao.getTasbihMagrib();
-    }
-    public LiveData<List<Tasbih>> getTasbihEsha() {
-        return tasbihDao.getTasbihEsha();
+    public LiveData<List<Tasbih>> getTasbihPrayer() {
+        return tasbihDao.getTasbihPrayer();
     }
     public LiveData<List<Tasbih>> getTasbihSleep() {
         return tasbihDao.getTasbihSleep();

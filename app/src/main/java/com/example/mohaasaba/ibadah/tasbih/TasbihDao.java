@@ -33,8 +33,8 @@ public interface TasbihDao {
     @Query("SELECT * FROM tasbih_table WHERE tasbihType LIKE '%MUSTAHAB%'")
     LiveData<List<Tasbih>> getTasbihMustahab();
 
-    @Query("SELECT * FROM tasbih_table WHERE tasbihType LIKE '%AFTER_FAZR%'")
-    LiveData<List<Tasbih>> getTasbihFazr();
+    @Query("SELECT * FROM tasbih_table WHERE tasbihType LIKE '%AFTER_SALAT%'")
+    LiveData<List<Tasbih>> getTasbihPrayer();
 
     @Query("SELECT * FROM tasbih_table WHERE tasbihType LIKE '%AFTER_JUHR%'")
     LiveData<List<Tasbih>> getTasbihJuhr();

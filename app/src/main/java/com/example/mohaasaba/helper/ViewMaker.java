@@ -580,35 +580,35 @@ public class ViewMaker {
                     .inflate(R.layout.view_tasbih_type, null, false);
 
             after_fazr = view.findViewById(R.id.fazr_ViewTasbihType);
-            after_juhr = view.findViewById(R.id.juhr_ViewTasbihType);
-            after_asr = view.findViewById(R.id.asr_ViewTasbihType);
-            after_magrib = view.findViewById(R.id.magrib_ViewTasbihType);
-            after_esha = view.findViewById(R.id.esha_ViewTasbihType);
+//            after_juhr = view.findViewById(R.id.juhr_ViewTasbihType);
+//            after_asr = view.findViewById(R.id.asr_ViewTasbihType);
+//            after_magrib = view.findViewById(R.id.magrib_ViewTasbihType);
+//            after_esha = view.findViewById(R.id.esha_ViewTasbihType);
             before_sleep = view.findViewById(R.id.sleep_ViewTasbihType);
             morning = view.findViewById(R.id.morning_ViewTasbihType);
             evening = view.findViewById(R.id.evening_ViewTasbihType);
             mustahab = view.findViewById(R.id.mustahab_ViewTasbihType);
 
             after_fazr.setOnClickListener(v -> {
-                tasbihType = Tasbih.TasbihType.AFTER_FAZR;
+                tasbihType = Tasbih.TasbihType.AFTER_SALAT;
                 setView();
             });
-            after_juhr.setOnClickListener(v -> {
-                tasbihType = Tasbih.TasbihType.AFTER_JUHR;
-                setView();
-            });
-            after_asr.setOnClickListener(v -> {
-                tasbihType = Tasbih.TasbihType.AFTER_ASR;
-                setView();
-            });
-            after_magrib.setOnClickListener(v -> {
-                tasbihType = Tasbih.TasbihType.AFTER_MAGRIB;
-                setView();
-            });
-            after_esha.setOnClickListener(v -> {
-                tasbihType = Tasbih.TasbihType.AFTER_ESHA;
-                setView();
-            });
+//            after_juhr.setOnClickListener(v -> {
+//                tasbihType = Tasbih.TasbihType.AFTER_JUHR;
+//                setView();
+//            });
+//            after_asr.setOnClickListener(v -> {
+//                tasbihType = Tasbih.TasbihType.AFTER_ASR;
+//                setView();
+//            });
+//            after_magrib.setOnClickListener(v -> {
+//                tasbihType = Tasbih.TasbihType.AFTER_MAGRIB;
+//                setView();
+//            });
+//            after_esha.setOnClickListener(v -> {
+//                tasbihType = Tasbih.TasbihType.AFTER_ESHA;
+//                setView();
+//            });
             before_sleep.setOnClickListener(v -> {
                 tasbihType = Tasbih.TasbihType.BEFORE_SLEEP;
                 setView();
@@ -641,10 +641,10 @@ public class ViewMaker {
         }
         private void setView() {
             clearViewColor(after_fazr);
-            clearViewColor(after_juhr);
-            clearViewColor(after_asr);
-            clearViewColor(after_magrib);
-            clearViewColor(after_esha);
+//            clearViewColor(after_juhr);
+//            clearViewColor(after_asr);
+//            clearViewColor(after_magrib);
+//            clearViewColor(after_esha);
             clearViewColor(before_sleep);
             clearViewColor(morning);
             clearViewColor(evening);
@@ -652,21 +652,21 @@ public class ViewMaker {
 
 
             switch (tasbihType) {
-                case AFTER_FAZR:
+                case AFTER_SALAT:
                     setActiveColor(after_fazr);
                     break;
-                case AFTER_JUHR:
-                    setActiveColor(after_juhr);
-                    break;
-                case AFTER_ASR:
-                    setActiveColor(after_asr);
-                    break;
-                case AFTER_MAGRIB:
-                    setActiveColor(after_magrib);
-                    break;
-                case AFTER_ESHA:
-                    setActiveColor(after_esha);
-                    break;
+//                case AFTER_JUHR:
+//                    setActiveColor(after_juhr);
+//                    break;
+//                case AFTER_ASR:
+//                    setActiveColor(after_asr);
+//                    break;
+//                case AFTER_MAGRIB:
+//                    setActiveColor(after_magrib);
+//                    break;
+//                case AFTER_ESHA:
+//                    setActiveColor(after_esha);
+//                    break;
                 case BEFORE_SLEEP:
                     setActiveColor(before_sleep);
                     break;

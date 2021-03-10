@@ -108,8 +108,8 @@ public class FragmentTasbihDetail extends Fragment {
         toolbar.setTitle("Tasbih Detail");
 
         label_et.setText(tasbih.label);
-        ar_et.setText(tasbih.hadith_ar);
-        bn_et.setText(tasbih.hadith_bn);
+        ar_et.setText(tasbih.doa_ar);
+        bn_et.setText(tasbih.doa_bn);
         ref_et.setText(tasbih.references);
         rewards_et.setText(tasbih.reward);
 
@@ -127,8 +127,8 @@ public class FragmentTasbihDetail extends Fragment {
 
         saveButton.setOnClickListener(v -> {
             tasbih.label = label_et.getText().toString().trim().isEmpty() ? null : label_et.getText().toString().trim();
-            tasbih.hadith_ar = ar_et.getText().toString().trim().isEmpty() ? "" : ar_et.getText().toString().trim();
-            tasbih.hadith_bn = bn_et.getText().toString().trim().isEmpty() ? "" : bn_et.getText().toString().trim();
+            tasbih.doa_ar = ar_et.getText().toString().trim().isEmpty() ? "" : ar_et.getText().toString().trim();
+            tasbih.doa_bn = bn_et.getText().toString().trim().isEmpty() ? "" : bn_et.getText().toString().trim();
             tasbih.references = ref_et.getText().toString().trim().isEmpty() ? "" : ref_et.getText().toString().trim();
             tasbih.reward = rewards_et.getText().toString().trim().isEmpty() ? "" : rewards_et.getText().toString().trim();
 

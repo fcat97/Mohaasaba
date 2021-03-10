@@ -11,8 +11,8 @@ public class Progress implements Parcelable, Serializable {
     private static final String TAG = Progress.class.getCanonicalName();
     public long commitDate;
 
-    public int target;
-    public int progress;
+    public int target = 1;
+    public int progress = 0;
     public int step = 1;
     public String unit = "";
 

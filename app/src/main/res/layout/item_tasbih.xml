@@ -66,6 +66,17 @@
 
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"/>
+        <ImageView
+            android:id="@+id/completed_ImageView_ItemTasbih"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_checkup"
+            android:visibility="invisible"
+
+            android:layout_alignStart="@id/circularProgressView_ItemTasbih"
+            android:layout_alignEnd="@id/circularProgressView_ItemTasbih"
+            android:layout_alignTop="@id/circularProgressView_ItemTasbih"
+            android:layout_alignBottom="@id/circularProgressView_ItemTasbih"/>
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

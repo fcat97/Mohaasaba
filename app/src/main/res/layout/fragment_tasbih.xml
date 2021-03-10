@@ -65,7 +65,7 @@
                     android:id="@+id/fazrTasbih_TextView_FragmentTasbih"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="After Farz"
+                    android:text="After Salat"
                     android:layout_margin="@dimen/dimen_small"
                     android:textAppearance="@style/textMedium"/>
 
@@ -99,7 +99,7 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_below="@id/morningTasbih_TextView_FragmentTasbih"/>
             </RelativeLayout>
-            <RelativeLayout
+<!--            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dimen_mini">
@@ -161,7 +161,7 @@
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_below="@id/magribTasbih_TextView_FragmentTasbih"/>
-            </RelativeLayout>
+            </RelativeLayout>-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_below="@id/eveningTasbih_TextView_FragmentTasbih"/>
             </RelativeLayout>
-            <RelativeLayout
+           <!-- <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dimen_mini">
@@ -203,7 +203,7 @@
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_below="@id/eshaTasbih_TextView_FragmentTasbih"/>
-            </RelativeLayout>
+            </RelativeLayout>-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -248,7 +248,4 @@
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
-
-
-
 </RelativeLayout>

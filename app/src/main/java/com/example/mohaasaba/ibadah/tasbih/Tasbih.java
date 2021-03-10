@@ -10,7 +10,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.example.mohaasaba.helper.IdGenerator;
-import com.example.mohaasaba.models.History;
 import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.Progress;
 import com.example.mohaasaba.models.ProgressHistory;
@@ -24,11 +23,7 @@ import java.util.List;
 public class Tasbih implements Parcelable {
     public enum TasbihType {
         MUSTAHAB,
-        AFTER_FAZR,
-        AFTER_JUHR,
-        AFTER_ASR,
-        AFTER_MAGRIB,
-        AFTER_ESHA,
+        AFTER_SALAT,
         BEFORE_SLEEP,
         MORNING_TASBIH,
         EVENING_TASBIH
@@ -38,8 +33,8 @@ public class Tasbih implements Parcelable {
     public String tasbihID;
     public String label;
     public String reward;
-    public String hadith_ar;
-    public String hadith_bn;
+    public String doa_ar;
+    public String doa_bn;
     public String references;
     public String tags;
     public TasbihType tasbihType;
@@ -53,8 +48,8 @@ public class Tasbih implements Parcelable {
     public Tasbih() {
         this.tasbihID = IdGenerator.getNewID();
         this.label = "";
-        this.hadith_ar = "";
-        this.hadith_bn = "";
+        this.doa_ar = "";
+        this.doa_bn = "";
         this.reward = "";
         this.references = "";
         this.tags = "";
@@ -74,8 +69,8 @@ public class Tasbih implements Parcelable {
         tasbihID = in.readString();
         label = in.readString();
         reward = in.readString();
-        hadith_ar = in.readString();
-        hadith_bn = in.readString();
+        doa_ar = in.readString();
+        doa_bn = in.readString();
         references = in.readString();
         tags = in.readString();
         history = in.readParcelable(ProgressHistory.class.getClassLoader());
@@ -89,8 +84,8 @@ public class Tasbih implements Parcelable {
         dest.writeString(tasbihID);
         dest.writeString(label);
         dest.writeString(reward);
-        dest.writeString(hadith_ar);
-        dest.writeString(hadith_bn);
+        dest.writeString(doa_ar);
+        dest.writeString(doa_bn);
         dest.writeString(references);
         dest.writeString(tags);
         dest.writeParcelable(history, flags);

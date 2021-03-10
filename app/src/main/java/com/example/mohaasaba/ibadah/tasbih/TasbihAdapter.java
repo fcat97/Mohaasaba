@@ -3,6 +3,7 @@ package com.example.mohaasaba.ibadah.tasbih;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,12 +19,13 @@ import java.util.Calendar;
 
 public class TasbihAdapter extends ListAdapter<Tasbih, TasbihAdapter.ViewHolder> {
     private ItemClickListener itemClickListener;
+    private ItemLongClickListener itemLongClickListener;
 
     public TasbihAdapter() {
         super(DIFF_CALLBACK);
     }
 
-    private static DiffUtil.ItemCallback<Tasbih> DIFF_CALLBACK = new DiffUtil.ItemCallback<Tasbih>() {
+    private static final DiffUtil.ItemCallback<Tasbih> DIFF_CALLBACK = new DiffUtil.ItemCallback<Tasbih>() {
         @Override
         public boolean areItemsTheSame(@NonNull Tasbih oldItem, @NonNull Tasbih newItem) {
             return oldItem.tasbihID.equals(newItem.tasbihID);
@@ -31,9 +33,9 @@ public class TasbihAdapter extends ListAdapter<Tasbih, TasbihAdapter.ViewHolder>
 
         @Override
         public boolean areContentsTheSame(@NonNull Tasbih oldItem, @NonNull Tasbih newItem) {
-            return oldItem.label.equals(newItem.label)
-                    && oldItem.reward.equals(newItem.reward)
-                    && oldItem.history.getProgress(Calendar.getInstance()).equals(newItem.history.getProgress(Calendar.getInstance()));
+            if (! oldItem.label.equals(newItem.label)) return false;
+            else if (! oldItem.reward.equals(newItem.reward)) return false;
+            else return oldItem.history.getProgress(Calendar.getInstance()).equals(newItem.history.getProgress(Calendar.getInstance()));
         }
     };
 
@@ -49,16 +51,30 @@ public class TasbihAdapter extends ListAdapter<Tasbih, TasbihAdapter.ViewHolder>
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Tasbih tasbih = getItem(position);
 
-//        holder.sl_tv.setText(String.valueOf(position + 1));
         holder.label_tv.setText(tasbih.label);
         holder.reward_tv.setText(tasbih.reward);
         Progress progress = tasbih.history.getProgress(Calendar.getInstance());
-        float p = (float) progress.progress / progress.target;
-        holder.progressView.setValue(p);
+        holder.progressView.setMaxValue(progress.target);
+        holder.progressView.setBlockCount(Math.round((float) progress.target / progress.step));
+        holder.progressView.setValueAnimated(Math.max(progress.progress - progress.step, 0),
+                progress.progress, 1000); // Animation Fix
 
         holder.itemView.setOnClickListener(v -> {
             if (itemClickListener != null) itemClickListener.onClick(tasbih);
         });
+
+        holder.itemView.setOnLongClickListener(v -> {
+            if (itemClickListener != null) itemLongClickListener.onLongClick(tasbih);
+            return true;
+        });
+
+        if (progress.progress == progress.target) {
+            holder.progressView.setVisibility(View.INVISIBLE);
+            holder.completedImageView.setVisibility(View.VISIBLE);
+        } else {
+            holder.progressView.setVisibility(View.VISIBLE);
+            holder.completedImageView.setVisibility(View.INVISIBLE);
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -66,6 +82,7 @@ public class TasbihAdapter extends ListAdapter<Tasbih, TasbihAdapter.ViewHolder>
         private TextView reward_tv;
         private TextView sl_tv;
         private CircleProgressView progressView;
+        private ImageView completedImageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,7 +90,7 @@ public class TasbihAdapter extends ListAdapter<Tasbih, TasbihAdapter.ViewHolder>
             label_tv = itemView.findViewById(R.id.label_TextView_ItemTasbih);
             reward_tv = itemView.findViewById(R.id.reward_TextView_ItemTasbih);
             progressView = itemView.findViewById(R.id.circularProgressView_ItemTasbih);
-//            sl_tv = itemView.findViewById(R.id.itemSL_TextView_ItemTasbih);
+            completedImageView = itemView.findViewById(R.id.completed_ImageView_ItemTasbih);
         }
     }
 
@@ -82,7 +99,15 @@ public class TasbihAdapter extends ListAdapter<Tasbih, TasbihAdapter.ViewHolder>
         return this;
     }
 
+    public TasbihAdapter setItemLongClickListener(ItemLongClickListener itemLongClickListener) {
+        this.itemLongClickListener = itemLongClickListener;
+        return this;
+    }
+
     public interface ItemClickListener {
         void onClick(Tasbih tasbih);
+    }
+    public interface ItemLongClickListener {
+        void onLongClick(Tasbih tasbih);
     }
 }
