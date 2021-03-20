@@ -8,16 +8,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.fragment.FragmentEditReminder;
-import com.example.mohaasaba.models.Notify;
 
 import java.util.List;
 
 public class TalimActivity extends AppCompatActivity {
     public static final String TAG = TalimActivity.class.getCanonicalName();
 
-    private FragmentBooks fragmentBooksReading;
-
+    private FragmentBooks fragmentBooks;
+    private LiveData<List<Book>> readingBooks;
+    private LiveData<List<Book>> readBooks;
+    private LiveData<List<Book>> wishListBooks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,13 +29,20 @@ public class TalimActivity extends AppCompatActivity {
         }
 
         BookRepo bookRepo = new BookRepo(this);
-        LiveData<List<Book>> allBooks = bookRepo.getAllBooks();
 
-        fragmentBooksReading = new FragmentBooks(allBooks)
+        readingBooks = bookRepo.getAllReadingBooks();
+        readBooks = bookRepo.getAllReadBooks();
+        wishListBooks = bookRepo.getAllWishListedBooks();
+
+        fragmentBooks = new FragmentBooks()
+                .setReadingBooks(readingBooks)
+                .setReadBooks(readBooks)
+                .setWishListBooks(wishListBooks)
                 .setItemClickedListener(this::openBookEditor)
                 .setAddButtonListener(this::openBookEditor);
 
         openFragmentBooks();
+
     }
 
     private void openBookEditor(Book book) {
@@ -48,7 +55,7 @@ public class TalimActivity extends AppCompatActivity {
 
     private void openFragmentBooks() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.frameLayout_TalimActivity, fragmentBooksReading)
+                .add(R.id.frameLayout_TalimActivity, fragmentBooks)
                 .commit();
     }
 }

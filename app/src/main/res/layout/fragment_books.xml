@@ -49,14 +49,12 @@
         </RelativeLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_FragmentBooks"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingStart="@dimen/dimen_small"
-        android:paddingEnd="@dimen/dimen_small"
-        tools:listitem="@layout/item_book"
-        app:spanCount="2"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        android:layout_below="@id/appbarLayout_FragmentBooks"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbarLayout_FragmentBooks">
+        <include android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/content_fragment_book"/>
+    </ScrollView>
 </RelativeLayout>

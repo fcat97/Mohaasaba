@@ -99,69 +99,6 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_below="@id/morningTasbih_TextView_FragmentTasbih"/>
             </RelativeLayout>
-<!--            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_mini">
-                <TextView
-                    android:id="@+id/juhrTasbih_TextView_FragmentTasbih"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="After Juhr"
-                    android:layout_margin="@dimen/dimen_small"
-                    android:textAppearance="@style/textMedium"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/juhr_RecyclerView_FragmentTasbih"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_tasbih"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_below="@id/juhrTasbih_TextView_FragmentTasbih"/>
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_mini">
-                <TextView
-                    android:id="@+id/asrTasbih_TextView_FragmentTasbih"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="After Asr"
-                    android:layout_margin="@dimen/dimen_small"
-                    android:textAppearance="@style/textMedium"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/asr_RecyclerView_FragmentTasbih"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_tasbih"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_below="@id/asrTasbih_TextView_FragmentTasbih"/>
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_mini">
-                <TextView
-                    android:id="@+id/magribTasbih_TextView_FragmentTasbih"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="After Magrib"
-                    android:layout_margin="@dimen/dimen_small"
-                    android:textAppearance="@style/textMedium"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/magrib_RecyclerView_FragmentTasbih"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_tasbih"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_below="@id/magribTasbih_TextView_FragmentTasbih"/>
-            </RelativeLayout>-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -183,27 +120,6 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_below="@id/eveningTasbih_TextView_FragmentTasbih"/>
             </RelativeLayout>
-           <!-- <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_mini">
-                <TextView
-                    android:id="@+id/eshaTasbih_TextView_FragmentTasbih"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="After Esha"
-                    android:layout_margin="@dimen/dimen_small"
-                    android:textAppearance="@style/textMedium"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/esha_RecyclerView_FragmentTasbih"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_tasbih"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_below="@id/eshaTasbih_TextView_FragmentTasbih"/>
-            </RelativeLayout>-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
