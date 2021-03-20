@@ -27,9 +27,6 @@ public class FragmentBooks extends Fragment {
     private RecyclerView readingRecyclerView;
     private RecyclerView readRecyclerView;
     private RecyclerView wishlistRecyclerView;
-    private BookAdapter readingAdapter;
-    private BookAdapter readAdapter;
-    private BookAdapter wishListAdapter;
     private ItemClickedListener itemClickedListener;
     private AddButtonListener addButtonListener;
     private ImageButton addButton;
@@ -62,21 +59,21 @@ public class FragmentBooks extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         toolbar.setTitle("Books");
 
-        readingAdapter = new BookAdapter()
+        BookAdapter readingAdapter = new BookAdapter()
                 .setItemClickListener(book -> {
                     if (itemClickedListener != null) itemClickedListener.onClick(book);
                 });
         readingRecyclerView.setAdapter(readingAdapter);
         if (readingBooks != null) readingBooks.observe(getViewLifecycleOwner(), readingAdapter::submitList);
 
-        readAdapter = new BookAdapter()
+        BookAdapter readAdapter = new BookAdapter()
                 .setItemClickListener(book -> {
                     if (itemClickedListener != null) itemClickedListener.onClick(book);
                 });
         readRecyclerView.setAdapter(readAdapter);
         if (readBooks != null) readBooks.observe(getViewLifecycleOwner(), readAdapter::submitList);
 
-        wishListAdapter = new BookAdapter()
+        BookAdapter wishListAdapter = new BookAdapter()
                 .setItemClickListener(book -> {
                     if (itemClickedListener != null) itemClickedListener.onClick(book);
                 });
