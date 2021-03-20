@@ -33,9 +33,11 @@ public class TasbihAdapter extends ListAdapter<Tasbih, TasbihAdapter.ViewHolder>
 
         @Override
         public boolean areContentsTheSame(@NonNull Tasbih oldItem, @NonNull Tasbih newItem) {
+            float oldProgress = oldItem.history.getProgress(Calendar.getInstance()).progress;
+            float newProgress = newItem.history.getProgress(Calendar.getInstance()).progress;
             if (! oldItem.label.equals(newItem.label)) return false;
             else if (! oldItem.reward.equals(newItem.reward)) return false;
-            else return oldItem.history.getProgress(Calendar.getInstance()).equals(newItem.history.getProgress(Calendar.getInstance()));
+            else return oldProgress == newProgress;
         }
     };
 
