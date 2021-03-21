@@ -10,21 +10,33 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.mohaasaba.R;
+import com.example.mohaasaba.ibadah.tasbih.Tasbih;
 import com.example.mohaasaba.models.Note;
+import com.example.mohaasaba.models.Progress;
+import com.example.mohaasaba.models.ProgressHistory;
 import com.example.mohaasaba.models.Reminder;
 import com.example.mohaasaba.models.ScheduleType;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class ViewMaker {
     private static final String TAG = "ViewMaker";
@@ -425,5 +437,257 @@ public class ViewMaker {
             else setAsIncome();
         }
         public View getIESelectorView() { return rootView; }
+    }
+
+    public static class ProgressHistoryView {
+        public final View view;
+        private TextView dailyTarget_tv, completed_tv, totalComplete_tv;
+        private EditText progressInput_et;
+        private Button progress_bt;
+        private RelativeLayout dailyTarget_rl, input_RL;
+        private ImageButton inputDoneButton, undoButton, allDoneButton;
+        private BarChart barChart;
+
+        private ProgressHistory history;
+
+        public ProgressHistoryView(Context context) {
+            view = LayoutInflater.from(context)
+                    .inflate(R.layout.view_progress_history, null, false);
+
+            dailyTarget_tv = view.findViewById(R.id.dailyTarget_TextView_ViewProgressHistory);
+            completed_tv = view.findViewById(R.id.targetComplete_TextView_ViewProgressHistory);
+            totalComplete_tv = view.findViewById(R.id.totalCompleted_TextView_ViewProgressHistory);
+            progress_bt = view.findViewById(R.id.progress_Button_ViewProgressHistory);
+            dailyTarget_rl = view.findViewById(R.id.dailyTarget_RelativeLayout_ViewProgressHistory);
+            input_RL = view.findViewById(R.id.progressInput_RelativeLayout_ViewProgressHistory);
+            progressInput_et = view.findViewById(R.id.progressInput_EditText_ViewProgressHistory);
+            inputDoneButton = view.findViewById(R.id.checkButton_ImageButton_ViewProgressHistory);
+            barChart = view.findViewById(R.id.progress_chart_ViewProgressHistory);
+            undoButton = view.findViewById(R.id.undoButton_ImageButton_ViewProgressHistory);
+            allDoneButton = view.findViewById(R.id.allDone_ImageButton_ViewProgressHistory);
+
+
+            // set Bar Chart
+            barChart.setBackgroundColor(Color.TRANSPARENT);
+            barChart.setDrawGridBackground(false);
+            barChart.setGridBackgroundColor(Color.GREEN);
+            barChart.setDrawBorders(false);
+            barChart.getDescription().setEnabled(false);
+            barChart.setPinchZoom(false);
+            barChart.getLegend().setEnabled(false);
+            barChart.getAxisLeft().setEnabled(true);
+            barChart.getAxisRight().setEnabled(false);
+            barChart.getXAxis().setDrawGridLines(false);
+            barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+
+            // Attach Listeners
+            progress_bt.setOnClickListener(this::doProgress);
+            undoButton.setOnClickListener(this::undoProgress);
+            allDoneButton.setOnClickListener(this::allDone);
+            dailyTarget_rl.setOnClickListener(this::showTargetInput);
+            inputDoneButton.setOnClickListener(this::onTargetInputDone);
+        }
+        public View getView() {
+            return view;
+        }
+
+        public ProgressHistoryView setProgressHistory(ProgressHistory progressHistory) {
+            this.history = progressHistory;
+            setProgressView();
+            return this;
+        }
+
+        private void setProgressView() {
+            Progress progress = history.getProgress(Calendar.getInstance());
+            String target = progress.target + " " + progress.unit;
+            String completed = progress.progress + " " + progress.unit;
+            String total = history.getTotalProgress() + " " + progress.unit;
+            dailyTarget_tv.setText(target);
+            completed_tv.setText(completed);
+            totalComplete_tv.setText(total);
+            setChartData();
+        }
+        private void setChartData() {
+            // month starting date and ending date
+            Calendar selectedDate = Calendar.getInstance();
+            selectedDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH),1);
+            int lastDayOfMonth = selectedDate.getMaximum(Calendar.DAY_OF_MONTH);
+
+            List<Integer> progressList = new ArrayList<>();
+            for (int i = 1; i <= lastDayOfMonth; i++) {
+                progressList.add( history.getProgress(selectedDate).progress);
+                selectedDate.add(Calendar.DAY_OF_MONTH, 1);
+            }
+
+            // This is a long step. think minimizing the process
+            List<BarEntry> yAxis = new ArrayList<>();
+            for (int i = 1; i <= progressList.size(); i++) {
+                yAxis.add(new BarEntry(i, progressList.get(i - 1)));
+            }
+
+            BarDataSet dataSet = new BarDataSet(yAxis, "Progress");
+            BarData barData = new BarData(dataSet);
+            barData.setDrawValues(false);
+            barChart.setData(barData);
+            barChart.invalidate();
+            barChart.animateX(600);
+
+        }
+        private void doProgress(View view) {
+            history.commitProgress(
+                    history.getProgress(Calendar.getInstance()).doProgress(),
+                    Calendar.getInstance());
+            setProgressView();
+        }
+        private void undoProgress(View view) {
+            history.commitProgress(
+                    history.getProgress(Calendar.getInstance()).undoProgress(),
+                    Calendar.getInstance());
+            setProgressView();
+        }
+        private void allDone(View view) {
+            history.commitProgress(
+                    history.getProgress(Calendar.getInstance()).allDone(),
+                    Calendar.getInstance());
+            setProgressView();
+        }
+        private void showTargetInput(View view) {
+            if (input_RL.getVisibility() == View.VISIBLE) {
+                input_RL.setVisibility(View.GONE);
+            } else {
+                input_RL.setVisibility(View.VISIBLE);
+                progressInput_et.setText(String.valueOf(history.getDailyTarget()));
+            }
+        }
+        private void onTargetInputDone(View view) {
+            Progress progress = history.getProgress(Calendar.getInstance());
+            progress.target = progressInput_et.getText().toString().trim().isEmpty() ? 0 : Integer.parseInt(progressInput_et.getText().toString().trim());
+            history.commitProgress(progress, Calendar.getInstance());
+            input_RL.setVisibility(View.GONE);
+            setProgressView();
+        }
+    }
+
+    public static class TasbihTypeSelector {
+        private View view;
+        private TextView after_fazr, after_juhr, after_asr, after_magrib, after_esha;
+        private TextView before_sleep, morning, evening, mustahab;
+
+        public Tasbih.TasbihType tasbihType;
+
+        public TasbihTypeSelector(Context context) {
+            view = LayoutInflater.from(context)
+                    .inflate(R.layout.view_tasbih_type, null, false);
+
+            after_fazr = view.findViewById(R.id.fazr_ViewTasbihType);
+//            after_juhr = view.findViewById(R.id.juhr_ViewTasbihType);
+//            after_asr = view.findViewById(R.id.asr_ViewTasbihType);
+//            after_magrib = view.findViewById(R.id.magrib_ViewTasbihType);
+//            after_esha = view.findViewById(R.id.esha_ViewTasbihType);
+            before_sleep = view.findViewById(R.id.sleep_ViewTasbihType);
+            morning = view.findViewById(R.id.morning_ViewTasbihType);
+            evening = view.findViewById(R.id.evening_ViewTasbihType);
+            mustahab = view.findViewById(R.id.mustahab_ViewTasbihType);
+
+            after_fazr.setOnClickListener(v -> {
+                tasbihType = Tasbih.TasbihType.AFTER_SALAT;
+                setView();
+            });
+//            after_juhr.setOnClickListener(v -> {
+//                tasbihType = Tasbih.TasbihType.AFTER_JUHR;
+//                setView();
+//            });
+//            after_asr.setOnClickListener(v -> {
+//                tasbihType = Tasbih.TasbihType.AFTER_ASR;
+//                setView();
+//            });
+//            after_magrib.setOnClickListener(v -> {
+//                tasbihType = Tasbih.TasbihType.AFTER_MAGRIB;
+//                setView();
+//            });
+//            after_esha.setOnClickListener(v -> {
+//                tasbihType = Tasbih.TasbihType.AFTER_ESHA;
+//                setView();
+//            });
+            before_sleep.setOnClickListener(v -> {
+                tasbihType = Tasbih.TasbihType.BEFORE_SLEEP;
+                setView();
+            });
+            morning.setOnClickListener(v -> {
+                tasbihType = Tasbih.TasbihType.MORNING_TASBIH;
+                setView();
+            });
+            evening.setOnClickListener(v -> {
+                tasbihType = Tasbih.TasbihType.EVENING_TASBIH;
+                setView();
+            });
+            mustahab.setOnClickListener(v -> {
+                tasbihType = Tasbih.TasbihType.MUSTAHAB;
+                setView();
+            });
+
+        }
+
+        public TasbihTypeSelector setTasbihType(Tasbih.TasbihType tasbihType) {
+            this.tasbihType = tasbihType;
+            setView();
+            return this;
+        }
+        public View getView() {
+            return view;
+        }
+        public Tasbih.TasbihType getTasbihType() {
+            return tasbihType;
+        }
+        private void setView() {
+            clearViewColor(after_fazr);
+//            clearViewColor(after_juhr);
+//            clearViewColor(after_asr);
+//            clearViewColor(after_magrib);
+//            clearViewColor(after_esha);
+            clearViewColor(before_sleep);
+            clearViewColor(morning);
+            clearViewColor(evening);
+            clearViewColor(mustahab);
+
+
+            switch (tasbihType) {
+                case AFTER_SALAT:
+                    setActiveColor(after_fazr);
+                    break;
+//                case AFTER_JUHR:
+//                    setActiveColor(after_juhr);
+//                    break;
+//                case AFTER_ASR:
+//                    setActiveColor(after_asr);
+//                    break;
+//                case AFTER_MAGRIB:
+//                    setActiveColor(after_magrib);
+//                    break;
+//                case AFTER_ESHA:
+//                    setActiveColor(after_esha);
+//                    break;
+                case BEFORE_SLEEP:
+                    setActiveColor(before_sleep);
+                    break;
+                case MORNING_TASBIH:
+                    setActiveColor(morning);
+                    break;
+                case EVENING_TASBIH:
+                    setActiveColor(evening);
+                    break;
+                default:
+                    setActiveColor(mustahab);
+            }
+        }
+
+        private void clearViewColor(TextView view) {
+            view.setBackgroundColor(Color.TRANSPARENT);
+            view.setTextColor(Color.BLACK);
+        }
+        private void setActiveColor(TextView view) {
+            view.setBackgroundColor(Color.LTGRAY);
+            view.setTextColor(Color.WHITE);
+        }
     }
 }

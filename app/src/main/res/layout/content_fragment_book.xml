@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGray"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_mini">
+        <TextView
+            android:id="@+id/reading_TextView_FragmentBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reading"
+            android:layout_margin="@dimen/dimen_small"
+            android:textAppearance="@style/textMedium"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reading_RecyclerView_FragmentBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_book"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_below="@id/reading_TextView_FragmentBook"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_mini">
+        <TextView
+            android:id="@+id/read_TextView_FragmentBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Read"
+            android:layout_margin="@dimen/dimen_small"
+            android:textAppearance="@style/textMedium"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/read_RecyclerView_FragmentBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_book"
+            android:orientation="horizontal"
+            app:spanCount="2"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            android:layout_below="@id/read_TextView_FragmentBook"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_mini">
+        <TextView
+            android:id="@+id/wishlist_TextView_FragmentBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="WishList"
+            android:layout_margin="@dimen/dimen_small"
+            android:textAppearance="@style/textMedium"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/wishlist_RecyclerView_FragmentBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_book"
+            android:orientation="horizontal"
+            app:spanCount="2"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            android:layout_below="@id/wishlist_TextView_FragmentBook"/>
+    </RelativeLayout>
+</LinearLayout>

@@ -11,8 +11,8 @@ public class Progress implements Parcelable, Serializable {
     private static final String TAG = Progress.class.getCanonicalName();
     public long commitDate;
 
-    public int target;
-    public int progress;
+    public int target = 1;
+    public int progress = 0;
     public int step = 1;
     public String unit = "";
 
@@ -25,13 +25,15 @@ public class Progress implements Parcelable, Serializable {
         return this;
     }
 
-    public void undoProgress() {
+    public Progress undoProgress() {
         progress = Math.max(progress - step, 0);
+        return this;
     }
 
     // Do all the steps..
-    public void allDone() {
+    public Progress allDone() {
         progress = target;
+        return this;
     }
 
     protected Progress(Parcel in) {

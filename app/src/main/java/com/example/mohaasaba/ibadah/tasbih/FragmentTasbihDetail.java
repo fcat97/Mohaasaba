@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -20,7 +21,6 @@ import android.widget.TextView;
 import com.example.mohaasaba.R;
 import com.example.mohaasaba.adapter.NotifyAdapter;
 import com.example.mohaasaba.fragment.FragmentEditReminder;
-import com.example.mohaasaba.fragment.FragmentTodo;
 import com.example.mohaasaba.helper.ViewMaker;
 import com.example.mohaasaba.models.Notify;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,13 +39,17 @@ public class FragmentTasbihDetail extends Fragment {
 
     private EditText label_et, ar_et, bn_et, ref_et, rewards_et;
     private Toolbar toolbar;
-    private ImageButton saveButton;
+    private ImageButton saveButton, backButton;
 
     private RecyclerView notify_rv;
     private TextView noNotify_tv;
     private FloatingActionButton addNotifyButton;
     private NotifyAdapter notifyAdapter;
     private FrameLayout dateSelector_fl;
+
+    private FrameLayout progressLayout;
+    private FrameLayout typeLayout;
+    private Button deleteButton;
 
 
     public FragmentTasbihDetail() {
@@ -77,6 +81,7 @@ public class FragmentTasbihDetail extends Fragment {
 
         toolbar = view.findViewById(R.id.toolbar_FragmentTasbihDetail);
         saveButton = view.findViewById(R.id.saveButton_FragmentTasbihDetail);
+        backButton = view.findViewById(R.id.backButton_FragmentTasbihDetail);
 
         label_et = view.findViewById(R.id.label_EditText_FragmentTasbihDetail);
         ar_et = view.findViewById(R.id.ar_EditText_FragmentTasbihDetail);
@@ -89,6 +94,11 @@ public class FragmentTasbihDetail extends Fragment {
         addNotifyButton = view.findViewById(R.id.addReminder_FAB_FragmentReminder);
         dateSelector_fl = view.findViewById(R.id.dateSelector_FrameLayout_FragmentTasbihDetail);
 
+        progressLayout = view.findViewById(R.id.preogress_FrameLayout_FragmentTasbihDetail);
+        typeLayout = view.findViewById(R.id.type_FrameLayout_FragmentTasbihDetail);
+
+        deleteButton = view.findViewById(R.id.deleteButton_FragmentTasbihDetail);
+
         return view;
     }
 
@@ -98,26 +108,39 @@ public class FragmentTasbihDetail extends Fragment {
         toolbar.setTitle("Tasbih Detail");
 
         label_et.setText(tasbih.label);
-        ar_et.setText(tasbih.hadith_ar);
-        bn_et.setText(tasbih.hadith_bn);
+        ar_et.setText(tasbih.doa_ar);
+        bn_et.setText(tasbih.doa_bn);
         ref_et.setText(tasbih.references);
         rewards_et.setText(tasbih.reward);
 
-        FragmentTodo fragmentTodo = new FragmentTodo(tasbih.history);
-        getChildFragmentManager().beginTransaction()
-                .add(R.id.frameLayout_FragmentTasbihDetail, fragmentTodo)
-                .commit();
+        // Set Progress History View
+        ViewMaker.ProgressHistoryView progressHistoryView = new ViewMaker.ProgressHistoryView(getContext())
+                .setProgressHistory(tasbih.history);
+        progressLayout.addView(progressHistoryView.getView());
+
+        // Set TasbihType View
+        ViewMaker.TasbihTypeSelector tasbihTypeSelector = new ViewMaker.TasbihTypeSelector(getContext())
+                .setTasbihType(tasbih.tasbihType);
+        typeLayout.addView(tasbihTypeSelector.getView());
 
         TasbihRepository repository = new TasbihRepository(getContext());
 
         saveButton.setOnClickListener(v -> {
             tasbih.label = label_et.getText().toString().trim().isEmpty() ? null : label_et.getText().toString().trim();
-            tasbih.hadith_ar = ar_et.getText().toString().trim().isEmpty() ? "" : ar_et.getText().toString().trim();
-            tasbih.hadith_bn = bn_et.getText().toString().trim().isEmpty() ? "" : bn_et.getText().toString().trim();
+            tasbih.doa_ar = ar_et.getText().toString().trim().isEmpty() ? "" : ar_et.getText().toString().trim();
+            tasbih.doa_bn = bn_et.getText().toString().trim().isEmpty() ? "" : bn_et.getText().toString().trim();
             tasbih.references = ref_et.getText().toString().trim().isEmpty() ? "" : ref_et.getText().toString().trim();
             tasbih.reward = rewards_et.getText().toString().trim().isEmpty() ? "" : rewards_et.getText().toString().trim();
 
+            tasbih.tasbihType = tasbihTypeSelector.getTasbihType();
+
             if (tasbih.label != null) repository.updateTasbih(tasbih);
+            getParentFragmentManager().popBackStack();
+        });
+
+        backButton.setOnClickListener(v -> getParentFragmentManager().popBackStack());
+        deleteButton.setOnClickListener(v -> {
+            repository.deleteTasbih(tasbih);
             getParentFragmentManager().popBackStack();
         });
 

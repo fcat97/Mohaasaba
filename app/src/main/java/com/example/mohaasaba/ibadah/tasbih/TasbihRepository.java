@@ -8,7 +8,6 @@ import com.example.mohaasaba.ibadah.IbadahDB;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -38,9 +37,27 @@ public class TasbihRepository {
 
         return tasbih;
     }
+
     public LiveData<List<Tasbih>> getAllTasbih() {
         return tasbihDao.getAllTasbih();
     }
+    public LiveData<List<Tasbih>> getTasbihPrayer() {
+        return tasbihDao.getTasbihPrayer();
+    }
+    public LiveData<List<Tasbih>> getTasbihSleep() {
+        return tasbihDao.getTasbihSleep();
+    }
+    public LiveData<List<Tasbih>> getTasbihMorning() {
+        return tasbihDao.getTasbihMorning();
+    }
+    public LiveData<List<Tasbih>> getTasbihEvening() {
+        return tasbihDao.getTasbihEvening();
+    }
+    public LiveData<List<Tasbih>> getTasbihMustahab() {
+        return tasbihDao.getTasbihMustahab();
+    }
+
+
     public List<Tasbih> getTasbihList() {
         ExecutorService service = Executors.newSingleThreadExecutor();
 

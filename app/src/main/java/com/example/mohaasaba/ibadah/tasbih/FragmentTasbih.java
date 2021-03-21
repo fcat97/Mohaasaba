@@ -18,28 +18,48 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.mohaasaba.R;
+import com.example.mohaasaba.models.Progress;
 import com.example.mohaasaba.receivers.NotificationScheduler;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
 
 public class FragmentTasbih extends Fragment {
     private static final String TAG = FragmentTasbih.class.getCanonicalName();
-    private RecyclerView recyclerView;
-    private TasbihAdapter tasbihAdapter;
+    private RecyclerView prayerRecyclerView;
+    private RecyclerView sleepRecyclerView;
+    private RecyclerView morningRecyclerView;
+    private RecyclerView eveningRecyclerView;
+    private RecyclerView mustahabRecyclerView;
+
+    private TasbihAdapter prayerAdapter;
+    private TasbihAdapter sleepAdapter;
+    private TasbihAdapter morningAdapter;
+    private TasbihAdapter eveningAdapter;
+    private TasbihAdapter mustahabAdapter;
+
     private Toolbar toolbar;
     private FragmentTasbihListener listener;
 
-    private ImageButton addButton;
+    private ImageButton addButton, backButton;
+
+    private TasbihRepository tasbihRepository;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_tasbih, null, false);
 
-        recyclerView = view.findViewById(R.id.recyclerView_FragmentTasbih);
+        prayerRecyclerView = view.findViewById(R.id.fazr_RecyclerView_FragmentTasbih);
+        sleepRecyclerView = view.findViewById(R.id.sleep_RecyclerView_FragmentTasbih);
+        morningRecyclerView = view.findViewById(R.id.morning_RecyclerView_FragmentTasbih);
+        eveningRecyclerView = view.findViewById(R.id.evening_RecyclerView_FragmentTasbih);
+        mustahabRecyclerView = view.findViewById(R.id.mustahab_RecyclerView_FragmentTasbih);
+
         addButton = view.findViewById(R.id.addButton_FragmentTasbih);
+        backButton = view.findViewById(R.id.backButton_FragmentTasbih);
         toolbar = view.findViewById(R.id.toolbar_FragmentTasbih);
 
         return view;
@@ -55,16 +75,45 @@ public class FragmentTasbih extends Fragment {
         addButton.setOnClickListener(v -> {
             if (listener != null) listener.onClick(new Tasbih());
         });
-        tasbihAdapter = new TasbihAdapter()
-                .setItemClickListener(tasbih -> {
-                    if (listener != null) listener.onClick(tasbih);
-                });
-        recyclerView.setAdapter(tasbihAdapter);
 
-        TasbihRepository tasbihRepository = new TasbihRepository(getContext());
-        LiveData<List<Tasbih>> tasbihLiveData = tasbihRepository.getAllTasbih();
+        backButton.setOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
 
-        tasbihLiveData.observe(getViewLifecycleOwner(), tasbihAdapter::submitList);
+        tasbihRepository = new TasbihRepository(getContext());
+
+        prayerAdapter = new TasbihAdapter()
+                .setItemClickListener(this::onAdapterItemClick)
+                .setItemLongClickListener(this::onAdapterItemLongClick);
+        prayerRecyclerView.setAdapter(prayerAdapter);
+        LiveData<List<Tasbih>> fazrLiveData = tasbihRepository.getTasbihPrayer();
+        fazrLiveData.observe(getViewLifecycleOwner(), prayerAdapter::submitList);
+
+        sleepAdapter = new TasbihAdapter()
+                .setItemClickListener(this::onAdapterItemClick)
+                .setItemLongClickListener(this::onAdapterItemLongClick);
+        sleepRecyclerView.setAdapter(sleepAdapter);
+        LiveData<List<Tasbih>> sleepLiveData = tasbihRepository.getTasbihSleep();
+        sleepLiveData.observe(getViewLifecycleOwner(), sleepAdapter::submitList);
+
+        morningAdapter = new TasbihAdapter()
+                .setItemClickListener(this::onAdapterItemClick)
+                .setItemLongClickListener(this::onAdapterItemLongClick);
+        morningRecyclerView.setAdapter(morningAdapter);
+        LiveData<List<Tasbih>> morningLiveData = tasbihRepository.getTasbihMorning();
+        morningLiveData.observe(getViewLifecycleOwner(), morningAdapter::submitList);
+
+        eveningAdapter = new TasbihAdapter()
+                .setItemClickListener(this::onAdapterItemClick)
+                .setItemLongClickListener(this::onAdapterItemLongClick);
+        eveningRecyclerView.setAdapter(eveningAdapter);
+        LiveData<List<Tasbih>> eveningLiveData = tasbihRepository.getTasbihEvening();
+        eveningLiveData.observe(getViewLifecycleOwner(), eveningAdapter::submitList);
+
+        mustahabAdapter = new TasbihAdapter()
+                .setItemClickListener(this::onAdapterItemClick)
+                .setItemLongClickListener(this::onAdapterItemLongClick);
+        mustahabRecyclerView.setAdapter(mustahabAdapter);
+        LiveData<List<Tasbih>> mustahabLiveData = tasbihRepository.getTasbihMustahab();
+        mustahabLiveData.observe(getViewLifecycleOwner(), mustahabAdapter::submitList);
     }
 
     @Override
@@ -82,6 +131,16 @@ public class FragmentTasbih extends Fragment {
             Log.d(TAG, "rescheduleNotification: failed");
             e.printStackTrace();
         }
+    }
+
+    private void onAdapterItemClick(Tasbih tasbih) {
+        if (listener != null) listener.onClick(tasbih);
+    }
+    private void onAdapterItemLongClick(Tasbih tasbih) {
+        Progress p = tasbih.history.getProgress(Calendar.getInstance());
+        p.doProgress();
+        tasbih.history.commitProgress(p, Calendar.getInstance());
+        tasbihRepository.updateTasbih(tasbih);
     }
 
 

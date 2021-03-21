@@ -24,16 +24,20 @@ import java.util.Objects;
 
 public class FragmentBooks extends Fragment {
     private static final String TAG = FragmentBooks.class.getCanonicalName();
-    private RecyclerView recyclerView;
-    private LiveData<List<Book>> bookList;
-    private BookAdapter adapter;
+    private RecyclerView readingRecyclerView;
+    private RecyclerView readRecyclerView;
+    private RecyclerView wishlistRecyclerView;
     private ItemClickedListener itemClickedListener;
     private AddButtonListener addButtonListener;
     private ImageButton addButton;
+    private ImageButton backButton;
     private Toolbar toolbar;
 
-    public FragmentBooks(LiveData<List<Book>> bookList) {
-        this.bookList = bookList;
+    private LiveData<List<Book>> readingBooks;
+    private LiveData<List<Book>> readBooks;
+    private LiveData<List<Book>> wishListBooks;
+
+    public FragmentBooks() {
         setRetainInstance(true);
     }
 
@@ -41,8 +45,11 @@ public class FragmentBooks extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = View.inflate(getContext(), R.layout.fragment_books, null);
-        recyclerView = view.findViewById(R.id.recyclerView_FragmentBooks);
+        readingRecyclerView = view.findViewById(R.id.reading_RecyclerView_FragmentBook);
+        readRecyclerView = view.findViewById(R.id.read_RecyclerView_FragmentBook);
+        wishlistRecyclerView = view.findViewById(R.id.wishlist_RecyclerView_FragmentBook);
         addButton = view.findViewById(R.id.addButton_FragmentBook);
+        backButton = view.findViewById(R.id.backButton_FragmentBook);
         toolbar = view.findViewById(R.id.toolbar_FragmentBooks);
         return view;
     }
@@ -52,15 +59,33 @@ public class FragmentBooks extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         toolbar.setTitle("Books");
 
-        adapter = new BookAdapter()
+        BookAdapter readingAdapter = new BookAdapter()
                 .setItemClickListener(book -> {
                     if (itemClickedListener != null) itemClickedListener.onClick(book);
                 });
-        recyclerView.setAdapter(adapter);
-        bookList.observe(getViewLifecycleOwner(), adapter::submitList);
+        readingRecyclerView.setAdapter(readingAdapter);
+        if (readingBooks != null) readingBooks.observe(getViewLifecycleOwner(), readingAdapter::submitList);
+
+        BookAdapter readAdapter = new BookAdapter()
+                .setItemClickListener(book -> {
+                    if (itemClickedListener != null) itemClickedListener.onClick(book);
+                });
+        readRecyclerView.setAdapter(readAdapter);
+        if (readBooks != null) readBooks.observe(getViewLifecycleOwner(), readAdapter::submitList);
+
+        BookAdapter wishListAdapter = new BookAdapter()
+                .setItemClickListener(book -> {
+                    if (itemClickedListener != null) itemClickedListener.onClick(book);
+                });
+        wishlistRecyclerView.setAdapter(wishListAdapter);
+        if (wishListBooks != null) wishListBooks.observe(getViewLifecycleOwner(), wishListAdapter::submitList);
 
         addButton.setOnClickListener(v -> {
             if (addButtonListener != null) addButtonListener.onClick(new Book(" "));
+        });
+
+        backButton.setOnClickListener(v -> {
+            Objects.requireNonNull(getActivity()).onBackPressed();
         });
     }
 
@@ -83,6 +108,21 @@ public class FragmentBooks extends Fragment {
 
     public FragmentBooks setItemClickedListener(ItemClickedListener itemClickedListener) {
         this.itemClickedListener = itemClickedListener;
+        return this;
+    }
+
+    public FragmentBooks setReadingBooks(LiveData<List<Book>> readingBooks) {
+        this.readingBooks = readingBooks;
+        return this;
+    }
+
+    public FragmentBooks setReadBooks(LiveData<List<Book>> readBooks) {
+        this.readBooks = readBooks;
+        return this;
+    }
+
+    public FragmentBooks setWishListBooks(LiveData<List<Book>> wishListBooks) {
+        this.wishListBooks = wishListBooks;
         return this;
     }
 
