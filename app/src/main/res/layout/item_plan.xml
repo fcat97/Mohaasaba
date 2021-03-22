@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="@dimen/cardElevation"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
+    android:layout_marginStart="@dimen/dimen_mini"
+    android:layout_marginEnd="@dimen/dimen_mini"
+    app:cardCornerRadius="@dimen/cardCornerRadius"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground">
+
+        <TextView
+            android:id="@+id/titleTextView_ItemPlan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_text"
+            android:textAppearance="@style/textRegular.bold"
+            android:layout_marginStart="@dimen/dimen_small"
+            android:layout_marginTop="@dimen/dimen_mini"
+            android:layout_alignParentTop="true"/>
+
+        <ImageView
+            android:id="@+id/tagIcon_ItemPlan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_tag"
+            android:layout_alignStart="@id/titleTextView_ItemPlan"
+            android:layout_below="@id/titleTextView_ItemPlan"/>
+
+        <TextView
+            android:id="@+id/tagsTextView_ItemPlan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/no_tags"
+            android:textAppearance="@style/textSmall.Italic"
+            android:layout_marginStart="@dimen/dimen_small"
+            android:layout_below="@id/titleTextView_ItemPlan"
+            android:layout_toEndOf="@id/tagIcon_ItemPlan"/>
+
+        <at.grabner.circleprogress.CircleProgressView
+            android:id="@+id/progress_circular_ItemPlan"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+
+            app:cpv_maxValue="100"
+            app:cpv_value="0"
+            app:cpv_textColor="?attr/colorAccent"
+            app:cpv_textMode="Percent"
+            app:cpv_autoTextSize="true"
+            app:cpv_textScale="0.75"
+            app:cpv_unit="%"
+            app:cpv_unitColor="@color/colorOrange"
+            app:cpv_unitPosition="right_top"
+            app:cpv_unitToTextScale="0.85"
+            app:cpv_showUnit="true"
+            app:cpv_blockCount="15"
+
+            app:cpv_startAngle="300"
+            app:cpv_rimWidth="3dp"
+            app:cpv_barWidth="9dp"
+            app:cpv_barColor="@color/colorOrange"
+            app:cpv_innerContourColor="@android:color/transparent"
+            app:cpv_outerContourColor="@android:color/transparent"
+
+            android:layout_alignParentEnd="true" />
+
+        <ImageView
+            android:id="@+id/completed_ImageView_ItemRecyclerView_ItemPlan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_checkup"
+            android:visibility="invisible"
+
+            android:layout_alignStart="@id/progress_circular_ItemPlan"
+            android:layout_alignEnd="@id/progress_circular_ItemPlan"
+            android:layout_alignTop="@id/progress_circular_ItemPlan"
+            android:layout_alignBottom="@id/progress_circular_ItemPlan"/>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

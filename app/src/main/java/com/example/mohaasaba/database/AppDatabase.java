@@ -20,13 +20,15 @@ import com.example.mohaasaba.models.Task;
 import com.example.mohaasaba.models.Transaction;
 import com.example.mohaasaba.models.TransactionAccount;
 import com.example.mohaasaba.models.TransactionPage;
+import com.example.mohaasaba.plans.Plan;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 @Database(entities = {Schedule.class, Note.class, Reminder.class,
-        Transaction.class, TransactionPage.class, TransactionAccount.class},
+        Transaction.class, TransactionPage.class, TransactionAccount.class,
+        Plan.class},
         version = 1)
 @TypeConverters({DataConverter.class})
 public abstract class AppDatabase extends RoomDatabase{
@@ -38,6 +40,7 @@ public abstract class AppDatabase extends RoomDatabase{
     public abstract TransactionAccountDao accountDao();
     public abstract TransactionPageDao transactionPageDao();
     public abstract TransactionDao transactionDao();
+    public abstract PlanDao planDao();
 
     public static synchronized AppDatabase getInstance(Context context) {
         if (appDatabaseInstance == null) {

@@ -9,6 +9,8 @@ import com.example.mohaasaba.models.Notify;
 import com.example.mohaasaba.models.ProgressHistory;
 import com.example.mohaasaba.models.ScheduleType;
 import com.example.mohaasaba.models.Transaction;
+import com.example.mohaasaba.plans.PlanPeriod;
+import com.example.mohaasaba.plans.SubPlan;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -16,6 +18,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class DataConverter {
@@ -286,5 +289,45 @@ public class DataConverter {
         Type type = new TypeToken<Tasbih.TasbihType>(){}.getType();
 
         return gson.toJson(tasbihType, type);
+    }
+
+    @TypeConverter
+    public static String fromPlanPeriod(PlanPeriod planPeriod) {
+        if (planPeriod == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<PlanPeriod>(){}.getType();
+
+        return gson.toJson(planPeriod, type);
+    }
+
+    @TypeConverter
+    public static PlanPeriod toPlanPeriod(String json) {
+        if (json == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<PlanPeriod>(){}.getType();
+
+        return gson.fromJson(json, type);
+    }
+
+    @TypeConverter
+    public static String fromSubPlanHash(HashMap<Long, List<SubPlan>> hashMap) {
+        if (hashMap == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<HashMap<Long, List<SubPlan>>>(){}.getType();
+
+        return gson.toJson(hashMap, type);
+    }
+
+    @TypeConverter
+    public static HashMap<Long, List<SubPlan>> toSubPlanHash(String json) {
+        if (json == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<HashMap<Long, List<SubPlan>>>(){}.getType();
+
+        return gson.fromJson(json, type);
     }
 }

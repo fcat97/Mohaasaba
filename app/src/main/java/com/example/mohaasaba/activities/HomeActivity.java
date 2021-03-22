@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.mohaasaba.R;
+import com.example.mohaasaba.plans.PlanActivity;
 
 import soup.neumorphism.NeumorphCardView;
 
@@ -36,7 +37,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn1_HomeActivity) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, PlanActivity.class);
             startActivity(intent);
         } else if (v.getId() == R.id.btn2_HomeActivity) {
             Intent intent = new Intent(this, HisaabActivity.class);
