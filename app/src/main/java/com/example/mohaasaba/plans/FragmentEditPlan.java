@@ -42,7 +42,6 @@ public class FragmentEditPlan extends Fragment {
     private Calendar selectedDate;
     private SubPlanAdapter subPlanAdapter;
     private Button saveButton;
-    private OnSaveButtonClickListener saveButtonClickListener;
 
     private List<SubPlan> subPlanList;
 
@@ -125,7 +124,8 @@ public class FragmentEditPlan extends Fragment {
 
         subPlanAdapter = new SubPlanAdapter()
                 .setDeleteButtonListener(this::deleteSubPlan)
-                .setItemClickListener(this::openFragmentEditSubPlan);
+                .setItemClickListener(this::openFragmentEditSubPlan)
+                .setLongPressListener(this::incrementProgress);
         recyclerView.setAdapter(subPlanAdapter);
         updateSubPlansList();
 
@@ -184,6 +184,13 @@ public class FragmentEditPlan extends Fragment {
 
     }
 
+    private void incrementProgress(SubPlan subPlan) {
+        subPlan.incrementCount();
+        mPlan.commitSubPlans(selectedDate, subPlanList);
+        int index = subPlanList.indexOf(subPlan);
+        subPlanAdapter.notifyItemRangeChanged(index, subPlanAdapter.getItemCount());
+    }
+
     private void openFragmentEditSubPlan(SubPlan subPlan) {
         FragmentEditSubPlan fragmentEditSubPlan = FragmentEditSubPlan.getInstance(subPlan)
                 .setConfirmListener(() -> {
@@ -220,14 +227,5 @@ public class FragmentEditPlan extends Fragment {
         subPlanList = mPlan.getSubPlans(selectedDate);
         subPlanAdapter.submitList(subPlanList);
         subPlanAdapter.notifyDataSetChanged();
-    }
-
-    public FragmentEditPlan setSaveButtonClickListener(OnSaveButtonClickListener saveButtonClickListener) {
-        this.saveButtonClickListener = saveButtonClickListener;
-        return this;
-    }
-
-    public interface OnSaveButtonClickListener {
-        void onClicked(Plan plan);
     }
 }

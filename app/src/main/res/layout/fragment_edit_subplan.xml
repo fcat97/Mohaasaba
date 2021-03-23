@@ -22,19 +22,12 @@
         android:padding="@dimen/dimen_small"
         android:background="@drawable/edit_text_background"
         android:layout_marginEnd="@dimen/dimen_large"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Goal"
-        android:textColor="@color/colorGrayDark"
-        android:layout_marginTop="@dimen/dimen_large"
-        android:layout_marginStart="@dimen/dimen_large"
-        android:layout_marginEnd="@dimen/dimen_large"
-        android:textAppearance="@style/textLarge.Bold"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="@dimen/dimen_extraLarge"
         android:layout_marginStart="@dimen/dimen_large"
         android:layout_marginEnd="@dimen/dimen_large">
         <RelativeLayout
@@ -147,24 +140,85 @@
                     android:text="s"/>
             </LinearLayout>
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/countInput_LinearLayout_FragmentEditSubPlan"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_small">
+            <TextView
+                android:id="@+id/goal_TextView_FragmentEditSubPlan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Goal"
+                android:textColor="@color/colorGrayDark"
+                android:layout_marginStart="@dimen/dimen_large"
+                android:textAppearance="@style/textLarge"
+
+                android:layout_alignBaseline="@id/countAmount_EditText_FragmentEditSubPlan"/>
             <EditText
                 android:id="@+id/countAmount_EditText_FragmentEditSubPlan"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/_0"
                 android:inputType="numberSigned"
                 android:textAlignment="center"
                 android:textAppearance="@style/textLarge"
                 android:padding="@dimen/dimen_mini"
+                android:layout_marginEnd="@dimen/dimen_large"
+                android:background="@drawable/edit_text_background"
+
+                android:layout_alignParentEnd="true"/>
+            <TextView
+                android:id="@+id/step_TextView_FragmentEditSubPlan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Step"
+                android:textColor="@color/colorGrayDark"
+                android:layout_marginStart="@dimen/dimen_large"
+                android:textAppearance="@style/textLarge"
+
+                android:layout_alignBaseline="@id/step_EditText_FragmentEditSubPlan"/>
+            <EditText
+                android:id="@+id/step_EditText_FragmentEditSubPlan"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/_0"
+                android:inputType="numberSigned"
+                android:textAlignment="center"
+                android:textAppearance="@style/textLarge"
+                android:padding="@dimen/dimen_mini"
+                android:layout_marginEnd="@dimen/dimen_large"
                 android:layout_marginTop="@dimen/dimen_small"
-                android:layout_marginStart="@dimen/dimen_extraLarge"
-                android:layout_marginEnd="@dimen/dimen_extraLarge"
-                android:background="@drawable/edit_text_background"/>
-        </LinearLayout>
+                android:background="@drawable/edit_text_background"
+
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/countAmount_EditText_FragmentEditSubPlan"/>
+            <TextView
+                android:id="@+id/progress_TextView_FragmentEditSubPlan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Progress"
+                android:textColor="@color/colorGrayDark"
+                android:layout_marginStart="@dimen/dimen_large"
+                android:textAppearance="@style/textLarge"
+
+                android:layout_alignBaseline="@id/progress_EditText_FragmentEditSubPlan"/>
+            <EditText
+                android:id="@+id/progress_EditText_FragmentEditSubPlan"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/_0"
+                android:inputType="numberSigned"
+                android:textAlignment="center"
+                android:textAppearance="@style/textLarge"
+                android:padding="@dimen/dimen_mini"
+                android:layout_marginEnd="@dimen/dimen_large"
+                android:layout_marginTop="@dimen/dimen_small"
+                android:background="@drawable/edit_text_background"
+
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/step_EditText_FragmentEditSubPlan"/>
+        </RelativeLayout>
     </LinearLayout>
     <Button
         android:id="@+id/confirm_button_FragmentEditSubPlan"

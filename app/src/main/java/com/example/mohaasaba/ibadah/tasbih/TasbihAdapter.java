@@ -1,5 +1,6 @@
 package com.example.mohaasaba.ibadah.tasbih;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.example.mohaasaba.models.Progress;
 import java.util.Calendar;
 
 public class TasbihAdapter extends ListAdapter<Tasbih, TasbihAdapter.ViewHolder> {
+    private static final String TAG = TasbihAdapter.class.getCanonicalName();
     private ItemClickListener itemClickListener;
     private ItemLongClickListener itemLongClickListener;
 
@@ -35,9 +37,12 @@ public class TasbihAdapter extends ListAdapter<Tasbih, TasbihAdapter.ViewHolder>
         public boolean areContentsTheSame(@NonNull Tasbih oldItem, @NonNull Tasbih newItem) {
             float oldProgress = oldItem.history.getProgress(Calendar.getInstance()).progress;
             float newProgress = newItem.history.getProgress(Calendar.getInstance()).progress;
+            Log.d(TAG, "areContentsTheSame: old Progress " + oldProgress);
+            Log.d(TAG, "areContentsTheSame: new Progress " + newProgress);
             if (! oldItem.label.equals(newItem.label)) return false;
             else if (! oldItem.reward.equals(newItem.reward)) return false;
-            else return oldProgress == newProgress;
+//            else return oldProgress == newProgress; // not working
+            else return false;
         }
     };
 

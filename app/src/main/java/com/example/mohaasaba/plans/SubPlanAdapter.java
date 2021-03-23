@@ -1,5 +1,6 @@
 package com.example.mohaasaba.plans;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,10 @@ import com.example.mohaasaba.R;
 import at.grabner.circleprogress.CircleProgressView;
 
 public class SubPlanAdapter extends ListAdapter<SubPlan, SubPlanAdapter.SubPlanHolder> {
+    private static final String TAG = SubPlanAdapter.class.getCanonicalName();
     private DeleteButtonListener deleteButtonListener;
     private ItemClickListener itemClickListener;
+    private ItemLongPressListener longPressListener;
 
     public SubPlanAdapter() {
         super(DIFF_CALLBACK);
@@ -52,8 +55,8 @@ public class SubPlanAdapter extends ListAdapter<SubPlan, SubPlanAdapter.SubPlanH
 
         // set circular progress view --------------------------------------------------------------
         float progress = 0f;
-        if (subPlan.track_time) progress = (float) subPlan.time_progress / subPlan.time_goal;
-        else if (subPlan.track_count) progress = (float) subPlan.count_progress / subPlan.count_goal;
+        if (subPlan.track_time) progress = (float) 100 * subPlan.time_progress / subPlan.time_goal;
+        else if (subPlan.track_count) progress = (float) 100 * subPlan.count_progress / subPlan.count_goal;
 
         holder.circleProgressView.setMaxValue(100f);
         holder.circleProgressView.setValue(progress);
@@ -87,6 +90,14 @@ public class SubPlanAdapter extends ListAdapter<SubPlan, SubPlanAdapter.SubPlanH
             goalText += subPlan.count_goal == 1 ? subPlan.count_goal + " time" : subPlan.count_goal + " times";
         }
         holder.goalTextView.setText(goalText);
+
+        // set onLongPress Listener ----------------------------------------------------------------
+        holder.itemView.setOnLongClickListener(v -> {
+            if (longPressListener != null) {
+                longPressListener.onPress(subPlan);
+                return true;
+            } else return false;
+        });
     }
 
     static class SubPlanHolder extends RecyclerView.ViewHolder {
@@ -116,10 +127,18 @@ public class SubPlanAdapter extends ListAdapter<SubPlan, SubPlanAdapter.SubPlanH
         return this;
     }
 
+    public SubPlanAdapter setLongPressListener(ItemLongPressListener longPressListener) {
+        this.longPressListener = longPressListener;
+        return this;
+    }
+
     public interface DeleteButtonListener {
         void onClick(int index);
     }
     public interface ItemClickListener {
         void onClick(SubPlan subPlan);
+    }
+    public interface ItemLongPressListener {
+        void onPress(SubPlan subPlan);
     }
 }

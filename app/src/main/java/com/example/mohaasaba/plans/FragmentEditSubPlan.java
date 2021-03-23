@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,13 +31,16 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
 
     private EditText labelEditText;
     private TextView trackTimeTextView, trackCountTextView;
-    private LinearLayout trackTime_ll, trackCount_ll;
+    private LinearLayout trackTime_ll;
+    private RelativeLayout trackCount_ll;
     private Button confirmButton;
 
     private OnConfirmListener confirmListener;
 
     private EditText hour_et, min_et, sec_et;
     private EditText countAmount_et;
+    private EditText countStep_et;
+    private EditText countProgress_et;
 
     public FragmentEditSubPlan () {
 
@@ -75,6 +79,8 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
         sec_et = rootView.findViewById(R.id.second_EditText_FragmentEditSubPlan);
 
         countAmount_et = rootView.findViewById(R.id.countAmount_EditText_FragmentEditSubPlan);
+        countStep_et = rootView.findViewById(R.id.step_EditText_FragmentEditSubPlan);
+        countProgress_et = rootView.findViewById(R.id.progress_EditText_FragmentEditSubPlan);
 
         confirmButton = rootView.findViewById(R.id.confirm_button_FragmentEditSubPlan);
         return rootView;
@@ -105,7 +111,8 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
             int sec = sec_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(sec_et.getText().toString());
 
             int countGoal = countAmount_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(countAmount_et.getText().toString());
-            Log.d(TAG, "eee onViewCreated: count " + countGoal);
+            int countStep = countStep_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(countStep_et.getText().toString());
+            int countProgress = countProgress_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(countProgress_et.getText().toString());
 
             if (label.isEmpty()) {
                 Toast.makeText(getContext(), "Label can't be Empty", Toast.LENGTH_SHORT).show();
@@ -114,12 +121,15 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
                 Toast.makeText(getContext(), "Tracking Time can't be 0", Toast.LENGTH_SHORT).show();
             else if (mSubPlan.track_count && countGoal == 0)
                 Toast.makeText(getContext(), "Count Goal can't be 0", Toast.LENGTH_SHORT).show();
+            else if (mSubPlan.track_count && countStep == 0)
+                Toast.makeText(getContext(), "Count Step can't be 0", Toast.LENGTH_SHORT).show();
             else {
                 mSubPlan.label = label;
                 if (mSubPlan.track_count) {
                     mSubPlan.count_goal = countGoal;
+                    mSubPlan.count_step = countStep;
+                    mSubPlan.count_progress = countProgress;
                     mSubPlan.time_goal = 0;
-                    Log.d(TAG, "eee onViewCreated: count " + mSubPlan.count_goal);
                 }
                 else {
                     mSubPlan.count_goal = 0;
@@ -165,6 +175,8 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
             trackCount_ll.setVisibility(View.VISIBLE);
 
             countAmount_et.setText(String.valueOf(mSubPlan.count_goal));
+            countStep_et.setText(String.valueOf(mSubPlan.count_step));
+            countProgress_et.setText(String.valueOf(mSubPlan.count_progress));
         }
     }
 

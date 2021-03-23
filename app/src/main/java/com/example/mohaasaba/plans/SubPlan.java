@@ -18,7 +18,7 @@ public class SubPlan implements Serializable, Parcelable {
     public long time_offset;
 
     public int count_goal = 1;
-    public int count_step;
+    public int count_step = 1;
     public int count_offset;
     public int count_progress;
 
@@ -43,6 +43,15 @@ public class SubPlan implements Serializable, Parcelable {
         this.count_step = planToCopy.count_step;
         this.count_offset = planToCopy.count_offset;
         this.count_progress = planToCopy.count_progress;
+    }
+
+    /**
+     * Increment Countable Progress
+     */
+    public void incrementCount() {
+        if (track_count) {
+            count_progress = Math.min(count_progress + count_step, count_goal);
+        }
     }
 
     protected SubPlan(Parcel in) {

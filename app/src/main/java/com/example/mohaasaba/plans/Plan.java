@@ -152,7 +152,7 @@ public class Plan implements Parcelable {
             }
         }
         progress /= subPlans.size();
-        return progress;
+        return 100 * progress;
     }
 
     // Parcelable Implementation ===================================================================
