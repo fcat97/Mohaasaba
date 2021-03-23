@@ -44,6 +44,8 @@ public class FragmentEditPlan extends Fragment {
     private Button saveButton;
     private OnSaveButtonClickListener saveButtonClickListener;
 
+    private List<SubPlan> subPlanList;
+
     private CheckBox cb_daily, cb_weekly, cb_monthly, cb_yearly, cb_interval, cb_weekDates;
 
     public FragmentEditPlan() {
@@ -122,17 +124,13 @@ public class FragmentEditPlan extends Fragment {
         });
 
         subPlanAdapter = new SubPlanAdapter()
-                .setDeleteButtonListener(this::deleteSubPlan);
+                .setDeleteButtonListener(this::deleteSubPlan)
+                .setItemClickListener(this::openFragmentEditSubPlan);
         recyclerView.setAdapter(subPlanAdapter);
         updateSubPlansList();
 
         addSubPlanButton.setOnClickListener(v -> {
-            List<SubPlan> subPlans = mPlan.getSubPlans(selectedDate);
-            SubPlan s = new SubPlan();
-            s.label = "Doom";
-            subPlans.add(s);
-            mPlan.commitSubPlans(selectedDate, subPlans);
-            updateSubPlansList();
+            openFragmentEditSubPlan(new SubPlan());
         });
 
 
@@ -186,10 +184,21 @@ public class FragmentEditPlan extends Fragment {
 
     }
 
+    private void openFragmentEditSubPlan(SubPlan subPlan) {
+        FragmentEditSubPlan fragmentEditSubPlan = FragmentEditSubPlan.getInstance(subPlan)
+                .setConfirmListener(() -> {
+                    if (! subPlanList.contains(subPlan)) subPlanList.add(subPlan);
+                    int index = subPlanList.indexOf(subPlan);
+                    mPlan.commitSubPlans(selectedDate, subPlanList);
+                    subPlanAdapter.submitList(subPlanList);
+                    subPlanAdapter.notifyItemRangeChanged(index, subPlanAdapter.getItemCount());
+                });
+        fragmentEditSubPlan.show(getChildFragmentManager(), "FragmentEditSubPlan");
+    }
+
     private void deleteSubPlan(int index) {
-        List<SubPlan> subPlans = mPlan.getSubPlans(selectedDate);
-        subPlans.remove(index);
-        mPlan.commitSubPlans(selectedDate, subPlans);
+        subPlanList.remove(index);
+        mPlan.commitSubPlans(selectedDate, subPlanList);
         subPlanAdapter.notifyItemRemoved(index);
         subPlanAdapter.notifyItemRangeChanged(index, subPlanAdapter.getItemCount());
     }
@@ -208,9 +217,9 @@ public class FragmentEditPlan extends Fragment {
     }
 
     private void updateSubPlansList() {
-        subPlanAdapter.submitList(mPlan.getSubPlans(selectedDate));
+        subPlanList = mPlan.getSubPlans(selectedDate);
+        subPlanAdapter.submitList(subPlanList);
         subPlanAdapter.notifyDataSetChanged();
-        Log.d(TAG, "rrr updateSubPlansList: ListSubmitted");
     }
 
     public FragmentEditPlan setSaveButtonClickListener(OnSaveButtonClickListener saveButtonClickListener) {

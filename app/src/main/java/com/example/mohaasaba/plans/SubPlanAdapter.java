@@ -18,6 +18,7 @@ import at.grabner.circleprogress.CircleProgressView;
 
 public class SubPlanAdapter extends ListAdapter<SubPlan, SubPlanAdapter.SubPlanHolder> {
     private DeleteButtonListener deleteButtonListener;
+    private ItemClickListener itemClickListener;
 
     public SubPlanAdapter() {
         super(DIFF_CALLBACK);
@@ -48,9 +49,11 @@ public class SubPlanAdapter extends ListAdapter<SubPlan, SubPlanAdapter.SubPlanH
     @Override
     public void onBindViewHolder(@NonNull SubPlanHolder holder, int position) {
         SubPlan subPlan = getItem(position);
+
+        // set circular progress view --------------------------------------------------------------
         float progress = 0f;
-        if (subPlan.track_time) progress = (float) subPlan.time_goal / subPlan.time_progress;
-        else if (subPlan.track_count) progress = (float) subPlan.count_goal / subPlan.count_progress;
+        if (subPlan.track_time) progress = (float) subPlan.time_progress / subPlan.time_goal;
+        else if (subPlan.track_count) progress = (float) subPlan.count_progress / subPlan.count_goal;
 
         holder.circleProgressView.setMaxValue(100f);
         holder.circleProgressView.setValue(progress);
@@ -65,6 +68,25 @@ public class SubPlanAdapter extends ListAdapter<SubPlan, SubPlanAdapter.SubPlanH
         holder.deleteButton.setOnClickListener(v -> {
             if (deleteButtonListener != null) deleteButtonListener.onClick(position);
         });
+
+        holder.itemView.setOnClickListener(v -> {
+            if (itemClickListener != null) itemClickListener.onClick(subPlan);
+        });
+
+        // set label  ------------------------------------------------------------------------------
+        holder.titleView.setText(subPlan.label);
+
+        // set goal Text ---------------------------------------------------------------------------
+        String goalText = "Goal - ";
+        if (subPlan.track_time) {
+            long hr = subPlan.time_goal / 3600;
+            long min = (subPlan.time_goal % 3600) / 60;
+            long sec = (subPlan.time_goal % 3600) % 60;
+            goalText += hr + "h" + min + "m" + sec + "s";
+        } else {
+            goalText += subPlan.count_goal == 1 ? subPlan.count_goal + " time" : subPlan.count_goal + " times";
+        }
+        holder.goalTextView.setText(goalText);
     }
 
     static class SubPlanHolder extends RecyclerView.ViewHolder {
@@ -89,7 +111,15 @@ public class SubPlanAdapter extends ListAdapter<SubPlan, SubPlanAdapter.SubPlanH
         return this;
     }
 
+    public SubPlanAdapter setItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+        return this;
+    }
+
     public interface DeleteButtonListener {
         void onClick(int index);
+    }
+    public interface ItemClickListener {
+        void onClick(SubPlan subPlan);
     }
 }

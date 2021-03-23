@@ -13,11 +13,11 @@ public class SubPlan implements Serializable, Parcelable {
     public boolean track_time = false;
     public boolean track_count = true;
 
-    public long time_goal;
+    public long time_goal = 0;
     public long time_progress;
     public long time_offset;
 
-    public int count_goal;
+    public int count_goal = 1;
     public int count_step;
     public int count_offset;
     public int count_progress;
