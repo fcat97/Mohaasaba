@@ -14,12 +14,6 @@ import java.util.List;
 public class TasbihActivity extends AppCompatActivity {
     private FragmentTasbih fragmentTasbih;
 
-    private LiveData<List<Tasbih>> prayerLiveData;
-    private LiveData<List<Tasbih>> sleepLiveData;
-    private LiveData<List<Tasbih>> morningLiveData;
-    private LiveData<List<Tasbih>> eveningLiveData;
-    private LiveData<List<Tasbih>> mustahabLiveData;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +26,11 @@ public class TasbihActivity extends AppCompatActivity {
 
         TasbihRepository repository = new TasbihRepository(this);
 
-        prayerLiveData = repository.getTasbihPrayer();
-        sleepLiveData = repository.getTasbihSleep();
-        morningLiveData = repository.getTasbihMorning();
-        eveningLiveData = repository.getTasbihEvening();
-        mustahabLiveData = repository.getTasbihMustahab();
+        LiveData<List<Tasbih>> prayerLiveData = repository.getTasbihPrayer();
+        LiveData<List<Tasbih>> sleepLiveData = repository.getTasbihSleep();
+        LiveData<List<Tasbih>> morningLiveData = repository.getTasbihMorning();
+        LiveData<List<Tasbih>> eveningLiveData = repository.getTasbihEvening();
+        LiveData<List<Tasbih>> mustahabLiveData = repository.getTasbihMustahab();
 
         fragmentTasbih = new FragmentTasbih()
                 .setListener(this::openFragmentTasbihDetail)
