@@ -189,15 +189,16 @@ public class ScheduleType implements Parcelable, Serializable {
         @Override
         public boolean equals(@Nullable Object obj) {
             if (obj == null) return false;
-            if (dayOfMonth != ((Dates) obj).dayOfMonth) return false;
-            else if (month != ((Dates)obj).month) return false;
-            else return super.equals(obj);
+            if (obj.getClass() != this.getClass()) return false;
+            Dates other = (Dates) obj;
+            return this.dayOfMonth == other.dayOfMonth
+                    && this.month == other.month;
         }
 
         @NonNull
         @Override
         public String toString() {
-            return "{\"dayOfMonth\":" + dayOfMonth + ",\"month\":" + month + "}";
+            return "{\"dayOfMonth\": " + dayOfMonth + ",\"month\": " + month + "}";
         }
 
         @Override
@@ -228,7 +229,8 @@ public class ScheduleType implements Parcelable, Serializable {
             }
         };
     }
-    public static class Interval implements Parcelable {
+
+    public static class Interval implements Serializable, Parcelable {
         public int activeDays;
         public int inactiveDays;
         public boolean isContinuous;
@@ -249,6 +251,21 @@ public class ScheduleType implements Parcelable, Serializable {
             dest.writeInt(this.activeDays);
             dest.writeInt(this.inactiveDays);
             dest.writeByte(this.isContinuous ? (byte) 1 : (byte) 0);
+        }
+
+        @Override
+        public int hashCode() {
+            return super.hashCode();
+        }
+
+        @Override
+        public boolean equals(@Nullable Object obj) {
+            if (obj == null) return false;
+            if (obj.getClass() != this.getClass()) return false;
+            Interval other = (Interval) obj;
+            return this.activeDays == other.activeDays
+                    && this.inactiveDays == other.inactiveDays
+                    && this.isContinuous == other.isContinuous;
         }
 
         protected Interval(Parcel in) {
@@ -331,6 +348,22 @@ public class ScheduleType implements Parcelable, Serializable {
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        return super.equals(obj);
+        if (obj == null) return false;
+        if (obj.getClass() != this.getClass()) return false;
+        ScheduleType other = (ScheduleType) obj;
+        return this.type.equals(other.type)
+                && this.everySaturday == other.everySaturday
+                && this.everySunday == other.everySunday
+                && this.everyMonday == other.everyMonday
+                && this.everyTuesday == other.everyTuesday
+                && this.everyWednesday == other.everyWednesday
+                && this.everyThursday == other.everyThursday
+                && this.everyFriday == other.everyFriday
+                && this.selectedDates.equals(other.selectedDates)
+                && ((this.interval == null && other.interval == null) || (this.interval != null && this.interval.equals(other.interval)))
+                && this.startingMinute == other.startingMinute
+                && this.endingMinute == other.endingMinute
+                && this.disposable == other.disposable
+                && this.disposeTime == other.disposeTime;
     }
 }

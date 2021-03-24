@@ -137,9 +137,9 @@ public class FragmentTasbih extends Fragment {
         if (listener != null) listener.onClick(tasbih);
     }
     private void onAdapterItemLongClick(Tasbih tasbih) {
-        Progress p = tasbih.history.getProgress(Calendar.getInstance());
-        p.doProgress();
-        tasbih.history.commitProgress(p, Calendar.getInstance());
+//        Progress p = tasbih.history.getProgress(Calendar.getInstance());
+//        p.doProgress();
+//        tasbih.history.commitProgress(p, Calendar.getInstance());
         tasbihRepository.updateTasbih(tasbih);
     }
 

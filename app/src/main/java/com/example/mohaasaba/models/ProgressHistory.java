@@ -4,13 +4,19 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.google.gson.Gson;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class ProgressHistory implements Parcelable {
+public class ProgressHistory implements Serializable, Parcelable {
 
     private static final String TAG = ProgressHistory.class.getCanonicalName();
     public HashMap<Long, Progress> progressHashMap = new HashMap<>();
@@ -81,18 +87,41 @@ public class ProgressHistory implements Parcelable {
 
 
 
+    // Serializable Methods ========================================================================
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
+    @NonNull
+    @Override
+    public String toString() {
+        StringBuilder st = new StringBuilder();
+        List<Long> keyList = new ArrayList<>(progressHashMap.keySet());
+        for (Long key: keyList) {
+            st.append("{"); // {
+            st.append("\""); // {"
+            st.append(key); // {"20210324
+            st.append("\""); // {"20210324"
+            st.append(": "); // {"20210324":
+            Progress p = this.progressHashMap.get(key);
+            assert p != null;
+            st.append(p.toString()); // "{"20210324":{"objKey":objValues,...}
+            st.append("}"); // {"20210324": {"objKey1": 1,"objKey2": 2}}
+        }
 
+        return st.toString();
+    }
 
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == null) return false;
+        else if (obj.getClass() != this.getClass()) return false;
+        ProgressHistory other = (ProgressHistory) obj;
+        return this.toString().equals(other.toString());
+    }
 
-
-
-
-
-
-
-
-
+    // Parcelable Methods --------------------------------------------------------------------------
 
     protected ProgressHistory(Parcel in) {
         this.progressHashMap = (HashMap<Long, Progress>) in.readSerializable();

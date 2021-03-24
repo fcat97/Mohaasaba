@@ -3,6 +3,7 @@ package com.example.mohaasaba.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
@@ -70,13 +71,34 @@ public class Progress implements Parcelable, Serializable {
         dest.writeString(unit);
     }
 
+    // Serializable Methods ------------------------------------------------------------------------
     @Override
     public int hashCode() {
         return super.hashCode();
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        // json format
+        return  "{" +
+                "\"CommitDate\": " + commitDate + "," +
+                "\"Target\": " + target + "," +
+                "\"Progress\": " + progress + "," +
+                "\"Step\": " + step + "," +
+                "\"Unit\": " + "\"" + unit + "\"" +
+                "}";
+    }
+
     @Override
     public boolean equals(@Nullable Object obj) {
-        return super.equals(obj);
+        if (obj == null) return false;
+        if (this.getClass() != obj.getClass()) return false;
+        Progress other = (Progress) obj;
+        return this.commitDate == other.commitDate
+                && this.target == other.target
+                && this.step == other.step
+                && this.progress == other.progress
+                && this.unit.equals(other.unit);
     }
 }

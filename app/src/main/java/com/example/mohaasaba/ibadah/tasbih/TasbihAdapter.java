@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.example.mohaasaba.R;
 import com.example.mohaasaba.models.Progress;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class TasbihAdapter extends ListAdapter<Tasbih, TasbihAdapter.ViewHolder> {
     private static final String TAG = TasbihAdapter.class.getCanonicalName();
@@ -35,14 +37,7 @@ public class TasbihAdapter extends ListAdapter<Tasbih, TasbihAdapter.ViewHolder>
 
         @Override
         public boolean areContentsTheSame(@NonNull Tasbih oldItem, @NonNull Tasbih newItem) {
-            float oldProgress = oldItem.history.getProgress(Calendar.getInstance()).progress;
-            float newProgress = newItem.history.getProgress(Calendar.getInstance()).progress;
-            Log.d(TAG, "areContentsTheSame: old Progress " + oldProgress);
-            Log.d(TAG, "areContentsTheSame: new Progress " + newProgress);
-            if (! oldItem.label.equals(newItem.label)) return false;
-            else if (! oldItem.reward.equals(newItem.reward)) return false;
-//            else return oldProgress == newProgress; // not working
-            else return false;
+            return oldItem.equals(newItem);
         }
     };
 
@@ -71,8 +66,13 @@ public class TasbihAdapter extends ListAdapter<Tasbih, TasbihAdapter.ViewHolder>
         });
 
         holder.itemView.setOnLongClickListener(v -> {
-            if (itemClickListener != null) itemLongClickListener.onLongClick(tasbih);
-            return true;
+            if (itemClickListener != null) {
+                Progress p = tasbih.history.getProgress(Calendar.getInstance()).doProgress();
+                tasbih.history.commitProgress(p, Calendar.getInstance());
+                notifyItemChanged(position);
+                itemLongClickListener.onLongClick(tasbih);
+                return true;
+            } else return false;
         });
 
         if (progress.progress == progress.target) {

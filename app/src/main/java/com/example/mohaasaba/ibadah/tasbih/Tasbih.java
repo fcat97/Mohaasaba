@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -15,12 +16,13 @@ import com.example.mohaasaba.models.Progress;
 import com.example.mohaasaba.models.ProgressHistory;
 import com.example.mohaasaba.models.ScheduleType;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 @Entity(tableName = "tasbih_table")
-public class Tasbih implements Parcelable {
+public class Tasbih implements Serializable, Parcelable {
     public enum TasbihType {
         MUSTAHAB,
         AFTER_SALAT,
@@ -110,4 +112,29 @@ public class Tasbih implements Parcelable {
             return new Tasbih[size];
         }
     };
+
+    // serializable methods -----------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == null) return false;
+        if (obj.getClass() != this.getClass()) return false;
+        Tasbih other = (Tasbih) obj;
+        return this.tasbihID.equals(other.tasbihID)
+                && this.label.equals(other.label)
+                && this.reward.equals(other.reward)
+                && this.doa_ar.equals(other.doa_ar)
+                && this.doa_bn.equals(other.doa_bn)
+                && this.references.equals(other.references)
+                && this.tags.equals(other.tags)
+                && this.tasbihType.equals(other.tasbihType)
+                && this.history.equals(other.history)
+                && this.scheduleType.equals(other.scheduleType)
+                && this.notifyList.equals(other.notifyList);
+    }
 }
