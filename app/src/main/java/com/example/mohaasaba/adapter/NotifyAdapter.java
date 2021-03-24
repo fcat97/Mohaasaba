@@ -18,7 +18,8 @@ import java.text.DateFormat;
 import java.util.Calendar;
 
 public class NotifyAdapter extends ListAdapter<Notify, NotifyAdapter.NotifyHolder> {
-    private onItemClickedListener listener;
+    private OnItemClickCallBack onItemClickCallBack;
+    private OnDeleteListener onDeleteListener;
 
     public NotifyAdapter() {
         super(DIFF_CALLBACK);
@@ -58,12 +59,12 @@ public class NotifyAdapter extends ListAdapter<Notify, NotifyAdapter.NotifyHolde
         holder.time.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime()));
 
         holder.itemView.setOnClickListener(v -> {
-            if (listener != null) listener.onItemClicked(getItem(position));
+            if (onItemClickCallBack != null) onItemClickCallBack.onItemClick(getItem(position));
             else throw new ClassCastException("Must implement Listener");
         });
 
         holder.deleteButton.setOnClickListener(v -> {
-            if (listener != null) listener.onItemDeleted(getItem(position));
+            if (onDeleteListener != null) onDeleteListener.onDelete(getItem(position));
             else throw new ClassCastException("Must implement Listener");
         });
     }
@@ -83,11 +84,20 @@ public class NotifyAdapter extends ListAdapter<Notify, NotifyAdapter.NotifyHolde
         }
     }
 
-    public void setListener(onItemClickedListener listener) {
-        this.listener = listener;
+    public NotifyAdapter setOnItemClickCallBack(OnItemClickCallBack onItemClickCallBack) {
+        this.onItemClickCallBack = onItemClickCallBack;
+        return this;
     }
-    public interface onItemClickedListener {
-        void onItemClicked(Notify notify);
-        void onItemDeleted(Notify notify);
+
+    public NotifyAdapter setOnDeleteListener(OnDeleteListener onDeleteListener) {
+        this.onDeleteListener = onDeleteListener;
+        return this;
+    }
+
+    public interface OnItemClickCallBack {
+        void onItemClick(Notify notify);
+    }
+    public interface OnDeleteListener {
+        void onDelete(Notify notify);
     }
 }

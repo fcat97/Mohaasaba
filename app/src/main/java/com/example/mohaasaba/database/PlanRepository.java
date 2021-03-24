@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import com.example.mohaasaba.ibadah.bookshelf.Book;
 import com.example.mohaasaba.plans.Plan;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -63,5 +64,20 @@ public class PlanRepository {
     public LiveData<List<Plan>> getAllPlans() {
         Log.d(TAG + "Plan", "getAllPlans: called");
         return planDao.getAllPlans();
+    }
+
+    public List<Plan> getAllPlanList() {
+        ExecutorService service = Executors.newSingleThreadExecutor();
+
+        Future<List<Plan>> result  = service.submit(() -> planDao.getAllPlanList());
+
+        List<Plan> planList = new ArrayList<>();
+        try {
+            planList = result.get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return planList;
     }
 }

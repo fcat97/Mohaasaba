@@ -157,33 +157,23 @@ public class FragmentBookDetail extends Fragment {
         ll_0.addView(progressHistoryView.getView());
 
         // Notify Related --------------------------------------------------------------------------
-        notifyAdapter = new NotifyAdapter();
+        notifyAdapter = new NotifyAdapter()
+                .setOnItemClickCallBack(this::openNotifyEditorFragment)
+                .setOnDeleteListener(notify -> {
+                    int position = notifyAdapter.getCurrentList().indexOf(notify);
+                    book.notifyList.remove(notify);
+                    notifyAdapter.notifyItemRemoved(position);
+                    notifyAdapter.notifyItemRangeChanged(position, notifyAdapter.getItemCount());
+                    if (book.notifyList.size() > 0) noNotify_tv.setVisibility(View.INVISIBLE);
+                    else noNotify_tv.setVisibility(View.VISIBLE);
+                });
         notify_rv.setAdapter(notifyAdapter);
         notifyAdapter.submitList(book.notifyList);
         if (book.notifyList.size() > 0) noNotify_tv.setVisibility(View.INVISIBLE);
         else noNotify_tv.setVisibility(View.VISIBLE);
 
-        addNotifyButton.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
-            openNotifyEditorFragment(new Notify(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)));
-        });
+        addNotifyButton.setOnClickListener(v -> openNotifyEditorFragment(new Notify()));
 
-        notifyAdapter.setListener(new NotifyAdapter.onItemClickedListener() {
-            @Override
-            public void onItemClicked(Notify notify) {
-                openNotifyEditorFragment(notify);
-            }
-
-            @Override
-            public void onItemDeleted(Notify notify) {
-                int position = notifyAdapter.getCurrentList().indexOf(notify);
-                book.notifyList.remove(notify);
-                notifyAdapter.notifyItemRemoved(position);
-                notifyAdapter.notifyItemRangeChanged(position, notifyAdapter.getItemCount());
-                if (book.notifyList.size() > 0) noNotify_tv.setVisibility(View.INVISIBLE);
-                else noNotify_tv.setVisibility(View.VISIBLE);
-            }
-        });
 
         // ScheduleType-----------------------------------------------------------------------------
         ViewMaker.DateSelectorView dateSelectorView = new ViewMaker.DateSelectorView(getContext());

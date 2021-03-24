@@ -85,7 +85,19 @@ public class FragmentOther extends Fragment {
 
         // Notify Related --------------------------------------------------------------------------
         notifyList = schedule.getNotifyList();
-        notifyAdapter = new NotifyAdapter();
+        notifyAdapter = new NotifyAdapter()
+                .setOnItemClickCallBack(notify -> {
+                    if (listeners != null) listeners.onEditNotify(notify);
+                    else throw new ClassCastException("Must Implement Listeners");
+                })
+                .setOnDeleteListener(notify -> {
+                    int position = notifyAdapter.getCurrentList().indexOf(notify);
+                    notifyList.remove(notify);
+                    notifyAdapter.notifyItemRemoved(position);
+                    notifyAdapter.notifyItemRangeChanged(position, notifyAdapter.getItemCount());
+                    if (notifyList.size() > 0) notifyNoItemTextView.setVisibility(View.INVISIBLE);
+                    else notifyNoItemTextView.setVisibility(View.VISIBLE);
+                });
         notifyRecyclerView.setAdapter(notifyAdapter);
         notifyAdapter.submitList(notifyList);
         if (notifyList.size() > 0) notifyNoItemTextView.setVisibility(View.INVISIBLE);
@@ -93,29 +105,8 @@ public class FragmentOther extends Fragment {
 
 
         notifyAddButton.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
-            if (listeners != null) listeners.onEditNotify(new Notify(
-                    calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)));
+            if (listeners != null) listeners.onEditNotify(new Notify());
             else throw new ClassCastException("Must Implement Listeners");
-        });
-
-
-        notifyAdapter.setListener(new NotifyAdapter.onItemClickedListener() {
-            @Override
-            public void onItemClicked(Notify notify) {
-                if (listeners != null) listeners.onEditNotify(notify);
-                else throw new ClassCastException("Must Implement Listeners");
-            }
-
-            @Override
-            public void onItemDeleted(Notify notify) {
-                int position = notifyAdapter.getCurrentList().indexOf(notify);
-                notifyList.remove(notify);
-                notifyAdapter.notifyItemRemoved(position);
-                notifyAdapter.notifyItemRangeChanged(position, notifyAdapter.getItemCount());
-                if (notifyList.size() > 0) notifyNoItemTextView.setVisibility(View.INVISIBLE);
-                else notifyNoItemTextView.setVisibility(View.VISIBLE);
-            }
         });
     }
 

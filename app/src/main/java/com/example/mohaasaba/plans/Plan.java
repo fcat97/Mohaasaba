@@ -10,6 +10,7 @@ import androidx.room.PrimaryKey;
 
 import com.example.mohaasaba.helper.IdGenerator;
 import com.example.mohaasaba.ibadah.tasbih.Tasbih;
+import com.example.mohaasaba.models.Notify;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,6 +34,8 @@ public class Plan implements Parcelable {
     public long planCreationTime = Calendar.getInstance().getTimeInMillis();
 
     public HashMap<Long, List<SubPlan>> subPlans = new HashMap<>();
+
+    public List<Notify> notifyList = new ArrayList<>();
 
     public Plan() {
         planID = IdGenerator.getNewID();
@@ -171,6 +174,7 @@ public class Plan implements Parcelable {
         dest.writeInt(intervalDate);
         dest.writeLong(planCreationTime);
         dest.writeSerializable(subPlans);
+        dest.writeTypedList(notifyList);
     }
 
     protected Plan(Parcel in) {
@@ -182,6 +186,7 @@ public class Plan implements Parcelable {
         intervalDate = in.readInt();
         planCreationTime = in.readLong();
         subPlans = (HashMap<Long, List<SubPlan>>) in.readSerializable();
+        notifyList = in.createTypedArrayList(Notify.CREATOR);
     }
 
     public static final Creator<Plan> CREATOR = new Creator<Plan>() {

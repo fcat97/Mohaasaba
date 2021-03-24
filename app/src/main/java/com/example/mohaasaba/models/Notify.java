@@ -11,6 +11,8 @@ import androidx.room.PrimaryKey;
 
 import com.example.mohaasaba.helper.IdGenerator;
 
+import java.util.Calendar;
+
 public class Notify implements Parcelable {
     public static final long MINUTE = 60 * 1000;
     public static final long HOUR = 60 * 60 * 1000;
@@ -37,10 +39,11 @@ public class Notify implements Parcelable {
     @Embedded
     public ScheduleType scheduleType;
 
-    public Notify(int notificationHour, int notificationMinute) {
+    public Notify () {
         this.notifyID = IdGenerator.getNewID();
-        this.notificationHour = notificationHour;
-        this.notificationMinute = notificationMinute;
+        Calendar c = Calendar.getInstance();
+        this.notificationHour = c.get(Calendar.HOUR_OF_DAY);
+        this.notificationMinute = c.get(Calendar.MINUTE);
         this.priority = Priority.DEFAULT;
         this.uniqueID = IdGenerator.getShortID();
         this.message = "";

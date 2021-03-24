@@ -146,33 +146,23 @@ public class FragmentTasbihDetail extends Fragment {
 
 
         // Notify Related --------------------------------------------------------------------------
-        notifyAdapter = new NotifyAdapter();
+        notifyAdapter = new NotifyAdapter()
+                .setOnItemClickCallBack(this::openNotifyEditor)
+                .setOnDeleteListener(notify -> {
+                    int position = notifyAdapter.getCurrentList().indexOf(notify);
+                    tasbih.notifyList.remove(notify);
+                    notifyAdapter.notifyItemRemoved(position);
+                    notifyAdapter.notifyItemRangeChanged(position, notifyAdapter.getItemCount());
+                    if (tasbih.notifyList.size() > 0) noNotify_tv.setVisibility(View.INVISIBLE);
+                    else noNotify_tv.setVisibility(View.VISIBLE);
+                });
         notify_rv.setAdapter(notifyAdapter);
         notifyAdapter.submitList(tasbih.notifyList);
         if (tasbih.notifyList.size() > 0) noNotify_tv.setVisibility(View.INVISIBLE);
         else noNotify_tv.setVisibility(View.VISIBLE);
 
-        addNotifyButton.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
-            openNotifyEditor(new Notify(calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE)));
-        });
+        addNotifyButton.setOnClickListener(v -> openNotifyEditor(new Notify()));
 
-        notifyAdapter.setListener(new NotifyAdapter.onItemClickedListener() {
-            @Override
-            public void onItemClicked(Notify notify) {
-                openNotifyEditor(notify);
-            }
-
-            @Override
-            public void onItemDeleted(Notify notify) {
-                int position = notifyAdapter.getCurrentList().indexOf(notify);
-                tasbih.notifyList.remove(notify);
-                notifyAdapter.notifyItemRemoved(position);
-                notifyAdapter.notifyItemRangeChanged(position, notifyAdapter.getItemCount());
-                if (tasbih.notifyList.size() > 0) noNotify_tv.setVisibility(View.INVISIBLE);
-                else noNotify_tv.setVisibility(View.VISIBLE);
-            }
-        });
 
         // ScheduleType Related---------------------------------------------------------------------
         ViewMaker.DateSelectorView dateSelectorView = new ViewMaker.DateSelectorView(getContext());

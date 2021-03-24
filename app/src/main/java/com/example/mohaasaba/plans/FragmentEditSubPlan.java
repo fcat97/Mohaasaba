@@ -41,6 +41,7 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
     private EditText countAmount_et;
     private EditText countStep_et;
     private EditText countProgress_et;
+    private EditText unit_et;
 
     public FragmentEditSubPlan () {
 
@@ -81,6 +82,7 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
         countAmount_et = rootView.findViewById(R.id.countAmount_EditText_FragmentEditSubPlan);
         countStep_et = rootView.findViewById(R.id.step_EditText_FragmentEditSubPlan);
         countProgress_et = rootView.findViewById(R.id.progress_EditText_FragmentEditSubPlan);
+        unit_et = rootView.findViewById(R.id.unit_EditText_FragmentEditSubPlan);
 
         confirmButton = rootView.findViewById(R.id.confirm_button_FragmentEditSubPlan);
         return rootView;
@@ -113,6 +115,7 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
             int countGoal = countAmount_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(countAmount_et.getText().toString());
             int countStep = countStep_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(countStep_et.getText().toString());
             int countProgress = countProgress_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(countProgress_et.getText().toString());
+            String countUnit = unit_et.getText().toString().trim().isEmpty() ? "" : unit_et.getText().toString().trim();
 
             if (label.isEmpty()) {
                 Toast.makeText(getContext(), "Label can't be Empty", Toast.LENGTH_SHORT).show();
@@ -129,6 +132,7 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
                     mSubPlan.count_goal = countGoal;
                     mSubPlan.count_step = countStep;
                     mSubPlan.count_progress = countProgress;
+                    mSubPlan.count_unit = countUnit;
                     mSubPlan.time_goal = 0;
                 }
                 else {
@@ -177,6 +181,7 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
             countAmount_et.setText(String.valueOf(mSubPlan.count_goal));
             countStep_et.setText(String.valueOf(mSubPlan.count_step));
             countProgress_et.setText(String.valueOf(mSubPlan.count_progress));
+            if (! mSubPlan.count_unit.isEmpty()) unit_et.setText(mSubPlan.count_unit);
         }
     }
 

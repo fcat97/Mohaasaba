@@ -21,6 +21,7 @@ public class SubPlan implements Serializable, Parcelable {
     public int count_step = 1;
     public int count_offset;
     public int count_progress;
+    public String count_unit = "";
 
     public SubPlan() {
         // Empty Constructor
@@ -43,6 +44,7 @@ public class SubPlan implements Serializable, Parcelable {
         this.count_step = planToCopy.count_step;
         this.count_offset = planToCopy.count_offset;
         this.count_progress = planToCopy.count_progress;
+        this.count_unit = planToCopy.count_unit;
     }
 
     /**
@@ -65,6 +67,7 @@ public class SubPlan implements Serializable, Parcelable {
         count_step = in.readInt();
         count_offset = in.readInt();
         count_progress = in.readInt();
+        count_unit = in.readString();
     }
 
     public static final Creator<SubPlan> CREATOR = new Creator<SubPlan>() {
@@ -88,17 +91,18 @@ public class SubPlan implements Serializable, Parcelable {
     public boolean equals(@Nullable Object obj) {
         if (obj == null) return false;
         if (obj.getClass() != this.getClass()) return false;
-        SubPlan newPlan = (SubPlan) obj;
-        return this.label.equals(newPlan.label)
-                && this.track_time == newPlan.track_time
-                && this.track_count == newPlan.track_count
-                && this.time_goal == newPlan.time_goal
-                && this.time_offset == newPlan.time_offset
-                && this.time_progress == newPlan.time_progress
-                && this.count_goal == newPlan.count_goal
-                && this.count_offset == newPlan.count_offset
-                && this.count_progress == newPlan.count_progress
-                && this.count_step == newPlan.count_step;
+        SubPlan other = (SubPlan) obj;
+        return this.label.equals(other.label)
+                && this.track_time == other.track_time
+                && this.track_count == other.track_count
+                && this.time_goal == other.time_goal
+                && this.time_offset == other.time_offset
+                && this.time_progress == other.time_progress
+                && this.count_goal == other.count_goal
+                && this.count_offset == other.count_offset
+                && this.count_progress == other.count_progress
+                && this.count_step == other.count_step
+                && this.count_unit.equals(other.count_unit);
     }
 
     @Override
@@ -118,5 +122,6 @@ public class SubPlan implements Serializable, Parcelable {
         dest.writeInt(count_step);
         dest.writeInt(count_offset);
         dest.writeInt(count_progress);
+        dest.writeString(count_unit);
     }
 }

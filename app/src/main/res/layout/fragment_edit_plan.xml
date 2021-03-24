@@ -224,6 +224,42 @@
                     android:layout_margin="@dimen/dimen_large"
                     android:layout_below="@id/recyclerView_FragmentEditPlan"/>
             </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageButton
+                    android:id="@+id/add_notify_ImageButton_FragmentEditPlan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:src="@drawable/ic_add"
+                    android:background="@drawable/button_circle_ripple"
+                    android:tint="?attr/colorAccent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/dimen_large"/>
+                <TextView
+                    android:id="@+id/notification_text_FragmentEditPlan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notifications"
+                    android:textColor="@color/colorGrayDark"
+                    android:layout_marginTop="@dimen/dimen_large"
+                    android:layout_marginStart="@dimen/dimen_large"
+                    android:layout_marginEnd="@dimen/dimen_large"
+                    android:textAppearance="@style/textLarge.Bold"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/notify_recyclerView_FragmentEditPlan"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@color/colorGray"
+                    android:layout_marginTop="@dimen/dimen_mini"
+                    android:layout_marginStart="@dimen/dimen_large"
+                    android:layout_marginEnd="@dimen/dimen_large"
+
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_fragment_reminder"
+                    android:layout_below="@id/notification_text_FragmentEditPlan"/>
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

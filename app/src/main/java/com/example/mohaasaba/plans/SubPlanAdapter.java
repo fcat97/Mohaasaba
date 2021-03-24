@@ -87,7 +87,9 @@ public class SubPlanAdapter extends ListAdapter<SubPlan, SubPlanAdapter.SubPlanH
             long sec = (subPlan.time_goal % 3600) % 60;
             goalText += hr + "h" + min + "m" + sec + "s";
         } else {
-            goalText += subPlan.count_goal == 1 ? subPlan.count_goal + " time" : subPlan.count_goal + " times";
+            if (subPlan.count_unit.isEmpty()) goalText += subPlan.count_goal == 1 ?
+                    subPlan.count_goal + " time" : subPlan.count_goal + " times";
+            else goalText += subPlan.count_goal + " " + subPlan.count_unit;
         }
         holder.goalTextView.setText(goalText);
 

@@ -27,4 +27,7 @@ public interface PlanDao {
 
     @Query("SELECT * FROM plan_table WHERE planID IS :planID")
     Plan getPlan(String planID);
+
+    @Query("SELECT * FROM plan_table")
+    List<Plan> getAllPlanList();
 }

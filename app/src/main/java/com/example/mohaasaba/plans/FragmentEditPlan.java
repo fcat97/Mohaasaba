@@ -18,7 +18,10 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.mohaasaba.R;
+import com.example.mohaasaba.adapter.NotifyAdapter;
 import com.example.mohaasaba.database.PlanRepository;
+import com.example.mohaasaba.fragment.FragmentEditReminder;
+import com.example.mohaasaba.models.Notify;
 import com.vivekkaushik.datepicker.DatePickerTimeline;
 import com.vivekkaushik.datepicker.OnDateSelectedListener;
 
@@ -46,6 +49,10 @@ public class FragmentEditPlan extends Fragment {
     private List<SubPlan> subPlanList;
 
     private CheckBox cb_daily, cb_weekly, cb_monthly, cb_yearly, cb_interval, cb_weekDates;
+
+    private RecyclerView notify_rv;
+    private ImageButton addNotify_button;
+    private NotifyAdapter notifyAdapter;
 
     public FragmentEditPlan() {
         // Required empty public constructor
@@ -88,6 +95,9 @@ public class FragmentEditPlan extends Fragment {
         cb_yearly = rootView.findViewById(R.id.everyYear_cb_FragmentEditPlan);
         cb_interval = rootView.findViewById(R.id.interval_cb_FragmentEditPlan);
         cb_weekDates = rootView.findViewById(R.id.weekDays_cb_FragmentEditPlan);
+
+        notify_rv = rootView.findViewById(R.id.notify_recyclerView_FragmentEditPlan);
+        addNotify_button = rootView.findViewById(R.id.add_notify_ImageButton_FragmentEditPlan);
 
         return rootView;
     }
@@ -182,6 +192,14 @@ public class FragmentEditPlan extends Fragment {
             setPeriodSelectors();
         });
 
+        // Notification ----------------------------------------------------------------------------
+        addNotify_button.setOnClickListener(v -> openFragmentNotifyEditor(new Notify()));
+        notifyAdapter = new NotifyAdapter()
+                .setOnItemClickCallBack(this::openFragmentNotifyEditor)
+                .setOnDeleteListener(this::deleteNotify);
+        notify_rv.setAdapter(notifyAdapter);
+        notifyAdapter.submitList(mPlan.notifyList);
+
     }
 
     private void incrementProgress(SubPlan subPlan) {
@@ -201,6 +219,27 @@ public class FragmentEditPlan extends Fragment {
                     subPlanAdapter.notifyItemRangeChanged(index, subPlanAdapter.getItemCount());
                 });
         fragmentEditSubPlan.show(getChildFragmentManager(), "FragmentEditSubPlan");
+    }
+
+    private void openFragmentNotifyEditor(Notify notify) {
+        FragmentEditReminder fragmentEditReminder = new FragmentEditReminder(notify)
+                .setOnConfirmListeners(this::notifyEditConfirmed);
+        fragmentEditReminder.show(getParentFragmentManager(), "Fragment Edit Reminder");
+    }
+
+    private void notifyEditConfirmed(Notify notify) {
+        notify.label = mPlan.label; // Add the label to notify
+        if (! mPlan.notifyList.contains(notify)) mPlan.notifyList.add(notify);
+        notifyAdapter.submitList(mPlan.notifyList);
+        int index = mPlan.notifyList.indexOf(notify);
+        notifyAdapter.notifyItemRangeChanged(index, notifyAdapter.getItemCount());
+    }
+
+    private void deleteNotify(Notify notify) {
+        int position = notifyAdapter.getCurrentList().indexOf(notify);
+        mPlan.notifyList.remove(notify);
+        notifyAdapter.notifyItemRemoved(position);
+        notifyAdapter.notifyItemRangeChanged(position, notifyAdapter.getItemCount());
     }
 
     private void deleteSubPlan(int index) {

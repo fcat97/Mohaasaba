@@ -218,6 +218,31 @@
 
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/step_EditText_FragmentEditSubPlan"/>
+            <TextView
+                android:id="@+id/unit_TextView_FragmentEditSubPlan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unit"
+                android:textColor="@color/colorGrayDark"
+                android:layout_marginStart="@dimen/dimen_large"
+                android:textAppearance="@style/textLarge"
+
+                android:layout_alignBaseline="@id/unit_EditText_FragmentEditSubPlan"/>
+            <EditText
+                android:id="@+id/unit_EditText_FragmentEditSubPlan"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/time_text"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textAppearance="@style/textLarge"
+                android:padding="@dimen/dimen_mini"
+                android:layout_marginEnd="@dimen/dimen_large"
+                android:layout_marginTop="@dimen/dimen_small"
+                android:background="@drawable/edit_text_background"
+
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/progress_EditText_FragmentEditSubPlan"/>
         </RelativeLayout>
     </LinearLayout>
     <Button
