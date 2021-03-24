@@ -18,10 +18,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.mohaasaba.R;
-import com.example.mohaasaba.models.Progress;
 import com.example.mohaasaba.receivers.NotificationScheduler;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,12 +38,18 @@ public class FragmentTasbih extends Fragment {
     private TasbihAdapter eveningAdapter;
     private TasbihAdapter mustahabAdapter;
 
+    private LiveData<List<Tasbih>> prayerLiveData;
+    private LiveData<List<Tasbih>> sleepLiveData;
+    private LiveData<List<Tasbih>> morningLiveData;
+    private LiveData<List<Tasbih>> eveningLiveData;
+    private LiveData<List<Tasbih>> mustahabLiveData;
+
     private Toolbar toolbar;
     private FragmentTasbihListener listener;
 
     private ImageButton addButton, backButton;
 
-    private TasbihRepository tasbihRepository;
+    private ItemLongClickListener longClickListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,41 +82,44 @@ public class FragmentTasbih extends Fragment {
 
         backButton.setOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
 
-        tasbihRepository = new TasbihRepository(getContext());
-
         prayerAdapter = new TasbihAdapter()
                 .setItemClickListener(this::onAdapterItemClick)
-                .setItemLongClickListener(tasbihRepository::updateTasbih);
+                .setItemLongClickListener(tasbih -> {
+                        if (longClickListener != null) longClickListener.onLongClick(tasbih);
+                });
         prayerRecyclerView.setAdapter(prayerAdapter);
-        LiveData<List<Tasbih>> fazrLiveData = tasbihRepository.getTasbihPrayer();
-        fazrLiveData.observe(getViewLifecycleOwner(), prayerAdapter::submitList);
+        prayerLiveData.observe(getViewLifecycleOwner(), prayerAdapter::submitList);
 
         sleepAdapter = new TasbihAdapter()
                 .setItemClickListener(this::onAdapterItemClick)
-                .setItemLongClickListener(tasbihRepository::updateTasbih);
+                .setItemLongClickListener(tasbih -> {
+                    if (longClickListener != null) longClickListener.onLongClick(tasbih);
+                });
         sleepRecyclerView.setAdapter(sleepAdapter);
-        LiveData<List<Tasbih>> sleepLiveData = tasbihRepository.getTasbihSleep();
         sleepLiveData.observe(getViewLifecycleOwner(), sleepAdapter::submitList);
 
         morningAdapter = new TasbihAdapter()
                 .setItemClickListener(this::onAdapterItemClick)
-                .setItemLongClickListener(tasbihRepository::updateTasbih);
+                .setItemLongClickListener(tasbih -> {
+                    if (longClickListener != null) longClickListener.onLongClick(tasbih);
+                });
         morningRecyclerView.setAdapter(morningAdapter);
-        LiveData<List<Tasbih>> morningLiveData = tasbihRepository.getTasbihMorning();
         morningLiveData.observe(getViewLifecycleOwner(), morningAdapter::submitList);
 
         eveningAdapter = new TasbihAdapter()
                 .setItemClickListener(this::onAdapterItemClick)
-                .setItemLongClickListener(tasbihRepository::updateTasbih);
+                .setItemLongClickListener(tasbih -> {
+                    if (longClickListener != null) longClickListener.onLongClick(tasbih);
+                });
         eveningRecyclerView.setAdapter(eveningAdapter);
-        LiveData<List<Tasbih>> eveningLiveData = tasbihRepository.getTasbihEvening();
         eveningLiveData.observe(getViewLifecycleOwner(), eveningAdapter::submitList);
 
         mustahabAdapter = new TasbihAdapter()
                 .setItemClickListener(this::onAdapterItemClick)
-                .setItemLongClickListener(tasbihRepository::updateTasbih);
+                .setItemLongClickListener(tasbih -> {
+                    if (longClickListener != null) longClickListener.onLongClick(tasbih);
+                });
         mustahabRecyclerView.setAdapter(mustahabAdapter);
-        LiveData<List<Tasbih>> mustahabLiveData = tasbihRepository.getTasbihMustahab();
         mustahabLiveData.observe(getViewLifecycleOwner(), mustahabAdapter::submitList);
     }
 
@@ -133,8 +140,34 @@ public class FragmentTasbih extends Fragment {
         }
     }
 
-    private void onAdapterItemClick(Tasbih tasbih) {
+    public FragmentTasbih setPrayerLiveData(LiveData<List<Tasbih>> prayerLiveData) {
+        this.prayerLiveData = prayerLiveData;
+        return this;
+    }
+
+    public FragmentTasbih setSleepLiveData(LiveData<List<Tasbih>> sleepLiveData) {
+        this.sleepLiveData = sleepLiveData;
+        return this;
+    }
+
+    public FragmentTasbih setMorningLiveData(LiveData<List<Tasbih>> morningLiveData) {
+        this.morningLiveData = morningLiveData;
+        return this;
+    }
+
+    public FragmentTasbih setEveningLiveData(LiveData<List<Tasbih>> eveningLiveData) {
+        this.eveningLiveData = eveningLiveData;
+        return this;
+    }
+
+    public FragmentTasbih setMustahabLiveData(LiveData<List<Tasbih>> mustahabLiveData) {
+        this.mustahabLiveData = mustahabLiveData;
+        return this;
+    }
+
+    private FragmentTasbih onAdapterItemClick(Tasbih tasbih) {
         if (listener != null) listener.onClick(tasbih);
+        return this;
     }
 
 
@@ -143,7 +176,16 @@ public class FragmentTasbih extends Fragment {
         return this;
     }
 
+    public FragmentTasbih setLongClickListener(ItemLongClickListener longClickListener) {
+        this.longClickListener = longClickListener;
+        return this;
+    }
+
     public interface FragmentTasbihListener {
         void onClick(Tasbih tasbih);
+    }
+
+    public interface ItemLongClickListener {
+        void onLongClick(Tasbih tasbih);
     }
 }
