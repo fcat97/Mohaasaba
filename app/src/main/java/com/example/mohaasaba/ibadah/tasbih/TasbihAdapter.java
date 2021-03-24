@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +17,6 @@ import com.example.mohaasaba.R;
 import com.example.mohaasaba.models.Progress;
 
 import java.util.Calendar;
-import java.util.List;
 
 public class TasbihAdapter extends ListAdapter<Tasbih, TasbihAdapter.ViewHolder> {
     private static final String TAG = TasbihAdapter.class.getCanonicalName();
