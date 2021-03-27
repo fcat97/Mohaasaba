@@ -8,8 +8,9 @@
     android:background="@color/white"
     tools:context=".plans.PlanActivity">
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/frameLayout_PlanActivity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:orientation="horizontal" />
 </RelativeLayout>

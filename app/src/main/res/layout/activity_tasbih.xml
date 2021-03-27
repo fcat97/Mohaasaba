@@ -7,8 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".ibadah.tasbih.TasbihActivity">
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/frameLayout_TasbihActivity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:orientation="horizontal"/>
 </RelativeLayout>

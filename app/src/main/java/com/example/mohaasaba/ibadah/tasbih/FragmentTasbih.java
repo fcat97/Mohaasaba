@@ -88,7 +88,7 @@ public class FragmentTasbih extends Fragment {
                         if (longClickListener != null) longClickListener.onLongClick(tasbih);
                 });
         prayerRecyclerView.setAdapter(prayerAdapter);
-        prayerLiveData.observe(getViewLifecycleOwner(), prayerAdapter::submitList);
+        if (prayerLiveData != null) prayerLiveData.observe(getViewLifecycleOwner(), prayerAdapter::submitList);
 
         sleepAdapter = new TasbihAdapter()
                 .setItemClickListener(this::onAdapterItemClick)
@@ -96,7 +96,7 @@ public class FragmentTasbih extends Fragment {
                     if (longClickListener != null) longClickListener.onLongClick(tasbih);
                 });
         sleepRecyclerView.setAdapter(sleepAdapter);
-        sleepLiveData.observe(getViewLifecycleOwner(), sleepAdapter::submitList);
+        if (sleepLiveData != null) sleepLiveData.observe(getViewLifecycleOwner(), sleepAdapter::submitList);
 
         morningAdapter = new TasbihAdapter()
                 .setItemClickListener(this::onAdapterItemClick)
@@ -104,7 +104,7 @@ public class FragmentTasbih extends Fragment {
                     if (longClickListener != null) longClickListener.onLongClick(tasbih);
                 });
         morningRecyclerView.setAdapter(morningAdapter);
-        morningLiveData.observe(getViewLifecycleOwner(), morningAdapter::submitList);
+        if (morningLiveData != null) morningLiveData.observe(getViewLifecycleOwner(), morningAdapter::submitList);
 
         eveningAdapter = new TasbihAdapter()
                 .setItemClickListener(this::onAdapterItemClick)
@@ -112,7 +112,7 @@ public class FragmentTasbih extends Fragment {
                     if (longClickListener != null) longClickListener.onLongClick(tasbih);
                 });
         eveningRecyclerView.setAdapter(eveningAdapter);
-        eveningLiveData.observe(getViewLifecycleOwner(), eveningAdapter::submitList);
+        if (eveningLiveData != null) eveningLiveData.observe(getViewLifecycleOwner(), eveningAdapter::submitList);
 
         mustahabAdapter = new TasbihAdapter()
                 .setItemClickListener(this::onAdapterItemClick)
@@ -120,7 +120,7 @@ public class FragmentTasbih extends Fragment {
                     if (longClickListener != null) longClickListener.onLongClick(tasbih);
                 });
         mustahabRecyclerView.setAdapter(mustahabAdapter);
-        mustahabLiveData.observe(getViewLifecycleOwner(), mustahabAdapter::submitList);
+        if (mustahabLiveData != null) mustahabLiveData.observe(getViewLifecycleOwner(), mustahabAdapter::submitList);
     }
 
     @Override
