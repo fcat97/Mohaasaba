@@ -57,13 +57,13 @@ public class Plan implements Parcelable {
         int queryDate = calendar.get(Calendar.DAY_OF_MONTH);
         int queryDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
-        if (period == PlanPeriod.DAILY || period == PlanPeriod.CUSTOM_DATES) {
+        if (period == PlanPeriod.DAILY || period == PlanPeriod.CUSTOM_DATES || period == PlanPeriod.WEEK_DAYS) {
             c.set(Calendar.YEAR, queryYear);
             c.set(Calendar.MONTH, queryMonth);
             c.set(Calendar.DATE, queryDate);
             return c.getTimeInMillis();
         }
-        else if (period == PlanPeriod.WEEKLY || period == PlanPeriod.WEEK_DAYS) {
+        else if (period == PlanPeriod.WEEKLY) {
             c.set(Calendar.YEAR, queryYear);
             c.set(Calendar.MONTH, queryMonth);
             c.set(Calendar.DATE, queryDate);
