@@ -84,13 +84,18 @@ public class SubPlanAdapter extends ListAdapter<SubPlan, SubPlanAdapter.SubPlanH
         if (subPlan.track_time) {
             long hr = subPlan.time_goal / 3600;
             long min = (subPlan.time_goal % 3600) / 60;
-            long sec = (subPlan.time_goal % 3600) % 60;
-            goalText += hr + "h" + min + "m" + sec + "s";
+            long hr_done = subPlan.time_progress / 3600;
+            long min_done = (subPlan.time_progress % 3600) / 60;
+
+            goalText += hr_done + "h" + min_done + "m" + "/" + hr + "h" + min + "m";
         } else {
-            if (subPlan.count_unit.isEmpty()) goalText += subPlan.count_goal == 1 ?
-                    subPlan.count_goal + " time" : subPlan.count_goal + " times";
-            else goalText += subPlan.count_goal + " " + subPlan.count_unit;
+            if (subPlan.count_unit.isEmpty()) {
+                goalText += subPlan.count_progress + "/" + subPlan.count_goal;
+                goalText += subPlan.count_goal == 1 ? " time" : " times";
+            }
+            else goalText += subPlan.count_progress + "/" + subPlan.count_goal + " " + subPlan.count_unit;
         }
+        goalText += " Done";
         holder.goalTextView.setText(goalText);
 
         // set onLongPress Listener ----------------------------------------------------------------

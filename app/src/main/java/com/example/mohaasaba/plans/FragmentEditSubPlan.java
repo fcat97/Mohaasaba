@@ -2,7 +2,6 @@ package com.example.mohaasaba.plans;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 import com.example.mohaasaba.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -37,7 +35,8 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
 
     private OnConfirmListener confirmListener;
 
-    private EditText hour_et, min_et, sec_et;
+    private EditText hour_et, min_et /*sec_et*/;
+    private EditText hourDone_et, minDone_et /*sec_et*/;
     private EditText countAmount_et;
     private EditText countStep_et;
     private EditText countProgress_et;
@@ -77,7 +76,9 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
 
         hour_et = rootView.findViewById(R.id.hour_EditText_FragmentEditSubPlan);
         min_et = rootView.findViewById(R.id.minute_EditText_FragmentEditSubPlan);
-        sec_et = rootView.findViewById(R.id.second_EditText_FragmentEditSubPlan);
+        hourDone_et = rootView.findViewById(R.id.hourDone_EditText_FragmentEditSubPlan);
+        minDone_et = rootView.findViewById(R.id.minuteDone_EditText_FragmentEditSubPlan);
+//        sec_et = rootView.findViewById(R.id.second_EditText_FragmentEditSubPlan);
 
         countAmount_et = rootView.findViewById(R.id.countAmount_EditText_FragmentEditSubPlan);
         countStep_et = rootView.findViewById(R.id.step_EditText_FragmentEditSubPlan);
@@ -110,7 +111,9 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
             String label = labelEditText.getText().toString().trim();
             int hr = hour_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(hour_et.getText().toString());
             int min = min_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(min_et.getText().toString());
-            int sec = sec_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(sec_et.getText().toString());
+//            int sec = sec_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(sec_et.getText().toString());
+            int hr_done = hourDone_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(hourDone_et.getText().toString());
+            int min_done = minDone_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(minDone_et.getText().toString());
 
             int countGoal = countAmount_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(countAmount_et.getText().toString());
             int countStep = countStep_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(countStep_et.getText().toString());
@@ -120,7 +123,7 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
             if (label.isEmpty()) {
                 Toast.makeText(getContext(), "Label can't be Empty", Toast.LENGTH_SHORT).show();
             }
-            else if (mSubPlan.track_time && hr == 0 && min == 0 && sec == 0)
+            else if (mSubPlan.track_time && hr == 0 && min == 0 /*&& sec == 0*/)
                 Toast.makeText(getContext(), "Tracking Time can't be 0", Toast.LENGTH_SHORT).show();
             else if (mSubPlan.track_count && countGoal == 0)
                 Toast.makeText(getContext(), "Count Goal can't be 0", Toast.LENGTH_SHORT).show();
@@ -134,10 +137,13 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
                     mSubPlan.count_progress = countProgress;
                     mSubPlan.count_unit = countUnit;
                     mSubPlan.time_goal = 0;
+                    mSubPlan.time_progress = 0;
                 }
                 else {
                     mSubPlan.count_goal = 0;
-                    mSubPlan.time_goal = (hr * 3600) + (min * 60) + sec;
+                    mSubPlan.count_progress = 0;
+                    mSubPlan.time_goal = (hr * 3600) + (min * 60) /*+ sec*/;
+                    mSubPlan.time_progress = (hr_done * 3600) + (min_done * 60) /*+ sec*/;
                 }
                 if (confirmListener != null) {
                     confirmListener.onConfirm();
@@ -164,11 +170,17 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
 
             long hr = mSubPlan.time_goal / 3600;
             long min = (mSubPlan.time_goal % 3600) / 60;
-            long sec = (mSubPlan.time_goal % 3600) % 60;
+//            long sec = (mSubPlan.time_goal % 3600) % 60;
+
+            long hr_done = mSubPlan.time_progress / 3600;
+            long min_done = (mSubPlan.time_progress % 3600) / 60;
 
             hour_et.setText(String.valueOf(hr));
             min_et.setText(String.valueOf(min));
-            sec_et.setText(String.valueOf(sec));
+//            sec_et.setText(String.valueOf(sec));
+            hourDone_et.setText(String.valueOf(hr_done));
+            minDone_et.setText(String.valueOf(min_done));
+
         } else {
             trackTimeTextView.setTextColor(Color.BLACK);
             trackCountTextView.setTextColor(Color.WHITE);

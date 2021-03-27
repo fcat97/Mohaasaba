@@ -69,75 +69,132 @@
             android:id="@+id/timeInput_LinearLayout_FragmentEditSubPlan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="3"
             android:visibility="visible"
+            android:orientation="vertical"
             android:layout_marginTop="@dimen/dimen_small"
             android:baselineAligned="false">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
-                <EditText
-                    android:id="@+id/hour_EditText_FragmentEditSubPlan"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/_0"
-                    android:inputType="numberSigned"
-                    android:textAlignment="textEnd"
-                    android:textAppearance="@style/textLarge"
-                    android:padding="@dimen/dimen_mini"
-                    android:background="@drawable/edit_text_background"/>
+                android:weightSum="3"
+                android:visibility="visible"
+                android:layout_marginTop="@dimen/dimen_small"
+                android:baselineAligned="false">
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/textLarge"
+                    android:text="Goal"
                     android:padding="@dimen/dimen_mini"
-                    android:text="hr"/>
+                    android:textColor="@color/colorGrayDark"
+                    android:layout_marginStart="@dimen/dimen_large"
+                    android:layout_marginEnd="@dimen/dimen_large"
+                    android:textAppearance="@style/textLarge"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <EditText
+                        android:id="@+id/hour_EditText_FragmentEditSubPlan"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/_0"
+                        android:inputType="numberSigned"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/textLarge"
+                        android:padding="@dimen/dimen_mini"
+                        android:background="@drawable/edit_text_background"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/textLarge"
+                        android:padding="@dimen/dimen_mini"
+                        android:text="hr"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <EditText
+                        android:id="@+id/minute_EditText_FragmentEditSubPlan"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/_0"
+                        android:inputType="numberSigned"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/textLarge"
+                        android:padding="@dimen/dimen_mini"
+                        android:background="@drawable/edit_text_background"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/textLarge"
+                        android:padding="@dimen/dimen_mini"
+                        android:text="m"/>
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/timeDone_LinearLayout_FragmentEditSubPlan"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
-                <EditText
-                    android:id="@+id/minute_EditText_FragmentEditSubPlan"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/_0"
-                    android:inputType="numberSigned"
-                    android:textAlignment="textEnd"
-                    android:textAppearance="@style/textLarge"
-                    android:padding="@dimen/dimen_mini"
-                    android:background="@drawable/edit_text_background"/>
+                android:weightSum="3"
+                android:visibility="visible"
+                android:layout_marginTop="@dimen/dimen_small"
+                android:baselineAligned="false">
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/textLarge"
+                    android:text="Done"
                     android:padding="@dimen/dimen_mini"
-                    android:text="m"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-                <EditText
-                    android:id="@+id/second_EditText_FragmentEditSubPlan"
-                    android:layout_width="70dp"
+                    android:textColor="@color/colorGrayDark"
+                    android:layout_marginStart="@dimen/dimen_large"
+                    android:layout_marginEnd="@dimen/dimen_large"
+                    android:textAppearance="@style/textLarge"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/_0"
-                    android:inputType="numberSigned"
-                    android:textAlignment="textEnd"
-                    android:textAppearance="@style/textLarge"
-                    android:padding="@dimen/dimen_mini"
-                    android:background="@drawable/edit_text_background"/>
-                <TextView
-                    android:layout_width="match_parent"
+                    android:layout_weight="1">
+                    <EditText
+                        android:id="@+id/hourDone_EditText_FragmentEditSubPlan"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/_0"
+                        android:inputType="numberSigned"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/textLarge"
+                        android:padding="@dimen/dimen_mini"
+                        android:background="@drawable/edit_text_background"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/textLarge"
+                        android:padding="@dimen/dimen_mini"
+                        android:text="hr"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/textLarge"
-                    android:padding="@dimen/dimen_mini"
-                    android:textAlignment="center"
-                    android:text="s"/>
+                    android:layout_weight="1">
+                    <EditText
+                        android:id="@+id/minuteDone_EditText_FragmentEditSubPlan"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/_0"
+                        android:inputType="numberSigned"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/textLarge"
+                        android:padding="@dimen/dimen_mini"
+                        android:background="@drawable/edit_text_background"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/textLarge"
+                        android:padding="@dimen/dimen_mini"
+                        android:text="m"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
         <RelativeLayout
