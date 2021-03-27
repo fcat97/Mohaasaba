@@ -170,7 +170,7 @@
                     android:id="@+id/weekDays_cb_FragmentEditPlan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Select Week Days"
+                    android:text="On Week Days"
                     android:padding="@dimen/dimen_small"
                     android:layout_margin="@dimen/dimen_mini"
                     android:background="@drawable/checkbox_drawable"
@@ -180,7 +180,9 @@
                 <FrameLayout
                     android:id="@+id/dateSelector_FrameLayout_FragmentEditPlan"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_below="@id/weekDays_cb_FragmentEditPlan"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -217,6 +219,24 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_subplan"
                     android:layout_below="@id/task_text_FragmentEditPlan"/>
+                <RelativeLayout
+                    android:id="@+id/viewProtector_FragmentEditPlan"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+
+                    android:layout_alignStart="@id/recyclerView_FragmentEditPlan"
+                    android:layout_alignEnd="@id/recyclerView_FragmentEditPlan"
+                    android:layout_alignTop="@id/recyclerView_FragmentEditPlan"
+                    android:layout_alignBaseline="@id/recyclerView_FragmentEditPlan">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:padding="@dimen/dimen_large"
+                        android:background="@drawable/drawable_circle"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_lock"/>
+                </RelativeLayout>
                 <com.vivekkaushik.datepicker.DatePickerTimeline
                     android:id="@+id/datePickerTimeLine_FragmentEditPlan"
                     android:layout_width="match_parent"

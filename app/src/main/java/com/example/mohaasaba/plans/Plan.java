@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Entity(tableName = "plan_table")
@@ -31,6 +33,7 @@ public class Plan implements Parcelable {
     public String tags = "";
     public PlanPeriod period = PlanPeriod.DAILY;
     public int intervalDate = 1;
+    public HashSet<Integer> selectedWeekDays = new HashSet<>();
     public long planCreationTime = Calendar.getInstance().getTimeInMillis();
 
     public HashMap<Long, List<SubPlan>> subPlans = new HashMap<>();
@@ -172,6 +175,7 @@ public class Plan implements Parcelable {
         dest.writeString(tags);
         dest.writeInt(period.ordinal());
         dest.writeInt(intervalDate);
+        dest.writeSerializable(selectedWeekDays);
         dest.writeLong(planCreationTime);
         dest.writeSerializable(subPlans);
         dest.writeTypedList(notifyList);
@@ -184,6 +188,7 @@ public class Plan implements Parcelable {
         tags = in.readString();
         period = PlanPeriod.values()[in.readInt()];
         intervalDate = in.readInt();
+        selectedWeekDays = (HashSet<Integer>) in.readSerializable();
         planCreationTime = in.readLong();
         subPlans = (HashMap<Long, List<SubPlan>>) in.readSerializable();
         notifyList = in.createTypedArrayList(Notify.CREATOR);

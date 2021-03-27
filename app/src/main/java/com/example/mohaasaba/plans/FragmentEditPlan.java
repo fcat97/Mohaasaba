@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.mohaasaba.R;
@@ -26,6 +28,7 @@ import com.vivekkaushik.datepicker.DatePickerTimeline;
 import com.vivekkaushik.datepicker.OnDateSelectedListener;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -39,7 +42,8 @@ public class FragmentEditPlan extends Fragment {
     private EditText labelEditText;
     private EditText intervalEditText;
     private DatePickerTimeline datePickerTimeline;
-    private RecyclerView recyclerView;
+    private RecyclerView subPlanRecyclerView;
+    private RelativeLayout viewProtector; // To lock down click events of subPlanRecyclerView
     private ImageButton addSubPlanButton, backButton;
 
     private Calendar selectedDate;
@@ -53,6 +57,8 @@ public class FragmentEditPlan extends Fragment {
     private RecyclerView notify_rv;
     private ImageButton addNotify_button;
     private NotifyAdapter notifyAdapter;
+
+    private FrameLayout dateSelector_fl;
 
     public FragmentEditPlan() {
         // Required empty public constructor
@@ -83,7 +89,8 @@ public class FragmentEditPlan extends Fragment {
         datePickerTimeline = rootView.findViewById(R.id.datePickerTimeLine_FragmentEditPlan);
         intervalEditText = rootView.findViewById(R.id.interval_et_FragmentEditPlan);
 
-        recyclerView = rootView.findViewById(R.id.recyclerView_FragmentEditPlan);
+        subPlanRecyclerView = rootView.findViewById(R.id.recyclerView_FragmentEditPlan);
+        viewProtector = rootView.findViewById(R.id.viewProtector_FragmentEditPlan);
         addSubPlanButton = rootView.findViewById(R.id.add_subPlan_ImageButton_FragmentEditPlan);
 
         saveButton = rootView.findViewById(R.id.saveButton_FragmentEditPlan);
@@ -98,6 +105,8 @@ public class FragmentEditPlan extends Fragment {
 
         notify_rv = rootView.findViewById(R.id.notify_recyclerView_FragmentEditPlan);
         addNotify_button = rootView.findViewById(R.id.add_notify_ImageButton_FragmentEditPlan);
+
+        dateSelector_fl = rootView.findViewById(R.id.dateSelector_FrameLayout_FragmentEditPlan);
 
         return rootView;
     }
@@ -124,6 +133,7 @@ public class FragmentEditPlan extends Fragment {
             public void onDateSelected(int year, int month, int day, int dayOfWeek) {
                 selectedDate.set(year, month, day);
                 updateSubPlansList();
+                onWeekDatesChanged(mPlan.selectedWeekDays); // just check
             }
 
             @Override
@@ -136,7 +146,7 @@ public class FragmentEditPlan extends Fragment {
                 .setDeleteButtonListener(this::deleteSubPlan)
                 .setItemClickListener(this::openFragmentEditSubPlan)
                 .setLongPressListener(this::incrementProgress);
-        recyclerView.setAdapter(subPlanAdapter);
+        subPlanRecyclerView.setAdapter(subPlanAdapter);
         updateSubPlansList();
 
         addSubPlanButton.setOnClickListener(v -> {
@@ -200,6 +210,18 @@ public class FragmentEditPlan extends Fragment {
         notify_rv.setAdapter(notifyAdapter);
         notifyAdapter.submitList(mPlan.notifyList);
 
+        // Date selector View ----------------------------------------------------------------------
+        View weekDaysView = new ViewWeekDays(getContext())
+                .setSelectedWeekDays(mPlan.selectedWeekDays)
+                .setListener(this::onWeekDatesChanged)
+                .getView();
+        dateSelector_fl.addView(weekDaysView);
+
+        // View Protector --------------------------------------------------------------------------
+        viewProtector.setOnClickListener(v -> {
+            // do nothing
+            // absorb everything
+        });
     }
 
     private void incrementProgress(SubPlan subPlan) {
@@ -259,6 +281,31 @@ public class FragmentEditPlan extends Fragment {
 
         if (mPlan.period == PlanPeriod.INTERVALS) {
             intervalEditText.setText(String.valueOf(mPlan.intervalDate));
+        }
+
+        if (mPlan.period == PlanPeriod.WEEK_DAYS) {
+            dateSelector_fl.setVisibility(View.VISIBLE);
+        } else dateSelector_fl.setVisibility(View.GONE);
+        onWeekDatesChanged(mPlan.selectedWeekDays);
+    }
+
+    /**
+     * Checks if plan period is on Week_Days
+     * if so, it checks if subPlans can be edited on SelectedDates on Not
+     * @param weekDates currently selected week_dates
+     */
+    private void onWeekDatesChanged(HashSet<Integer> weekDates) {
+        if (mPlan.period != PlanPeriod.WEEK_DAYS) {
+            viewProtector.setVisibility(View.GONE);
+            addSubPlanButton.setVisibility(View.VISIBLE);
+            return;
+        }
+        if (! weekDates.contains(selectedDate.get(Calendar.DAY_OF_WEEK))) {
+            viewProtector.setVisibility(View.VISIBLE);
+            addSubPlanButton.setVisibility(View.INVISIBLE);
+        } else {
+            viewProtector.setVisibility(View.GONE);
+            addSubPlanButton.setVisibility(View.VISIBLE);
         }
     }
 

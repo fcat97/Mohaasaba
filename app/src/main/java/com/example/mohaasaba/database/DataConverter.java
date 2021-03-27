@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class DataConverter {
@@ -327,6 +328,26 @@ public class DataConverter {
 
         Gson gson = new Gson();
         Type type = new TypeToken<HashMap<Long, List<SubPlan>>>(){}.getType();
+
+        return gson.fromJson(json, type);
+    }
+
+    @TypeConverter
+    public static String fromIntegerHashSet(HashSet<Integer> integers) {
+        if (integers == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<HashSet<Integer>>(){}.getType();
+
+        return gson.toJson(integers, type);
+    }
+
+    @TypeConverter
+    public static HashSet<Integer> toIntegerHashSet(String json) {
+        if (json == null) return null;
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<HashSet<Integer>>(){}.getType();
 
         return gson.fromJson(json, type);
     }
