@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarLayout_FragmentEditPlan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_FragmentPlanDetail"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/white"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:titleTextColor="?attr/colorAccent"
+
+                android:layout_toStartOf="@id/editButton_FragmentPlanDetail"
+                android:layout_toEndOf="@id/backButton_FragmentPlanDetail" />
+            <ImageButton
+                android:id="@+id/backButton_FragmentPlanDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_left"
+                android:tint="@color/colorGrayDark"
+                android:padding="@dimen/dimen_mini"
+                android:layout_marginStart="@dimen/dimen_small"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/button_circle_ripple"/>
+            <ImageButton
+                android:id="@+id/editButton_FragmentPlanDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_edit"
+                android:tint="@color/colorGrayDark"
+                android:padding="@dimen/dimen_mini"
+                android:layout_marginEnd="@dimen/dimen_small"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/button_circle_ripple"/>
+        </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_large">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/notificationIcon_FragmentPlanDetail">
+            <TextView
+                android:id="@+id/planLabel_FragmentPlanDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/colorAccent"
+                android:shadowColor="@color/colorGrayDark"
+                android:text="Drink"
+                android:textAppearance="@style/textLarge.Bold"/>
+            <TextView
+                android:id="@+id/period_TextView_FragmentPlanDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/textMedium"
+                android:textColor="@color/colorGrayAccent"
+                android:text="Every Day"/>
+            <TextView
+                android:id="@+id/tags_TextView_FragmentPlanDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/textSmall.Italic"
+                android:text="#Go Ahead, #Do it"/>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/notificationIcon_FragmentPlanDetail"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_bell"
+            app:tint="?attr/colorAccent"
+            android:layout_marginStart="@dimen/dimen_large"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/notification_icon" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_small">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_FragmentPlanDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_large"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_subplan_action"/>
+        <RelativeLayout
+            android:id="@+id/viewProtector_FragmentPlanDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignStart="@id/recyclerView_FragmentPlanDetail"
+            android:layout_alignEnd="@id/recyclerView_FragmentPlanDetail"
+            android:layout_alignTop="@id/recyclerView_FragmentPlanDetail"
+            android:layout_alignBottom="@id/recyclerView_FragmentPlanDetail">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:padding="@dimen/dimen_large"
+                android:background="@drawable/drawable_circle"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_lock"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/textLarge.Bold"
+        android:text="History"
+        android:gravity="center"
+        android:textColor="@color/colorGrayAccent"
+        android:layout_marginStart="@dimen/dimen_large"
+        android:layout_marginEnd="@dimen/dimen_large"
+        android:layout_marginTop="@dimen/dimen_extraLarge"/>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/lineChart_FragmentPlanDetail"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="@dimen/dimen_large"
+        android:layout_marginEnd="@dimen/dimen_large"
+        android:layout_marginTop="@dimen/dimen_small"/>
+</LinearLayout>

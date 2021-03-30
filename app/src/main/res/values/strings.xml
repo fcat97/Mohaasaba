@@ -140,4 +140,5 @@
     <string name="_1">1</string>
     <string name="time_text">Times</string>
     <string name="notifications">Notifications</string>
+    <string name="notification_icon">Notification Icon</string>
 </resources>

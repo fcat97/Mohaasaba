@@ -14,10 +14,12 @@
         <activity
             android:name=".plans.PlanActivity"
             android:label="Plan Activity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".ibadah.tasbih.TasbihActivity"
             android:label="@string/tasbih"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.IbadahActivity"
@@ -83,6 +85,7 @@
         <activity
             android:name=".ibadah.bookshelf.TalimActivity"
             android:label="Talim"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver android:name=".receivers.NotyFire" />

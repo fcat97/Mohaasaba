@@ -227,7 +227,7 @@
                     android:layout_alignStart="@id/recyclerView_FragmentEditPlan"
                     android:layout_alignEnd="@id/recyclerView_FragmentEditPlan"
                     android:layout_alignTop="@id/recyclerView_FragmentEditPlan"
-                    android:layout_alignBaseline="@id/recyclerView_FragmentEditPlan">
+                    android:layout_alignBottom="@id/recyclerView_FragmentEditPlan">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

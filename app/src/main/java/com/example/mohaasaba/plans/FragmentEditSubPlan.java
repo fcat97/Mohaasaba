@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 
 import com.example.mohaasaba.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -111,7 +112,7 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
             String label = labelEditText.getText().toString().trim();
             int hr = hour_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(hour_et.getText().toString());
             int min = min_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(min_et.getText().toString());
-//            int sec = sec_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(sec_et.getText().toString());
+
             int hr_done = hourDone_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(hourDone_et.getText().toString());
             int min_done = minDone_et.getText().toString().isEmpty() ? 0 : Integer.parseInt(minDone_et.getText().toString());
 
@@ -142,8 +143,8 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
                 else {
                     mSubPlan.count_goal = 0;
                     mSubPlan.count_progress = 0;
-                    mSubPlan.time_goal = (hr * 3600) + (min * 60) /*+ sec*/;
-                    mSubPlan.time_progress = (hr_done * 3600) + (min_done * 60) /*+ sec*/;
+                    mSubPlan.time_goal = ((hr * 3600) + (min * 60)) * 1000 ;
+                    mSubPlan.time_progress = ((hr_done * 3600) + (min_done * 60)) * 1000 ;
                 }
                 if (confirmListener != null) {
                     confirmListener.onConfirm();
@@ -168,12 +169,12 @@ public class FragmentEditSubPlan extends BottomSheetDialogFragment {
             trackCount_ll.setVisibility(View.GONE);
             trackTime_ll.setVisibility(View.VISIBLE);
 
-            long hr = mSubPlan.time_goal / 3600;
-            long min = (mSubPlan.time_goal % 3600) / 60;
+            long hr = (mSubPlan.time_goal / 1000) / 3600;
+            long min = ((mSubPlan.time_goal / 1000) % 3600) / 60;
 //            long sec = (mSubPlan.time_goal % 3600) % 60;
 
-            long hr_done = mSubPlan.time_progress / 3600;
-            long min_done = (mSubPlan.time_progress % 3600) / 60;
+            long hr_done = (mSubPlan.time_progress / 1000) / 3600;
+            long min_done = ((mSubPlan.time_progress / 1000) % 3600) / 60;
 
             hour_et.setText(String.valueOf(hr));
             min_et.setText(String.valueOf(min));

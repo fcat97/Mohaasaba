@@ -82,10 +82,10 @@ public class SubPlanAdapter extends ListAdapter<SubPlan, SubPlanAdapter.SubPlanH
         // set goal Text ---------------------------------------------------------------------------
         String goalText = "Goal - ";
         if (subPlan.track_time) {
-            long hr = subPlan.time_goal / 3600;
-            long min = (subPlan.time_goal % 3600) / 60;
-            long hr_done = subPlan.time_progress / 3600;
-            long min_done = (subPlan.time_progress % 3600) / 60;
+            long hr = (subPlan.time_goal / 1000 ) / 3600;
+            long min = ((subPlan.time_goal / 1000) % 3600) / 60;
+            long hr_done = (subPlan.time_progress / 1000 ) / 3600;
+            long min_done = ((subPlan.time_progress / 1000) % 3600) / 60;
 
             goalText += hr_done + "h" + min_done + "m" + "/" + hr + "h" + min + "m";
         } else {

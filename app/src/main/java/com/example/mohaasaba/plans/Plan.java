@@ -161,6 +161,25 @@ public class Plan implements Parcelable {
         return 100 * progress;
     }
 
+    public List<Float> getProgressBetween(Calendar starting, Calendar ending) {
+        Log.d(TAG, "getProgress: monthly called");
+        List<Float> progressList = new ArrayList<>();
+
+        int start = starting.get(Calendar.DAY_OF_YEAR);
+        int end = ending.get(Calendar.DAY_OF_YEAR);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(Calendar.YEAR, starting.get(Calendar.YEAR));
+
+        for (int i = start; i <= end; i++) {
+            calendar.set(Calendar.DAY_OF_YEAR, i);
+            progressList.add(getProgress(calendar));
+        }
+
+        return progressList;
+    }
+
     // Parcelable Implementation ===================================================================
     @Override
     public int describeContents() {

@@ -2,9 +2,11 @@ package com.example.mohaasaba.plans;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,8 +18,8 @@ import java.util.List;
 
 
 public class PlanActivity extends AppCompatActivity {
+    private static final String TAG = PlanActivity.class.getCanonicalName();
     private FragmentPlan fragmentPlan;
-    private PlanRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +32,13 @@ public class PlanActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(getColor(R.color.colorGray));
         }
 
-        repository = new PlanRepository(this);
+        PlanRepository repository = new PlanRepository(this);
         LiveData<List<Plan>> planLiveData = repository.getAllPlans();
 
         fragmentPlan = new FragmentPlan()
                 .setPlansLiveData(planLiveData)
                 .setOnAddButtonClicked(this::openFragmentEditPlan)
-                .setItemClickListener(this::openFragmentEditPlan);
+                .setItemClickListener(this::openFragmentPlanDetail);
 
         openFragmentPlan();
     }
@@ -54,10 +56,11 @@ public class PlanActivity extends AppCompatActivity {
                 .commit();
     }
 
-//    private void addPlan() {
-//        Plan plan = new Plan();
-//        plan.label = "Hello Shahriar";
-//        repository.insert(plan);
-//        Toast.makeText(this, "Plan Added", Toast.LENGTH_SHORT).show();
-//    }
+    public void openFragmentPlanDetail(Plan plan) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameLayout_PlanActivity, FragmentPlanDetail.getInstance(plan)
+                        .setEditButtonListener(this::openFragmentEditPlan))
+                .addToBackStack("Fragment Plan Detail")
+                .commit();
+    }
 }

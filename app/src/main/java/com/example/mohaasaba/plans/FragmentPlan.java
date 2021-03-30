@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -33,6 +34,12 @@ public class FragmentPlan extends Fragment {
     private ImageButton addButton;
     private OnAddButtonClicked onAddButtonClicked;
     private ItemClickListener itemClickListener;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: called now");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +67,7 @@ public class FragmentPlan extends Fragment {
                     fragmentPlanOptions.show(getParentFragmentManager(), "Fragment Plan Options");
                 });
         recyclerView.setAdapter(adapter);
+
         if (plansLiveData != null) {
             Log.d(TAG + "Plan", "onViewCreated: called");
             plansLiveData.observe(getViewLifecycleOwner(), adapter::submitList);

@@ -56,6 +56,15 @@ public class SubPlan implements Serializable, Parcelable {
         }
     }
 
+    /**
+     * Decrement Countable Progress
+     */
+    public void decrementCount() {
+        if (track_count) {
+            count_progress = Math.max(count_progress - count_step, 0);
+        }
+    }
+
     protected SubPlan(Parcel in) {
         label = in.readString();
         track_time = in.readByte() != 0;
