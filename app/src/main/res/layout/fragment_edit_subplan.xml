@@ -55,7 +55,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Time Track"
-                android:layout_weight="1"
                 android:padding="@dimen/dimen_mini"
                 android:textAlignment="center"
                 android:background="@drawable/button_ripple_gray"
