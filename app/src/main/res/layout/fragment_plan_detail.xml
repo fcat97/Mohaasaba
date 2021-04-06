@@ -28,6 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_left"
+                android:contentDescription="@string/back"
                 android:tint="@color/colorGrayDark"
                 android:padding="@dimen/dimen_mini"
                 android:layout_marginStart="@dimen/dimen_small"
@@ -39,6 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_edit"
+                android:contentDescription="@string/edit_text"
                 android:tint="@color/colorGrayDark"
                 android:padding="@dimen/dimen_mini"
                 android:layout_marginEnd="@dimen/dimen_small"
@@ -72,7 +74,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="?attr/colorAccent"
                         android:shadowColor="@color/colorGrayDark"
-                        android:text="Drink"
+                        android:text="@string/drink"
                         android:textAppearance="@style/textLarge.Bold"/>
                     <TextView
                         android:id="@+id/period_TextView_FragmentPlanDetail"
@@ -80,13 +82,13 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/textMedium"
                         android:textColor="@color/colorGrayAccent"
-                        android:text="Every Day"/>
+                        android:text="@string/every_day"/>
                     <TextView
                         android:id="@+id/tags_TextView_FragmentPlanDetail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/textSmall.Italic"
-                        android:text="#Go Ahead, #Do it"/>
+                        android:text="@string/go_ahead_do_it"/>
                 </LinearLayout>
                 <ImageView
                     android:id="@+id/notificationIcon_FragmentPlanDetail"
@@ -122,7 +124,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
+                        android:contentDescription="@string/lock"
                         android:padding="@dimen/dimen_large"
                         android:background="@drawable/drawable_circle"
                         android:layout_centerInParent="true"
@@ -133,7 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/textLarge.Bold"
-                android:text="History"
+                android:text="@string/history"
                 android:gravity="center"
                 android:textColor="@color/colorGrayAccent"
                 android:layout_marginStart="@dimen/dimen_large"
@@ -146,6 +148,13 @@
                 android:layout_marginStart="@dimen/dimen_large"
                 android:layout_marginEnd="@dimen/dimen_large"
                 android:layout_marginTop="@dimen/dimen_small"/>
+
+            <FrameLayout
+                android:id="@+id/historyCalender_FragmentPlanDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_extraLarge"
+                android:padding="@dimen/dimen_extraLarge"/>
         </LinearLayout>
     </ScrollView>
 

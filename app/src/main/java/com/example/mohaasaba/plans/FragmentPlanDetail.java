@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -45,6 +46,7 @@ public class FragmentPlanDetail extends Fragment {
     private SubPlanActionAdapter actionAdapter;
     private PlanRepository repository;
     private ImageView notificationIcon;
+    private FrameLayout historyFrameLayout;
 
     public FragmentPlanDetail () {
 
@@ -85,6 +87,8 @@ public class FragmentPlanDetail extends Fragment {
         editButton = rootView.findViewById(R.id.editButton_FragmentPlanDetail);
 
         notificationIcon = rootView.findViewById(R.id.notificationIcon_FragmentPlanDetail);
+
+        historyFrameLayout = rootView.findViewById(R.id.historyCalender_FragmentPlanDetail);
 
         return rootView;
     }
@@ -138,6 +142,25 @@ public class FragmentPlanDetail extends Fragment {
         // Notification Icon -----------------------------------------------------------------------
         if (mPlan.notifyList.size() > 0) notificationIcon.setVisibility(View.VISIBLE);
         else notificationIcon.setVisibility(View.INVISIBLE);
+
+        // History Calendar ------------------------------------------------------------------------
+        HistoryCalendar historyCalendar = new HistoryCalendar(getContext());
+        historyFrameLayout.addView(historyCalendar.getView());
+
+        Calendar monthStarting = Calendar.getInstance();
+        monthStarting.clear();
+        Calendar monthEnding = Calendar.getInstance();
+        monthEnding.clear();
+
+        Calendar c = Calendar.getInstance();
+
+        // month starting date and ending date
+        monthStarting.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH),1);
+        monthEnding.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
+                c.getActualMaximum(Calendar.DAY_OF_MONTH));
+
+        List<Float> progress= mPlan.getProgressBetween(monthStarting, monthEnding);
+        historyCalendar.submitProgress(progress, c.get(Calendar.YEAR), c.get(Calendar.MONTH));
     }
 
     private void setChartData() {

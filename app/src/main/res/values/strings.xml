@@ -141,4 +141,10 @@
     <string name="time_text">Times</string>
     <string name="notifications">Notifications</string>
     <string name="notification_icon">Notification Icon</string>
+    <string name="history">History</string>
+    <string name="go_ahead_do_it">#Go Ahead, #Do it</string>
+    <string name="every_day">Every Day</string>
+    <string name="drink">Drink</string>
+    <string name="back">back</string>
+    <string name="lock">Lock</string>
 </resources>
