@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -70,9 +71,9 @@ public class HistoryCalendar {
 
         public CalendarAdapter(Context context) {
             /*
-            Change the color to theme preference
-            https://stackoverflow.com/questions/28489509/how-can-i-get-the-primary-color-from-my-app-theme
-             */
+            * Change the color to theme preference
+            * https://stackoverflow.com/questions/28489509/how-can-i-get-the-primary-color-from-my-app-theme
+            */
             TypedValue typedValue = new TypedValue();
             context.getTheme().resolveAttribute(R.attr.colorAccent, typedValue, true);
             int accentColor = typedValue.data;
@@ -168,6 +169,16 @@ public class HistoryCalendar {
                         else holder.textView.setTextColor(_selectedDated_TEXTCOLOR_ALT);
                     }
                 }
+
+                // Show percent score of selected date
+                holder.itemView.setOnClickListener(v -> {
+                    if (position < 7 + _starting_offset || position > 7 + _starting_offset + _day_in_month - 1) return;
+                    int a = alpha.get(position - 7 - _starting_offset);
+                    float p = (float) a * 100 / 255;
+                    Toast.makeText(v.getContext(),
+                            "Progress: " + Math.round(p) + "%",
+                            Toast.LENGTH_SHORT).show();
+                });
 
                 /* Set All the days number to textView */
                 holder.textView.setText(String.valueOf(daysOfMonth.get(position - 7).get(Calendar.DAY_OF_MONTH)));
