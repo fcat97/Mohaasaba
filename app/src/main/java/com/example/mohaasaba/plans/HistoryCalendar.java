@@ -19,16 +19,16 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import com.example.mohaasaba.R;
+
 public class HistoryCalendar {
-    private Context context;
-    private RecyclerView recyclerView;
-    private CalendarAdapter adapter;
+    private final RecyclerView recyclerView;
+    private final CalendarAdapter adapter;
 
     public HistoryCalendar(Context context) {
-        this.context = context;
         this.recyclerView = new RecyclerView(context);
         recyclerView.setLayoutManager(new GridLayoutManager(context, 7));
-        adapter = new CalendarAdapter();
+        adapter = new CalendarAdapter(context);
         recyclerView.setAdapter(adapter);
     }
 
@@ -68,38 +68,24 @@ public class HistoryCalendar {
         private int _ending_offset;
         private List<Calendar> daysOfMonth;
 
-        public CalendarAdapter() {
+        public CalendarAdapter(Context context) {
+            /*
+            Change the color to theme preference
+            https://stackoverflow.com/questions/28489509/how-can-i-get-the-primary-color-from-my-app-theme
+             */
+            TypedValue typedValue = new TypedValue();
+            context.getTheme().resolveAttribute(R.attr.colorAccent, typedValue, true);
+            int accentColor = typedValue.data;
+            _selectedDates_BGCOLOR = accentColor;
+            _weekDays_TEXTCOLOR = accentColor;
+
             Calendar calendar = Calendar.getInstance();
 
             this.progress = new ArrayList<>();
             invalidate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH));
         }
 
-//        public void submitProgress(List<Float> progress, int year, int month) {
-//            this.progress = progress;
-//            this.month = month;
-//            this.year = year;
-//
-//            // get max_day_of_month
-//            Calendar c = Calendar.getInstance();
-//            c.clear();
-//            c.set(year, month, 1);
-//            _day_in_month = c.getActualMaximum(Calendar.DAY_OF_MONTH);
-//            _starting_offset = c.get(Calendar.DAY_OF_WEEK) - 1;
-//            _ending_offset = _starting_offset + _day_in_month <= 35 ?
-//                    35 - (_starting_offset + _day_in_month) : 42 - (_starting_offset + _day_in_month);
-//
-//            // Get days that will show on Calendar
-//            daysOfMonth = new ArrayList<>();
-//            int _1st = c.get(Calendar.DAY_OF_YEAR);
-//            for (int i = _1st - _starting_offset; i < _1st + _day_in_month + _ending_offset; i++) {
-//                Calendar c1 = Calendar.getInstance();
-//                c1.clear();
-//                c1.set(Calendar.DAY_OF_YEAR, i);
-//                daysOfMonth.add(c);
-//            }
-//        }
-        public void invalidate(int year, int month) {
+        private void invalidate(int year, int month) {
             // get max_day_of_month
             Calendar c = Calendar.getInstance();
             c.clear();
